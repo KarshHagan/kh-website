@@ -1,6 +1,6 @@
-# Client - Project Name
+# Karsh Hagan – Website 2022.
 
-Project description.
+Code for Karsh Hagan website built in 2022.
 
 ## Reference
 
