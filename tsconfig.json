@@ -5,7 +5,9 @@
     "baseUrl": "./",
     "paths": {
       "$utils/*": ["src/utils/*"],
-      "$motion/*": ["src/motion/*"]
+      "$motion/*": ["src/motion/*"],
+      "$pages/*": ["src/pages/*"],
+      "$assets/*": ["src/assets/*"]
     }
   }
 }
