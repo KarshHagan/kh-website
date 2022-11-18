@@ -54,6 +54,6 @@
   "dependencies": {
     "@finsweet/ts-utils": "^0.33.1",
     "barba.js": "^1.0.0",
-    "gsap": "npm:@gsap/business@^3.11.3"
+    "gsap": "file:gsap-bounus.tgz"
   }
 }

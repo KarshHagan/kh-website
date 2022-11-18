@@ -2,6 +2,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { preloader } from '$motion/preoloader';
+import { querySelectorToArray } from '$utils/querySelectorToArray';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,10 +43,13 @@ export const home = () => {
   // Hero Section
   //----------------------
   const heroParent = document.querySelector('.section_home-hero');
-  const bgContainer = document.querySelector('.home-hero_bg-track') as HTMLElement;
-  const bgImage = document.querySelector('.home-hero_bg-mask');
-  const bgInnerText = bgContainer.children[1] as HTMLElement;
-  console.log(bgImage, bgInnerText);
+  const bgParent = document.querySelector('.home-hero_bg-track') as HTMLElement;
+  console.log(bgParent);
+  const bgTextItems = querySelectorToArray('.bg-text_track-item');
+  console.log(bgTextItems);
+  // const bgImage = document.querySelector('.home-hero_bg-mask');
+  // const bgInnerText = bgContainer.children[1] as HTMLElement;
+  // console.log(bgImage, bgInnerText);
 
   const heroScrollTL = gsap.timeline({
     scrollTrigger: {
@@ -55,17 +59,14 @@ export const home = () => {
       toggleActions: 'play none none reverse',
       scrub: 1,
       markers: true,
-      onScrubComplete: () => {
-        console.log('complete');
-        const revealInnerTL = gsap.timeline();
-        revealInnerTL.to(bgInnerText, { opacity: 1, ease: 'power4.out' });
-      },
     },
   });
 
-  heroScrollTL.to(bgImage, {
-    width: '50%',
-    height: '80%',
+  heroScrollTL.to(bgParent, {
+    width: '60%',
+    height: '85%',
     borderRadius: '2rem',
+    duration: 1,
   });
+  // heroScrollTL.to(bgInnerText, { opacity: 1, ease: 'power4.out', delay: 4 });
 };
