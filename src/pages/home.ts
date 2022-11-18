@@ -15,6 +15,8 @@ export const home = () => {
   // Preloader
   //----------------------
 
+  console.log('test');
+
   // Get svg data
   //----------------------
   const svgEmbed = document.querySelector('.preloader_graphic-embed') as HTMLImageElement;
