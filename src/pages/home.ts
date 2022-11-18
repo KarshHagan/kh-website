@@ -15,7 +15,7 @@ export const home = () => {
   // Preloader
   //----------------------
 
-  console.log('test');
+  // console.log('test');
 
   // Get svg data
   //----------------------
