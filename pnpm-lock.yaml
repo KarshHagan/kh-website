@@ -10,21 +10,19 @@ specifiers:
   '@trivago/prettier-plugin-sort-imports': ^3.3.0
   '@typescript-eslint/eslint-plugin': ^5.33.0
   '@typescript-eslint/parser': ^5.33.0
-  barba.js: ^1.0.0
   cross-env: ^7.0.3
   esbuild: ^0.15.1
   esbuild-plugin-svgr: ^1.0.1
   eslint: ^8.21.0
   eslint-config-prettier: ^8.5.0
   eslint-plugin-prettier: ^4.2.1
-  gsap: file:gsap-bonus.tgz
+  gsap: npm:@gsap/business@^3.11.3
   prettier: ^2.7.1
   typescript: ^4.7.4
 
 dependencies:
   '@finsweet/ts-utils': 0.33.1
-  barba.js: 1.0.0
-  gsap: file:gsap-bonus.tgz
+  gsap: /@gsap/business/3.11.3
 
 devDependencies:
   '@changesets/changelog-git': 0.1.12
@@ -664,6 +662,10 @@ packages:
     resolution: {integrity: sha512-P+cceRLc4wzcN3YfTCMqOQ1SfrxIFcMvC1lzgl8rd021ZcCNkdiOYlPkpZSL1lzDt2+9k4wFq4OUFcxALdOOsQ==}
     dev: true
 
+  /@gsap/business/3.11.3:
+    resolution: {integrity: sha512-u+8zXI2yOHk7IIzML5TzON+xUkwBnyIaHIo0qCI2OV7oISUyARDHQfbEpqcOL93niU4C7l1lZqniTRFK70Us3g==}
+    dev: false
+
   /@humanwhocodes/config-array/0.10.4:
     resolution: {integrity: sha512-mXAIHxZT3Vcpg83opl1wGlVZ9xydbfZO3r5YfRSH6Gpp2J/PfdBP0wbDa2sO6/qRbcalpoevVyW6A/fI6LfeMw==}
     engines: {node: '>=10.10.0'}
@@ -1153,10 +1155,6 @@ packages:
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
     dev: true
-
-  /barba.js/1.0.0:
-    resolution: {integrity: sha512-JXhSw4y0XjhGavkxLOBrp/qXHql6HW2pw18qCBA9EWavvb12SFfv56JceZVHfwV+PxVlwb9QxNwyIXuSeQkoZA==}
-    dev: false
 
   /better-path-resolve/1.0.0:
     resolution: {integrity: sha512-pbnl5XzGBdrFU/wT4jqmJVPn2B6UHPBOhzMQkY/SPUPB6QtUXtmBHBIwCbXJol93mOpGMnQyP/+BB19q04xj7g==}
@@ -3338,9 +3336,3 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
-
-  file:gsap-bonus.tgz:
-    resolution: {integrity: sha512-pDhbxDJeZreZORpBacsNwMkJZtmnqwxDU5knDfLIf1l3YIzUggiIe1P2bz5QHu2mK5giSE3qgoZl28JHBoogTQ==, tarball: file:gsap-bonus.tgz}
-    name: gsap
-    version: 3.11.3
-    dev: false
