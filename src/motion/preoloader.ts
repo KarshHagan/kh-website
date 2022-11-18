@@ -7,8 +7,6 @@ gsap.registerPlugin(MorphSVGPlugin);
 
 export const preloader = () => {
   setTimeout(() => {
-    console.log('timeout');
-
     const svgWrapper = document.querySelector('.preloader_svg');
     const kGraphics = querySelectorToArray('.k-graphic');
     const hGraphics = querySelectorToArray('.h-graphic');

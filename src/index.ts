@@ -1,7 +1,7 @@
 import { Webflow } from '@finsweet/ts-utils';
 
 import { brandHover } from '$motion/navBrandHover';
-import { index } from '$pages/index';
+import { home } from '$pages/home';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
@@ -13,7 +13,7 @@ window.Webflow.push(() => {
 
   if (windowLocation === '/') {
     //load index module
-    index();
+    home();
   }
 
   //--------------------
