@@ -36,7 +36,7 @@ export const home = () => {
 
   // run preloader
   //----------------------
-  // preloader();
+  preloader();
 
   //----------------------
   // Hero Section
@@ -58,7 +58,7 @@ export const home = () => {
       onScrubComplete: () => {
         console.log('complete');
         const revealInnerTL = gsap.timeline();
-        // revealInnerTL.to(bgInnerText, { opacity: 1, ease: 'power4.out' });
+        revealInnerTL.to(bgInnerText, { opacity: 1, ease: 'power4.out' });
       },
     },
   });
