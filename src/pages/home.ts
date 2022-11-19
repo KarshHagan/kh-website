@@ -12,7 +12,7 @@ export const home = () => {
   // Page Globals
   //----------------------
 
-  console.log('home');
+  // console.log('home');
 
   //----------------------
   // Preloader
