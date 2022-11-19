@@ -12,6 +12,8 @@ export const home = () => {
   // Page Globals
   //----------------------
 
+  console.log('home');
+
   //----------------------
   // Preloader
   //----------------------
@@ -82,4 +84,8 @@ export const home = () => {
   });
 
   heroTextTL.to(bgImageTextWrap, { opacity: 1, ease: 'power4.out' });
+
+  //----------------------
+  // Hero Section
+  //----------------------
 };
