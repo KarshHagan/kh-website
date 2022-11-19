@@ -13,7 +13,7 @@ window.Webflow.push(() => {
 
   if (windowLocation === '/') {
     //load index module
-    console.log('home');
+    // console.log('home');
     home();
   }
 
