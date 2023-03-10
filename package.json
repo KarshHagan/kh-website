@@ -12,7 +12,8 @@
   "author": "Samso Studios",
   "license": "ISC",
   "dependencies": {
-    "@finsweet/ts-utils": "^0.37.3"
+    "@finsweet/ts-utils": "^0.37.3",
+    "gsap": "file:gsap-bonus.tgz"
   },
   "devDependencies": {
     "@finsweet/eslint-config": "^2.0.1",
