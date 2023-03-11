@@ -1,8 +1,8 @@
-## ss-threejs-starter
+## Karsh Hagan Website - 2024
 
-A starter project for inetragating three js with Webflow based on Finsweets Developer Starter. This project is NPM based unlike Finsweet's PNPM based starter.
+Custom code integration for Karsh Hagan Webflow Website - 2023
 
-Please review the information below to get started.
+Must be public to serve to Webflow
 
 ## Included tools
 
@@ -14,12 +14,6 @@ This template contains some preconfigured development tools:
 - [esbuild](https://esbuild.github.io/)
 - [Changesets](https://github.com/changesets/changesets)
 - [Finsweet's TypeScript Utils](https://github.com/finsweet/ts-utils)
-
-## Getting started
-
-The quickest way to start developing a new project is by [creating a new repository from this template](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template#creating-a-repository-from-a-template).
-
-Once the new repository has been created, update the `package.json` file with the correct information, specially the name of the package which has to be unique.
 
 ### Installing
 
