@@ -1,3 +1,4 @@
+import { featuredWork } from '$components/featuredWork';
 import { heroHide, heroScroll } from '$motion/homeHeroScroll';
 
 export const home = () => {
@@ -14,4 +15,8 @@ export const home = () => {
   // -------------
   heroScroll();
   heroHide();
+
+  // Featured Work
+  // -------------
+  featuredWork();
 };

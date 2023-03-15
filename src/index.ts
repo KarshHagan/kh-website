@@ -5,6 +5,7 @@ import { caseTemplate } from '$pages/caseTemplate';
 import { home } from '$pages/home';
 import { news } from '$pages/news';
 import { newsTemplate } from '$pages/newsTemplate';
+import { smoothScroll } from '$utils/smoothScroll';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
@@ -14,6 +15,7 @@ window.Webflow.push(() => {
   // Site Globals
   // ---------------
   menu();
+  smoothScroll();
 
   // ---------------
   // Page Routing

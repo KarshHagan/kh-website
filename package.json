@@ -13,12 +13,15 @@
   "license": "ISC",
   "dependencies": {
     "@finsweet/ts-utils": "^0.37.3",
-    "gsap": "file:gsap-bonus.tgz"
+    "@studio-freight/lenis": "^1.0.0",
+    "gsap": "file:gsap-bonus.tgz",
+    "locomotive-scroll": "^4.1.4"
   },
   "devDependencies": {
     "@finsweet/eslint-config": "^2.0.1",
     "@finsweet/tsconfig": "^1.2.0",
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",
+    "@types/locomotive-scroll": "^4.1.0",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
     "cross-env": "^7.0.3",
