@@ -14,14 +14,13 @@ const navStamp = document.querySelector('.nav_footer-stamp');
 const navTexture = document.querySelector('.nav_texture-overlay');
 
 const lenisContainer = document.querySelector('html');
-console.log(lenisContainer);
 
 const menuOpenSplit = new SplitText('#menuText', { type: 'words,chars' });
 const menuCloseSplit = new SplitText('#menuCloseText', { type: 'words,chars' });
 
 export const menuMotionOpen = () => {
   const animation = gsap.timeline({ paused: true });
-  animation.set(body, { overflowY: 'hidden' });
+  // animation.set(body, { overflowY: 'hidden' });
   animation.set(lenisContainer, { height: '100%' });
   animation.to(navMenu, { display: 'block' });
 
@@ -31,6 +30,8 @@ export const menuMotionOpen = () => {
     { y: '2rem', stagger: { each: 0.1 }, ease: 'power4.out' },
     '<'
   );
+  animation.to('#menuCloseText', { opacity: 1 }, '<');
+
   animation.from(navMenu, { duration: 0.6, width: '0%', ease: 'power3.inOut' }, '<');
 
   animation.from(navSpan, { duration: 0.4, width: '0%', ease: 'power3.inOut' }, '<0.4');
@@ -154,6 +155,7 @@ export const menuMotionClose = () => {
     { y: '2rem', stagger: { each: 0.1 }, ease: 'power4.out' },
     '<'
   );
+  animation.to('#menuCloseText', { opacity: 0 }, '<');
 
   animation.to(navMenu, { duration: 0.6, width: '0%', ease: 'power3.inOut' }, '-=0.6');
 

@@ -1,3 +1,4 @@
+import { cursorGlobal } from '$components/cursor';
 import { menu } from '$components/nav';
 import { about } from '$pages/about';
 import { caseOverview } from '$pages/caseOverview';
@@ -16,6 +17,7 @@ window.Webflow.push(() => {
   // ---------------
   menu();
   smoothScroll();
+  cursorGlobal();
 
   // ---------------
   // Page Routing
