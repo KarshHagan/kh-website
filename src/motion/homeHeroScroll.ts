@@ -61,3 +61,7 @@ export const heroHide = () => {
   animation.to(heroBGText, { display: 'none' });
   animation.to(heroScrollIcon, { display: 'none' });
 };
+
+export const heroZText = () => {
+  // const
+};

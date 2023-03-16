@@ -6,6 +6,7 @@ export const home = () => {
   // Page Globals
   // ---------------
   console.log('home');
+  console.log('here');
 
   // Fixed Header
   // const headerElement = document.querySelector('#homeHero') as HTMLElement;
