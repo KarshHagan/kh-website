@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 const cursor = document.querySelector('.cursor_component') as HTMLElement;
 const cursorImage = cursor.children[1] as HTMLElement;
 
-export const featuredCursorReveal = () => {
+export const cursorArrowReveal = () => {
   const animation = gsap.timeline({ paused: true });
   animation.to(cursor, {
     duration: 0.6,
@@ -18,19 +18,23 @@ export const featuredCursorReveal = () => {
   return animation;
 };
 
-export const featuredCursorUpdate = (xType: string) => {
+export const cursorArrowSliderChange = (xType: string) => {
   const animation = gsap.timeline();
 
   if (xType === 'prev') {
-    animation.to(cursor, { duration: 1, rotate: '0deg', ease: 'expo.out' });
+    animation.to(cursor, { duration: 1, rotate: '-180deg', ease: 'expo.out' });
   } else {
-    animation.to(cursor, { duration: 1, rotate: '180deg', ease: 'expo.out' });
+    animation.to(cursor, { duration: 1, rotate: '0deg', ease: 'expo.out' });
   }
 
   return animation;
 };
+export const cursorArrowSliderReset = () => {
+  const animation = gsap.timeline();
+  animation.to(cursor, { delay: 0.6, duration: 0, rotate: '0deg' });
+};
 
-export const featuredCursorYUpdate = (xType: string, yMovement: number) => {
+export const cursorArrowYMovement = (xType: string, yMovement: number) => {
   const animation = gsap.timeline();
 
   if (xType === 'prev') {

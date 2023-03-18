@@ -1,7 +1,8 @@
 import {
-  featuredCursorReveal,
-  featuredCursorUpdate,
-  featuredCursorYUpdate,
+  cursorArrowReveal,
+  cursorArrowSliderChange,
+  cursorArrowSliderReset,
+  cursorArrowYMovement,
 } from '$motion/cursorMotion';
 import { showNext, showPrev } from '$motion/featuredWorkMotion';
 
@@ -11,10 +12,10 @@ export const featuredWork = () => {
 
   // Cursor Effects
   // --------------
-  let curCursorType = 'prev';
-  const revealAnimation = featuredCursorReveal();
+  let curCursorType = 'next';
+  const cursorReveal = cursorArrowReveal();
   featuredWrap.addEventListener('mouseenter', (e) => {
-    revealAnimation.play();
+    cursorReveal.play();
     const mouseX = e.pageX;
 
     if (mouseX <= wrapperWidth / 2) {
@@ -22,10 +23,11 @@ export const featuredWork = () => {
     } else {
       curCursorType = 'next';
     }
-    featuredCursorUpdate(curCursorType);
+    cursorArrowSliderChange(curCursorType);
   });
-  featuredWrap.addEventListener('mouseleave', (e) => {
-    revealAnimation.reverse();
+  featuredWrap.addEventListener('mouseleave', () => {
+    cursorReveal.reverse();
+    cursorArrowSliderReset();
   });
 
   featuredWrap.addEventListener('mousemove', (e) => {
@@ -33,19 +35,19 @@ export const featuredWork = () => {
     const mouseYMovement = e.movementY;
 
     // console.log('mouse', mouseYMovement);
-    featuredCursorYUpdate(curCursorType, mouseYMovement);
+    cursorArrowYMovement(curCursorType, mouseYMovement);
 
     if (mouseX <= wrapperWidth / 2) {
       const setCursor = 'prev';
       if (setCursor !== curCursorType) {
         curCursorType = setCursor;
-        featuredCursorUpdate(curCursorType);
+        cursorArrowSliderChange(curCursorType);
       }
     } else {
       const setCursor = 'next';
       if (setCursor !== curCursorType) {
         curCursorType = setCursor;
-        featuredCursorUpdate(curCursorType);
+        cursorArrowSliderChange(curCursorType);
       }
     }
   });

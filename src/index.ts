@@ -1,5 +1,6 @@
 import { cursorGlobal } from '$components/cursor';
 import { menu } from '$components/nav';
+import { menuTransition } from '$motion/navMotion';
 import { about } from '$pages/about';
 import { caseOverview } from '$pages/caseOverview';
 import { caseTemplate } from '$pages/caseTemplate';
@@ -16,6 +17,7 @@ window.Webflow.push(() => {
   // Site Globals
   // ---------------
   menu();
+  menuTransition();
   smoothScroll();
   cursorGlobal();
 

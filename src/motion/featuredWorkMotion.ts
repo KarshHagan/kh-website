@@ -9,11 +9,8 @@ projectTitles.reverse();
 // console.log('images', projectsItem);
 
 export const showNext = (count: number) => {
-  console.log('P', projectsItem[count]);
   const scaleElement = projectsItem[count];
   const scaleImage = scaleElement.children[1];
-
-  console.log('image', scaleImage);
 
   const imageAnimation = gsap.timeline();
   imageAnimation.set(scaleImage, { scale: '1.4' });

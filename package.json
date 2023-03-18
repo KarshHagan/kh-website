@@ -13,9 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "@finsweet/ts-utils": "^0.37.3",
-    "@studio-freight/lenis": "^1.0.0",
-    "gsap": "file:gsap-bonus.tgz",
-    "locomotive-scroll": "^4.1.4"
+    "@studio-freight/lenis": "^1.0.1",
+    "gsap": "file:gsap-bonus.tgz"
   },
   "devDependencies": {
     "@finsweet/eslint-config": "^2.0.1",

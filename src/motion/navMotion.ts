@@ -3,7 +3,6 @@ import { SplitText } from 'gsap/SplitText';
 
 gsap.registerPlugin(SplitText);
 
-const body = document.body as HTMLElement;
 const navMenu = document.querySelector('#navMenu');
 const navPageLinks = document.querySelectorAll('.nav_link');
 const menuSwatches = document.querySelectorAll('.nav_palette');
@@ -12,6 +11,8 @@ const navInfoLinks = document.querySelectorAll('.nav_info-link');
 const navSpan = document.querySelector('.nav_span');
 const navStamp = document.querySelector('.nav_footer-stamp');
 const navTexture = document.querySelector('.nav_texture-overlay');
+const navIconSpans = document.querySelectorAll('.nav-ui_icon-span');
+const navBG = document.querySelector('.nav-ui_bg-container');
 
 const lenisContainer = document.querySelector('html');
 
@@ -20,7 +21,6 @@ const menuCloseSplit = new SplitText('#menuCloseText', { type: 'words,chars' });
 
 export const menuMotionOpen = () => {
   const animation = gsap.timeline({ paused: true });
-  // animation.set(body, { overflowY: 'hidden' });
   animation.set(lenisContainer, { height: '100%' });
   animation.to(navMenu, { display: 'block' });
 
@@ -31,6 +31,11 @@ export const menuMotionOpen = () => {
     '<'
   );
   animation.to('#menuCloseText', { opacity: 1 }, '<');
+
+  animation.to(navIconSpans[0], { duration: 1.5, y: '3px', ease: 'expo.out' }, '<');
+  animation.to(navIconSpans[1], { duration: 1.5, y: '-3px', ease: 'expo.out' }, '<');
+
+  animation.to(navBG, { opacity: 0, ease: 'power4.out' }, '<');
 
   animation.from(navMenu, { duration: 0.6, width: '0%', ease: 'power3.inOut' }, '<');
 
@@ -76,7 +81,7 @@ export const menuMotionOpen = () => {
     '<0.2'
   );
 
-  animation.from(navTexture, { duration: 0.4, opacity: 0, ease: 'power3.inOut' }, '<');
+  animation.from(navTexture, { duration: 1, opacity: 0, ease: 'power1.inOut' }, '<');
 
   animation.from(
     menuSwatches,
@@ -157,7 +162,47 @@ export const menuMotionClose = () => {
   );
   animation.to('#menuCloseText', { opacity: 0 }, '<');
 
-  animation.to(navMenu, { duration: 0.6, width: '0%', ease: 'power3.inOut' }, '-=0.6');
+  animation.to(navIconSpans[0], { duration: 1.5, y: '0px', ease: 'expo.out' }, '<');
+  animation.to(navIconSpans[1], { duration: 1.5, y: '0px', ease: 'expo.out' }, '<');
+
+  animation.to(navMenu, { duration: 0.6, width: '0%', ease: 'power3.inOut' }, '<0.4');
+  animation.to(navBG, { duration: 1, opacity: 1, ease: 'power4.out' }, '<0.4');
+
+  animation.set(navMenu, { display: 'none' });
 
   return animation;
+};
+
+export const menuLinkHoverIn = (curLink: HTMLElement) => {
+  const animation = gsap.timeline({});
+  animation.to(curLink, { color: 'rgba(248,244,238,1)', ease: 'expo.out' });
+  animation.to(curLink, { letterSpacing: '6px', ease: 'expo.out' }, '<');
+};
+export const menuLinkHoverOut = (curLink: HTMLElement) => {
+  const animation = gsap.timeline();
+  animation.to(curLink, { color: 'rgba(248,244,238,0)', ease: 'expo.out' });
+  animation.to(curLink, { letterSpacing: '0px', ease: 'expo.out' }, '<');
+  curLink.classList.add('text-stroke-white');
+};
+
+export const menuTransition = () => {
+  const navBG = document.querySelector('.nav-ui_bg-container');
+  const navBrand = document.querySelector('.nav-ui_brand-track');
+  const navMenuText = [...document.querySelectorAll('.nav-ui_menu-text')];
+  const navMenuIcon = [...document.querySelectorAll('.nav-ui_icon-span')];
+  const triggerElement = document.querySelector('.nav_scroll-trigger');
+
+  const animation = gsap.timeline({
+    scrollTrigger: {
+      trigger: triggerElement,
+      start: 'center top',
+      end: 'center top',
+      toggleActions: 'play none none reverse',
+      // markers: true,
+    },
+  });
+  animation.to(navBG, { y: '0%', ease: 'expo.inOut' });
+  animation.to(navBrand, { y: '-2rem', ease: 'expo.inOut' }, '<0.1');
+  animation.to(navMenuText, { color: '#EC2543' }, '<');
+  animation.to(navMenuIcon, { backgroundColor: '#EC2543' }, '<');
 };
