@@ -35,7 +35,7 @@ export const menuMotionOpen = () => {
   animation.to(navIconSpans[0], { duration: 1.5, y: '3px', ease: 'expo.out' }, '<');
   animation.to(navIconSpans[1], { duration: 1.5, y: '-3px', ease: 'expo.out' }, '<');
 
-  animation.to(navBG, { opacity: 0, ease: 'power4.out' }, '<');
+  animation.to(navBG, { y: '-100%', ease: 'power3.out' }, '<');
 
   animation.from(navMenu, { duration: 0.6, width: '0%', ease: 'power3.inOut' }, '<');
 
@@ -166,7 +166,7 @@ export const menuMotionClose = () => {
   animation.to(navIconSpans[1], { duration: 1.5, y: '0px', ease: 'expo.out' }, '<');
 
   animation.to(navMenu, { duration: 0.6, width: '0%', ease: 'power3.inOut' }, '<0.4');
-  animation.to(navBG, { duration: 1, opacity: 1, ease: 'power4.out' }, '<0.4');
+  animation.to(navBG, { y: '0%', ease: 'power3.out' }, '<0.4');
 
   animation.set(navMenu, { display: 'none' });
 

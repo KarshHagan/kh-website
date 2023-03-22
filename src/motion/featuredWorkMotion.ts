@@ -133,16 +133,16 @@ export const textYMovement = (movement: number) => {
   });
 };
 
-const largeTextLink = document.querySelector('.text-link_large') as HTMLElement;
-const linkText = largeTextLink.children[0] as HTMLElement;
-const linkIcon = largeTextLink.children[1] as HTMLElement;
-
-export const viewMoreHoverIn = () => {
+export const viewMoreHoverIn = (element: HTMLElement) => {
+  const linkText = element.children[0];
+  const linkIcon = element.children[1];
   const animation = gsap.timeline();
   animation.to(linkText, { letterSpacing: '4px', ease: 'expo.out' });
   animation.to(linkIcon, { scale: 0.8, rotate: '45deg', ease: 'expo.out' }, '<');
 };
-export const viewMoreHoverOut = () => {
+export const viewMoreHoverOut = (element: HTMLElement) => {
+  const linkText = element.children[0];
+  const linkIcon = element.children[1];
   const animation = gsap.timeline();
   animation.to(linkText, { letterSpacing: '0px', ease: 'expo.out' });
   animation.to(linkIcon, { scale: 1, rotate: '0deg', ease: 'expo.out' }, '<');

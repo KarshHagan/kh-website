@@ -102,11 +102,13 @@ export const featuredWork = () => {
   const largeTextLink = document.querySelector('.text-link_large') as HTMLElement;
 
   largeTextLink.addEventListener('mouseenter', (e) => {
+    const target = e.target as HTMLElement;
     cursorButtonIn(2.5);
-    viewMoreHoverIn();
+    viewMoreHoverIn(target);
   });
   largeTextLink.addEventListener('mouseleave', (e) => {
+    const target = e.target as HTMLElement;
     cursorButtonOut();
-    viewMoreHoverOut();
+    viewMoreHoverOut(target);
   });
 };
