@@ -176,7 +176,7 @@ export const menuMotionClose = () => {
 export const menuLinkHoverIn = (curLink: HTMLElement) => {
   const animation = gsap.timeline({});
   animation.to(curLink, { color: 'rgba(248,244,238,1)', ease: 'expo.out' });
-  animation.to(curLink, { letterSpacing: '6px', ease: 'expo.out' }, '<');
+  animation.to(curLink, { letterSpacing: '3px', ease: 'expo.out' }, '<');
 };
 export const menuLinkHoverOut = (curLink: HTMLElement) => {
   const animation = gsap.timeline();
@@ -187,7 +187,7 @@ export const menuLinkHoverOut = (curLink: HTMLElement) => {
 
 export const menuTransition = () => {
   const navBG = document.querySelector('.nav-ui_bg-container');
-  const navBrand = document.querySelector('.nav-ui_brand-track');
+  const navBrand = [...document.querySelectorAll('.nav-ui_brand-image')];
   const navMenuText = [...document.querySelectorAll('.nav-ui_menu-text')];
   const navMenuIcon = [...document.querySelectorAll('.nav-ui_icon-span')];
   const triggerElement = document.querySelector('.nav_scroll-trigger');
@@ -201,8 +201,9 @@ export const menuTransition = () => {
       // markers: true,
     },
   });
-  animation.to(navBG, { y: '0%', ease: 'expo.inOut' });
-  animation.to(navBrand, { y: '-2rem', ease: 'expo.inOut' }, '<0.1');
+  animation.to(navBG, { opacity: 1, ease: 'expo.inOut' });
+  animation.to(navBrand[0], { opacity: 0, ease: 'expo.inOut' }, '<');
+  animation.to(navBrand[1], { opacity: 1, ease: 'expo.inOut' }, '<');
   animation.to(navMenuText, { color: '#EC2543' }, '<');
   animation.to(navMenuIcon, { backgroundColor: '#EC2543' }, '<');
 };

@@ -7,8 +7,8 @@ export const cursorArrowReveal = () => {
   const animation = gsap.timeline({ paused: true });
   animation.to(cursor, {
     duration: 0.6,
-    width: '5rem',
-    height: '5rem',
+    width: '4rem',
+    height: '4rem',
     padding: '1rem',
     backgroundColor: '#4C9A8C',
     ease: 'power4.out',
@@ -42,4 +42,20 @@ export const cursorArrowYMovement = (xType: string, yMovement: number) => {
   } else {
     animation.to(cursorImage, { rotate: yMovement });
   }
+};
+
+export const cursorButtonIn = (scaleTo: number) => {
+  const animation = gsap.timeline();
+  cursor.classList.add('mbm-ex');
+  animation.to(cursor, {
+    duration: 1,
+    width: scaleTo + 'rem',
+    height: scaleTo + 'rem',
+    ease: 'power4.out',
+  });
+};
+export const cursorButtonOut = () => {
+  const animation = gsap.timeline();
+  animation.to(cursor, { duration: 1, width: '0.75rem', height: '0.75rem', ease: 'power4.out' });
+  cursor.classList.remove('mbm-ex');
 };

@@ -1,4 +1,6 @@
 import { cursorGlobal } from '$components/cursor';
+import { cursorButton } from '$components/cursor';
+import { footer } from '$components/footer';
 import { menu } from '$components/nav';
 import { menuTransition } from '$motion/navMotion';
 import { about } from '$pages/about';
@@ -18,8 +20,13 @@ window.Webflow.push(() => {
   // ---------------
   menu();
   menuTransition();
+
   smoothScroll();
+
   cursorGlobal();
+  cursorButton();
+
+  footer();
 
   // ---------------
   // Page Routing

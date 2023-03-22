@@ -1,8 +1,9 @@
+// eslint-disable-next-line simple-import-sort/imports
+import { cursorButtonIn, cursorButtonOut } from '$motion/cursorMotion';
 import { gsap } from 'gsap';
 
+const cursor = document.querySelector('.cursor_component') as HTMLElement;
 export const cursorGlobal = () => {
-  const cursor = document.querySelector('.cursor_component') as HTMLElement;
-
   gsap.set(cursor, { xPercent: -50, yPercent: -50 });
 
   const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
@@ -12,7 +13,9 @@ export const cursorGlobal = () => {
   const xSet = gsap.quickSetter(cursor, 'x', 'px');
   const ySet = gsap.quickSetter(cursor, 'y', 'px');
 
+  // console.log(window);
   window.addEventListener('mousemove', (e) => {
+    // console.log('e');
     mouse.x = e.x;
     mouse.y = e.y;
   });
@@ -25,4 +28,21 @@ export const cursorGlobal = () => {
     xSet(pos.x);
     ySet(pos.y);
   });
+};
+
+export const cursorButton = () => {
+  const buttons = [...document.querySelectorAll('.button')];
+
+  for (let i = 0; i < buttons.length; i++) {
+    const buttonTemp = buttons[i] as HTMLElement;
+
+    buttonTemp.addEventListener('mouseenter', (e) => {
+      // console.log('button enter');
+      cursorButtonIn(1.5);
+    });
+    buttonTemp.addEventListener('mouseleave', (e) => {
+      // console.log('button leave');
+      cursorButtonOut();
+    });
+  }
 };
