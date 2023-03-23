@@ -1,9 +1,4 @@
-import {
-  cursorArrowReveal,
-  cursorArrowYMovement,
-  cursorButtonIn,
-  cursorButtonOut,
-} from '$motion/cursorMotion';
+import { cursorArrowReveal, cursorArrowYMovement } from '$motion/cursorMotion';
 import {
   menuLinkHoverIn,
   menuLinkHoverOut,
@@ -16,22 +11,6 @@ export const menu = () => {
   const menuButton = document.querySelector('#navMenuButton') as HTMLElement;
   const menuOpenAnimation = menuMotionOpen();
   const menuCloseAnimation = menuMotionClose();
-
-  // Nav UI Hover Effects
-  // --------------------
-  const navBrand = document.querySelector('.nav-ui_brand-link') as HTMLElement;
-  const navMenuButton = document.querySelector('.nav-ui_menu-link') as HTMLElement;
-  const triggerElements = [navBrand, navMenuButton];
-
-  for (const item in triggerElements) {
-    const temp = triggerElements[item] as HTMLElement;
-    temp.addEventListener('mouseenter', () => {
-      cursorButtonIn(1.5);
-    });
-    temp.addEventListener('mouseleave', () => {
-      cursorButtonOut();
-    });
-  }
 
   // Menu Open/Close
   // --------------

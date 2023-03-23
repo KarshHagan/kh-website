@@ -1,5 +1,5 @@
 import { cursorGlobal } from '$components/cursor';
-import { cursorButton } from '$components/cursor';
+import { cursorGlobalButton } from '$components/cursor';
 import { footer } from '$components/footer';
 import { menu } from '$components/nav';
 import { menuTransition } from '$motion/navMotion';
@@ -24,7 +24,7 @@ window.Webflow.push(() => {
   smoothScroll();
 
   cursorGlobal();
-  cursorButton();
+  cursorGlobalButton();
 
   footer();
 

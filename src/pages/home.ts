@@ -1,10 +1,12 @@
 import { featuredWork } from '$components/featuredWork';
+import { services } from '$components/services';
 import { heroHide, heroScroll, heroZText } from '$motion/homeHeroScroll';
 
 export const home = () => {
   // ---------------
   // Page Globals
   // ---------------
+  console.log('home');
 
   // Fixed Header
   // const headerElement = document.querySelector('#homeHero') as HTMLElement;
@@ -19,4 +21,8 @@ export const home = () => {
   // Featured Work
   // -------------
   featuredWork();
+
+  // Services
+  // -------------
+  services();
 };

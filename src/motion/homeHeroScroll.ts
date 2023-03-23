@@ -73,10 +73,9 @@ export const heroHide = () => {
   const heroBG = document.querySelector('.home-hero_bg-compnent');
   const heroBGText = document.querySelector('.bg-text_track');
   const heroScrollIcon = document.querySelector('#heroScrollIndicator');
+  const heroTexture = document.querySelector('.home-hero_texture');
 
-  animation.to(heroBG, { display: 'none' });
-  animation.to(heroBGText, { display: 'none' });
-  animation.to(heroScrollIcon, { display: 'none' });
+  animation.to([heroBG, heroBGText, heroScrollIcon, heroTexture], { display: 'none' });
 };
 
 export const heroZText = () => {

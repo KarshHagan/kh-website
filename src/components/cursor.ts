@@ -30,17 +30,19 @@ export const cursorGlobal = () => {
   });
 };
 
-export const cursorButton = () => {
-  const buttons = [...document.querySelectorAll('.button')];
+export const cursorGlobalButton = () => {
+  const buttons = [...document.querySelectorAll('[data-hover-scale]')];
 
   for (let i = 0; i < buttons.length; i++) {
     const buttonTemp = buttons[i] as HTMLElement;
+    const tempScale = Number(buttonTemp.dataset.hoverScale);
+    // console.log(buttonTemp.dataset.hoverScale);
 
-    buttonTemp.addEventListener('mouseenter', (e) => {
+    buttonTemp.addEventListener('mouseenter', () => {
       // console.log('button enter');
-      cursorButtonIn(1.5);
+      cursorButtonIn(tempScale);
     });
-    buttonTemp.addEventListener('mouseleave', (e) => {
+    buttonTemp.addEventListener('mouseleave', () => {
       // console.log('button leave');
       cursorButtonOut();
     });

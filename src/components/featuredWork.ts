@@ -3,14 +3,11 @@ import {
   cursorArrowSliderChange,
   cursorArrowSliderReset,
   cursorArrowYMovement,
-  cursorButtonIn,
-  cursorButtonOut,
 } from '$motion/cursorMotion';
 import {
   initSlider,
   showNext,
   showPrev,
-  textYMovement,
   viewMoreHoverIn,
   viewMoreHoverOut,
 } from '$motion/featuredWorkMotion';
@@ -19,8 +16,8 @@ export const featuredWork = () => {
   const featuredWrap = document.querySelector('.home-featured_cursor-wrap') as HTMLElement;
   const wrapperWidth = featuredWrap.offsetWidth;
 
-  // Cursor Effects
-  // --------------
+  // SLider Cursor Effects
+  // ---------------------
   let curCursorType = 'next';
   const cursorReveal = cursorArrowReveal();
   featuredWrap.addEventListener('mouseenter', (e) => {
@@ -42,9 +39,7 @@ export const featuredWork = () => {
   featuredWrap.addEventListener('mousemove', (e) => {
     const mouseX = e.pageX;
     const mouseYMovement = e.movementY;
-    // console.log(mouseYMovement);
 
-    // console.log('mouse', mouseYMovement);
     cursorArrowYMovement(curCursorType, mouseYMovement);
 
     if (mouseX <= wrapperWidth / 2) {
@@ -103,12 +98,10 @@ export const featuredWork = () => {
 
   largeTextLink.addEventListener('mouseenter', (e) => {
     const target = e.target as HTMLElement;
-    cursorButtonIn(2.5);
     viewMoreHoverIn(target);
   });
   largeTextLink.addEventListener('mouseleave', (e) => {
     const target = e.target as HTMLElement;
-    cursorButtonOut();
     viewMoreHoverOut(target);
   });
 };
