@@ -1,5 +1,4 @@
 import {
-  cursorArrowReveal,
   cursorArrowSliderChange,
   cursorArrowSliderReset,
   cursorArrowYMovement,
@@ -19,9 +18,9 @@ export const featuredWork = () => {
   // SLider Cursor Effects
   // ---------------------
   let curCursorType = 'next';
-  const cursorReveal = cursorArrowReveal();
+  // const cursorReveal = cursorArrowReveal();
   featuredWrap.addEventListener('mouseenter', (e) => {
-    cursorReveal.play();
+    // cursorReveal.play();
     const mouseX = e.pageX;
 
     if (mouseX <= wrapperWidth / 2) {
@@ -32,7 +31,6 @@ export const featuredWork = () => {
     cursorArrowSliderChange(curCursorType);
   });
   featuredWrap.addEventListener('mouseleave', () => {
-    cursorReveal.reverse();
     cursorArrowSliderReset();
   });
 

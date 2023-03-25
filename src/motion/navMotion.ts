@@ -19,6 +19,26 @@ const lenisContainer = document.querySelector('html');
 const menuOpenSplit = new SplitText('#menuText', { type: 'words,chars' });
 const menuCloseSplit = new SplitText('#menuCloseText', { type: 'words,chars' });
 
+export const menuInit = (page: string) => {
+  const hasFurtherIndex = page.substring(1);
+
+  const navMenuText = [...document.querySelectorAll('.nav-ui_menu-text')];
+  const navMenuIcon = [...document.querySelectorAll('.nav-ui_icon-span')];
+  const navBrand = [...document.querySelectorAll('.nav-ui_brand-image')];
+
+  let setTransition = 'default';
+
+  if (hasFurtherIndex === '') {
+    setTransition = 'bgContent';
+    gsap.set(navBrand[0], { opacity: 0 });
+    gsap.set(navBrand[1], { opacity: 1 });
+    gsap.set(navMenuIcon, { backgroundColor: '#EEEBE6' });
+    gsap.set(navMenuText, { color: '#EEEBE6' });
+  }
+
+  menuTransition(setTransition);
+};
+
 export const menuMotionOpen = () => {
   const animation = gsap.timeline({ paused: true });
   animation.set(lenisContainer, { height: '100%' });
@@ -185,7 +205,7 @@ export const menuLinkHoverOut = (curLink: HTMLElement) => {
   curLink.classList.add('text-stroke-white');
 };
 
-export const menuTransition = () => {
+export const menuTransition = (type: string) => {
   const navBG = document.querySelector('.nav-ui_bg-container');
   const navBrand = [...document.querySelectorAll('.nav-ui_brand-image')];
   const navMenuText = [...document.querySelectorAll('.nav-ui_menu-text')];
@@ -201,9 +221,13 @@ export const menuTransition = () => {
       // markers: true,
     },
   });
-  animation.to(navBG, { opacity: 1, ease: 'expo.inOut' });
-  animation.to(navBrand[0], { opacity: 0, ease: 'expo.inOut' }, '<');
-  animation.to(navBrand[1], { opacity: 1, ease: 'expo.inOut' }, '<');
-  animation.to(navMenuText, { color: '#EC2543' }, '<');
-  animation.to(navMenuIcon, { backgroundColor: '#EC2543' }, '<');
+  if (type === 'default') {
+    animation.to(navBG, { opacity: 1, ease: 'power4.ouut' });
+  } else {
+    animation.to(navBG, { opacity: 1, ease: 'power4.ouut' });
+    animation.to(navBrand[1], { opacity: 0, ease: 'power4.out' }, '<');
+    animation.to(navBrand[0], { opacity: 1, ease: 'power4.out' }, '<');
+    animation.to(navMenuText, { color: '#EC2543' }, '<');
+    animation.to(navMenuIcon, { backgroundColor: '#EC2543' }, '<');
+  }
 };

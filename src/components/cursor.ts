@@ -31,20 +31,21 @@ export const cursorGlobal = () => {
 };
 
 export const cursorGlobalButton = () => {
-  const buttons = [...document.querySelectorAll('[data-hover-scale]')];
+  const cursorAreas = [...document.querySelectorAll('[data-hover-scale]')];
 
-  for (let i = 0; i < buttons.length; i++) {
-    const buttonTemp = buttons[i] as HTMLElement;
-    const tempScale = Number(buttonTemp.dataset.hoverScale);
-    // console.log(buttonTemp.dataset.hoverScale);
+  for (let i = 0; i < cursorAreas.length; i++) {
+    const area = cursorAreas[i] as HTMLElement;
+    const scale = Number(area.dataset.hoverScale);
+    const icon = area.dataset.hoverIcon as string;
+    // console.log(icon);
 
-    buttonTemp.addEventListener('mouseenter', () => {
+    area.addEventListener('mouseenter', () => {
       // console.log('button enter');
-      cursorButtonIn(tempScale);
+      cursorButtonIn(scale, icon);
     });
-    buttonTemp.addEventListener('mouseleave', () => {
+    area.addEventListener('mouseleave', () => {
       // console.log('button leave');
-      cursorButtonOut();
+      cursorButtonOut(icon);
     });
   }
 };

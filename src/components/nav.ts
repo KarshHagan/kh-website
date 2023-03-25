@@ -1,5 +1,6 @@
-import { cursorArrowReveal, cursorArrowYMovement } from '$motion/cursorMotion';
+import { cursorArrowYMovement } from '$motion/cursorMotion';
 import {
+  menuInit,
   menuLinkHoverIn,
   menuLinkHoverOut,
   menuMotionClose,
@@ -7,10 +8,13 @@ import {
 } from '$motion/navMotion';
 
 export const menu = () => {
+  const windowLocation = window.location.pathname as string;
   const navMenu = document.querySelector('#navMenu') as HTMLElement;
   const menuButton = document.querySelector('#navMenuButton') as HTMLElement;
   const menuOpenAnimation = menuMotionOpen();
   const menuCloseAnimation = menuMotionClose();
+
+  menuInit(windowLocation);
 
   // Menu Open/Close
   // --------------
@@ -28,19 +32,16 @@ export const menu = () => {
   // Menu link hover effects
   // -----------------------
   const navLinks = [...document.querySelectorAll('.nav_link')];
-  const revealAnimation = cursorArrowReveal();
 
   for (let i = 0; i < navLinks.length; i++) {
     const linkTemp = navLinks[i] as HTMLElement;
     linkTemp.addEventListener('mouseenter', (e) => {
       const enterLink = e.target as HTMLElement;
       menuLinkHoverIn(enterLink);
-      revealAnimation.play();
     });
     linkTemp.addEventListener('mouseleave', (e) => {
       const leftLink = e.target as HTMLElement;
       menuLinkHoverOut(leftLink);
-      revealAnimation.reverse();
     });
   }
   navMenu.addEventListener('mousemove', (e) => {

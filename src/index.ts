@@ -2,7 +2,6 @@ import { cursorGlobal } from '$components/cursor';
 import { cursorGlobalButton } from '$components/cursor';
 import { footer } from '$components/footer';
 import { menu } from '$components/nav';
-import { menuTransition } from '$motion/navMotion';
 import { about } from '$pages/about';
 import { caseOverview } from '$pages/caseOverview';
 import { caseTemplate } from '$pages/caseTemplate';
@@ -15,11 +14,12 @@ window.Webflow ||= [];
 window.Webflow.push(() => {
   console.log('/// kh ///');
 
+  const windowLocation = window.location.pathname as string;
+
   // ---------------
   // Site Globals
   // ---------------
   menu();
-  menuTransition();
 
   smoothScroll();
 
@@ -31,7 +31,6 @@ window.Webflow.push(() => {
   // ---------------
   // Page Routing
   // ---------------
-  const windowLocation = window.location.pathname as string;
 
   if (windowLocation === '/') {
     home();
