@@ -1,11 +1,12 @@
 import { cursorArrowSliderChange, cursorArrowYMovement } from '$motion/cursorMotion';
 import {
-  initSlider,
-  showNext,
-  showPrev,
+  initSliderContent,
+  showNextContent,
+  showPrevContent,
   viewMoreHoverIn,
   viewMoreHoverOut,
 } from '$motion/featuredWorkMotion';
+import { initSliderImages, showNextImage } from '$motion/mediaSliderMotion';
 
 export const featuredWork = () => {
   const featuredWrap = document.querySelector('.home-featured_cursor-wrap') as HTMLElement;
@@ -14,9 +15,7 @@ export const featuredWork = () => {
   // SLider Cursor Effects
   // ---------------------
   let curCursorType = 'next';
-  // const cursorReveal = cursorArrowReveal();
   featuredWrap.addEventListener('mouseenter', (e) => {
-    // cursorReveal.play();
     const mouseX = e.pageX;
 
     if (mouseX <= wrapperWidth / 2) {
@@ -58,7 +57,8 @@ export const featuredWork = () => {
   let curIndex = 0;
   let prevIndex = 0;
   const countIndex = [...document.querySelectorAll('.home-featured_image-item')].length;
-  initSlider();
+  initSliderContent();
+  initSliderImages();
 
   featuredWrap.addEventListener('click', (e) => {
     const clickX = e.pageX;
@@ -69,7 +69,8 @@ export const featuredWork = () => {
       if (curIndex < 0) {
         curIndex = countIndex - 1;
       }
-      showPrev(curIndex, prevIndex);
+      showNextImage(curIndex, prevIndex);
+      showPrevContent(curIndex, prevIndex);
     } else {
       curIndex += 1;
       prevIndex = curIndex - 1;
@@ -77,7 +78,8 @@ export const featuredWork = () => {
       if (curIndex > countIndex - 1) {
         curIndex = 0;
       }
-      showNext(curIndex, prevIndex);
+      showNextImage(curIndex, prevIndex);
+      showNextContent(curIndex, prevIndex);
     }
   });
 

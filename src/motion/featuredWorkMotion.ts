@@ -13,28 +13,24 @@ const pDescriptions = [...document.querySelectorAll('.home-featured_description'
 pDescriptions.reverse();
 const pButtons = [...document.querySelectorAll('.home-featured_button')];
 pButtons.reverse();
-const pImages = [...document.querySelectorAll('.home-featured_image')];
-pImages.reverse();
 
-export const initSlider = () => {
+export const initSliderContent = () => {
   for (let i = 0; i < pItems.length; i++) {
     const titleTemp = pTitles[i] as HTMLElement;
     const numberTemp = pNumbers[i] as HTMLElement;
     const descTemp = pDescriptions[i] as HTMLElement;
     const buttonTemp = pButtons[i] as HTMLElement;
-    const imageTemp = pImages[i] as HTMLElement;
+
     numberTemp.innerHTML = '0' + (i + 1);
     if (i > 0) {
       gsap.set([titleTemp, numberTemp], { y: '100%' });
       gsap.set(descTemp, { opacity: 0 });
       gsap.set(buttonTemp, { display: 'none' });
-      gsap.set(imageTemp, { x: '-100%' });
     }
   }
 };
 
-export const showNext = (curItem: number, prevItem: number) => {
-  // console.log('shown next', curItem, prevItem);
+export const showNextContent = (curItem: number, prevItem: number) => {
   const moveCurTitle = pTitles[curItem] as HTMLElement;
   const movePrevTitle = pTitles[prevItem] as HTMLElement;
   const moveCurNumber = pNumbers[curItem] as HTMLElement;
@@ -47,38 +43,23 @@ export const showNext = (curItem: number, prevItem: number) => {
   const infoAnimation = gsap.timeline();
   infoAnimation.to(
     [moveCurTitle, moveCurNumber],
-    { duration: 0.8, y: '0%', ease: 'expo.inOut' },
+    { duration: 0.6, y: '0%', ease: 'expo.inOut' },
     '<'
   );
   infoAnimation.to(
     [movePrevTitle, movePrevNumber],
-    {
-      duration: 0.8,
-      y: '-100%',
-      ease: 'expo.inOut',
-    },
+    { duration: 0.6, y: '-100%', ease: 'expo.inOut' },
     '<'
   );
-  infoAnimation.to(movePrevDescription, { duration: 1, opacity: 0, ease: 'power4.out' }, '<');
-  infoAnimation.to(moveCurDescription, { duration: 1, opacity: 1, ease: 'power4.out' }, '<0.5');
-  infoAnimation.set(movePrevButton, { duration: 0, display: 'none' }, '<');
-  infoAnimation.set(moveCurButton, { duration: 0, display: 'flex' }, '<');
+  infoAnimation.to(movePrevDescription, { duration: 0.6, opacity: 0, ease: 'power4.out' }, '<');
+  infoAnimation.to(moveCurDescription, { duration: 0.6, opacity: 1, ease: 'power4.out' }, '<');
 
+  infoAnimation.set(movePrevButton, { display: 'none' });
+  infoAnimation.set(moveCurButton, { display: 'flex' });
   infoAnimation.set([movePrevTitle, movePrevNumber], { y: '100%' });
-
-  const curImage = pImages[curItem];
-  const prevImage = pImages[prevItem];
-
-  const imageAnimation = gsap.timeline();
-  imageAnimation.set(curImage, { zIndex: 1 });
-  imageAnimation.set(prevImage, { zIndex: 0 });
-  imageAnimation.to(curImage, { duration: 1, x: '0%', ease: 'expo.inOut' });
-  imageAnimation.to(prevImage, { duration: 1, ease: 'expo.inOut' }, '<');
-  imageAnimation.set(prevImage, { x: '-100%' });
 };
 
-export const showPrev = (curItem: number, prevItem: number) => {
-  // console.log('shown prev', curItem, prevItem);
+export const showPrevContent = (curItem: number, prevItem: number) => {
   const moveCurTitle = pTitles[curItem] as HTMLElement;
   const movePrevTitle = pTitles[prevItem] as HTMLElement;
   const moveCurNumber = pNumbers[curItem] as HTMLElement;
@@ -91,34 +72,24 @@ export const showPrev = (curItem: number, prevItem: number) => {
   const infoAnimation = gsap.timeline();
   infoAnimation.to(
     [moveCurTitle, moveCurNumber],
-    { duration: 1, y: '0%', ease: 'expo.inOut' },
+    { duration: 0.6, y: '0%', ease: 'expo.inOut' },
     '<'
   );
   infoAnimation.to(
     [movePrevTitle, movePrevNumber],
     {
-      duration: 1,
+      duration: 0.6,
       y: '-100%',
       ease: 'expo.inOut',
     },
     '<'
   );
-  infoAnimation.to(movePrevDescription, { duration: 1, opacity: 0, ease: 'power4.out' }, '<0.5');
-  infoAnimation.to(moveCurDescription, { duration: 1, opacity: 1, ease: 'power4.out' }, '<');
-  infoAnimation.set(movePrevButton, { duration: 0, display: 'none' }, '<');
-  infoAnimation.set(moveCurButton, { duration: 0, display: 'flex' }, '<');
+  infoAnimation.to(movePrevDescription, { duration: 0.6, opacity: 0, ease: 'power4.out' }, '<0.5');
+  infoAnimation.to(moveCurDescription, { duration: 0.6, opacity: 1, ease: 'power4.out' }, '<');
 
   infoAnimation.set([movePrevTitle, movePrevNumber], { y: '100%' });
-
-  const curImage = pImages[curItem];
-  const prevImage = pImages[prevItem];
-
-  const imageAnimation = gsap.timeline();
-  imageAnimation.set(curImage, { zIndex: 1 });
-  imageAnimation.set(prevImage, { zIndex: 0 });
-  imageAnimation.to(curImage, { duration: 1, x: '0%', ease: 'expo.inOut' });
-  imageAnimation.to(prevImage, { duration: 1, ease: 'expo.inOut' }, '<');
-  imageAnimation.set(prevImage, { x: '-100%' });
+  infoAnimation.set(movePrevButton, { duration: 0, display: 'none' });
+  infoAnimation.set(moveCurButton, { duration: 0, display: 'flex' });
 };
 
 export const textYMovement = (movement: number) => {

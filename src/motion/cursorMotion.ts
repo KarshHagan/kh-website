@@ -50,7 +50,7 @@ export const cursorIconRevealOut = (icon: HTMLElement) => {
     '<0.2'
   );
 
-  // cursorIconReset();
+  cursorIconReset();
 };
 
 export const cursorIconReset = () => {

@@ -1,5 +1,4 @@
-import { showNext } from '$motion/featuredWorkMotion';
-import { initSliderImages } from '$motion/mediaSliderMotion';
+import { initSliderImages, showNextImage, showPrevImage } from '$motion/mediaSliderMotion';
 
 export const mediaSlider = () => {
   let curIndex = 0;
@@ -12,14 +11,22 @@ export const mediaSlider = () => {
   const nextControl = sliderControls[1] as HTMLElement;
 
   nextControl.addEventListener('click', () => {
-    console.log('next');
+    // console.log('next');
     curIndex += 1;
     prevIndex = curIndex - 1;
 
     if (curIndex > countIndex - 1) {
       curIndex = 0;
     }
-    // showNext(curIndex, prevIndex);
+    showNextImage(curIndex, prevIndex);
   });
-  console.log(sliderControls);
+
+  prevControl.addEventListener('click', () => {
+    curIndex -= 1;
+    prevIndex = curIndex + 1;
+    if (curIndex < 0) {
+      curIndex = countIndex - 1;
+    }
+    showPrevImage(curIndex, prevIndex);
+  });
 };
