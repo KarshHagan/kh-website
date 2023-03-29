@@ -8,7 +8,7 @@ export const initSliderImages = () => {
 
   const checkSliderType = sliderImages[0] as HTMLElement;
   if (checkSliderType.dataset.sliderImage === 'featured') {
-    useImages.reverse();
+    // useImages.reverse();
   }
 
   for (let i = 0; i < useImages.length; i++) {

@@ -4,15 +4,15 @@ import { SplitText } from 'gsap/SplitText';
 gsap.registerPlugin(SplitText);
 
 const pItems = [...document.querySelectorAll('.home-featured_image-item')];
-pItems.reverse();
+// pItems.reverse();
 const pTitles = [...document.querySelectorAll('.home-featured_title')];
-pTitles.reverse();
+// pTitles.reverse();
 const pNumbers = [...document.querySelectorAll('.home-featured_number')];
-pNumbers.reverse();
+// pNumbers.reverse();
 const pDescriptions = [...document.querySelectorAll('.home-featured_description')];
-pDescriptions.reverse();
+// pDescriptions.reverse();
 const pButtons = [...document.querySelectorAll('.home-featured_button')];
-pButtons.reverse();
+// pButtons.reverse();
 
 export const initSliderContent = () => {
   for (let i = 0; i < pItems.length; i++) {

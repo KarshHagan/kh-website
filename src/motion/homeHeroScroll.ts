@@ -1,37 +1,39 @@
 import { gsap } from 'gsap';
 
 export const heroScroll = () => {
-  const homeHero = document.querySelector('.section_home-hero');
-  const homeHeroScrolled = document.querySelector('.home-hero_scrolled');
-  const heroBg = document.querySelector('.home-hero_bg-mask');
+  const maskedComponent = document.querySelector('.home-hero_masked-component');
+  const scrolledComponent = document.querySelector('.home-hero_scrolled');
+  const heroMainComponent = document.querySelector('.home-hero_main-component');
+  const maskElement = document.querySelector('.home-hero_bg-mask');
   const heroScrollIcon = document.querySelector('#heroScrollIndicator');
   const heroImageText = document.querySelector('.home-hero_text-track');
   const heroBGText = document.querySelector('.bg-text_track');
 
   const animation = gsap.timeline({
     scrollTrigger: {
-      trigger: homeHero,
+      trigger: maskedComponent,
       start: '10% top',
-      end: '60% top',
-      // markers: true,
+      end: '100% top',
+      markers: true,
       toggleActions: 'play none none reverse',
       scrub: 1,
     },
   });
 
-  animation.to(heroBg, {
+  animation.to(maskElement, {
     width: '40%',
     height: '80%',
     borderRadius: '100vw 100vw 12rem 12rem',
   });
+  animation.to(heroMainComponent, { opacity: 0, y: '-2rem', ease: 'power4.out' }, '<');
   animation.to(heroImageText, { opacity: 1 }, '<0.3');
 
   const indicatorAnimation = gsap.timeline({
     scrollTrigger: {
-      trigger: homeHero,
-      start: '40% top',
-      end: '40% top',
-      // markers: true,
+      trigger: scrolledComponent,
+      start: 'top top',
+      end: 'top top',
+      markers: true,
       toggleActions: 'play none none reverse',
       // scrub: 1,
     },
@@ -46,7 +48,7 @@ export const heroScroll = () => {
 
   const textScrollAniamtion = gsap.timeline({
     scrollTrigger: {
-      trigger: homeHeroScrolled,
+      trigger: scrolledComponent,
       start: 'top top',
       end: 'bottom top',
       // markers: true,
@@ -70,7 +72,7 @@ export const heroHide = () => {
     },
   });
 
-  const heroBG = document.querySelector('.home-hero_bg-compnent');
+  const heroBG = document.querySelector('.home-hero_masked-component');
   const heroBGText = document.querySelector('.bg-text_track');
   const heroScrollIcon = document.querySelector('#heroScrollIndicator');
   const heroTexture = document.querySelector('.home-hero_texture');

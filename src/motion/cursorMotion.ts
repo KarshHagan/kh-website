@@ -54,7 +54,6 @@ export const cursorIconRevealOut = (icon: HTMLElement) => {
 };
 
 export const cursorIconReset = () => {
-  console.log('resetting icons');
   const cursorImages = [...document.querySelectorAll('.cursor_image')];
   const animation = gsap.timeline();
   animation.to(cursor, { delay: 0.6, duration: 0, rotate: '0deg' });
