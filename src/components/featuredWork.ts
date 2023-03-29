@@ -1,8 +1,4 @@
-import {
-  cursorArrowSliderChange,
-  cursorArrowYMovement,
-  cursorIconReset,
-} from '$motion/cursorMotion';
+import { cursorArrowSliderChange, cursorArrowYMovement } from '$motion/cursorMotion';
 import {
   initSlider,
   showNext,

@@ -39,7 +39,7 @@ export const cursorIconRevealIn = (icon: HTMLElement) => {
 };
 export const cursorIconRevealOut = (icon: HTMLElement) => {
   const animation = gsap.timeline();
-  // animation.to(icon, { opacity: 0, display: 'none' });
+  animation.to(icon, { opacity: 0, display: 'none' });
   animation.to(
     cursor,
     {
@@ -50,10 +50,11 @@ export const cursorIconRevealOut = (icon: HTMLElement) => {
     '<0.2'
   );
 
-  cursorIconReset();
+  // cursorIconReset();
 };
 
 export const cursorIconReset = () => {
+  console.log('resetting icons');
   const cursorImages = [...document.querySelectorAll('.cursor_image')];
   const animation = gsap.timeline();
   animation.to(cursor, { delay: 0.6, duration: 0, rotate: '0deg' });
