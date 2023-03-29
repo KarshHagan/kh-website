@@ -1,3 +1,4 @@
+// import { cursorArrowYMovement } from '$motion/cursorMotion';
 import { cursorArrowYMovement } from '$motion/cursorMotion';
 import {
   menuInit,
@@ -48,6 +49,6 @@ export const menu = () => {
     const curCursorType = 'next';
     const mouseY = e.movementY;
 
-    cursorArrowYMovement(curCursorType, mouseY);
+    cursorArrowYMovement('default', mouseY);
   });
 };

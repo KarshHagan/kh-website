@@ -1,9 +1,10 @@
 // eslint-disable-next-line simple-import-sort/imports
-import { cursorButtonIn, cursorButtonOut } from '$motion/cursorMotion';
+import { cursorRevealIn, cursorRevealOut } from '$motion/cursorMotion';
+import { getVideoState } from './videoPlayer';
 import { gsap } from 'gsap';
 
 const cursor = document.querySelector('.cursor_component') as HTMLElement;
-export const cursorGlobal = () => {
+export const cursorMovement = () => {
   gsap.set(cursor, { xPercent: -50, yPercent: -50 });
 
   const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
@@ -30,22 +31,37 @@ export const cursorGlobal = () => {
   });
 };
 
-export const cursorGlobalButton = () => {
+export const cursorHover = () => {
   const cursorAreas = [...document.querySelectorAll('[data-hover-scale]')];
-
   for (let i = 0; i < cursorAreas.length; i++) {
     const area = cursorAreas[i] as HTMLElement;
     const scale = Number(area.dataset.hoverScale);
-    const icon = area.dataset.hoverIcon as string;
-    // console.log(icon);
+    const iconType = area.dataset.hoverIcon as string;
 
     area.addEventListener('mouseenter', () => {
-      // console.log('button enter');
-      cursorButtonIn(scale, icon);
+      const areaIcon = getAreaIcon(iconType) as HTMLElement;
+      cursorRevealIn(scale, areaIcon);
     });
     area.addEventListener('mouseleave', () => {
-      // console.log('button leave');
-      cursorButtonOut(icon);
+      const areaIcon = getAreaIcon(iconType) as HTMLElement;
+      cursorRevealOut(areaIcon);
     });
+  }
+
+  function getAreaIcon(type: string) {
+    const cursorImages = [...document.querySelectorAll('.cursor_image')];
+    let returnIcon;
+    if (type === 'arrow') {
+      returnIcon = cursorImages[0] as HTMLElement;
+    }
+    if (type === 'media') {
+      const isPaused = getVideoState();
+      if (isPaused) {
+        returnIcon = cursorImages[2] as HTMLElement;
+      } else {
+        returnIcon = cursorImages[1] as HTMLElement;
+      }
+    }
+    return returnIcon;
   }
 };

@@ -1,7 +1,7 @@
 import {
   cursorArrowSliderChange,
-  cursorArrowSliderReset,
   cursorArrowYMovement,
+  cursorIconReset,
 } from '$motion/cursorMotion';
 import {
   initSlider,
@@ -31,28 +31,30 @@ export const featuredWork = () => {
     cursorArrowSliderChange(curCursorType);
   });
   featuredWrap.addEventListener('mouseleave', () => {
-    cursorArrowSliderReset();
+    // cursorIconReset();
   });
 
   featuredWrap.addEventListener('mousemove', (e) => {
     const mouseX = e.pageX;
     const mouseYMovement = e.movementY;
-
-    cursorArrowYMovement(curCursorType, mouseYMovement);
+    let setCursor = 'default';
+    // cursorArrowYMovement(curCursorType, mouseYMovement);
 
     if (mouseX <= wrapperWidth / 2) {
-      const setCursor = 'prev';
+      setCursor = 'rotate';
       if (setCursor !== curCursorType) {
         curCursorType = setCursor;
         cursorArrowSliderChange(curCursorType);
       }
     } else {
-      const setCursor = 'next';
+      const setCursor = 'default';
       if (setCursor !== curCursorType) {
         curCursorType = setCursor;
         cursorArrowSliderChange(curCursorType);
       }
     }
+
+    cursorArrowYMovement(setCursor, mouseYMovement);
   });
 
   // Content Slider
@@ -85,10 +87,10 @@ export const featuredWork = () => {
 
   // BG Text
   // --------------
-  window.addEventListener('wheel', (e) => {
-    // console.log(e.deltaY * 0.2);
-    // textYMovement(e.deltaY);
-  });
+  // window.addEventListener('wheel', (e) => {
+  //   console.log(e.deltaY * 0.2);
+  //   textYMovement(e.deltaY);
+  // });
 
   // View More
   // --------------
