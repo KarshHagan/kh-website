@@ -8,6 +8,7 @@ import { caseTemplate } from '$pages/caseTemplate';
 import { home } from '$pages/home';
 import { news } from '$pages/news';
 import { newsTemplate } from '$pages/newsTemplate';
+import { inertiaMovement } from '$utils/intertiaMovement';
 import { smoothScroll } from '$utils/smoothScroll';
 
 window.Webflow ||= [];
@@ -22,6 +23,7 @@ window.Webflow.push(() => {
   menu();
 
   smoothScroll();
+  inertiaMovement();
 
   cursorMovement();
   cursorHover();

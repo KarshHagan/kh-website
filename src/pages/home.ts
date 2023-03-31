@@ -1,6 +1,14 @@
 import { featuredWork } from '$components/featuredWork';
 import { services } from '$components/services';
-import { heroHide, heroScroll, heroZText } from '$motion/homeHeroScroll';
+import {
+  featuredReveal,
+  featuredTextMovement,
+  heroHide,
+  heroScroll,
+  heroZText,
+  overviewReveal,
+  servicesReveal,
+} from '$motion/homeMotion';
 
 export const home = () => {
   // ---------------
@@ -18,11 +26,16 @@ export const home = () => {
   heroHide();
   heroZText();
 
+  overviewReveal();
+
   // Featured Work
   // -------------
+  featuredTextMovement();
+  featuredReveal();
   featuredWork();
 
   // Services
   // -------------
+  servicesReveal();
   services();
 };
