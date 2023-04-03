@@ -185,7 +185,7 @@ export const overviewReveal = () => {
   animation.from(overviewText, { duration: 1, y: '1rem', opacity: 0, ease: 'power4.out' }, '<');
   animation.from(
     overviewStamp,
-    { duration: 1, opacity: 0, rotate: '-4deg', ease: 'power4.inOut' },
+    { duration: 1, opacity: 0, scale: 1.2, rotate: '-2deg', ease: 'power4.out' },
     '<'
   );
 };

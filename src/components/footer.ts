@@ -5,10 +5,8 @@ export const footer = () => {
   const footerCornerFix = 5 * 16;
   const footerHeight = footerElement.clientHeight;
 
-  //   console.log(footerHeight);
   footerSpacer.style.height = footerHeight - footerCornerFix + 'px';
 
-  //   console.log(footerHeight - footerCornerFix);
-
-  //   console.log('height', footerHeight, footerElement, footerSpacer);
+  // const footerText = document.querySelector('.')
+  // const animation = gsap.timeline();
 };
