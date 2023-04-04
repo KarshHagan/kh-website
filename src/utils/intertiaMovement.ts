@@ -5,7 +5,7 @@ gsap.registerPlugin(InertiaPlugin);
 
 export const inertiaMovement = () => {
   const scrollSections = [...document.querySelectorAll('[data-scroll-section]')];
-  console.log('sections', scrollSections);
+  // console.log('sections', scrollSections);
 
   for (const i in scrollSections) {
     const tempSection = scrollSections[i] as HTMLElement;

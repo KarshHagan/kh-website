@@ -4,6 +4,7 @@ import { getVideoState } from './videoPlayer';
 import { gsap } from 'gsap';
 
 const cursor = document.querySelector('.cursor_component') as HTMLElement;
+
 export const cursorMovement = () => {
   gsap.set(cursor, { xPercent: -50, yPercent: -50 });
 
@@ -14,7 +15,21 @@ export const cursorMovement = () => {
   const xSet = gsap.quickSetter(cursor, 'x', 'px');
   const ySet = gsap.quickSetter(cursor, 'y', 'px');
 
-  // console.log(window);
+  const windowLocation = window.location.pathname as string;
+  const hasIndex = windowLocation.substring(1);
+
+  console.log('index:', hasIndex);
+  if (hasIndex === '') {
+    const heroScroll = document.querySelector('#splineEmbed') as HTMLIFrameElement;
+    console.log(heroScroll);
+    heroScroll.addEventListener('mousemove', (e) => {
+      console.log('here');
+      // console.log('e');
+      mouse.x = e.x;
+      mouse.y = e.y;
+    });
+  }
+
   window.addEventListener('mousemove', (e) => {
     // console.log('e');
     mouse.x = e.x;

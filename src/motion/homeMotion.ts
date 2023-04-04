@@ -2,7 +2,7 @@ import { gsap } from 'gsap';
 import { InertiaPlugin } from 'gsap/InertiaPlugin';
 import { SplitText } from 'gsap/SplitText';
 
-gsap.registerPlugin([SplitText, InertiaPlugin]);
+gsap.registerPlugin(SplitText, InertiaPlugin);
 
 export const heroScroll = () => {
   const maskedComponent = document.querySelector('.home-hero_masked-component');
@@ -196,8 +196,6 @@ export const featuredReveal = () => {
   const featuedContent = featuredSection.querySelector('.home-featured_info-item') as HTMLElement;
   const splitContent = [...featuedContent.childNodes];
 
-  // console.log(splitContent);
-
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: featuredSection,
@@ -223,8 +221,6 @@ export const servicesReveal = () => {
   const servicesImageMask = servicesSection.querySelector('.home-services_image-mask');
   const serviceItems = [...servicesSection.querySelectorAll('.home-services_item')];
 
-  // console.log('services', serviceItems);
-
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: servicesSection,
@@ -242,4 +238,48 @@ export const servicesReveal = () => {
     { duration: 1, y: '1rem', opacity: 0, stagger: { each: 0.2 }, ease: 'expo.out' },
     '<'
   );
+};
+
+// Our Focus
+export const focusReveal = () => {
+  const focusSection = document.querySelector('.section_home-agency') as HTMLElement;
+  const focusLabel = focusSection.querySelector('.module_label');
+  const focusText = focusSection.querySelector('h2');
+  const textSplit = new SplitText(focusText, { type: 'lines', linesClass: 'lineChild' });
+  const textSplitParent = new SplitText(focusText, {
+    type: 'lines',
+    linesClass: 'split-text_parent',
+  });
+  const focusParagraph = focusSection.querySelector('p');
+  const focusStamp = focusSection.querySelector('img');
+
+  console.log(focusText);
+
+  const animation = gsap.timeline({
+    scrollTrigger: {
+      trigger: focusSection,
+      start: 'top 50%',
+      end: 'top 50%',
+      markers: true,
+      toggleActions: 'play none none reverse',
+    },
+  });
+  animation.from(focusLabel, { y: '2rem', duration: 1, opacity: 0, ease: 'power4.out' });
+  animation.from(
+    textSplit.lines,
+    {
+      duration: 2,
+      y: '6rem',
+      opacity: 0,
+      stagger: { each: 0.1 },
+      ease: 'power4.inOut',
+    },
+    '<0.1'
+  );
+  animation.from(
+    focusParagraph,
+    { duration: 1, opacity: 0, y: '2rem', ease: 'power4.inOut' },
+    '<1.4'
+  );
+  animation.from(focusStamp, { duration: 1, scale: 1.4, opacity: 0, ease: 'expo.inOut' }, '<');
 };

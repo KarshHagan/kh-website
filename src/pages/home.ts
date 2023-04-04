@@ -3,6 +3,7 @@ import { services } from '$components/services';
 import {
   featuredReveal,
   featuredTextMovement,
+  focusReveal,
   heroHide,
   heroScroll,
   heroZText,
@@ -26,6 +27,8 @@ export const home = () => {
   heroHide();
   heroZText();
 
+  // Overview
+  // -------------
   overviewReveal();
 
   // Featured Work
@@ -35,7 +38,11 @@ export const home = () => {
   featuredWork();
 
   // Services
-  // -------------
+  // --------
   servicesReveal();
   services();
+
+  // Our Focus
+  // ---------
+  focusReveal();
 };
