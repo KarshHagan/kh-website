@@ -15,20 +15,16 @@ export const cursorMovement = () => {
   const xSet = gsap.quickSetter(cursor, 'x', 'px');
   const ySet = gsap.quickSetter(cursor, 'y', 'px');
 
-  const windowLocation = window.location.pathname as string;
-  const hasIndex = windowLocation.substring(1);
+  // const windowLocation = window.location.pathname as string;
+  // const hasIndex = windowLocation.substring(1);
 
-  console.log('index:', hasIndex);
-  if (hasIndex === '') {
-    const heroScroll = document.querySelector('#splineEmbed') as HTMLIFrameElement;
-    console.log(heroScroll);
-    heroScroll.addEventListener('mousemove', (e) => {
-      console.log('here');
-      // console.log('e');
-      mouse.x = e.x;
-      mouse.y = e.y;
-    });
-  }
+  // if (hasIndex === '') {
+  //   const heroScroll = document.querySelector('#splineEmbed') as HTMLIFrameElement;
+  //   heroScroll.addEventListener('mousemove', (e) => {
+  //     mouse.x = e.x;
+  //     mouse.y = e.y;
+  //   });
+  // }
 
   window.addEventListener('mousemove', (e) => {
     // console.log('e');
