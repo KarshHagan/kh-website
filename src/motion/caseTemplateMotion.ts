@@ -119,7 +119,7 @@ export const csStatsReveal = () => {
       trigger: statsSection,
       start: 'top 50%',
       end: 'top 50%',
-      markers: true,
+      // markers: true,
       toggleActions: 'play none none reverse',
     },
   });

@@ -99,10 +99,10 @@ export const caseScrollEffect = () => {
       end: 'bottom top',
       scrub: true,
       toggleActions: 'play none none reverse',
-      markers: {
-        startColor: 'yellow',
-        endColor: 'orange',
-      },
+      // markers: {
+      //   startColor: 'yellow',
+      //   endColor: 'orange',
+      // },
     },
   });
 

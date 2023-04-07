@@ -184,7 +184,7 @@ export const featuredReveal = () => {
       start: 'top 10%',
       end: 'top 10%',
       toggleActions: 'play none none reverse',
-      markers: { startColor: 'green', endColor: 'olive' },
+      // markers: { startColor: 'green', endColor: 'olive' },
     },
   });
   animation.from(splitContent, {

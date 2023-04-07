@@ -12,7 +12,7 @@ export const horizontalScrollText = () => {
         trigger: tempSection,
         start: 'top bottom',
         end: 'bottom -200%',
-        markers: { startColor: 'pink', endColor: 'purple' },
+        // markers: { startColor: 'pink', endColor: 'purple' },
         scrub: true,
       },
     });
