@@ -1,4 +1,6 @@
+import { abAwardsReveal, abClientsReveal, abPageReveal, abTeamReveal } from '$motion/aboutMotion';
 import { fixedHeader } from '$motion/fixedHeader';
+import { horizontalScrollText } from '$utils/horizontalScrollText';
 
 export const about = () => {
   // ---------------
@@ -8,4 +10,20 @@ export const about = () => {
   // Fixed Header
   const headerElement = document.querySelector('#fixedHeader') as HTMLElement;
   fixedHeader(headerElement);
+
+  // Hero
+  abPageReveal();
+
+  // Clients
+  abClientsReveal();
+
+  // Team
+  abTeamReveal();
+
+  // Media
+  // mediaSliderTextMovement();
+  horizontalScrollText();
+
+  // Awwards
+  abAwardsReveal();
 };

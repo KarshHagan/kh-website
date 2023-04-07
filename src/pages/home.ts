@@ -2,7 +2,6 @@ import { featuredWork } from '$components/featuredWork';
 import { services } from '$components/services';
 import {
   featuredReveal,
-  featuredTextMovement,
   focusReveal,
   heroHide,
   heroScroll,
@@ -10,6 +9,7 @@ import {
   overviewReveal,
   servicesReveal,
 } from '$motion/homeMotion';
+import { horizontalScrollText } from '$utils/horizontalScrollText';
 
 export const home = () => {
   // ---------------
@@ -22,27 +22,22 @@ export const home = () => {
   // fixedHeader(headerElement);
 
   // Hero
-  // -------------
   heroScroll();
   heroHide();
   heroZText();
 
   // Overview
-  // -------------
   overviewReveal();
 
   // Featured Work
-  // -------------
-  featuredTextMovement();
+  horizontalScrollText();
   featuredReveal();
   featuredWork();
 
   // Services
-  // --------
   servicesReveal();
   services();
 
   // Our Focus
-  // ---------
   focusReveal();
 };

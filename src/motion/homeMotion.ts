@@ -126,26 +126,6 @@ export const heroZText = () => {
   // .to(midChildren, { duration: textSpeed, x: -textMovement, ease: 'linear' });
 };
 
-// Featured BG Text Movement
-// -------------------------
-export const featuredTextMovement = () => {
-  const featuredSection = document.querySelector('.section_home-featured') as HTMLElement;
-  const featuredText = [...featuredSection.querySelectorAll('.home-featured_float-text')];
-
-  const animation = gsap.timeline({
-    scrollTrigger: {
-      trigger: featuredSection,
-      start: 'top bottom',
-      end: 'bottom -50%',
-      // markers: { startColor: 'pink', endColor: 'purple' },
-      scrub: true,
-    },
-  });
-  animation.to(featuredText[0], { inertia: { x: { velocity: -300 } } });
-  animation.to(featuredText[1], { inertia: { x: { velocity: -300 } }, ease: 'power4.out' }, '<');
-  // console.log('featurted', featuredSection);
-};
-
 // -----------------
 // REVEAL ANIMATIONS
 // -----------------
@@ -195,14 +175,16 @@ export const featuredReveal = () => {
   const featuredSection = document.querySelector('.section_home-featured') as HTMLElement;
   const featuedContent = featuredSection.querySelector('.home-featured_info-item') as HTMLElement;
   const splitContent = [...featuedContent.childNodes];
+  const revealContainer = featuredSection.querySelector('.home-featured_reveal-wrap');
 
+  gsap.set(revealContainer, { y: 0 });
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: featuredSection,
       start: 'top 10%',
       end: 'top 10%',
       toggleActions: 'play none none reverse',
-      // markers: { startColor: 'green', endColor: 'olive' },
+      markers: { startColor: 'green', endColor: 'olive' },
     },
   });
   animation.from(splitContent, {
@@ -211,6 +193,7 @@ export const featuredReveal = () => {
     stagger: { each: 0.2 },
     ease: 'power4.out',
   });
+  animation.to(revealContainer, { duration: 1, y: '-100%', ease: 'expo.out' }, '<');
 };
 
 // Services
@@ -253,14 +236,12 @@ export const focusReveal = () => {
   const focusParagraph = focusSection.querySelector('p');
   const focusStamp = focusSection.querySelector('img');
 
-  console.log(focusText);
-
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: focusSection,
       start: 'top 50%',
       end: 'top 50%',
-      markers: true,
+      // markers: true,
       toggleActions: 'play none none reverse',
     },
   });
@@ -268,11 +249,11 @@ export const focusReveal = () => {
   animation.from(
     textSplit.lines,
     {
-      duration: 2,
-      y: '6rem',
+      duration: 1,
+      y: '4rem',
       opacity: 0,
       stagger: { each: 0.1 },
-      ease: 'power4.inOut',
+      ease: 'power4.out',
     },
     '<0.1'
   );

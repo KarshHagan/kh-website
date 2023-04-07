@@ -15,33 +15,24 @@ export const inertiaMovement = () => {
     const animation = gsap.timeline({
       scrollTrigger: {
         trigger: tempSection,
-        start: 'top top',
+        start: 'top 50%',
         end: 'bottom top',
         scrub: true,
-        // markers: {
-        //   startColor: 'yellow',
-        //   endColor: 'orange',
-        //   //   fontSize: '18px',
-        //   //   fontWeight: 'bold',
-        //   //   indent: 20,
-        // },
+        toggleActions: 'play none none reverse',
+        markers: {
+          startColor: 'yellow',
+          endColor: 'orange',
+        },
       },
     });
 
-    tempSection.addEventListener('wheel', (e) => {
-      //   console.log(e.pageY);
-      //   setSpeed = e.deltaY;
+    for (const j in scrollElements) {
+      const tempElement = scrollElements[j] as HTMLElement;
+      const elementSpeed = Number(tempElement.dataset.scrollSpeed);
+      const setSpeed = elementSpeed;
+      // console.log('temp', tempElement);
 
-      for (const j in scrollElements) {
-        const tempElement = scrollElements[j] as HTMLElement;
-        const elementSpeed = Number(tempElement.dataset.scrollSpeed);
-        const setSpeed = elementSpeed;
-        // console.log('temp', setSpeed);
-
-        animation.to(tempElement, { inertia: { y: setSpeed } });
-      }
-    });
+      animation.to(tempElement, { yPercent: setSpeed * 5, ease: 'none' }, '<');
+    }
   }
-
-  //   console.log(scrollSection);
 };
