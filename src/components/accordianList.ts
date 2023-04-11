@@ -1,14 +1,14 @@
 import {
-  initServices,
-  serviceClose,
-  serviceImageHover,
-  serviceOpen,
-  servicesHoverIn,
-  servicesHoverOut,
-} from '$motion/servicesMotion';
+  accordianClose,
+  accordianHoverIn,
+  accordianHoverOut,
+  accordianImageHover,
+  accordianOpen,
+  initAccordian,
+} from '$motion/accordianMotion';
 
-export const services = () => {
-  initServices();
+export const accordianList = () => {
+  initAccordian();
 
   // Set service number
   // ------------------
@@ -30,9 +30,9 @@ export const services = () => {
     temp.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
       if (isOpen === false) {
-        serviceOpen(target);
+        accordianOpen(target);
       } else if (isOpen === true) {
-        serviceClose(target);
+        accordianClose(target);
       }
 
       isOpen = !isOpen;
@@ -43,13 +43,13 @@ export const services = () => {
       const target = e.target as HTMLElement;
       const curService = target.children[0].children[0].innerHTML;
       const changeImage = getImage(curService);
-      servicesHoverIn(changeImage);
+      accordianHoverIn(changeImage);
     });
     temp.addEventListener('mouseleave', (e) => {
       const target = e.target as HTMLElement;
       const curService = target.children[0].children[0].innerHTML;
       const changeImage = getImage(curService);
-      servicesHoverOut(changeImage);
+      accordianHoverOut(changeImage);
     });
 
     function getImage(service: string) {
@@ -70,6 +70,6 @@ export const services = () => {
   // --------------------
   const servicesContainer = document.querySelector('.section_home-services') as HTMLElement;
   servicesContainer.addEventListener('mousemove', (e) => {
-    serviceImageHover(e.clientX, e.clientY);
+    accordianImageHover(e.clientX, e.clientY);
   });
 };

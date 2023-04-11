@@ -3,6 +3,8 @@ import { gsap } from 'gsap';
 export const horizontalScrollText = () => {
   const scrollSections = [...document.querySelectorAll('[data-scroll-text-wrap]')];
 
+  // console.log('HERE', scrollSections);
+
   for (const i in scrollSections) {
     const tempSection = scrollSections[i] as HTMLElement;
     const textElement = [...tempSection.querySelectorAll('[data-scroll-text]')];

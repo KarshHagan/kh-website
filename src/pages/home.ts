@@ -1,5 +1,5 @@
+import { accordianList } from '$components/accordianList';
 import { featuredWork } from '$components/featuredWork';
-import { services } from '$components/services';
 import {
   featuredReveal,
   focusReveal,
@@ -36,7 +36,7 @@ export const home = () => {
 
   // Services
   servicesReveal();
-  services();
+  accordianList();
 
   // Our Focus
   focusReveal();

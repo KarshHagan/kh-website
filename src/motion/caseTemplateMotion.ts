@@ -81,11 +81,7 @@ export const csOverviewReveal = () => {
     ease: 'power4.inOut',
   });
 
-  animation.from(
-    overviewRichText,
-    { duration: 1, y: '2rem', opacity: 0, ease: 'power4.inOut' },
-    '<'
-  );
+  animation.from(overviewRichText, { duration: 1, y: '2rem', opacity: 0, ease: 'expo.inOut' }, '<');
 };
 
 // Image Slider Reveal
