@@ -1,3 +1,4 @@
+import { careersFeed } from '$components/careersFeed';
 import { careersOverviewReveal, careersPageReveal, mediaGridReveal } from '$motion/careersMotion';
 import { fixedHeader } from '$motion/fixedHeader';
 import { horizontalScrollText } from '$utils/horizontalScrollText';
@@ -18,7 +19,10 @@ export const careers = () => {
   //Overview
   careersOverviewReveal();
 
-  // Media Grid\
+  // Media Grid
   mediaGridReveal();
   horizontalScrollText();
+
+  // Careers Feed
+  careersFeed();
 };

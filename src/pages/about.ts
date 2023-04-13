@@ -1,3 +1,4 @@
+import { draggableSlider } from '$components/draggableSlider';
 import { abAwardsReveal, abClientsReveal, abPageReveal, abTeamReveal } from '$motion/aboutMotion';
 import { fixedHeader } from '$motion/fixedHeader';
 import { horizontalScrollText } from '$utils/horizontalScrollText';
@@ -18,6 +19,7 @@ export const about = () => {
   abClientsReveal();
 
   // Team
+  draggableSlider();
   abTeamReveal();
 
   // Media

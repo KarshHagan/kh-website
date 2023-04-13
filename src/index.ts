@@ -42,7 +42,7 @@ window.Webflow.push(() => {
     about();
   } else if (windowLocation.includes('/services')) {
     services();
-  } else if (windowLocation.includes('/careers')) {
+  } else if (windowLocation.includes('/jobs')) {
     careers();
   } else if (windowLocation.includes('/case-studies')) {
     const hasFurtherIndex = windowLocation.substring(13);
