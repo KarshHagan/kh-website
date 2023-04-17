@@ -21,9 +21,10 @@ export const abPageReveal = () => {
   const heroStamp = heroSection.querySelector('.about-header_stamp');
 
   const aboutOverline = aboutSecton.querySelector('.fixed-header_overline');
-  const aboutTitle = aboutSecton.querySelector('h2');
-  const aboutOverview = aboutSecton.querySelector('p');
+  const aboutTitle = aboutSecton.querySelector('p.text-size-large');
+  const aboutOverview = aboutSecton.querySelector('p.text-size-medium');
   const aboutImage = aboutSecton.querySelector('.about-hero_image');
+
   const animation = gsap.timeline({
     onComplete: () => {
       textSplitParent.revert();

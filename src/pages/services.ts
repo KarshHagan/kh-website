@@ -1,5 +1,9 @@
 import { fixedHeader } from '$motion/fixedHeader';
-import { serviceSectionReveal, servicesPageReveal } from '$motion/servicesMotion';
+import {
+  serviceSectionReveal,
+  servicesOverviewReveal,
+  servicesPageReveal,
+} from '$motion/servicesMotion';
 import { scrollToServices } from '$utils/scrollToService';
 
 export const services = () => {
@@ -18,5 +22,6 @@ export const services = () => {
   servicesPageReveal();
 
   // Services
+  servicesOverviewReveal();
   serviceSectionReveal();
 };

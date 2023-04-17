@@ -1,5 +1,10 @@
 // eslint-disable-next-line simple-import-sort/imports
-import { cursorRevealIn, cursorRevealOut } from '$motion/cursorMotion';
+import {
+  cursorIconRevealIn,
+  cursorIconRevealOut,
+  cursorRevealIn,
+  cursorRevealOut,
+} from '$motion/cursorMotion';
 import { getVideoState } from './videoPlayer';
 import { gsap } from 'gsap';
 
@@ -14,17 +19,6 @@ export const cursorMovement = () => {
 
   const xSet = gsap.quickSetter(cursor, 'x', 'px');
   const ySet = gsap.quickSetter(cursor, 'y', 'px');
-
-  // const windowLocation = window.location.pathname as string;
-  // const hasIndex = windowLocation.substring(1);
-
-  // if (hasIndex === '') {
-  //   const heroScroll = document.querySelector('#splineEmbed') as HTMLIFrameElement;
-  //   heroScroll.addEventListener('mousemove', (e) => {
-  //     mouse.x = e.x;
-  //     mouse.y = e.y;
-  //   });
-  // }
 
   window.addEventListener('mousemove', (e) => {
     // console.log('e');
@@ -48,14 +42,23 @@ export const cursorHover = () => {
     const area = cursorAreas[i] as HTMLElement;
     const scale = Number(area.dataset.hoverScale);
     const iconType = area.dataset.hoverIcon as string;
+    // console.log(area);
 
     area.addEventListener('mouseenter', () => {
-      const areaIcon = getAreaIcon(iconType) as HTMLElement;
-      cursorRevealIn(scale, areaIcon);
+      if (iconType === undefined) {
+        cursorRevealIn(scale);
+      } else {
+        const areaIcon = getAreaIcon(iconType) as HTMLElement;
+        cursorIconRevealIn(scale, areaIcon);
+      }
     });
     area.addEventListener('mouseleave', () => {
-      const areaIcon = getAreaIcon(iconType) as HTMLElement;
-      cursorRevealOut(areaIcon);
+      if (iconType === undefined) {
+        cursorRevealOut();
+      } else {
+        const areaIcon = getAreaIcon(iconType) as HTMLElement;
+        cursorIconRevealOut(areaIcon);
+      }
     });
   }
 
@@ -72,6 +75,9 @@ export const cursorHover = () => {
       } else {
         returnIcon = cursorImages[1] as HTMLElement;
       }
+    }
+    if (type === 'drag') {
+      returnIcon = cursorImages[3] as HTMLElement;
     }
     return returnIcon;
   }

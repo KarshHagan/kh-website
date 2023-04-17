@@ -23,8 +23,7 @@ export const initSliderContent = () => {
 
     numberTemp.innerHTML = '0' + (i + 1);
     if (i > 0) {
-      gsap.set([titleTemp, numberTemp], { y: '100%' });
-      gsap.set(descTemp, { opacity: 0 });
+      gsap.set([titleTemp, numberTemp, descTemp], { y: '100%', opacity: 0 });
       gsap.set(buttonTemp, { display: 'none' });
     }
   }
@@ -42,21 +41,29 @@ export const showNextContent = (curItem: number, prevItem: number) => {
 
   const infoAnimation = gsap.timeline();
   infoAnimation.to(
-    [moveCurTitle, moveCurNumber],
-    { duration: 0.6, y: '0%', ease: 'expo.inOut' },
+    [moveCurTitle, moveCurNumber, moveCurDescription],
+    { duration: 0.6, y: '0%', opacity: 1, ease: 'power4.inOut' },
     '<'
   );
   infoAnimation.to(
-    [movePrevTitle, movePrevNumber],
-    { duration: 0.6, y: '-100%', ease: 'expo.inOut' },
+    [movePrevTitle, movePrevNumber, movePrevDescription],
+    { duration: 0.6, y: '-100%', opacity: 0, ease: 'power4.inOut' },
     '<'
   );
-  infoAnimation.to(movePrevDescription, { duration: 0.6, opacity: 0, ease: 'power4.out' }, '<');
-  infoAnimation.to(moveCurDescription, { duration: 0.6, opacity: 1, ease: 'power4.out' }, '<');
+  // infoAnimation.to(
+  //   movePrevDescription,
+  //   { duration: 0.6, y: '-100%', opacity: 0, ease: 'expo.inOut' },
+  //   '<'
+  // );
+  // infoAnimation.to(
+  //   moveCurDescription,
+  //   { duration: 0.6, y: '0%', opacity: 1, ease: 'expo.inOut' },
+  //   '<0.2'
+  // );
 
   infoAnimation.set(movePrevButton, { display: 'none' });
   infoAnimation.set(moveCurButton, { display: 'flex' });
-  infoAnimation.set([movePrevTitle, movePrevNumber], { y: '100%' });
+  infoAnimation.set([movePrevTitle, movePrevNumber, movePrevDescription], { y: '100%' });
 };
 
 export const showPrevContent = (curItem: number, prevItem: number) => {

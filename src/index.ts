@@ -7,8 +7,8 @@ import { careers } from '$pages/careers';
 import { caseOverview } from '$pages/caseOverview';
 import { caseTemplate } from '$pages/caseTemplate';
 import { home } from '$pages/home';
-import { news } from '$pages/news';
-import { newsTemplate } from '$pages/newsTemplate';
+import { insights } from '$pages/insights';
+import { insightsTemplate } from '$pages/insightsTemplate';
 import { services } from '$pages/services';
 import { inertiaMovement } from '$utils/intertiaMovement';
 import { smoothScroll } from '$utils/smoothScroll';
@@ -51,12 +51,12 @@ window.Webflow.push(() => {
     } else {
       caseTemplate();
     }
-  } else if (windowLocation.includes('/news')) {
+  } else if (windowLocation.includes('/insights')) {
     const hasFurtherIndex = windowLocation.substring(14);
     if (hasFurtherIndex === '') {
-      news();
+      insights();
     } else {
-      newsTemplate();
+      insightsTemplate();
     }
   }
 });

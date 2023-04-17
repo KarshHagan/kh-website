@@ -1,4 +1,5 @@
 import { caseScrollEffect, csoPageReveal } from '$motion/caseOverviewMotion';
+import { cursorArrowYMovement } from '$motion/cursorMotion';
 import { fixedHeader } from '$motion/fixedHeader';
 import { filterContent } from '$utils/filterContent';
 
@@ -21,4 +22,12 @@ export const caseOverview = () => {
 
   // Page Scrolling
   caseScrollEffect();
+
+  // Cursor Y Scroll
+  const workGrid = document.querySelector('.work-grid_wrapper') as HTMLElement;
+  workGrid.addEventListener('mousemove', (e) => {
+    const mouseYMovement = e.movementY;
+    const setCursor = 'default';
+    cursorArrowYMovement(setCursor, mouseYMovement);
+  });
 };

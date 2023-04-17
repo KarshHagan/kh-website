@@ -3,12 +3,8 @@ import { gsap } from 'gsap';
 
 const cursor = document.querySelector('.cursor_component') as HTMLElement;
 
-export const cursorRevealIn = (scaleTo: number, icon: HTMLElement) => {
-  if (icon !== undefined) {
-    cursorIconRevealIn(icon);
-  } else {
-    cursor.classList.add('mbm-ex');
-  }
+export const cursorRevealIn = (scaleTo: number) => {
+  cursor.classList.add('mbm-ex');
 
   const animation = gsap.timeline();
   animation.to(cursor, {
@@ -18,20 +14,18 @@ export const cursorRevealIn = (scaleTo: number, icon: HTMLElement) => {
   });
 };
 
-export const cursorRevealOut = (icon: HTMLElement) => {
-  if (icon !== undefined) {
-    cursorIconRevealOut(icon);
-  }
-
+export const cursorRevealOut = () => {
+  cursor.classList.remove('mbm-ex');
   const animation = gsap.timeline();
   animation.to(cursor, { width: '0.75rem', height: '0.75rem', ease: 'power4.out' });
-  cursor.classList.remove('mbm-ex');
 };
 
-export const cursorIconRevealIn = (icon: HTMLElement) => {
+export const cursorIconRevealIn = (scaleTo: number, icon: HTMLElement) => {
   const animation = gsap.timeline();
   animation.to(cursor, {
     padding: '1rem',
+    width: scaleTo + 'rem',
+    height: scaleTo + 'rem',
     backgroundColor: '#4C9A8C',
     ease: 'power4.out',
   });
@@ -45,18 +39,20 @@ export const cursorIconRevealOut = (icon: HTMLElement) => {
     {
       padding: '0rem',
       backgroundColor: '#F09F43',
+      width: '0.75rem',
+      height: '0.75rem',
       ease: 'power4.out',
     },
     '<0.2'
   );
 
-  cursorIconReset();
+  // cursorIconReset();
 };
 
 export const cursorIconReset = () => {
   const cursorImages = [...document.querySelectorAll('.cursor_image')];
   const animation = gsap.timeline();
-  animation.to(cursor, { delay: 0.6, duration: 0, rotate: '0deg' });
+  animation.to(cursor, { duration: 0, rotate: '0deg' });
   for (const i in cursorImages) {
     const temp = cursorImages[i] as HTMLElement;
     animation.set(temp, { opacity: 0, display: 'none' });
