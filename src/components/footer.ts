@@ -1,22 +1,32 @@
-import { gsap } from 'gsap';
+// import { generateHubspotJSON } from '$utils/generateHubspotJSON';
+import { footerTextMovement } from '$motion/footerMotion';
+import { generateHubspotJSON } from '$utils/generateHubspotJSON';
+import { postContactData } from '$utils/postContactForm';
 
 export const footer = () => {
+  // Footer Spacer Sizing
+  // --------------------
   const footerElement = document.querySelector('.footer_component') as HTMLElement;
   const footerSpacer = document.querySelector('.section_footer-spacer') as HTMLElement;
 
-  const footerCornerFix = 5 * 16;
+  const footerCornerFix = 4 * 16;
   const footerHeight = footerElement.clientHeight;
 
   footerSpacer.style.height = footerHeight - footerCornerFix + 'px';
 
-  const footerText = document.querySelector('.footer_large-text');
+  // Footer Text Movement
+  // --------------------
+  footerTextMovement();
 
-  const textSpeed = 60;
-  const textMovement = 400;
-  const animation = gsap.timeline({ repeat: -1, yoyo: true });
-  animation.fromTo(
-    footerText,
-    { duration: textSpeed, x: -textMovement + '%', ease: 'linear' },
-    { duration: textSpeed, x: 0 + '%', ease: 'linear' }
-  );
+  // Footer Form
+  // -----------
+  const footerForm = document.querySelector('.footer_form') as HTMLElement;
+  footerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const target = e.target as HTMLFormElement;
+    const formData = new FormData(target);
+
+    const formattedData = generateHubspotJSON(formData, target);
+    postContactData(formattedData, target);
+  });
 };

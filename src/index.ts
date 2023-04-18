@@ -6,6 +6,7 @@ import { about } from '$pages/about';
 import { careers } from '$pages/careers';
 import { caseOverview } from '$pages/caseOverview';
 import { caseTemplate } from '$pages/caseTemplate';
+import { contact } from '$pages/contact';
 import { home } from '$pages/home';
 import { insights } from '$pages/insights';
 import { insightsTemplate } from '$pages/insightsTemplate';
@@ -58,5 +59,7 @@ window.Webflow.push(() => {
     } else {
       insightsTemplate();
     }
+  } else if (windowLocation.includes('/contact')) {
+    contact();
   }
 });

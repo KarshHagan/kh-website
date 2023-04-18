@@ -20,6 +20,7 @@
     "@finsweet/eslint-config": "^2.0.1",
     "@finsweet/tsconfig": "^1.2.0",
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",
+    "@types/jquery": "^3.5.16",
     "@types/locomotive-scroll": "^4.1.0",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
