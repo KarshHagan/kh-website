@@ -11,6 +11,7 @@ import { home } from '$pages/home';
 import { insights } from '$pages/insights';
 import { insightsTemplate } from '$pages/insightsTemplate';
 import { services } from '$pages/services';
+import { terms } from '$pages/terms';
 import { inertiaMovement } from '$utils/intertiaMovement';
 import { smoothScroll } from '$utils/smoothScroll';
 
@@ -61,5 +62,7 @@ window.Webflow.push(() => {
     }
   } else if (windowLocation.includes('/contact')) {
     contact();
+  } else if (windowLocation.includes('/terms')) {
+    terms();
   }
 });
