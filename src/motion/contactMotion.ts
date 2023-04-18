@@ -9,14 +9,14 @@ export const initContact = () => {
 
 export const linkHoverIn = (curNote: HTMLElement, curLink: HTMLElement) => {
   const animation = gsap.timeline();
-  animation.to(curLink, { color: '#D5CFC6', ease: 'expo.out' });
+  animation.to(curLink.children[0], { color: '#D5CFC6', ease: 'expo.out' });
   //   animation.to(curLink, { letterSpacing: '3px', ease: 'expo.out' }, '<');
   animation.to(curNote, { color: '#AFD8DB', ease: 'expo.inout' }, '<');
 };
 
 export const linkHoverOut = (curNote: HTMLElement, curLink: HTMLElement) => {
   const animation = gsap.timeline();
-  animation.to(curLink, { color: 'rgba(248,244,238,0)', ease: 'expo.out' });
+  animation.to(curLink.children[0], { color: 'rgba(248,244,238,0)', ease: 'expo.out' });
   //   animation.to(curLink, { letterSpacing: '0px', ease: 'expo.out' }, '<');
   animation.to(curNote, { color: 'rgb(238, 235, 230, .2)', ease: 'expo.out' }, '<');
 
