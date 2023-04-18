@@ -27,8 +27,19 @@ export const filterContent = () => {
           renderUpdate(renderQueue);
           updateInitialCheckbox(initialFilter, 'hide');
         }
+
+        if (filterText === 'All') {
+          console.log('all clicked', filterCheckboxes);
+
+          activeFilters = [];
+          renderQueue = masterList;
+          renderUpdate(renderQueue);
+          allReset();
+        }
       } else {
         clickedSpan.style.color = '#EC2543';
+
+        console.log('no checked');
 
         if (filterText !== 'All') {
           const updatedFilters = activeFilters.filter((item) => item !== filterText);
@@ -88,5 +99,22 @@ function updateInitialCheckbox(initialFilter: Element, setState: string) {
     checkboxInput.checked = true;
     checkboxContainer.classList.add('w--redirected-checked');
     checkboxText.style.color = '#EEEBE6';
+  }
+}
+
+function allReset() {
+  const filterCheckboxes = [...document.querySelectorAll('[data-filter-checkbox]')];
+
+  for (let i = 0; i < filterCheckboxes.length; i++) {
+    const temp = filterCheckboxes[i] as HTMLInputElement;
+    const tempParent = temp.parentElement as HTMLElement;
+    const tempContainer = tempParent.children[0] as HTMLElement;
+    const tempText = tempParent.childNodes[2] as HTMLElement;
+
+    if (i !== 0) {
+      temp.checked = false;
+      tempContainer.classList.remove('w--redirected-checked');
+      tempText.style.color = '#EC2543';
+    }
   }
 }
