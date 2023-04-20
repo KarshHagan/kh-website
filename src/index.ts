@@ -10,6 +10,7 @@ import { contact } from '$pages/contact';
 import { home } from '$pages/home';
 import { insights } from '$pages/insights';
 import { insightsTemplate } from '$pages/insightsTemplate';
+import { peopleTemplate } from '$pages/peopleTemplate';
 import { services } from '$pages/services';
 import { terms } from '$pages/terms';
 import { inertiaMovement } from '$utils/intertiaMovement';
@@ -64,5 +65,7 @@ window.Webflow.push(() => {
     contact();
   } else if (windowLocation.includes('/terms')) {
     terms();
+  } else if (windowLocation.includes('/people')) {
+    peopleTemplate();
   }
 });

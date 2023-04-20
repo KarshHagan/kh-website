@@ -1,47 +1,47 @@
 export const generateHubspotJSON = (formData: FormData, target: HTMLFormElement) => {
-  const parsedFormData = [...formData.entries()].map((dataObject) => ({
-    name: dataObject[0],
-    value: dataObject[1],
-  }));
+  // const parsedFormData = [...formData.entries()].map((dataObject) => ({
+  //   name: dataObject[0],
+  //   value: dataObject[1],
+  // }));
 
-  console.log('PP', parsedFormData);
+  // console.log('PP', parsedFormData);
 
-  // const checkbox = target.querySelector('#newsletter_signup_checkbox') as HTMLElement;
-  // checkbox.classList.add('w-input');
+  const checkbox = target.querySelector('#newsletter_signup_checkbox') as HTMLElement;
+  checkbox.classList.add('w-input');
 
-  // const formInputs = [...target.querySelectorAll('.w-input')];
-  // const parsedFormData: { name: string; value: string }[] = [];
+  const formInputs = [...target.querySelectorAll('.w-input')];
+  const parsedFormData: { name: string; value: string }[] = [];
 
-  // for (let i = 0; i < formInputs.length; i++) {
-  //   // console.log(formInputs[i]);
-  //   const tempInput = formInputs[i] as HTMLInputElement;
+  for (let i = 0; i < formInputs.length; i++) {
+    // console.log(formInputs[i]);
+    const tempInput = formInputs[i] as HTMLInputElement;
 
-  //   if (tempInput.name === 'newsletter_signup_checkbox') {
-  //     const isChecked = tempInput.checked;
-  //     let setValue = '';
-  //     if (isChecked) {
-  //       setValue = 'true';
-  //     } else {
-  //       setValue = 'false';
-  //     }
+    if (tempInput.name === 'newsletter_signup_checkbox') {
+      const isChecked = tempInput.checked;
+      let setValue = '';
+      if (isChecked) {
+        setValue = 'true';
+      } else {
+        setValue = 'false';
+      }
 
-  //     const tempData = {
-  //       name: tempInput.name,
-  //       value: setValue,
-  //     };
+      const tempData = {
+        name: tempInput.name,
+        value: setValue,
+      };
 
-  //     parsedFormData.push(tempData);
-  //   } else {
-  //     const tempData = {
-  //       name: tempInput.name,
-  //       value: tempInput.value,
-  //     };
-  //     // console.log('temp', tempData);
-  //     parsedFormData.push(tempData);
-  //   }
-  // }
+      parsedFormData.push(tempData);
+    } else {
+      const tempData = {
+        name: tempInput.name,
+        value: tempInput.value,
+      };
+      // console.log('temp', tempData);
+      parsedFormData.push(tempData);
+    }
+  }
 
-  // console.log('parsed', parsedFormData);
+  console.log('parsed', parsedFormData);
 
   const goToWebinarWebinarKey = parsedFormData.find(
     (input) => input.name === 'goToWebinarWebinarKey'
@@ -72,9 +72,7 @@ export const generateHubspotJSON = (formData: FormData, target: HTMLFormElement)
     'sfdcCampaignId',
   ];
   const data = {
-    fields: parsedFormData.filter(
-      (item) => !ignoredFields.find((ignoredField) => item.name.includes(ignoredField))
-    ),
+    fields: parsedFormData,
     context: {
       pageUri: window.location.href,
       pageName: document.title,
