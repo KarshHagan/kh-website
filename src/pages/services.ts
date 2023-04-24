@@ -4,6 +4,7 @@ import {
   servicesOverviewReveal,
   servicesPageReveal,
 } from '$motion/servicesMotion';
+import { checkDeepLinks } from '$utils/scrollToDeepLink';
 import { scrollToServices } from '$utils/scrollToService';
 
 export const services = () => {
@@ -16,6 +17,7 @@ export const services = () => {
   const headerElement = document.querySelector('#fixedHeader') as HTMLElement;
   fixedHeader(headerElement);
 
+  checkDeepLinks();
   scrollToServices();
 
   // Hero

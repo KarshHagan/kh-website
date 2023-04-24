@@ -21,7 +21,7 @@ export const initSliderContent = () => {
     const descTemp = pDescriptions[i] as HTMLElement;
     const buttonTemp = pButtons[i] as HTMLElement;
 
-    console.log(titleTemp.parentElement);
+    // console.log(titleTemp.parentElement);
     numberTemp.innerHTML = '0' + (i + 1);
     if (i > 0) {
       gsap.set([titleTemp, numberTemp, descTemp], { y: '100%', opacity: 0 });

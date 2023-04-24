@@ -62,6 +62,17 @@ export const heroScroll = () => {
   });
   textScrollAniamtion.to(heroImageText, { rotate: '4deg' });
   textScrollAniamtion.to(heroBGText, { rotate: '4deg' }, '<');
+
+  // const cursorAnimation = gsap.timeline({
+  //   scrollTrigger: {
+  //     trigger: scrolledComponent,
+  //     start: 'top top',
+  //     end: 'bottom top',
+  //     markers: true,
+  //     toggleActions: 'play none none reverse',
+  //     scrub: 1,
+  //   },
+  // });
 };
 
 export const heroHide = () => {
@@ -139,17 +150,21 @@ export const overviewReveal = () => {
   const overviewStamp = overviewSection.querySelector('.text-left_image');
   const overviewTexture = overviewSection.querySelector('.home-overview_texture-overlay');
   const overviewLabel = overviewSection.querySelector('.module_label-container');
+  const cursor = document.querySelector('.cursor_component');
+
+  gsap.set(cursor, { opacity: 0 });
 
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: overviewSection,
       start: 'top 50%',
       end: 'top 50%',
-      // markers: true,
+      markers: true,
       toggleActions: 'play none none reverse',
     },
   });
   animation.from(overviewLabel, { y: '2rem', duration: 1, opacity: 0, ease: 'power4.inOut' });
+  animation.to(cursor, { opacity: 1, ease: 'power4.out' }, '<');
   animation.from(
     headerSplit.lines,
     {

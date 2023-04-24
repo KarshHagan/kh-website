@@ -10,6 +10,7 @@ import {
   servicesReveal,
 } from '$motion/homeMotion';
 import { horizontalScrollText } from '$utils/horizontalScrollText';
+import { setDeepLinks } from '$utils/scrollToDeepLink';
 
 export const home = () => {
   // ---------------
@@ -35,6 +36,7 @@ export const home = () => {
   featuredWork();
 
   // Services
+  setDeepLinks();
   servicesReveal();
   accordianList();
 

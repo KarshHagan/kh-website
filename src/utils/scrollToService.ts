@@ -14,6 +14,8 @@ export const scrollToServices = () => {
     sectionTag = sectionTag.split(' ')[0] as string;
 
     tempSection.id = sectionTag;
+
+    // console.log(tempSection);
   }
 
   for (const i in serviceLinks) {
@@ -22,8 +24,6 @@ export const scrollToServices = () => {
       const target = e.target as HTMLElement;
       let linkTag = target.innerHTML as string;
       linkTag = linkTag.split(' ')[0] as string;
-
-      const targetContainer = document.querySelector('#' + linkTag);
 
       gsap.to(window, {
         duration: 2,
