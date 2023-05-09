@@ -67,6 +67,7 @@ export const heroScroll = () => {
   animation.to(maskElement, {
     width: setWidth,
     height: setHeight,
+    bottom: 0,
     borderRadius: setCornerRadius,
     ease: 'linear',
   });
@@ -79,7 +80,7 @@ export const heroScroll = () => {
   if (device === 'tablet') {
     setIndicator = '-3rem';
   } else if (device === 'mobile') {
-    setIndicator = '-2rem';
+    setIndicator = '-3rem';
   }
   const indicatorAnimation = gsap.timeline({
     scrollTrigger: {
@@ -110,8 +111,8 @@ export const heroScroll = () => {
       scrub: 1,
     },
   });
-  textScrollAniamtion.to(heroImageText, { rotate: '4deg' });
-  textScrollAniamtion.to(heroBGText, { rotate: '4deg' }, '<');
+  textScrollAniamtion.to(heroImageText, { rotate: '4deg', scale: 1.05 });
+  textScrollAniamtion.to(heroBGText, { rotate: '4deg', scale: 1.05 }, '<');
 };
 
 // Hide Hero
@@ -140,8 +141,9 @@ export const heroHide = () => {
 // Hero Scrolled Text Movement
 // ---------------------------
 export const heroZText = () => {
-  const maskedTrack = document.querySelector('.home-hero_text-track') as HTMLElement;
-  const bgTrack = document.querySelector('.bg-text_track') as HTMLElement;
+  const heroSection = document.querySelector('.section_home-hero') as HTMLElement;
+  const maskedTrack = heroSection.querySelector('.home-hero_text-track') as HTMLElement;
+  const bgTrack = heroSection.querySelector('.bg-text_track') as HTMLElement;
 
   const maskedChildren = [...maskedTrack.childNodes];
   const bgChildren = [...bgTrack.childNodes];
@@ -162,21 +164,36 @@ export const heroZText = () => {
     }
   }
 
-  const textSpeed = 45;
-  const textMovement = 40;
-  const midAnimation = gsap.timeline({ repeat: -1, yoyo: true });
-  midAnimation.fromTo(
-    midChildren,
-    { duration: textSpeed, x: textMovement + '%', ease: 'linear' },
-    { duration: textSpeed, x: -textMovement + '%', ease: 'linear' }
-  );
+  const paddingGlobal = document.querySelector('.padding-global') as HTMLElement;
+  const paddingObject = window
+    .getComputedStyle(paddingGlobal, null)
+    .getPropertyValue('padding-left');
 
-  const outAnimation = gsap.timeline({ repeat: -1, yoyo: true });
-  outAnimation.fromTo(
-    outChildren,
-    { duration: textSpeed, x: -textMovement + '%', ease: 'linear' },
-    { duration: textSpeed, x: textMovement + '%', ease: 'linear' }
-  );
+  const paddingValue = parseInt(paddingObject);
+
+  const textWidth = bgTrack.scrollWidth;
+  const computedMovement = textWidth - textWidth / 3;
+
+  const textSpeed = 35;
+
+  const midAnimation = gsap.timeline({
+    onComplete: () => {
+      midAnimation.restart();
+    },
+  });
+  midAnimation.set(midChildren, { x: -computedMovement - paddingValue });
+  midAnimation.to(midChildren, { duration: textSpeed, x: 0, ease: 'linear' });
+
+  const outAnimation = gsap.timeline({
+    onComplete: () => {
+      outAnimation.restart();
+    },
+  });
+  outAnimation.to(outChildren, {
+    duration: textSpeed,
+    x: -computedMovement - paddingValue,
+    ease: 'linear',
+  });
 };
 
 // -----------------
@@ -184,8 +201,8 @@ export const heroZText = () => {
 // -----------------
 
 // Reveal global properties
-const scrollTriggerStart = 'top 70%';
-const scrollTriggerEnd = 'top 70%';
+let scrollTriggerStart = 'top 70%';
+let scrollTriggerEnd = 'top 70%';
 
 let setDuration = 2;
 let setYOffset = '4rem';
@@ -195,6 +212,8 @@ const device = getDeviceType();
 if (device === 'tablet' || device === 'mobile') {
   setDuration = 1;
   setYOffset = '1rem';
+  scrollTriggerStart = 'top 85%';
+  scrollTriggerEnd = 'top 85%';
 }
 
 // Overview Reveal
@@ -216,8 +235,8 @@ export const overviewReveal = () => {
       trigger: overviewSection,
       start: scrollTriggerStart,
       end: scrollTriggerEnd,
-      markers: true,
-      toggleActions: 'play none none reverse',
+      // markers: true,
+      // toggleActions: 'play none none reverse',
     },
     onComplete: () => {
       textSplitParent.revert();
@@ -265,7 +284,7 @@ export const featuredReveal = () => {
       trigger: featuredSection,
       start: 'top 10%',
       end: 'top 10%',
-      toggleActions: 'play none none reverse',
+      // toggleActions: 'play none none reverse',
       // markers: { startColor: 'green', endColor: 'olive' },
     },
   });
@@ -291,7 +310,7 @@ export const servicesReveal = () => {
       start: scrollTriggerStart,
       end: scrollTriggerEnd,
       // markers: true,
-      toggleActions: 'play none none reverse',
+      // toggleActions: 'play none none reverse',
     },
   });
   animation.from(servicesLabel, { duration: 2, opacity: 0, ease: 'power4.out' });
@@ -327,12 +346,12 @@ export const focusReveal = () => {
       start: scrollTriggerStart,
       end: scrollTriggerEnd,
       // markers: true,
-      toggleActions: 'play none none reverse',
+      // toggleActions: 'play none none reverse',
     },
-    // onComplete: () => {
-    //   // textSplitParent.revert();
-    //   textSplit.revert();
-    // },
+    onComplete: () => {
+      textSplitParent.revert();
+      textSplit.revert();
+    },
   });
   animation.from(focusLabel, { duration: 2, opacity: 0, ease: 'power4.out' });
   animation.from(
@@ -349,7 +368,7 @@ export const focusReveal = () => {
   animation.from(
     focusParagraph,
     { duration: 2, opacity: 0, y: '4rem', ease: 'power4.out' },
-    '<0.5'
+    '<0.4'
   );
-  animation.from(focusStamp, { duration: 1, scale: 1.2, opacity: 0, ease: 'power4.out' }, '<');
+  animation.from(focusStamp, { duration: 2, scale: 1.2, opacity: 0, ease: 'power4.out' }, '<');
 };
