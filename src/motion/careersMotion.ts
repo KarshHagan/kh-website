@@ -4,7 +4,7 @@ import { SplitText } from 'gsap/SplitText';
 gsap.registerPlugin(SplitText);
 
 export const careersPageReveal = () => {
-  const fixedHeaderSection = document.querySelector('.section_fixed-header') as HTMLElement;
+  const fixedHeaderSection = document.querySelector('.section_sticky-header') as HTMLElement;
   const heroSection = document.querySelector('.section_careers-hero') as HTMLElement;
 
   const headerTitle = fixedHeaderSection.querySelector('h1');

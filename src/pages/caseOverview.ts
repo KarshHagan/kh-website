@@ -1,18 +1,15 @@
+import { stickyHeader } from '$components/stickyHeader';
 import { caseScrollEffect, csoPageReveal } from '$motion/caseOverviewMotion';
 import { cursorArrowYMovement } from '$motion/cursorMotion';
-import { fixedHeader } from '$motion/fixedHeader';
 import { filterContent } from '$utils/filterContent';
 
 export const caseOverview = () => {
   // ---------------
   // Page Globals
   // ---------------
-
   console.log('overview');
 
-  // Fixed Header
-  const headerElement = document.querySelector('#fixedHeader') as HTMLElement;
-  fixedHeader(headerElement);
+  stickyHeader();
 
   // Page Reveal
   csoPageReveal();

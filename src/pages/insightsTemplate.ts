@@ -1,12 +1,9 @@
-import { fixedHeader } from '$motion/fixedHeader';
+import { stickyHeader } from '$components/stickyHeader';
 
 export const insightsTemplate = () => {
   // ---------------
   // Page Globals
   // ---------------
   console.log('insights template');
-
-  // Fixed Header
-  const headerElement = document.querySelector('#fixedHeader') as HTMLElement;
-  fixedHeader(headerElement);
+  stickyHeader();
 };

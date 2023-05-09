@@ -1,16 +1,13 @@
 import { draggableSlider } from '$components/draggableSlider';
+import { stickyHeader } from '$components/stickyHeader';
 import { abAwardsReveal, abClientsReveal, abPageReveal, abTeamReveal } from '$motion/aboutMotion';
-import { fixedHeader } from '$motion/fixedHeader';
 import { horizontalScrollText } from '$utils/horizontalScrollText';
 
 export const about = () => {
   // ---------------
   // Page Globals
   // ---------------
-
-  // Fixed Header
-  const headerElement = document.querySelector('#fixedHeader') as HTMLElement;
-  fixedHeader(headerElement);
+  stickyHeader();
 
   // Hero
   abPageReveal();

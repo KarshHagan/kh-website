@@ -19,8 +19,6 @@ const lenisContainer = document.querySelector('html');
 const menuOpen = document.querySelector('.nav-ui_menu-text.is-menu');
 const menuClose = document.querySelector('.nav-ui_menu-text.is-close');
 
-console.log(menuOpen, menuClose);
-
 export const menuInit = (page: string) => {
   const hasFurtherIndex = page.substring(1);
 

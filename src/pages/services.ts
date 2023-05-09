@@ -1,4 +1,4 @@
-import { fixedHeader } from '$motion/fixedHeader';
+import { stickyHeader } from '$components/stickyHeader';
 import {
   serviceSectionReveal,
   servicesOverviewReveal,
@@ -12,10 +12,7 @@ export const services = () => {
   // Page Globals
   // ---------------
   console.log('services');
-
-  // Fixed Header
-  const headerElement = document.querySelector('#fixedHeader') as HTMLElement;
-  fixedHeader(headerElement);
+  stickyHeader();
 
   checkDeepLinks();
   scrollToServices();

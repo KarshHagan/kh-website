@@ -1,9 +1,10 @@
 // eslint-disable-next-line simple-import-sort/imports
 import { getDeviceType } from '$utils/getDevice';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 
-gsap.registerPlugin(SplitText);
+gsap.registerPlugin(SplitText, ScrollTrigger);
 
 // -----------------
 // Reveal Animations
@@ -15,7 +16,7 @@ const scrollTriggerEnd = 'top 70%';
 
 // Hero Reveal
 export const abPageReveal = () => {
-  const heroSection = document.querySelector('.section_about-header') as HTMLElement;
+  const heroSection = document.querySelector('.section_sticky-header') as HTMLElement;
   const aboutSecton = document.querySelector('.section_about-hero') as HTMLElement;
 
   const heroTitle = heroSection.querySelector('h1');

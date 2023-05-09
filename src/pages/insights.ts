@@ -1,4 +1,4 @@
-import { fixedHeader } from '$motion/fixedHeader';
+import { stickyHeader } from '$components/stickyHeader';
 import { filterContent } from '$utils/filterContent';
 
 export const insights = () => {
@@ -6,10 +6,7 @@ export const insights = () => {
   // Page Globals
   // ---------------
   console.log('insights');
-
-  // Fixed Header
-  const headerElement = document.querySelector('#fixedHeader') as HTMLElement;
-  fixedHeader(headerElement);
+  stickyHeader();
 
   filterContent();
 };

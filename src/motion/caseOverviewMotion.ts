@@ -7,7 +7,7 @@ gsap.registerPlugin(SplitText); // -----------------
 
 // Page Reveal
 export const csoPageReveal = () => {
-  const fixedHeaderSection = document.querySelector('.section_fixed-header') as HTMLElement;
+  const fixedHeaderSection = document.querySelector('.section_sticky-header') as HTMLElement;
   const workSection = document.querySelector('.section_work') as HTMLElement;
 
   const headerTitle = fixedHeaderSection.querySelector('h1');

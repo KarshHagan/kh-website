@@ -7,7 +7,6 @@ import {
   csPageReveal,
   csStatsReveal,
 } from '$motion/caseTemplateMotion';
-import { fixedHeader } from '$motion/fixedHeader';
 import { horizontalScrollText } from '$utils/horizontalScrollText';
 
 export const caseTemplate = () => {
@@ -15,10 +14,6 @@ export const caseTemplate = () => {
   // Page Globals
   // ---------------
   console.log('case detail');
-
-  // Fixed Header
-  const headerElement = document.querySelector('#fixedHeader') as HTMLElement;
-  fixedHeader(headerElement);
 
   // Hero
   csPageReveal();
