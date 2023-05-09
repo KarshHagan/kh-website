@@ -16,8 +16,10 @@ const navBG = document.querySelector('.nav-ui_bg-container');
 
 const lenisContainer = document.querySelector('html');
 
-const menuOpenSplit = new SplitText('#menuText', { type: 'words,chars' });
-const menuCloseSplit = new SplitText('#menuCloseText', { type: 'words,chars' });
+const menuOpen = document.querySelector('.nav-ui_menu-text.is-menu');
+const menuClose = document.querySelector('.nav-ui_menu-text.is-close');
+
+console.log(menuOpen, menuClose);
 
 export const menuInit = (page: string) => {
   const hasFurtherIndex = page.substring(1);
@@ -42,15 +44,13 @@ export const menuInit = (page: string) => {
 export const menuMotionOpen = () => {
   const animation = gsap.timeline({ paused: true });
   animation.set(lenisContainer, { height: '100%' });
-  animation.to(navMenu, { display: 'block' });
+  animation.set(menuClose, { y: '100%' });
 
-  animation.to(menuOpenSplit.chars, { y: '-2rem', stagger: { each: 0.1 }, ease: 'power.out' }, '<');
-  animation.from(
-    menuCloseSplit.chars,
-    { y: '2rem', stagger: { each: 0.1 }, ease: 'power4.out' },
-    '<'
-  );
-  animation.to('#menuCloseText', { opacity: 1 }, '<');
+  animation.to(navMenu, { display: 'flex' });
+  animation.to(menuOpen, { duration: 1, y: '-100%', ease: 'power4.out' }, '<');
+  animation.to(menuClose, { duration: 1, y: '0%', opacity: 1, ease: 'power4.out' }, '<');
+
+  // animation.to('#menuCloseText', { opacity: 1 }, '<');
 
   animation.to(navIconSpans[0], { duration: 1.5, y: '3px', ease: 'expo.out' }, '<');
   animation.to(navIconSpans[1], { duration: 1.5, y: '-3px', ease: 'expo.out' }, '<');
@@ -76,12 +76,14 @@ export const menuMotionOpen = () => {
     navOverview,
     {
       duration: 0.6,
-      y: '100%',
+      y: '2rem',
       opacity: 0,
       ease: 'power3.out',
     },
     '<'
   );
+
+  animation.from(navInfoLinks, { duration: 0.6, y: '2rem', opacity: 0, ease: 'power3.out' }, '<');
 
   animation.from(
     navPageLinks,
@@ -93,12 +95,6 @@ export const menuMotionOpen = () => {
       ease: 'expo.out',
     },
     '<'
-  );
-
-  animation.from(
-    navInfoLinks,
-    { stagger: { each: 0.2 }, y: '100%', opacity: 0, ease: 'power3.out' },
-    '<0.2'
   );
 
   animation.from(navTexture, { duration: 1, opacity: 0, ease: 'power1.inOut' }, '<');
@@ -131,8 +127,8 @@ export const menuMotionClose = () => {
   animation.to(
     navInfoLinks,
     {
-      duration: 1,
-      y: '100%',
+      duration: 0.6,
+      y: '2rem',
       opacity: 0,
       ease: 'power3.out',
     },
@@ -142,8 +138,8 @@ export const menuMotionClose = () => {
   animation.to(
     navOverview,
     {
-      duration: 1,
-      y: '100%',
+      duration: 0.6,
+      y: '2rem',
       opacity: 0,
       ease: 'power3.out',
     },
@@ -174,12 +170,9 @@ export const menuMotionClose = () => {
 
   animation.to(navSpan, { duration: 0.4, width: '0%', ease: 'expo.inOut' }, '<');
 
-  animation.to(menuOpenSplit.chars, { y: '0rem', stagger: { each: 0.1 }, ease: 'power.out' }, '<');
-  animation.to(
-    menuCloseSplit.chars,
-    { y: '2rem', stagger: { each: 0.1 }, ease: 'power4.out' },
-    '<'
-  );
+  animation.to(menuOpen, { duration: 1, y: '0%', ease: 'power4.out' }, '<');
+  animation.to(menuClose, { duration: 1, y: '100%', opacity: 0, ease: 'power4.out' }, '<');
+
   animation.to('#menuCloseText', { opacity: 0 }, '<');
 
   animation.to(navIconSpans[0], { duration: 1.5, y: '0px', ease: 'expo.out' }, '<');
@@ -196,12 +189,12 @@ export const menuMotionClose = () => {
 export const menuLinkHoverIn = (curLink: HTMLElement) => {
   const animation = gsap.timeline({});
   animation.to(curLink, { color: 'rgba(248,244,238,1)', ease: 'expo.out' });
-  animation.to(curLink, { letterSpacing: '3px', ease: 'expo.out' }, '<');
+  // animation.to(curLink, { letterSpacing: '3px', ease: 'expo.out' }, '<');
 };
 export const menuLinkHoverOut = (curLink: HTMLElement) => {
   const animation = gsap.timeline();
   animation.to(curLink, { color: 'rgba(248,244,238,0)', ease: 'expo.out' });
-  animation.to(curLink, { letterSpacing: '0px', ease: 'expo.out' }, '<');
+  // animation.to(curLink, { letterSpacing: '0px', ease: 'expo.out' }, '<');
   curLink.classList.add('text-stroke-white');
 };
 
@@ -212,17 +205,27 @@ export const menuTransition = (type: string) => {
   const navMenuIcon = [...document.querySelectorAll('.nav-ui_icon-span')];
   const triggerElement = document.querySelector('.nav_scroll-trigger');
 
+  const windowLocation = window.location.pathname as string;
+
+  let setStart = '60% top';
+  let setEnd = '60% top';
+
+  if (windowLocation === '/') {
+    setStart = '100% top';
+    setEnd = '100% top';
+  }
+
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: triggerElement,
-      start: 'center top',
-      end: 'center top',
+      start: setStart,
+      end: setEnd,
       toggleActions: 'play none none reverse',
-      // markers: true,
+      // markers: { startColor: 'olive', endColor: 'lightblue' },
     },
   });
   if (type === 'default') {
-    animation.to(navBG, { opacity: 1, ease: 'power4.ouut' });
+    animation.to(navBG, { opacity: 1, ease: 'power4.out' });
   } else {
     animation.to(navBG, { opacity: 1, ease: 'power4.ouut' });
     animation.to(navBrand[1], { opacity: 0, ease: 'power4.out' }, '<');

@@ -1,55 +1,105 @@
+// eslint-disable-next-line simple-import-sort/imports
+import { getDeviceType } from '$utils/getDevice';
 import { gsap } from 'gsap';
 import { InertiaPlugin } from 'gsap/InertiaPlugin';
 import { SplitText } from 'gsap/SplitText';
 
 gsap.registerPlugin(SplitText, InertiaPlugin);
 
+// Hero Main Scroll
+// ----------------
 export const heroScroll = () => {
-  const maskedComponent = document.querySelector('.home-hero_masked-component');
-  const scrolledComponent = document.querySelector('.home-hero_scrolled');
-  const heroMainComponent = document.querySelector('.home-hero_main-component');
-  const maskElement = document.querySelector('.home-hero_bg-mask');
-  const heroScrollIcon = document.querySelector('#heroScrollIndicator');
-  const heroImageText = document.querySelector('.home-hero_text-track');
-  const heroBGText = document.querySelector('.bg-text_track');
+  // Set Production Scene
+  const prodcutionScene = document.querySelector(
+    '.home-hero_3d-embed.is-production'
+  ) as HTMLElement;
+  const designerScene = document.querySelector('.home-hero_3d-embed.is-designer') as HTMLElement;
+
+  designerScene.classList.add('hide');
+  prodcutionScene.classList.remove('hide');
+  // ------------
+  // Main Scroll
+  // ------------
+  const homeHeroSection = document.querySelector('.section_home-hero') as HTMLElement;
+  const maskedComponent = homeHeroSection.querySelector(
+    '.home-hero_masked-component'
+  ) as HTMLElement;
+  const scrolledComponent = homeHeroSection.querySelector('.home-hero_scrolled') as HTMLElement;
+  const heroMainComponent = homeHeroSection.querySelector(
+    '.home-hero_main-component'
+  ) as HTMLElement;
+
+  const maskElement = maskedComponent.querySelector('.home-hero_bg-mask');
+  const heroImageText = maskedComponent.querySelector('.home-hero_text-track');
+  const heroScrollIcon = scrolledComponent.querySelector('#heroScrollIndicator');
+  const heroBGText = scrolledComponent.querySelector('.bg-text_track');
+  const heroMainZText = heroMainComponent.querySelector('.home-hero_z-pos');
+
+  let setWidth = '40%';
+  let setHeight = '80%';
+  let setCornerRadius = '50vw 50vw 4rem 4rem';
+
+  // Check mobile
+  const device = getDeviceType();
+  // console.log('device', device);
+
+  if (device === 'tablet') {
+    setWidth = '80%';
+    setHeight = '85%';
+    setCornerRadius = '100vw 100vw 6rem 6rem';
+  } else if (device === 'mobile') {
+    setWidth = '80%';
+    setHeight = '80%';
+    setCornerRadius = '2rem 2rem 2rem 2rem';
+  }
 
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: maskedComponent,
-      start: '10% top',
-      end: '100% top',
+      start: 'top top',
+      end: 'bottom top',
       // markers: true,
       toggleActions: 'play none none reverse',
       scrub: 1,
     },
   });
-
+  animation.set(heroMainComponent, { zIndex: 2 });
   animation.to(maskElement, {
-    width: '40%',
-    height: '80%',
-    borderRadius: '100vw 100vw 12rem 12rem',
+    width: setWidth,
+    height: setHeight,
+    borderRadius: setCornerRadius,
+    ease: 'linear',
   });
-  animation.to(heroMainComponent, { opacity: 0, y: '-2rem', ease: 'power4.out' }, '<');
+  animation.to(heroMainComponent, { opacity: 0, ease: 'power4.out' }, '<');
   animation.to(heroImageText, { opacity: 1 }, '<0.3');
 
+  //Indicator Animation
+  // ------------------
+  let setIndicator = '-5rem';
+  if (device === 'tablet') {
+    setIndicator = '-3rem';
+  } else if (device === 'mobile') {
+    setIndicator = '-2rem';
+  }
   const indicatorAnimation = gsap.timeline({
     scrollTrigger: {
       trigger: scrolledComponent,
       start: 'top top',
       end: 'top top',
-      // markers: true,
       toggleActions: 'play none none reverse',
-      // scrub: 1,
+      // markers: true,
     },
   });
 
   indicatorAnimation.to(heroScrollIcon, {
     duration: 0.8,
-    y: '-5rem',
+    y: setIndicator,
     opacity: 1,
     ease: 'expo.out',
   });
 
+  // Hero Scroll Text Rotation on exit
+  // --------------------------
   const textScrollAniamtion = gsap.timeline({
     scrollTrigger: {
       trigger: scrolledComponent,
@@ -62,39 +112,33 @@ export const heroScroll = () => {
   });
   textScrollAniamtion.to(heroImageText, { rotate: '4deg' });
   textScrollAniamtion.to(heroBGText, { rotate: '4deg' }, '<');
-
-  // const cursorAnimation = gsap.timeline({
-  //   scrollTrigger: {
-  //     trigger: scrolledComponent,
-  //     start: 'top top',
-  //     end: 'bottom top',
-  //     markers: true,
-  //     toggleActions: 'play none none reverse',
-  //     scrub: 1,
-  //   },
-  // });
 };
 
+// Hide Hero
+// ---------
 export const heroHide = () => {
-  const animation = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.section_home-overview',
-      start: 'top top',
-      end: '50% top',
-      toggleActions: 'play none none reverse',
-      scrub: true,
-      // markers: true,
-    },
-  });
-
-  const heroBG = document.querySelector('.home-hero_masked-component');
+  const heroBG = document.querySelector('.home-hero_masked-component') as HTMLElement;
   const heroBGText = document.querySelector('.bg-text_track');
   const heroScrollIcon = document.querySelector('#heroScrollIndicator');
   const heroTexture = document.querySelector('.home-hero_texture');
 
-  animation.to([heroBG, heroBGText, heroScrollIcon, heroTexture], { display: 'none' });
+  const animation = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.section_home-overview',
+      start: 'bottom top',
+      end: 'bottom top',
+      toggleActions: 'play none none reverse',
+
+      // markers: true,
+    },
+  });
+  animation.to([heroBGText, heroScrollIcon, heroTexture], { duration: 0, display: 'none' });
+  animation.to(heroBG, { duration: 0, opacity: 0 });
+  animation.to(heroBG, { duration: 0, pointerEvents: 'none' });
 };
 
+// Hero Scrolled Text Movement
+// ---------------------------
 export const heroZText = () => {
   const maskedTrack = document.querySelector('.home-hero_text-track') as HTMLElement;
   const bgTrack = document.querySelector('.bg-text_track') as HTMLElement;
@@ -126,7 +170,6 @@ export const heroZText = () => {
     { duration: textSpeed, x: textMovement + '%', ease: 'linear' },
     { duration: textSpeed, x: -textMovement + '%', ease: 'linear' }
   );
-  // midAnimation.to(midChildren, { duration: textSpeed, x: '40%', ease: 'linear' });
 
   const outAnimation = gsap.timeline({ repeat: -1, yoyo: true });
   outAnimation.fromTo(
@@ -134,65 +177,89 @@ export const heroZText = () => {
     { duration: textSpeed, x: -textMovement + '%', ease: 'linear' },
     { duration: textSpeed, x: textMovement + '%', ease: 'linear' }
   );
-  // .to(midChildren, { duration: textSpeed, x: -textMovement, ease: 'linear' });
 };
 
 // -----------------
 // REVEAL ANIMATIONS
 // -----------------
 
-// Overview
+// Reveal global properties
+const scrollTriggerStart = 'top 70%';
+const scrollTriggerEnd = 'top 70%';
+
+let setDuration = 2;
+let setYOffset = '4rem';
+
+const device = getDeviceType();
+
+if (device === 'tablet' || device === 'mobile') {
+  setDuration = 1;
+  setYOffset = '1rem';
+}
+
+// Overview Reveal
 export const overviewReveal = () => {
   const overviewSection = document.querySelector('.section_home-overview') as HTMLElement;
   const header = overviewSection.querySelector('h2');
-  const headerSplit = new SplitText(header, { type: 'lines' });
+  const headerSplit = new SplitText(header, { type: 'lines', linesClass: 'lines' });
+  const textSplitParent = new SplitText(header, {
+    type: 'words',
+    linesClass: 'split-text_parent',
+  });
   const overviewText = overviewSection.querySelector('p');
   const overviewStamp = overviewSection.querySelector('.text-left_image');
   const overviewTexture = overviewSection.querySelector('.home-overview_texture-overlay');
   const overviewLabel = overviewSection.querySelector('.module_label-container');
-  const cursor = document.querySelector('.cursor_component');
-
-  gsap.set(cursor, { opacity: 0 });
 
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: overviewSection,
-      start: 'top 50%',
-      end: 'top 50%',
+      start: scrollTriggerStart,
+      end: scrollTriggerEnd,
       markers: true,
       toggleActions: 'play none none reverse',
     },
+    onComplete: () => {
+      textSplitParent.revert();
+      headerSplit.revert();
+    },
   });
-  animation.from(overviewLabel, { y: '2rem', duration: 1, opacity: 0, ease: 'power4.inOut' });
-  animation.to(cursor, { opacity: 1, ease: 'power4.out' }, '<');
+
+  animation.from(overviewLabel, {
+    duration: setDuration,
+    opacity: 0,
+    ease: 'power4.out',
+  });
+  animation.from(overviewTexture, { opacity: 0, duration: 2 }, '<');
+  animation.from(
+    overviewText,
+    { duration: setDuration, y: setYOffset, opacity: 0, ease: 'power4.out' },
+    '<'
+  );
+  animation.from(
+    overviewStamp,
+    { duration: setDuration, opacity: 0, scale: 1.2, ease: 'power4.out' },
+    '<'
+  );
+
   animation.from(
     headerSplit.lines,
     {
       duration: 1,
       opacity: 0,
-      stagger: { each: 0.1 },
+      stagger: 0.1,
       y: '2rem',
       ease: 'power4.out',
     },
-    '<0.2'
-  );
-  animation.from(overviewTexture, { opacity: 0, duration: 2 }, '<');
-  animation.from(overviewText, { duration: 1, y: '1rem', opacity: 0, ease: 'power4.out' }, '<');
-  animation.from(
-    overviewStamp,
-    { duration: 1, opacity: 0, scale: 1.2, rotate: '-2deg', ease: 'power4.out' },
     '<'
   );
 };
 
-// Featured Work
+// Featured Work Reveal
 export const featuredReveal = () => {
   const featuredSection = document.querySelector('.section_home-featured') as HTMLElement;
-  const featuedContent = featuredSection.querySelector('.home-featured_info-item') as HTMLElement;
-  const splitContent = [...featuedContent.childNodes];
-  const revealContainer = featuredSection.querySelector('.home-featured_reveal-wrap');
+  const featuedContent = featuredSection.querySelector('.home-featured_item-wrap') as HTMLElement;
 
-  gsap.set(revealContainer, { y: 0 });
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: featuredSection,
@@ -202,16 +269,15 @@ export const featuredReveal = () => {
       // markers: { startColor: 'green', endColor: 'olive' },
     },
   });
-  animation.from(splitContent, {
-    duration: 2,
+  animation.from(featuedContent, {
+    duration: 1,
     opacity: 0,
-    stagger: { each: 0.2 },
+    y: '100%',
     ease: 'power4.out',
   });
-  animation.to(revealContainer, { duration: 1, y: '-100%', ease: 'expo.out' }, '<');
 };
 
-// Services
+// Services Reveal
 export const servicesReveal = () => {
   const servicesSection = document.querySelector('.section_home-services') as HTMLElement;
   const servicesLabel = servicesSection.querySelector('.module_label-container');
@@ -222,23 +288,27 @@ export const servicesReveal = () => {
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: servicesSection,
-      start: 'top 50%',
-      end: 'top 50%',
+      start: scrollTriggerStart,
+      end: scrollTriggerEnd,
       // markers: true,
       toggleActions: 'play none none reverse',
     },
   });
-  animation.from(servicesLabel, { y: '2rem', duration: 1, opacity: 0, ease: 'power4.out' });
-  animation.from(servicesImageMask, { duration: 2, opacity: 0, ease: 'expo.inOut' }, '<');
-  animation.from(servicesOverview, { duration: 1, y: '2rem', opacity: 0, ease: 'power4.out' }, '<');
+  animation.from(servicesLabel, { duration: 2, opacity: 0, ease: 'power4.out' });
+  animation.from(
+    servicesImageMask,
+    { duration: 2, y: '4rem', opacity: 0, ease: 'power4.out' },
+    '<'
+  );
+  animation.from(servicesOverview, { duration: 2, y: '4rem', opacity: 0, ease: 'power4.out' }, '<');
   animation.from(
     serviceItems,
-    { duration: 1, y: '1rem', opacity: 0, stagger: { each: 0.2 }, ease: 'expo.out' },
+    { duration: 2, y: '4rem', opacity: 0, stagger: 0.2, ease: 'expo.out' },
     '<'
   );
 };
 
-// Our Focus
+// Our Focus Reveal
 export const focusReveal = () => {
   const focusSection = document.querySelector('.section_home-agency') as HTMLElement;
   const focusLabel = focusSection.querySelector('.module_label');
@@ -254,28 +324,32 @@ export const focusReveal = () => {
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: focusSection,
-      start: 'top 50%',
-      end: 'top 50%',
+      start: scrollTriggerStart,
+      end: scrollTriggerEnd,
       // markers: true,
       toggleActions: 'play none none reverse',
     },
+    // onComplete: () => {
+    //   // textSplitParent.revert();
+    //   textSplit.revert();
+    // },
   });
-  animation.from(focusLabel, { y: '2rem', duration: 1, opacity: 0, ease: 'power4.out' });
+  animation.from(focusLabel, { duration: 2, opacity: 0, ease: 'power4.out' });
   animation.from(
     textSplit.lines,
     {
-      duration: 1,
+      duration: 0.8,
       y: '4rem',
       opacity: 0,
-      stagger: { each: 0.1 },
+      stagger: 0.1,
       ease: 'power4.out',
     },
-    '<0.1'
+    '<'
   );
   animation.from(
     focusParagraph,
-    { duration: 1, opacity: 0, y: '2rem', ease: 'power4.inOut' },
-    '<1.4'
+    { duration: 2, opacity: 0, y: '4rem', ease: 'power4.out' },
+    '<0.5'
   );
-  animation.from(focusStamp, { duration: 1, scale: 1.4, opacity: 0, ease: 'expo.inOut' }, '<');
+  animation.from(focusStamp, { duration: 1, scale: 1.2, opacity: 0, ease: 'power4.out' }, '<');
 };

@@ -12,6 +12,7 @@ export const menu = () => {
   const windowLocation = window.location.pathname as string;
   const navMenu = document.querySelector('#navMenu') as HTMLElement;
   const menuButton = document.querySelector('#navMenuButton') as HTMLElement;
+  const menuCloseOffset = document.querySelector('.nav_x-offset') as HTMLElement;
   const menuOpenAnimation = menuMotionOpen();
   const menuCloseAnimation = menuMotionClose();
 
@@ -28,6 +29,11 @@ export const menu = () => {
     } else {
       menuCloseAnimation.play(0);
     }
+  });
+
+  menuCloseOffset.addEventListener('click', () => {
+    menuIsOpen = false;
+    menuCloseAnimation.play(0);
   });
 
   // Menu link hover effects

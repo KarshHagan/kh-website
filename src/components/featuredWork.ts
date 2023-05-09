@@ -6,7 +6,7 @@ import {
   viewMoreHoverIn,
   viewMoreHoverOut,
 } from '$motion/featuredWorkMotion';
-import { initSliderImages, showNextImage } from '$motion/mediaSliderMotion';
+import { initSliderImages, showNextImage, showPrevImage } from '$motion/mediaSliderMotion';
 
 export const featuredWork = () => {
   const featuredWrap = document.querySelector('.home-featured_cursor-wrap') as HTMLElement;
@@ -69,7 +69,7 @@ export const featuredWork = () => {
       if (curIndex < 0) {
         curIndex = countIndex - 1;
       }
-      showNextImage(curIndex, prevIndex);
+      showPrevImage(curIndex, prevIndex);
       showPrevContent(curIndex, prevIndex);
     } else {
       curIndex += 1;

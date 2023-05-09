@@ -3,6 +3,7 @@ import { SplitText } from 'gsap/SplitText';
 
 gsap.registerPlugin(SplitText);
 
+// Page Reveal
 export const servicesPageReveal = () => {
   const fixedHeaderSection = document.querySelector('.section_fixed-header') as HTMLElement;
   const heroSection = document.querySelector('.section_services-hero') as HTMLElement;
@@ -54,6 +55,7 @@ export const servicesPageReveal = () => {
   animation.from(heroChildren, { duration: 1, opacity: 0, scale: 1.05, ease: 'power4.out' }, '<');
 };
 
+// Overview Reveal
 export const servicesOverviewReveal = () => {
   const overviewSection = document.querySelector('.section_serivces-info') as HTMLElement;
 
@@ -104,6 +106,7 @@ export const servicesOverviewReveal = () => {
   );
 };
 
+// Service Item Reveal
 export const serviceSectionReveal = () => {
   const serviceSections = [...document.querySelectorAll('.services_item')];
   const servicesHeader = document.querySelector('.services-info_header');
@@ -113,7 +116,7 @@ export const serviceSectionReveal = () => {
       trigger: serviceSections[0],
       start: 'top 50%',
       end: 'top 50%',
-      markers: true,
+      // markers: true,
       toggleActions: 'play none none reverse',
     },
   });

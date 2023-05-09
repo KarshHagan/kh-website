@@ -81,13 +81,15 @@ export const caseScrollEffect = () => {
 
   for (const i in leftItems) {
     const temp = leftItems[i] as HTMLElement;
-    temp.dataset.scrollSpeed = '5';
+    temp.dataset.scrollSpeed = '3';
   }
 
   for (const i in rightItems) {
-    const temp = leftItems[i] as HTMLElement;
-    temp.dataset.scrollSpeed = '3';
+    const temp = rightItems[i] as HTMLElement;
+    temp.dataset.scrollSpeed = '-3';
   }
+
+  console.log('right', rightItems, 'left', leftItems);
 
   const scrollSection = document.querySelector('.section_work') as HTMLElement;
   const scrollElements = [...scrollSection.querySelectorAll('[data-scroll-speed]')];
@@ -99,10 +101,10 @@ export const caseScrollEffect = () => {
       end: 'bottom top',
       scrub: true,
       toggleActions: 'play none none reverse',
-      // markers: {
-      //   startColor: 'yellow',
-      //   endColor: 'orange',
-      // },
+      markers: {
+        startColor: 'yellow',
+        endColor: 'orange',
+      },
     },
   });
 

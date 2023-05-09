@@ -27,17 +27,17 @@ export const caseTemplate = () => {
   videoPlayer();
 
   // Overview Section
-  csOverviewReveal();
+  // csOverviewReveal();
 
   // Media Grids
   cmsMediaGrid();
 
   // Media Slider
-  csMediaSliderReveal();
+  // csMediaSliderReveal();
   mediaSlider();
 
   // Stats Section
-  csStatsReveal();
+  // csStatsReveal();
 
   // Next Project
   horizontalScrollText();

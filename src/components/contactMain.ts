@@ -7,12 +7,12 @@ import {
   sublinksHoverIn,
   sublinksHoverOut,
 } from '$motion/contactMotion';
-import { isTouchDevice } from '$utils/getDevice';
+import { getDeviceType } from '$utils/getDevice';
 
 export const contactHover = () => {
-  const touchDevice = isTouchDevice();
+  const device = getDeviceType();
 
-  if (!touchDevice) {
+  if (device === 'desktop') {
     initContact();
 
     const contactLinksWraps = [...document.querySelectorAll('.contact_block')];

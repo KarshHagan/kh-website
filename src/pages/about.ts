@@ -23,7 +23,6 @@ export const about = () => {
   abTeamReveal();
 
   // Media
-  // mediaSliderTextMovement();
   horizontalScrollText();
 
   // Awwards

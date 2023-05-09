@@ -22,6 +22,10 @@ window.Webflow.push(() => {
 
   const windowLocation = window.location.pathname as string;
 
+  document.addEventListener('click', (e) => {
+    console.log(e.target);
+  });
+
   // ---------------
   // Site Globals
   // ---------------
@@ -39,7 +43,7 @@ window.Webflow.push(() => {
   // Page Routing
   // ---------------
 
-  if (windowLocation === '/') {
+  if (windowLocation === '/' || windowLocation === '/home2') {
     home();
   } else if (windowLocation === '/about') {
     about();
