@@ -227,7 +227,7 @@ export const menuTransition = (type: string) => {
       start: setStart,
       end: setEnd,
       toggleActions: 'play none none reverse',
-      markers: { startColor: 'olive', endColor: 'lightblue' },
+      // markers: { startColor: 'olive', endColor: 'lightblue' },
     },
   });
   animation.set(navBG, { backgroundColor: setColor });

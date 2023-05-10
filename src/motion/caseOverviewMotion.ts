@@ -79,27 +79,34 @@ export const csoPageReveal = () => {
 export const caseScrollEffect = () => {
   const workItems = [...document.querySelectorAll('.work-grid_item')];
 
-  const leftItems = [];
-  const rightItems = [];
+  const device = getDeviceType();
 
-  for (let i = 0; i < workItems.length; i += 2) {
-    leftItems.push(workItems[i]);
-  }
-  for (let i = 1; i < workItems.length; i += 2) {
-    rightItems.push(workItems[i]);
-  }
+  if (device === 'desktop') {
+    const leftItems = [];
+    const rightItems = [];
 
-  for (const i in leftItems) {
-    const temp = leftItems[i] as HTMLElement;
-    temp.dataset.scrollSpeed = '3';
-  }
+    for (let i = 0; i < workItems.length; i += 2) {
+      leftItems.push(workItems[i]);
+    }
+    for (let i = 1; i < workItems.length; i += 2) {
+      rightItems.push(workItems[i]);
+    }
 
-  for (const i in rightItems) {
-    const temp = rightItems[i] as HTMLElement;
-    temp.dataset.scrollSpeed = '-3';
-  }
+    for (const i in leftItems) {
+      const temp = leftItems[i] as HTMLElement;
+      temp.dataset.scrollSpeed = '3';
+    }
 
-  console.log('right', rightItems, 'left', leftItems);
+    for (const i in rightItems) {
+      const temp = rightItems[i] as HTMLElement;
+      temp.dataset.scrollSpeed = '-3';
+    }
+  } else {
+    for (const i in workItems) {
+      const temp = workItems[i] as HTMLElement;
+      temp.dataset.scrollSpeed = '8';
+    }
+  }
 
   const scrollSection = document.querySelector('.section_work') as HTMLElement;
   const scrollElements = [...scrollSection.querySelectorAll('[data-scroll-speed]')];
@@ -111,10 +118,10 @@ export const caseScrollEffect = () => {
       end: 'bottom top',
       scrub: true,
       toggleActions: 'play none none reverse',
-      markers: {
-        startColor: 'yellow',
-        endColor: 'orange',
-      },
+      // markers: {
+      //   startColor: 'yellow',
+      //   endColor: 'orange',
+      // },
     },
   });
 
