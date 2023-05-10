@@ -207,10 +207,6 @@ export const menuTransition = (type: string) => {
 
   const windowLocation = window.location.pathname as string;
 
-  if (windowLocation.includes('/contact')) {
-    setColor = '#212929';
-  }
-
   let setStart = '60% top';
   let setEnd = '60% top';
 
@@ -219,13 +215,19 @@ export const menuTransition = (type: string) => {
     setEnd = '100% top';
   }
 
+  if (windowLocation.includes('/contact')) {
+    setColor = '#212929';
+    setStart = '-1% top';
+    setEnd = '-1% top';
+  }
+
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: triggerElement,
       start: setStart,
       end: setEnd,
       toggleActions: 'play none none reverse',
-      // markers: { startColor: 'olive', endColor: 'lightblue' },
+      markers: { startColor: 'olive', endColor: 'lightblue' },
     },
   });
   animation.set(navBG, { backgroundColor: setColor });
