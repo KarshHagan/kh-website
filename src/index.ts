@@ -8,7 +8,7 @@ import { caseOverview } from '$pages/caseOverview';
 import { caseTemplate } from '$pages/caseTemplate';
 import { contact } from '$pages/contact';
 import { home } from '$pages/home';
-import { insights } from '$pages/insights';
+import { insights } from '$pages/insightsOverview';
 import { insightsTemplate } from '$pages/insightsTemplate';
 import { peopleTemplate } from '$pages/peopleTemplate';
 import { services } from '$pages/services';

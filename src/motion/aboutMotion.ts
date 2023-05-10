@@ -11,8 +11,15 @@ gsap.registerPlugin(SplitText, ScrollTrigger);
 // -----------------
 
 // Reveal global properties
-const scrollTriggerStart = 'top 70%';
-const scrollTriggerEnd = 'top 70%';
+let scrollTriggerStart = 'top 70%';
+let scrollTriggerEnd = 'top 70%';
+
+const device = getDeviceType();
+
+if (device === 'tablet' || device === 'mobile') {
+  scrollTriggerStart = 'top 80%';
+  scrollTriggerEnd = 'top 80%';
+}
 
 // Hero Reveal
 export const abPageReveal = () => {
@@ -43,7 +50,7 @@ export const abPageReveal = () => {
     duration: 1,
     y: '4rem',
     opacity: 0,
-    stagger: { each: 0.1 },
+    stagger: 0.1,
     ease: 'power4.inOut',
   });
 
@@ -64,10 +71,10 @@ export const abPageReveal = () => {
   animation.from(
     [aboutTitle, aboutOverview],
     {
-      duration: 1,
+      duration: 1.5,
       opacity: 0,
       y: '2rem',
-      ease: 'power4.out',
+      ease: 'power4.inOut',
     },
     '<0.2'
   );
@@ -108,8 +115,8 @@ export const abClientsReveal = () => {
       trigger: clientSection,
       start: scrollTriggerStart,
       end: scrollTriggerEnd,
-      markers: true,
-      toggleActions: 'play none none reverse',
+      // markers: true,
+      // toggleActions: 'play none none reverse',
     },
   });
 
@@ -134,8 +141,8 @@ export const abTeamReveal = () => {
       trigger: teamSection,
       start: scrollTriggerStart,
       end: scrollTriggerEnd,
-      markers: true,
-      toggleActions: 'play none none reverse',
+      // markers: true,
+      // toggleActions: 'play none none reverse',
     },
   });
 
@@ -162,8 +169,8 @@ export const abAwardsReveal = () => {
       trigger: awardsSection,
       start: scrollTriggerStart,
       end: scrollTriggerEnd,
-      markers: true,
-      toggleActions: 'play none none reverse',
+      // markers: true,
+      // toggleActions: 'play none none reverse',
     },
   });
   animation.from(bgText, { duration: 1.5, y: '2rem', opacity: 0, ease: 'power4.out' });
