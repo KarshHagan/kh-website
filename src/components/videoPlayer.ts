@@ -1,5 +1,11 @@
 import { toggleMuteMotion, togglePlayMotion } from '$motion/videoPlayerMotion';
 
+// declare global {
+//   interface HTMLVideoElement {
+//     mozRequestFullscreen?(): void;
+//   }
+// }
+
 export const videoPlayer = () => {
   const videoEmbed = document.querySelector('.case-hero_video-embed') as HTMLElement;
   const videoElement = videoEmbed.querySelector('video') as HTMLVideoElement;
@@ -22,6 +28,7 @@ export const videoPlayer = () => {
 
   function toggleFullScreen() {
     videoElement.requestFullscreen();
+    // videoElementTemp.mozRequestFullScreen();
   }
 
   function togglePlay() {
