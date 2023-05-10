@@ -203,7 +203,13 @@ export const menuTransition = (type: string) => {
   const navMenuIcon = [...document.querySelectorAll('.nav-ui_icon-span')];
   const triggerElement = document.querySelector('.nav_scroll-trigger');
 
+  let setColor = '##eeebe6';
+
   const windowLocation = window.location.pathname as string;
+
+  if (windowLocation.includes('/contact')) {
+    setColor = '#212929';
+  }
 
   let setStart = '60% top';
   let setEnd = '60% top';
@@ -222,6 +228,7 @@ export const menuTransition = (type: string) => {
       // markers: { startColor: 'olive', endColor: 'lightblue' },
     },
   });
+  animation.set(navBG, { backgroundColor: setColor });
   if (type === 'default') {
     animation.to(navBG, { opacity: 1, ease: 'power4.out' });
   } else {
