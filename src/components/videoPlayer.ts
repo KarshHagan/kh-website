@@ -3,7 +3,10 @@ import { toggleMuteMotion, togglePlayMotion } from '$motion/videoPlayerMotion';
 export const videoPlayer = () => {
   const videoEmbed = document.querySelector('.case-hero_video-embed') as HTMLElement;
   const videoElement = videoEmbed.querySelector('video') as HTMLVideoElement;
-  const muteButton = document.querySelector('.case-hero_mute-button') as HTMLElement;
+  const muteButton = document.querySelector('.case-hero_mute-button.is-mute') as HTMLElement;
+  const expandButton = document.querySelector('.case-hero_mute-button.is-expand') as HTMLElement;
+
+  console.log(muteButton, expandButton);
 
   videoEmbed.addEventListener('click', () => {
     togglePlay();
@@ -12,6 +15,14 @@ export const videoPlayer = () => {
   muteButton.addEventListener('click', () => {
     toggleMute();
   });
+
+  expandButton.addEventListener('click', () => {
+    toggleFullScreen();
+  });
+
+  function toggleFullScreen() {
+    videoElement.requestFullscreen();
+  }
 
   function togglePlay() {
     if (videoElement.paused || videoElement.ended) {

@@ -1,3 +1,5 @@
+// eslint-disable-next-line simple-import-sort/imports
+import { getDeviceType } from './getDevice';
 import { gsap } from 'gsap';
 import { InertiaPlugin } from 'gsap/InertiaPlugin';
 
@@ -5,6 +7,12 @@ gsap.registerPlugin(InertiaPlugin);
 
 export const inertiaMovement = () => {
   const scrollSections = [...document.querySelectorAll('[data-scroll-section]')];
+
+  let movementMuliplier = 5;
+  const device = getDeviceType();
+  if (device === 'tablet' || device === 'mobile') {
+    movementMuliplier = 3;
+  }
   // console.log('sections', scrollSections);
 
   for (const i in scrollSections) {
@@ -34,7 +42,7 @@ export const inertiaMovement = () => {
       const setSpeed = elementSpeed;
       // console.log('temp', tempElement);
 
-      animation.to(tempElement, { yPercent: setSpeed * 5, ease: 'none' }, '<');
+      animation.to(tempElement, { yPercent: setSpeed * movementMuliplier, ease: 'none' }, '<');
     }
   }
 };

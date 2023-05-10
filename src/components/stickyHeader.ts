@@ -11,8 +11,8 @@ export const stickyHeader = () => {
       start: '200% top',
       end: '200% top',
       toggleActions: 'play none none reverse',
-      //   markers: true,
+      // markers: true,
     },
   });
-  scrollTimeline.to(scrollSection, { duration: 0, backgroundColor: 'transparent' });
+  scrollTimeline.to(scrollSection, { duration: 0, opacity: 0 });
 };
