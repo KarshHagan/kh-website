@@ -45,7 +45,7 @@ export const careersPageReveal = () => {
     ease: 'power4.inOut',
   });
   animation.from(overline, { duration: 1, width: 0, ease: 'expo.inOut' }, '<');
-  animation.from(headerOverview, { duration: 1.5, opacity: 0, ease: 'power4.inOut' }, '<');
+  animation.from(headerOverview, { duration: 1, y: '1rem', opacity: 0, ease: 'power4.inOut' }, '<');
   animation.from(heroComponent, { duration: 1, y: '2rem', opacity: 0, ease: 'expo.out' }, '<0.6');
 };
 
@@ -64,13 +64,13 @@ export const careersOverviewReveal = () => {
       trigger: overviewSection,
       start: scrollTriggerStart,
       end: scrollTriggerEnd,
-      markers: true,
-      toggleActions: 'play none none reverse',
+      // markers: true,
+      // toggleActions: 'play none none reverse',
     },
-    // onComplete: () => {
-    //   textSplitParent.revert();
-    //   headerSplit.revert();
-    // },
+    onComplete: () => {
+      textSplitParent.revert();
+      headerSplit.revert();
+    },
   });
   animation.from(headerSplit.lines, {
     duration: 1,

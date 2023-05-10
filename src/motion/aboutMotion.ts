@@ -55,19 +55,6 @@ export const abPageReveal = () => {
   });
 
   animation.from(aboutOverline, { duration: 1, width: '0%', ease: 'expo.inOut' }, '<');
-
-  animation.from(
-    heroStamp,
-    {
-      duration: 1,
-      scale: 1.2,
-      rotate: '0deg',
-      opacity: 0,
-      ease: 'power4.inOut',
-    },
-    '<0.5'
-  );
-
   animation.from(
     [aboutTitle, aboutOverview],
     {
@@ -76,8 +63,21 @@ export const abPageReveal = () => {
       y: '2rem',
       ease: 'power4.inOut',
     },
-    '<0.2'
+    '<0.5'
   );
+
+  animation.from(
+    heroStamp,
+    {
+      duration: 1.5,
+      scale: 1.2,
+      rotate: '0deg',
+      opacity: 0,
+      ease: 'power4.inOut',
+    },
+    '<'
+  );
+
   animation.from(
     aboutImage,
     {

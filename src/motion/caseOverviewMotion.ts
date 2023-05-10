@@ -37,8 +37,8 @@ export const csoPageReveal = () => {
 
   const animation = gsap.timeline({
     onComplete: () => {
-      // textSplitParent.revert();
-      // headerSplit.revert();
+      textSplitParent.revert();
+      headerSplit.revert();
     },
   });
   animation.from(headerSplit.lines, {
@@ -49,7 +49,7 @@ export const csoPageReveal = () => {
     ease: 'power4.inOut',
   });
   animation.from(overline, { duration: 1, width: 0, ease: 'expo.inOut' }, '<');
-  animation.from(headerOverview, { duration: 1.5, opacity: 0, ease: 'power4.inOut' }, '<');
+  animation.from(headerOverview, { duration: 1, opacity: 0, y: '1rem', ease: 'power4.inOut' }, '<');
   animation.from(
     filterButton,
     {

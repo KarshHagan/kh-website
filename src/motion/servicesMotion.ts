@@ -36,8 +36,8 @@ export const servicesPageReveal = () => {
 
   const animation = gsap.timeline({
     onComplete: () => {
-      // textSplitParent.revert();
-      // headerSplit.revert();
+      textSplitParent.revert();
+      headerSplit.revert();
     },
   });
   animation.from(headerSplit.lines, {
@@ -48,7 +48,7 @@ export const servicesPageReveal = () => {
     ease: 'power4.inOut',
   });
   animation.from(overline, { duration: 1, width: 0, ease: 'expo.inOut' }, '<');
-  animation.from(headerOverview, { duration: 1.5, opacity: 0, ease: 'power4.inOut' }, '<');
+  animation.from(headerOverview, { duration: 1, opacity: 0, y: '1rem', ease: 'power4.inOut' }, '<');
   animation.from(
     filterButtons,
     {
@@ -69,7 +69,7 @@ export const servicesOverviewReveal = () => {
   const overviewSection = document.querySelector('.section_serivces-info') as HTMLElement;
 
   const overviewHeader = overviewSection.querySelector('.services-info_overview-header');
-  const overviewPoints = [...overviewSection.querySelectorAll('.services-info_grid-wrap')];
+  const overviewSpan = overviewSection.querySelector('.services-info_span');
 
   const industriesSection = overviewSection.querySelector(
     '.service-info_industries'
@@ -80,35 +80,21 @@ export const servicesOverviewReveal = () => {
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: overviewSection,
-      start: 'top 60%',
-      end: 'top 60%',
+      start: scrollTriggerStart,
+      end: scrollTriggerEnd,
       // markers: true,
-      toggleActions: 'play none none reverse',
+      // toggleActions: 'play none none reverse',
     },
   });
   animation.from(overviewHeader, { duration: 1, opacity: 0, y: '2rem', ease: 'power4.out' });
-  animation.from(
-    overviewPoints,
-    {
-      duration: 1,
-      opacity: 0,
-      y: '2rem',
-      stagger: { each: 0.1 },
-      ease: 'power4.out',
-    },
-    '<0.2'
-  );
-  animation.from(
-    industriesHeader,
-    { duration: 1, opacity: 0, y: '1rem', ease: 'power4.out' },
-    '<0.4'
-  );
+  animation.from(overviewSpan, { duration: 1, width: 0, ease: 'power4.out' }, '<');
+  animation.from(industriesHeader, { duration: 1, opacity: 0, y: '2rem', ease: 'power4.out' }, '<');
   animation.from(
     industriesTag,
     {
       duration: 1,
       opacity: 0,
-      y: '1rem',
+      y: '2rem',
       ease: 'power4.out',
     },
     '<'
@@ -123,10 +109,10 @@ export const serviceSectionReveal = () => {
   const headerAnimation = gsap.timeline({
     scrollTrigger: {
       trigger: serviceSections[0],
-      start: 'top 50%',
-      end: 'top 50%',
+      start: scrollTriggerStart,
+      end: scrollTriggerEnd,
       // markers: true,
-      toggleActions: 'play none none reverse',
+      // toggleActions: 'play none none reverse',
     },
   });
 
@@ -144,10 +130,10 @@ export const serviceSectionReveal = () => {
     const animation = gsap.timeline({
       scrollTrigger: {
         trigger: tempSection,
-        start: 'top 50%',
-        end: 'top 50%',
+        start: scrollTriggerStart,
+        end: scrollTriggerStart,
         // markers: true,
-        toggleActions: 'play none none reverse',
+        // toggleActions: 'play none none reverse',
       },
     });
 

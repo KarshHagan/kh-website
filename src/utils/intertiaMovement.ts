@@ -12,6 +12,8 @@ export const inertiaMovement = () => {
     const scrollElements = [...tempSection.querySelectorAll('[data-scroll-speed]')];
     // let setSpeed = 0;
 
+    // console.log(scrollElements);
+
     const animation = gsap.timeline({
       scrollTrigger: {
         trigger: tempSection,
