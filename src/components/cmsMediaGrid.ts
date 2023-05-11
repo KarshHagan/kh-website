@@ -1,32 +1,40 @@
 export const cmsMediaGrid = () => {
-  const mediaGrids = [...document.querySelectorAll('.section_media-grid')];
-  for (const i in mediaGrids) {
-    const tempGrid = mediaGrids[i] as HTMLElement;
-    const feedContent = [...tempGrid.querySelectorAll('.content-feed_image')];
-    const fillContainers = [...tempGrid.querySelectorAll('.media-grid_image')];
+  // const mediaGrids = [...document.querySelectorAll('.section_media-grid')];
+  // for (const i in mediaGrids) {
+  //   const tempGrid = mediaGrids[i] as HTMLElement;
 
-    console.log(feedContent, fillContainers);
+  // }
 
-    if (feedContent.length === 1) {
-      // console.log('load block 2');
-      const container = fillContainers[1] as HTMLImageElement;
-      const replaceImage = feedContent[0] as HTMLImageElement;
-      const updateLink = replaceImage.src;
-      const updateSrcSet = replaceImage.srcset;
+  const mediaBlocks = [...document.querySelectorAll('[data-media-block]')];
+  let setIndex = 0;
 
-      container.src = updateLink;
-      container.srcset = updateSrcSet;
-    } else {
-      // console.log('load all');
-      for (const j in fillContainers) {
-        const container = fillContainers[j] as HTMLImageElement;
-        const replaceImage = feedContent[j] as HTMLImageElement;
-        const updateLink = replaceImage.src;
-        const updateSrcSet = replaceImage.srcset;
+  for (let i = 0; i < mediaBlocks.length; i++) {
+    const tempMediaBlock = mediaBlocks[i] as HTMLElement;
+    const videoSet = isVideoSet(tempMediaBlock);
+    // console.log('has video', videoSet);
 
-        container.src = updateLink;
-        container.srcset = updateSrcSet;
-      }
+    if (videoSet === false) {
+      setMedia(tempMediaBlock, setIndex);
+      setIndex += 1;
     }
+  }
+
+  function setMedia(block: HTMLElement, index: number) {
+    const feedContent = [...document.querySelectorAll('.content-feed_image')];
+
+    const blockImageElement = block.children[0] as HTMLImageElement;
+    const setImage = feedContent[index] as HTMLImageElement;
+    blockImageElement.src = setImage.src;
+    blockImageElement.srcset = setImage.srcset;
+  }
+
+  function isVideoSet(block: HTMLElement) {
+    const blockVideo = block.children[1] as HTMLElement;
+    let videoSet = false;
+    if (blockVideo !== undefined) {
+      const videoInvisible = blockVideo.classList.contains('w-condition-invisible');
+      videoSet = !videoInvisible;
+    }
+    return videoSet;
   }
 };

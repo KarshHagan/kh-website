@@ -14,6 +14,9 @@ export const footer = () => {
 
   footerSpacer.style.height = footerHeight - footerCornerFix + 'px';
 
+  // console.log(footerHeight);
+  // console.log(footerSpacer.style.height);
+
   // Footer Text Movement
   // --------------------
   footerTextMovement();

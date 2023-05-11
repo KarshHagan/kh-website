@@ -12,7 +12,7 @@ export const videoPlayer = () => {
   const muteButton = document.querySelector('.case-hero_mute-button.is-mute') as HTMLElement;
   const expandButton = document.querySelector('.case-hero_mute-button.is-expand') as HTMLElement;
 
-  console.log(muteButton, expandButton);
+  // console.log(muteButton, expandButton);
 
   videoEmbed.addEventListener('click', () => {
     togglePlay();
