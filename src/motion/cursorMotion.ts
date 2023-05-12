@@ -37,12 +37,9 @@ export const cursorIconRevealOut = (icon: HTMLElement) => {
 
 export const cursorIconReset = () => {
   const cursorImages = [...document.querySelectorAll('.cursor_image')];
+  console.log('reset');
   const animation = gsap.timeline();
   animation.to(cursor, { duration: 0, rotate: '0deg' });
-  for (const i in cursorImages) {
-    const temp = cursorImages[i] as HTMLElement;
-    animation.set(temp, { opacity: 0, display: 'none' });
-  }
 };
 
 export const cursorArrowSliderChange = (xType: string) => {

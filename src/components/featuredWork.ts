@@ -1,4 +1,8 @@
-import { cursorArrowSliderChange, cursorArrowYMovement } from '$motion/cursorMotion';
+import {
+  cursorArrowSliderChange,
+  cursorArrowYMovement,
+  cursorIconReset,
+} from '$motion/cursorMotion';
 import {
   initSliderContent,
   showNextContent,
@@ -24,6 +28,9 @@ export const featuredWork = () => {
       curCursorType = 'next';
     }
     cursorArrowSliderChange(curCursorType);
+  });
+  featuredWrap.addEventListener('mouseleave', () => {
+    cursorIconReset();
   });
 
   featuredWrap.addEventListener('mousemove', (e) => {
