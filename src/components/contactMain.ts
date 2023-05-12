@@ -7,6 +7,7 @@ import {
   sublinksHoverIn,
   sublinksHoverOut,
 } from '$motion/contactMotion';
+import { cursorArrowYMovement } from '$motion/cursorMotion';
 import { getDeviceType } from '$utils/getDevice';
 
 export const contactHover = () => {
@@ -47,6 +48,12 @@ export const contactHover = () => {
         }
       });
     }
+
+    const formMainWrapper = document.querySelector('.contact_main-wrap') as HTMLElement;
+    formMainWrapper.addEventListener('mousemove', (e) => {
+      const mouseYMovement = e.movementY;
+      cursorArrowYMovement('default', mouseYMovement);
+    });
   }
 };
 

@@ -20,33 +20,19 @@ export const cursorRevealOut = () => {
   animation.to(cursor, { width: '0.75rem', height: '0.75rem', ease: 'power4.out' });
 };
 
-export const cursorIconRevealIn = (scaleTo: number, icon: HTMLElement) => {
+export const cursorIconRevealIn = (icon: HTMLElement) => {
+  cursor.classList.remove('mbm-ex');
   const animation = gsap.timeline();
-  animation.to(cursor, {
-    padding: '1rem',
-    width: scaleTo + 'rem',
-    height: scaleTo + 'rem',
-    backgroundColor: '#4C9A8C',
-    ease: 'power4.out',
-  });
-  animation.to(icon, { opacity: 1, display: 'block' }, '<0.2');
+  animation.set(cursor, { padding: '1rem' });
+  animation.set(icon, { opacity: 1, display: 'block' });
+  animation.to(cursor, { backgroundColor: '#4C9A8C' });
 };
 export const cursorIconRevealOut = (icon: HTMLElement) => {
+  // cursor.classList.remove('mbm-ex');
   const animation = gsap.timeline();
-  animation.to(icon, { opacity: 0, display: 'none' });
-  animation.to(
-    cursor,
-    {
-      padding: '0rem',
-      backgroundColor: '#F09F43',
-      width: '0.75rem',
-      height: '0.75rem',
-      ease: 'power4.out',
-    },
-    '<0.2'
-  );
-
-  // cursorIconReset();
+  animation.set(cursor, { padding: '0rem' });
+  animation.set(icon, { opacity: 0, display: 'none' });
+  animation.to(cursor, { backgroundColor: '#F09F43' });
 };
 
 export const cursorIconReset = () => {

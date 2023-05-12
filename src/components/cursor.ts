@@ -42,20 +42,19 @@ export const cursorHover = () => {
     const area = cursorAreas[i] as HTMLElement;
     const scale = Number(area.dataset.hoverScale);
     const iconType = area.dataset.hoverIcon as string;
-    // console.log(area);
 
     area.addEventListener('mouseenter', () => {
-      if (iconType === undefined) {
-        cursorRevealIn(scale);
-      } else {
+      cursorRevealIn(scale);
+
+      if (iconType !== undefined) {
         const areaIcon = getAreaIcon(iconType) as HTMLElement;
-        cursorIconRevealIn(scale, areaIcon);
+        cursorIconRevealIn(areaIcon);
       }
     });
     area.addEventListener('mouseleave', () => {
-      if (iconType === undefined) {
-        cursorRevealOut();
-      } else {
+      cursorRevealOut();
+
+      if (iconType !== undefined) {
         const areaIcon = getAreaIcon(iconType) as HTMLElement;
         cursorIconRevealOut(areaIcon);
       }

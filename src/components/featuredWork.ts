@@ -25,9 +25,6 @@ export const featuredWork = () => {
     }
     cursorArrowSliderChange(curCursorType);
   });
-  featuredWrap.addEventListener('mouseleave', () => {
-    // cursorIconReset();
-  });
 
   featuredWrap.addEventListener('mousemove', (e) => {
     const mouseX = e.pageX;

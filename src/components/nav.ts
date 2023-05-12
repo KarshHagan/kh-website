@@ -52,7 +52,6 @@ export const menu = () => {
     });
   }
   navMenu.addEventListener('mousemove', (e) => {
-    const curCursorType = 'next';
     const mouseY = e.movementY;
 
     cursorArrowYMovement('default', mouseY);

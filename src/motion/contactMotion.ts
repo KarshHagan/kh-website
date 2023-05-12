@@ -11,7 +11,7 @@ export const linkHoverIn = (curNote: HTMLElement, curLink: HTMLElement) => {
   const animation = gsap.timeline();
   animation.to(curLink.children[0], { color: '#D5CFC6', ease: 'expo.out' });
   //   animation.to(curLink, { letterSpacing: '3px', ease: 'expo.out' }, '<');
-  animation.to(curNote, { color: '#AFD8DB', ease: 'expo.inout' }, '<');
+  animation.to(curNote, { color: '#EC2543', ease: 'expo.inout' }, '<');
 };
 
 export const linkHoverOut = (curNote: HTMLElement, curLink: HTMLElement) => {
