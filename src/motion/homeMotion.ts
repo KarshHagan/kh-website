@@ -33,7 +33,6 @@ export const heroScroll = () => {
   const heroImageText = maskedComponent.querySelector('.home-hero_text-track');
   const heroScrollIcon = scrolledComponent.querySelector('#heroScrollIndicator');
   const heroBGText = scrolledComponent.querySelector('.bg-text_track');
-  const heroMainZText = heroMainComponent.querySelector('.home-hero_z-pos');
 
   let setWidth = '40%';
   let setHeight = '80%';
@@ -215,6 +214,26 @@ if (device === 'tablet' || device === 'mobile') {
   scrollTriggerStart = 'top 85%';
   scrollTriggerEnd = 'top 85%';
 }
+
+// Hero Reveal
+export const heroReveal = () => {
+  const heroSection = document.querySelector('.section_home-hero') as HTMLElement;
+  const heroHeaders = [...heroSection.querySelectorAll('.home-hero_header')];
+  const heroOverview = heroSection.querySelector('.home-hero_description');
+  const hero3D = heroSection.querySelector('.home-hero_3d-embed.is-production');
+
+  const animation = gsap.timeline();
+  animation.from(heroHeaders, {
+    delay: 2,
+    duration: 1,
+    opacity: 0,
+    y: '2rem',
+    stagger: 0.1,
+    ease: 'power4.inOut',
+  });
+  animation.from(heroOverview, { duration: 1.3, y: '2rem', opacity: 0, ease: 'power4.inOut' }, '<');
+  animation.from(hero3D, { duration: 1.3, y: '2rem', opacity: 0, ease: 'power3.inOut' }, '<');
+};
 
 // Overview Reveal
 export const overviewReveal = () => {

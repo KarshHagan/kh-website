@@ -41,6 +41,7 @@ export const isoRevealAnimation = () => {
     },
   });
   animation.from(headerSplit.lines, {
+    delay: 1,
     duration: 1,
     y: '4rem',
     opacity: 0,

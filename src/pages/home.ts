@@ -4,11 +4,13 @@ import {
   featuredReveal,
   focusReveal,
   heroHide,
+  heroReveal,
   heroScroll,
   heroZText,
   overviewReveal,
   servicesReveal,
 } from '$motion/homeMotion';
+import { preloaderMotion } from '$motion/preloaderMotion';
 import { horizontalScrollText } from '$utils/horizontalScrollText';
 import { setDeepLinks } from '$utils/scrollToDeepLink';
 
@@ -18,11 +20,10 @@ export const home = () => {
   // ---------------
   console.log('home');
 
-  // Fixed Header
-  // const headerElement = document.querySelector('#homeHero') as HTMLElement;
-  // fixedHeader(headerElement);
+  preloaderMotion();
 
   // Hero
+  heroReveal();
   heroScroll();
   heroHide();
   heroZText();

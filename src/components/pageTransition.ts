@@ -3,7 +3,11 @@ import { pageTransitionIn, pageTransitionOut } from '$motion/pageTransitionMotio
 export const pageTransition = () => {
   const allLinks = [...document.querySelectorAll('a')];
 
-  pageTransitionOut();
+  const pageLocation = window.location.pathname;
+  const hasFurtherIndex = pageLocation.substring(1);
+  if (hasFurtherIndex !== '') {
+    pageTransitionOut();
+  }
 
   for (const i in allLinks) {
     const temp = allLinks[i] as HTMLAnchorElement;

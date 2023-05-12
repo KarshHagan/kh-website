@@ -35,11 +35,12 @@ export const peopleRevealAnimation = () => {
 
   const animation = gsap.timeline({
     onComplete: () => {
-      // textSplitParent.revert();
-      // headerSplit.revert();
+      textSplitParent.revert();
+      headerSplit.revert();
     },
   });
   animation.from(headerSplit.lines, {
+    delay: 1,
     duration: 1,
     y: '4rem',
     opacity: 0,

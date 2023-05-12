@@ -65,6 +65,7 @@ export const contactPageReveal = () => {
 
   const animation = gsap.timeline();
   animation.from(contactBlocks, {
+    delay: 1,
     duration: 1,
     stagger: { each: 0.1 },
     y: '100%',

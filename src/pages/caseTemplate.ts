@@ -8,6 +8,7 @@ import {
   csPageReveal,
   csStatsReveal,
 } from '$motion/caseTemplateMotion';
+import { cursorArrowYMovement } from '$motion/cursorMotion';
 import { horizontalScrollText } from '$utils/horizontalScrollText';
 
 export const caseTemplate = () => {
@@ -39,4 +40,12 @@ export const caseTemplate = () => {
 
   // Next Project
   horizontalScrollText();
+
+  // Cursor Y Movement
+  const cursorArea = document.querySelector('.case-next_image-wrap') as HTMLElement;
+  cursorArea.addEventListener('mousemove', (e) => {
+    const mouseY = e.movementY;
+
+    cursorArrowYMovement('default', mouseY);
+  });
 };

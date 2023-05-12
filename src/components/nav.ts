@@ -51,6 +51,8 @@ export const menu = () => {
       menuLinkHoverOut(leftLink);
     });
   }
+
+  // Cursor Y Movement
   navMenu.addEventListener('mousemove', (e) => {
     const mouseY = e.movementY;
 
