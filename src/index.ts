@@ -2,6 +2,7 @@ import { cursorMovement } from '$components/cursor';
 import { cursorHover } from '$components/cursor';
 import { footer } from '$components/footer';
 import { menu } from '$components/nav';
+import { pageTransition } from '$components/pageTransition';
 import { about } from '$pages/about';
 import { careers } from '$pages/careers';
 import { caseOverview } from '$pages/caseOverview';
@@ -33,6 +34,8 @@ window.Webflow.push(() => {
 
   smoothScroll();
   inertiaMovement();
+
+  pageTransition();
 
   cursorMovement();
   cursorHover();
