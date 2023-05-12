@@ -9,11 +9,9 @@ export const pageTransition = () => {
     const temp = allLinks[i] as HTMLAnchorElement;
     const linkSrc = temp.href;
 
-    if (linkSrc.includes('karshhagan')) {
-      //   console.log(temp.href);
-      //   console.log('site link');
+    if (linkSrc.includes('karshhagan') && !linkSrc.includes('#')) {
       temp.addEventListener('click', (e) => {
-        // console.log(animationDuration);
+        // console.log(temp.href);
         const animation = pageTransitionIn();
         animation.play();
         const animationDuration = animation.duration() * 1000;
