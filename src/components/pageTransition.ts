@@ -1,6 +1,7 @@
 import { pageTransitionIn, pageTransitionOut } from '$motion/pageTransitionMotion';
 
 export const pageTransition = () => {
+  console.log('PAGE TRANSITON');
   const allLinks = [...document.querySelectorAll('a')];
 
   const pageLocation = window.location.pathname;
