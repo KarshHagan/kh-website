@@ -12,6 +12,7 @@
   "author": "Samso Studios",
   "license": "ISC",
   "dependencies": {
+    "@barba/core": "^2.9.7",
     "@finsweet/ts-utils": "^0.37.3",
     "@studio-freight/lenis": "^1.0.1",
     "gsap": "file:gsap-bonus.tgz"
