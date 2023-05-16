@@ -20,7 +20,7 @@ export const pageTransitionOut = () => {
   const animation = gsap.timeline();
   animation.set(transitionElement, { display: 'block', opacity: 1 });
   animation.to(transitionElement, {
-    delay: 1,
+    delay: 0.5,
     duration: 0.5,
     opacity: 0,
     display: 'none',
