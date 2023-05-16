@@ -2,22 +2,18 @@ import { gsap } from 'gsap';
 
 export const initContact = () => {
   const sublinks = [...document.querySelectorAll('.contact_sub-link')];
-  //   console.log(sublinks);
-
   gsap.set(sublinks, { y: '1rem', opacity: 0 });
 };
 
 export const linkHoverIn = (curNote: HTMLElement, curLink: HTMLElement) => {
   const animation = gsap.timeline();
   animation.to(curLink.children[0], { color: '#D5CFC6', ease: 'expo.out' });
-  //   animation.to(curLink, { letterSpacing: '3px', ease: 'expo.out' }, '<');
   animation.to(curNote, { color: '#EC2543', ease: 'expo.inout' }, '<');
 };
 
 export const linkHoverOut = (curNote: HTMLElement, curLink: HTMLElement) => {
   const animation = gsap.timeline();
   animation.to(curLink.children[0], { color: 'rgba(248,244,238,0)', ease: 'expo.out' });
-  //   animation.to(curLink, { letterSpacing: '0px', ease: 'expo.out' }, '<');
   animation.to(curNote, { color: 'rgb(238, 235, 230, .2)', ease: 'expo.out' }, '<');
 
   curLink.classList.add('text-stroke-white');

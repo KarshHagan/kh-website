@@ -14,8 +14,6 @@ export const scrollToServices = () => {
     sectionTag = sectionTag.split(' ')[0] as string;
 
     tempSection.id = sectionTag;
-
-    // console.log(tempSection);
   }
 
   for (const i in serviceLinks) {

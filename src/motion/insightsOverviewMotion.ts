@@ -36,8 +36,8 @@ export const isoRevealAnimation = () => {
 
   const animation = gsap.timeline({
     onComplete: () => {
-      // textSplitParent.revert();
-      // headerSplit.revert();
+      textSplitParent.revert();
+      headerSplit.revert();
     },
   });
   animation.from(headerSplit.lines, {

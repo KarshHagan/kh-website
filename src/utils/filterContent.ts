@@ -29,8 +29,6 @@ export const filterContent = () => {
         }
 
         if (filterText === 'All') {
-          console.log('all clicked', filterCheckboxes);
-
           activeFilters = [];
           renderQueue = masterList;
           renderUpdate(renderQueue);
@@ -38,8 +36,6 @@ export const filterContent = () => {
         }
       } else {
         clickedSpan.style.color = '#EC2543';
-
-        console.log('no checked');
 
         if (filterText !== 'All') {
           const updatedFilters = activeFilters.filter((item) => item !== filterText);

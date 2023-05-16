@@ -40,7 +40,6 @@ export const heroScroll = () => {
 
   // Check mobile
   const device = getDeviceType();
-  // console.log('device', device);
 
   if (device === 'tablet') {
     setWidth = '80%';

@@ -1,7 +1,6 @@
 import { pageTransitionIn, pageTransitionOut } from '$motion/pageTransitionMotion';
 
 export const pageTransition = () => {
-  //   console.log('PAGE');
   const allLinks = [...document.querySelectorAll('a')];
 
   const pageLocation = window.location.pathname;
@@ -16,7 +15,6 @@ export const pageTransition = () => {
 
     if (linkSrc.includes('karshhagan') && !linkSrc.includes('#')) {
       temp.addEventListener('click', (e) => {
-        // console.log(temp.href);
         e.preventDefault();
         const animation = pageTransitionIn();
         animation.play();

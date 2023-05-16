@@ -7,7 +7,6 @@ export const careers = () => {
   // ---------------
   // Page Globals
   // ---------------
-  console.log('careers');
   stickyHeader();
 
   // Hero

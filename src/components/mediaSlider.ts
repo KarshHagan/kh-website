@@ -11,7 +11,6 @@ export const mediaSlider = () => {
   const nextControl = sliderControls[1] as HTMLElement;
 
   nextControl.addEventListener('click', () => {
-    // console.log('next');
     curIndex += 1;
     prevIndex = curIndex - 1;
 

@@ -7,7 +7,6 @@ export const insights = () => {
   // ---------------
   // Page Globals
   // ---------------
-  console.log('insights');
   stickyHeader();
 
   // Hero

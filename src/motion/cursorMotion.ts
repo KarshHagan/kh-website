@@ -28,7 +28,6 @@ export const cursorIconRevealIn = (icon: HTMLElement) => {
   animation.to(cursor, { backgroundColor: '#4C9A8C' });
 };
 export const cursorIconRevealOut = (icon: HTMLElement) => {
-  // cursor.classList.remove('mbm-ex');
   const animation = gsap.timeline();
   animation.set(cursor, { padding: '0rem' });
   animation.set(icon, { opacity: 0, display: 'none' });
@@ -36,8 +35,6 @@ export const cursorIconRevealOut = (icon: HTMLElement) => {
 };
 
 export const cursorIconReset = () => {
-  const cursorImages = [...document.querySelectorAll('.cursor_image')];
-  console.log('reset');
   const animation = gsap.timeline();
   animation.to(cursor, { duration: 0, rotate: '0deg' });
 };

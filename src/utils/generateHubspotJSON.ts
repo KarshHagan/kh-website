@@ -1,11 +1,4 @@
 export const generateHubspotJSON = (formData: FormData, target: HTMLFormElement) => {
-  // const parsedFormData = [...formData.entries()].map((dataObject) => ({
-  //   name: dataObject[0],
-  //   value: dataObject[1],
-  // }));
-
-  // console.log('PP', parsedFormData);
-
   const checkbox = target.querySelector('#newsletter_signup_checkbox') as HTMLElement;
   checkbox.classList.add('w-input');
 
@@ -13,7 +6,6 @@ export const generateHubspotJSON = (formData: FormData, target: HTMLFormElement)
   const parsedFormData: { name: string; value: string }[] = [];
 
   for (let i = 0; i < formInputs.length; i++) {
-    // console.log(formInputs[i]);
     const tempInput = formInputs[i] as HTMLInputElement;
 
     if (tempInput.name === 'newsletter_signup_checkbox') {
@@ -36,12 +28,9 @@ export const generateHubspotJSON = (formData: FormData, target: HTMLFormElement)
         name: tempInput.name,
         value: tempInput.value,
       };
-      // console.log('temp', tempData);
       parsedFormData.push(tempData);
     }
   }
-
-  console.log('parsed', parsedFormData);
 
   const goToWebinarWebinarKey = parsedFormData.find(
     (input) => input.name === 'goToWebinarWebinarKey'

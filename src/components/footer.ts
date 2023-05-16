@@ -20,9 +20,6 @@ export const footer = () => {
   }
   footerSpacer.style.height = setHeight;
 
-  // console.log(footerHeight);
-  // console.log(footerSpacer.style.height);
-
   // Footer Text Movement
   // --------------------
   footerTextMovement();

@@ -7,7 +7,6 @@ export const caseOverview = () => {
   // ---------------
   // Page Globals
   // ---------------
-  console.log('overview');
 
   stickyHeader();
 

@@ -1,7 +1,6 @@
 import { gsap } from 'gsap';
 
 export const preloaderMotion = () => {
-  console.log('pre');
   const preloaderElement = document.querySelector('.preloader_component') as HTMLElement;
   const preloaderImage = preloaderElement.querySelector('img');
   const pageTransition = document.querySelector('.transition_component');

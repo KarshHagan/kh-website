@@ -35,8 +35,8 @@ export const istRevealAnimation = () => {
 
   const animation = gsap.timeline({
     onComplete: () => {
-      // textSplitParent.revert();
-      // headerSplit.revert();
+      textSplitParent.revert();
+      headerSplit.revert();
     },
   });
   animation.from(headerSplit.lines, {

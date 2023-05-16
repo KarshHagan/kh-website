@@ -18,9 +18,6 @@ export const inertiaMovement = () => {
   for (const i in scrollSections) {
     const tempSection = scrollSections[i] as HTMLElement;
     const scrollElements = [...tempSection.querySelectorAll('[data-scroll-speed]')];
-    // let setSpeed = 0;
-
-    // console.log(scrollElements);
 
     const animation = gsap.timeline({
       scrollTrigger: {
@@ -40,7 +37,6 @@ export const inertiaMovement = () => {
       const tempElement = scrollElements[j] as HTMLElement;
       const elementSpeed = Number(tempElement.dataset.scrollSpeed);
       const setSpeed = elementSpeed;
-      // console.log('temp', tempElement);
 
       animation.to(tempElement, { yPercent: setSpeed * movementMuliplier, ease: 'none' }, '<');
     }

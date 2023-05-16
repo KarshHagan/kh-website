@@ -14,11 +14,9 @@ export const postContactData = (data: string, target: HTMLFormElement) => {
           window.location.href = response.redirectUri;
         }
       } else {
-        // console.log('response but no inlineMessage or redirectUri');
       }
     },
     error: function () {
-      //   console.log('error on the form submitting', data);
       $(target).css('display', 'none').siblings('.w-form-fail').css('display', 'block');
     },
   });

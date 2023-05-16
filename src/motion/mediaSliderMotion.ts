@@ -1,12 +1,9 @@
 import { gsap } from 'gsap';
 
 const sliderImages = [...document.querySelectorAll('[data-slider-image]')];
-// sliderImages.reverse();
 
 export const initSliderImages = () => {
   const useImages = sliderImages;
-
-  // console.log('init', sliderImages);
 
   for (let i = 0; i < useImages.length; i++) {
     const temp = useImages[i] as HTMLElement;
@@ -19,8 +16,6 @@ export const initSliderImages = () => {
 export const showNextImage = (curIndex: number, prevIndex: number) => {
   const curImage = sliderImages[curIndex];
   const prevImage = sliderImages[prevIndex];
-
-  // console.log('cur', curImage, 'prev', prevImage);
 
   const imageAnimation = gsap.timeline();
   imageAnimation.set(curImage, { zIndex: 2, x: '-100%' });

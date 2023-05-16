@@ -15,7 +15,6 @@ export const caseTemplate = () => {
   // ---------------
   // Page Globals
   // ---------------
-  console.log('case detail');
 
   stickyHeader();
 

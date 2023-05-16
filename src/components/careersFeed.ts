@@ -3,5 +3,5 @@ export const careersFeed = () => {
   const bambooList = [...careersList.querySelectorAll('.BambooHR-ATS-Department-Item')];
 
   console.log(careersList.children[0].children[0].children);
-  console.log('bamboo', bambooList);
+  // console.log('bamboo', bambooList);
 };

@@ -11,7 +11,6 @@ export const services = () => {
   // ---------------
   // Page Globals
   // ---------------
-  console.log('services');
   stickyHeader();
 
   checkDeepLinks();

@@ -6,7 +6,6 @@ export const insightsTemplate = () => {
   // ---------------
   // Page Globals
   // ---------------
-  console.log('insights template');
   stickyHeader();
 
   istRevealAnimation();

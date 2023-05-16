@@ -14,31 +14,12 @@ import { insightsTemplate } from '$pages/insightsTemplate';
 import { peopleTemplate } from '$pages/peopleTemplate';
 import { services } from '$pages/services';
 import { terms } from '$pages/terms';
-import { barbaTransition } from '$utils/barba';
 import { inertiaMovement } from '$utils/intertiaMovement';
 import { smoothScroll } from '$utils/smoothScroll';
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   console.log('dom content');
-//   const windowLocation = window.location.pathname;
-//   if (windowLocation === '/') {
-//     console.log('home preloader');
-//     const preloaderElement = document.querySelector('.preloader_component') as HTMLElement;
-//     preloaderElement.style.display = 'flex';
-//     preloaderElement.style.opacity = '1';
-//   } else {
-//     console.log('regular transition');
-//     const transitionElement = document.querySelector('.transition_component') as HTMLElement;
-//     transitionElement.style.display = 'block';
-//     transitionElement.style.opacity = '1';
-//   }
-// });
-// barbaTransition();
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
   console.log('/// kh ///');
-  console.log('webflow');
 
   const windowLocation = window.location.pathname as string;
 

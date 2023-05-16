@@ -37,7 +37,6 @@ export const featuredWork = () => {
     const mouseX = e.pageX;
     const mouseYMovement = e.movementY;
     let setCursor = 'default';
-    // cursorArrowYMovement(curCursorType, mouseYMovement);
 
     if (mouseX <= wrapperWidth / 2) {
       setCursor = 'rotate';
@@ -86,13 +85,6 @@ export const featuredWork = () => {
       showNextContent(curIndex, prevIndex);
     }
   });
-
-  // BG Text
-  // --------------
-  // window.addEventListener('wheel', (e) => {
-  //   console.log(e.deltaY * 0.2);
-  //   textYMovement(e.deltaY);
-  // });
 
   // View More
   // --------------

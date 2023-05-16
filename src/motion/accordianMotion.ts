@@ -6,7 +6,7 @@ gsap.registerPlugin(SplitText);
 const services = [...document.querySelectorAll('.home-services_item')];
 const servicesImages = [...document.querySelectorAll('.home-services_image')];
 
-// Services Init
+// Accordian Init
 // -------------
 export const initAccordian = () => {
   // Services Items
@@ -34,14 +34,12 @@ export const accordianOpen = (element: HTMLElement) => {
   const buttonWrap = element.children[2] as HTMLElement;
   const animation = gsap.timeline();
   animation.set([hiddenContent, buttonWrap], { display: 'flex', opacity: 0 });
-  //   animation.set(buttonWrap, { display: 'block', opacity: 0 });
   animation.to([hiddenContent, buttonWrap], {
     duration: 1,
     height: 'auto',
     opacity: 1,
     ease: 'power4.out',
   });
-  //   animation.to(buttonWrap, { duration: 1, opacity: 1, ease: 'power4.out' }, '<');
 };
 export const accordianClose = (element: HTMLElement) => {
   const hiddenContent = element.children[1] as HTMLElement;
@@ -53,12 +51,11 @@ export const accordianClose = (element: HTMLElement) => {
     opacity: 0,
     ease: 'power4.out',
   });
-  //   animation.to(buttonWrap, { duration: 1, opacity: 0, ease: 'power4.out' }, '<');
   animation.set([hiddenContent, buttonWrap], { display: 'none' });
 };
 
-// Service Item Hover Effects
-// --------------------------
+// Accordian Hover Effects
+// -----------------------
 const duration = 0.8;
 export const accordianHoverIn = (element: HTMLElement) => {
   const defaultImage = servicesImages[0] as HTMLElement;

@@ -18,7 +18,6 @@ export const home = () => {
   // ---------------
   // Page Globals
   // ---------------
-  console.log('home');
 
   preloaderMotion();
 

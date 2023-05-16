@@ -48,8 +48,6 @@ export const menuMotionOpen = () => {
   animation.to(menuOpen, { duration: 1, y: '-100%', ease: 'power4.out' }, '<');
   animation.to(menuClose, { duration: 1, y: '0%', opacity: 1, ease: 'power4.out' }, '<');
 
-  // animation.to('#menuCloseText', { opacity: 1 }, '<');
-
   animation.to(navIconSpans[0], { duration: 1.5, y: '3px', ease: 'expo.out' }, '<');
   animation.to(navIconSpans[1], { duration: 1.5, y: '-3px', ease: 'expo.out' }, '<');
 

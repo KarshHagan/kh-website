@@ -2,16 +2,13 @@ export const cmsMediaGrid = () => {
   // const mediaGrids = [...document.querySelectorAll('.section_media-grid')];
   // for (const i in mediaGrids) {
   //   const tempGrid = mediaGrids[i] as HTMLElement;
-
   // }
-
   const mediaBlocks = [...document.querySelectorAll('[data-media-block]')];
   let setIndex = 0;
 
   for (let i = 0; i < mediaBlocks.length; i++) {
     const tempMediaBlock = mediaBlocks[i] as HTMLElement;
     const videoSet = isVideoSet(tempMediaBlock);
-    // console.log('has video', videoSet);
 
     if (videoSet === false) {
       setMedia(tempMediaBlock, setIndex);

@@ -6,7 +6,6 @@ export const contact = () => {
   // ---------------
   // Page Globals
   // ---------------
-  console.log('contact');
 
   contactPageReveal();
 

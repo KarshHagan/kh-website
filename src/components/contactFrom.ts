@@ -9,12 +9,7 @@ export const postContactFrom = () => {
 
     const formData = new FormData(target);
 
-    // console.log('DATA');
-
-    // console.log(checkbox);
-
     const formattedData = generateHubspotJSON(formData, target);
     postContactData(formattedData, target);
-    console.log('DATA', formattedData);
   });
 };
