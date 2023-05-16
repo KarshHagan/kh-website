@@ -1,6 +1,7 @@
 // import { generateHubspotJSON } from '$utils/generateHubspotJSON';
 import { footerTextMovement } from '$motion/footerMotion';
 import { generateHubspotJSON } from '$utils/generateHubspotJSON';
+import { getDeviceType } from '$utils/getDevice';
 import { postContactData } from '$utils/postContactForm';
 
 export const footer = () => {
@@ -11,8 +12,13 @@ export const footer = () => {
 
   const footerCornerFix = 4 * 16;
   const footerHeight = footerElement.clientHeight;
+  let setHeight = footerHeight - footerCornerFix + 'px';
 
-  footerSpacer.style.height = footerHeight - footerCornerFix + 'px';
+  const device = getDeviceType();
+  if (device === 'mobile') {
+    setHeight = '0px';
+  }
+  footerSpacer.style.height = setHeight;
 
   // console.log(footerHeight);
   // console.log(footerSpacer.style.height);
