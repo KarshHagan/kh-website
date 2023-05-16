@@ -20,7 +20,7 @@ export const home = () => {
   // ---------------
   console.log('home');
 
-  // preloaderMotion();
+  preloaderMotion();
 
   // Hero
   heroReveal();

@@ -1,3 +1,5 @@
+// eslint-disable-next-line simple-import-sort/imports
+import { home } from '$pages/home';
 import barba from '@barba/core';
 import { restartWebflow } from '@finsweet/ts-utils';
 import { gsap } from 'gsap';
@@ -21,9 +23,18 @@ export const barbaTransition = () => {
     ],
   });
 
-  barba.hooks.after(async () => {
-    console.log('after - Webflow restart');
-    const restart = await restartWebflow();
-    console.log('restart', restart);
+  barba.hooks.after(async (data) => {
+    console.log('after - Webflow restart', data?.next.url.path);
+    const pagePath = data?.next.url.path as string;
+    restartPageModules(pagePath);
+    await restartWebflow();
   });
 };
+
+async function restartPageModules(page: string) {
+  //   const curPage = page;
+  console.log(page);
+  if (page === '/') {
+    home();
+  }
+}

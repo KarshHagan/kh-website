@@ -33,7 +33,6 @@ import { smoothScroll } from '$utils/smoothScroll';
 //     transitionElement.style.opacity = '1';
 //   }
 // });
-
 // barbaTransition();
 
 window.Webflow ||= [];
@@ -43,10 +42,6 @@ window.Webflow.push(() => {
 
   const windowLocation = window.location.pathname as string;
 
-  // document.addEventListener('click', (e) => {
-  //   console.log(e.target);
-  // });
-
   // ---------------
   // Site Globals
   // ---------------
@@ -54,7 +49,7 @@ window.Webflow.push(() => {
 
   smoothScroll();
   inertiaMovement();
-  // pageTransition();
+  pageTransition();
   cursorMovement();
   cursorHover();
 
