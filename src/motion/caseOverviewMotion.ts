@@ -49,7 +49,7 @@ export const csoPageReveal = () => {
     stagger: 0.1,
     ease: 'power4.inOut',
   });
-  animation.from(overline, { duration: 1, width: 0, ease: 'expo.inOut' }, '<');
+  animation.from(overline, { duration: 1, width: '0%', ease: 'expo.inOut' }, '<');
   animation.from(headerOverview, { duration: 1, opacity: 0, y: '1rem', ease: 'power4.inOut' }, '<');
   animation.from(
     filterButton,
@@ -75,14 +75,42 @@ export const csoPageReveal = () => {
   );
 };
 
+// Card Hover Effects
+export const caseHover = () => {
+  const caseItems = [...document.querySelectorAll('.work-grid_item')];
+
+  for (const i in caseItems) {
+    const temp = caseItems[i] as HTMLElement;
+    const tempImage = temp.querySelector('img');
+
+    // gsap.set(tempImage, { scale: 1.1 });
+
+    temp.addEventListener('mouseenter', (e) => {
+      const target = e.target as HTMLElement;
+      const targetImage = target.querySelector('img');
+
+      const animation = gsap.timeline();
+      animation.to(targetImage, { scale: 1.1, ease: 'power3.out' });
+    });
+    temp.addEventListener('mouseleave', (e) => {
+      const target = e.target as HTMLElement;
+      const targetImage = target.querySelector('img');
+
+      const animation = gsap.timeline();
+      animation.to(targetImage, { duration: 0.6, scale: 1, ease: 'power3.out' });
+    });
+  }
+};
+
 // Page Scroll
 // -----------
 export const caseScrollEffect = () => {
+  const windowWidth = window.innerWidth;
   const workItems = [...document.querySelectorAll('.work-grid_item')];
 
   const device = getDeviceType();
 
-  if (device === 'desktop') {
+  if (device === 'desktop' && windowWidth > 767) {
     const leftItems = [];
     const rightItems = [];
 

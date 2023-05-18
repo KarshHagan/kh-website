@@ -36,6 +36,14 @@ export const menu = () => {
     menuCloseAnimation.play(0);
   });
 
+  document.addEventListener('keydown', (e) => {
+    const keyPressed = e.key;
+
+    if (keyPressed === 'Escape') {
+      menuCloseAnimation.play(0);
+    }
+  });
+
   // Menu link hover effects
   // -----------------------
   const navLinks = [...document.querySelectorAll('.nav_link')];

@@ -73,3 +73,30 @@ export const isoRevealAnimation = () => {
     '<0.2'
   );
 };
+
+// Card Hover Effects
+export const insightHover = () => {
+  const items = [...document.querySelectorAll('.insights_item')];
+
+  for (const i in items) {
+    const temp = items[i] as HTMLElement;
+    const tempImage = temp.querySelector('img');
+
+    // gsap.set(tempImage, { scale: 1.1 });
+
+    temp.addEventListener('mouseenter', (e) => {
+      const target = e.target as HTMLElement;
+      const targetImage = target.querySelector('img');
+
+      const animation = gsap.timeline();
+      animation.to(targetImage, { scale: 1.1, ease: 'power3.out' });
+    });
+    temp.addEventListener('mouseleave', (e) => {
+      const target = e.target as HTMLElement;
+      const targetImage = target.querySelector('img');
+
+      const animation = gsap.timeline();
+      animation.to(targetImage, { duration: 0.6, scale: 1, ease: 'power3.out' });
+    });
+  }
+};

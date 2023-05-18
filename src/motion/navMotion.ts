@@ -42,6 +42,7 @@ export const menuInit = (page: string) => {
 export const menuMotionOpen = () => {
   const animation = gsap.timeline({ paused: true });
   animation.set(lenisContainer, { height: '100%' });
+  animation.set('body', { overflow: 'hidden' });
   animation.set(menuClose, { y: '100%' });
 
   animation.to(navMenu, { display: 'flex' });
@@ -112,6 +113,8 @@ export const menuMotionClose = () => {
   const animation = gsap.timeline({ paused: true });
 
   animation.set(lenisContainer, { height: 'auto' });
+  animation.set('body', { overflow: 'auto' });
+
   animation.to(menuSwatches, {
     opacity: 0,
     ease: 'power1.out',

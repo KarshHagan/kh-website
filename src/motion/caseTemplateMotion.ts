@@ -10,14 +10,16 @@ gsap.registerPlugin(SplitText);
 // -----------------
 
 // Reveal global properties
-let scrollTriggerStart = 'top 70%';
-let scrollTriggerEnd = 'top 70%';
+let scrollTriggerStart = 'top 75%';
+let scrollTriggerEnd = 'top 75%';
+let setDelay = 0;
 
 const device = getDeviceType();
 
 if (device === 'tablet' || device === 'mobile') {
-  scrollTriggerStart = 'top 80%';
-  scrollTriggerEnd = 'top 80%';
+  scrollTriggerStart = 'top 90%';
+  scrollTriggerEnd = 'top 90%';
+  setDelay = 1.5;
 }
 // Page Reveal
 export const csPageReveal = () => {
@@ -31,6 +33,7 @@ export const csPageReveal = () => {
     linesClass: 'split-text_parent',
   });
   const headerOverview = fixedHeaderSection.querySelector('p');
+  const headerTexture = document.querySelector('.case-hero_texture');
 
   const overline = featuredSection.querySelector('.fixed-header_overline');
   const featuredContent = featuredSection.querySelector('.case-hero_featured-wrap');
@@ -56,6 +59,7 @@ export const csPageReveal = () => {
     { duration: 1, opacity: 0, y: '2rem', ease: 'power4.out' },
     '<0.6'
   );
+  animation.from(headerTexture, { opacity: 0, ease: 'power4.out' });
 };
 
 // Overview Reveal
@@ -77,6 +81,7 @@ export const csOverviewReveal = () => {
       // markers: true,
       // toggleActions: 'play none none reverse',
     },
+    delay: setDelay,
     onComplete: () => {
       textSplitParent.revert();
       headerSplit.revert();

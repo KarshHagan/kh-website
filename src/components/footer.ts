@@ -16,7 +16,7 @@ export const footer = () => {
 
   const device = getDeviceType();
   if (device === 'mobile') {
-    setHeight = '0px';
+    setHeight = '0vh';
   }
   footerSpacer.style.height = setHeight;
 

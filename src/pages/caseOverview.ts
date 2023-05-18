@@ -1,5 +1,5 @@
 import { stickyHeader } from '$components/stickyHeader';
-import { caseScrollEffect, csoPageReveal } from '$motion/caseOverviewMotion';
+import { caseHover, caseScrollEffect, csoPageReveal } from '$motion/caseOverviewMotion';
 import { cursorArrowYMovement } from '$motion/cursorMotion';
 import { filterContent } from '$utils/filterContent';
 
@@ -15,6 +15,9 @@ export const caseOverview = () => {
 
   // Work Filtering
   filterContent();
+
+  //  Item Hover
+  caseHover();
 
   // Page Scrolling
   caseScrollEffect();

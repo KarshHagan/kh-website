@@ -1,3 +1,5 @@
+import { filterReveal } from '$motion/filterReveal';
+
 export const filterContent = () => {
   let activeFilters: string[] = [];
   let renderQueue: Element[] = [];
@@ -24,14 +26,19 @@ export const filterContent = () => {
           activeFilters.push(filterText);
           const tempList = filterList(renderQueue, activeFilters);
           renderQueue = tempList;
-          renderUpdate(renderQueue);
+          console.log('render', renderQueue);
+          hideAll();
+          filterReveal(renderQueue);
+          // renderUpdate(renderQueue);
           updateInitialCheckbox(initialFilter, 'hide');
         }
 
         if (filterText === 'All') {
           activeFilters = [];
           renderQueue = masterList;
-          renderUpdate(renderQueue);
+          hideAll();
+          filterReveal(renderQueue);
+          // renderUpdate(renderQueue);
           allReset();
         }
       } else {
@@ -42,12 +49,16 @@ export const filterContent = () => {
           activeFilters = updatedFilters;
 
           if (activeFilters.length < 1) {
-            renderUpdate(renderQueue);
+            hideAll();
+            filterReveal(renderQueue);
+            // renderUpdate(renderQueue);
             updateInitialCheckbox(initialFilter, 'show');
           } else {
             const tempList = filterList(renderQueue, activeFilters);
             renderQueue = tempList;
-            renderUpdate(renderQueue);
+            hideAll();
+            filterReveal(renderQueue);
+            // renderUpdate(renderQueue);
           }
         }
       }
@@ -78,7 +89,8 @@ function filterList(items: Element[], filters: string[]) {
 function hideAll() {
   const masterList = [...document.querySelectorAll('[data-filter-item]')];
   for (const item of masterList) {
-    item.classList.add('hide');
+    const temp = item as HTMLElement;
+    temp.style.display = 'none';
   }
 }
 

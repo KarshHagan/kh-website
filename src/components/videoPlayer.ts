@@ -6,8 +6,8 @@ export const videoPlayer = () => {
   const muteButton = document.querySelector('.case-hero_mute-button.is-mute') as HTMLElement;
   const expandButton = document.querySelector('.case-hero_mute-button.is-expand') as HTMLElement;
 
-  videoElement.removeAttribute('muted');
-  videoElement.muted = false;
+  // videoElement.removeAttribute('muted');
+  // videoElement.muted = false;
 
   videoEmbed.addEventListener('click', () => {
     togglePlay();
