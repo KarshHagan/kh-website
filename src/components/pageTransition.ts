@@ -13,7 +13,13 @@ export const pageTransition = () => {
     const temp = allLinks[i] as HTMLAnchorElement;
     const linkSrc = temp.href;
 
-    if (linkSrc.includes('karshhagan') && !linkSrc.includes('#')) {
+    if (
+      linkSrc.includes('karshhagan') &&
+      !linkSrc.includes('#') &&
+      !linkSrc.includes('facebook') &&
+      !linkSrc.includes('twitter') &&
+      !linkSrc.includes('linkedin')
+    ) {
       temp.addEventListener('click', (e) => {
         e.preventDefault();
         const animation = pageTransitionIn();
