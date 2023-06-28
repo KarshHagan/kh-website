@@ -43,11 +43,11 @@ export const heroScroll = () => {
 
   if (device === 'tablet') {
     setWidth = '80%';
-    setHeight = '85%';
-    setCornerRadius = '100vw 100vw 6rem 6rem';
-  } else if (device === 'mobile') {
-    setWidth = '80%';
     setHeight = '80%';
+    setCornerRadius = '3rem 3rem 3rem 3rem';
+  } else if (device === 'mobile') {
+    setWidth = '75%';
+    setHeight = '50%';
     setCornerRadius = '2rem 2rem 2rem 2rem';
   }
 
@@ -76,7 +76,7 @@ export const heroScroll = () => {
   // ------------------
   let setIndicator = '-5rem';
   if (device === 'tablet') {
-    setIndicator = '-3rem';
+    setIndicator = '-4rem';
   } else if (device === 'mobile') {
     setIndicator = '-3rem';
   }
