@@ -18,7 +18,8 @@ export const pageTransition = () => {
       !linkSrc.includes('#') &&
       !linkSrc.includes('facebook') &&
       !linkSrc.includes('twitter') &&
-      !linkSrc.includes('linkedin')
+      !linkSrc.includes('linkedin') &&
+      !linkSrc.includes('instagram')
     ) {
       temp.addEventListener('click', (e) => {
         e.preventDefault();
