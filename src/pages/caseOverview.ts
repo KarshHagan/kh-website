@@ -8,7 +8,7 @@ export const caseOverview = () => {
   // Page Globals
   // ---------------
 
-  stickyHeader();
+  // stickyHeader();
 
   // Page Reveal
   csoPageReveal();

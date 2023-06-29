@@ -7,7 +7,7 @@ export const about = () => {
   // ---------------
   // Page Globals
   // ---------------
-  stickyHeader();
+  // stickyHeader();
 
   // Hero
   abPageReveal();

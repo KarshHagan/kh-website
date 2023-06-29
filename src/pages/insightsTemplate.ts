@@ -1,3 +1,4 @@
+import { mediaSlider } from '$components/mediaSlider';
 import { stickyHeader } from '$components/stickyHeader';
 import { istRevealAnimation } from '$motion/insightsTemplateMotion';
 
@@ -5,7 +6,10 @@ export const insightsTemplate = () => {
   // ---------------
   // Page Globals
   // ---------------
-  stickyHeader();
+  // stickyHeader();
+
+  // Media Slider
+  mediaSlider();
 
   istRevealAnimation();
 

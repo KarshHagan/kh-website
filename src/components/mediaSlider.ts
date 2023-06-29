@@ -10,7 +10,13 @@ export const mediaSlider = () => {
   const prevControl = sliderControls[0] as HTMLElement;
   const nextControl = sliderControls[1] as HTMLElement;
 
+  if (countIndex === 1) {
+    prevControl.style.display = 'none';
+    nextControl.style.display = 'none';
+  }
+
   nextControl.addEventListener('click', () => {
+    console.log('next');
     curIndex += 1;
     prevIndex = curIndex - 1;
 
@@ -21,6 +27,7 @@ export const mediaSlider = () => {
   });
 
   prevControl.addEventListener('click', () => {
+    console.log('prev');
     curIndex -= 1;
     prevIndex = curIndex + 1;
     if (curIndex < 0) {

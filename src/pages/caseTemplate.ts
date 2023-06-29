@@ -16,7 +16,7 @@ export const caseTemplate = () => {
   // Page Globals
   // ---------------
 
-  stickyHeader();
+  // stickyHeader();
 
   // Hero
   csPageReveal();
