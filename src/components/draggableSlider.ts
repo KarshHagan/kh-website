@@ -6,7 +6,7 @@ gsap.registerPlugin(InertiaPlugin, Draggable);
 
 export const draggableSlider = () => {
   const sliderParent = document.querySelector('.about-team_wrapper') as HTMLElement;
-  const sliderContainer = document.querySelector('.about-team_list') as HTMLElement;
+  const sliderContainer = sliderParent.querySelector('.about-team_list') as HTMLElement;
 
   const slideDuration = 0.3;
   const slideDelay = 1.5;
@@ -16,12 +16,12 @@ export const draggableSlider = () => {
   const nextButton = document.querySelector('#nextButton') as HTMLElement;
   const slideCount = slides.length;
 
-  console.log('slides', slides, slideCount);
-
   for (let i = 0; i < slideCount; i++) {
+    const calcPercent = i * 100 + 10;
+
     gsap.set(slides[i], {
-      backgroundColor: '#' + ((Math.random() * 0xffffff) << 0).toString(16),
-      xPercent: i * 100,
+      // backgroundColor: '#' + ((Math.random() * 0xffffff) << 0).toString(16),
+      xPercent: calcPercent,
     });
   }
 
@@ -45,9 +45,7 @@ export const draggableSlider = () => {
   let wrapWidth = 0;
   resize();
 
-  const draggable = Draggable.create(proxy, {
-    // type: 'x',
-    // bounds: sliderParent,
+  Draggable.create(proxy, {
     trigger: sliderContainer,
     inertia: true,
     throwProps: true,
@@ -71,7 +69,7 @@ export const draggableSlider = () => {
   });
 
   // Functions
-  function updateDraggable() {
+  function updateDraggable(this: any) {
     // timer.restart(true);
     slideAnimation.kill();
     this.update();
@@ -89,14 +87,6 @@ export const draggableSlider = () => {
       onUpdate: updateProgress,
     });
   }
-
-  // function autoPlay() {
-  //   if (draggable.isPressed || draggable.isDragging || draggable.isThrowing) {
-  //     timer.restart(true);
-  //   } else {
-  //     animateSlides(-1);
-  //   }
-  // }
 
   function updateProgress() {
     animation.progress(gsap.utils.wrap(0, 1, (gsap.getProperty(proxy, 'x') as number) / wrapWidth));
@@ -119,9 +109,12 @@ export const draggableSlider = () => {
   function snapX(x: number) {
     return Math.round(x / slideWidth) * slideWidth;
   }
-  // Draggable.create(sliderContainer, {
-  //   type: 'x',
-  //   bounds: sliderParent,
-  //   inertia: true,
-  // });
+
+  // function autoPlay() {
+  //   if (draggable.isPressed || draggable.isDragging || draggable.isThrowing) {
+  //     timer.restart(true);
+  //   } else {
+  //     animateSlides(-1);
+  //   }
+  // }
 };
