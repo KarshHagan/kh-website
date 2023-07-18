@@ -99,7 +99,7 @@ export const draggableSlider = () => {
     const norm = (gsap.getProperty(proxy, 'x') as number) / wrapWidth || 0;
 
     slideWidth = (slides[0] as HTMLElement).offsetWidth;
-    slideHeight = (slides[0] as HTMLElement).offsetHeight;
+    slideHeight = largestCard(slides);
     wrapWidth = slideWidth * slideCount;
 
     gsap.set(sliderGrid, { height: slideHeight });
@@ -114,6 +114,18 @@ export const draggableSlider = () => {
 
   function snapX(x: number) {
     return Math.round(x / slideWidth) * slideWidth;
+  }
+
+  function largestCard(slides: Element[]) {
+    const cardHeights: number[] = [];
+    for (const i in slides) {
+      const temp = (slides[i] as HTMLElement).offsetHeight;
+      cardHeights.push(temp);
+    }
+
+    const maxHeight = Math.max(...cardHeights);
+
+    return maxHeight;
   }
 
   // function autoPlay() {
