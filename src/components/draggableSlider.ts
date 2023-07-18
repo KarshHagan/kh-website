@@ -42,6 +42,7 @@ export const draggableSlider = () => {
   gsap.set(proxy, { x: 0 });
   let slideAnimation = gsap.to({}, { duration: 0.1 });
   let slideWidth = 0;
+  let slideHeight = 0;
   let wrapWidth = 0;
   resize();
 
@@ -93,10 +94,15 @@ export const draggableSlider = () => {
   }
 
   function resize() {
+    const sliderGrid = document.querySelector('.about-team_grid') as HTMLElement;
+
     const norm = (gsap.getProperty(proxy, 'x') as number) / wrapWidth || 0;
 
     slideWidth = (slides[0] as HTMLElement).offsetWidth;
+    slideHeight = (slides[0] as HTMLElement).offsetHeight;
     wrapWidth = slideWidth * slideCount;
+
+    gsap.set(sliderGrid, { height: slideHeight });
 
     gsap.set(proxy, {
       x: norm * wrapWidth,

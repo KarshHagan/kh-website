@@ -136,22 +136,29 @@ export const abTeamReveal = () => {
   const teamSection = document.querySelector('.section_about-team') as HTMLElement;
   const sectionLabel = teamSection.querySelector('.module_label');
   const teamCards = [...teamSection.querySelectorAll('.about-team_item')];
+  const controls = teamSection.querySelector('.about-team_slider-controls') as HTMLElement;
   const seeMore = teamSection.querySelector('.show-more_component');
+
+  const lastCard = teamCards[teamCards.length - 1];
+  teamCards.pop();
+
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: teamSection,
       start: scrollTriggerStart,
       end: scrollTriggerEnd,
-      // markers: true,
-      // toggleActions: 'play none none reverse',
+      markers: true,
+      toggleActions: 'play none none reverse',
     },
   });
 
   animation.from(sectionLabel, { duration: 2, opacity: 0, ease: 'power4.out' });
+  animation.from(controls, { duration: 2, opacity: 0, ease: 'power4.out' }, '<0.2');
+  animation.from(lastCard, { duration: 1, x: '2rem', opacity: 0, ease: 'power4.out' }, '<0.2');
   animation.from(
     teamCards,
     { duration: 1, x: '2rem', opacity: 0, stagger: 0.1, ease: 'power4.out' },
-    '<'
+    '<0.1'
   );
   // animation.from(seeMore, { duration: 1, y: '2rem', opacity: 0, ease: 'power4.out' }, '<0.2');
 };
