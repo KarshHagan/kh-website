@@ -147,8 +147,8 @@ export const abTeamReveal = () => {
       trigger: teamSection,
       start: scrollTriggerStart,
       end: scrollTriggerEnd,
-      markers: true,
-      toggleActions: 'play none none reverse',
+      // markers: true,
+      // toggleActions: 'play none none reverse',
     },
   });
 
