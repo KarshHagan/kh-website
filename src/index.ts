@@ -23,6 +23,13 @@ window.Webflow.push(() => {
 
   const windowLocation = window.location.pathname as string;
 
+  // window.addEventListener('load', (e) => {
+  //   console.log('load', e);
+  // });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM');
+  });
   // ---------------
   // Site Globals
   // ---------------

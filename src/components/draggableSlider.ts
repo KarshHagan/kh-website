@@ -18,6 +18,7 @@ export const draggableSlider = () => {
 
   for (let i = 0; i < slideCount; i++) {
     const calcPercent = i * 100 + 10;
+    // console.log('perc', calcPercent);
 
     gsap.set(slides[i], {
       // backgroundColor: '#' + ((Math.random() * 0xffffff) << 0).toString(16),
@@ -44,6 +45,7 @@ export const draggableSlider = () => {
   let slideWidth = 0;
   let slideHeight = 0;
   let wrapWidth = 0;
+
   resize();
 
   Draggable.create(proxy, {
@@ -94,15 +96,21 @@ export const draggableSlider = () => {
   }
 
   function resize() {
+    console.log('resize');
     const sliderGrid = document.querySelector('.about-team_grid') as HTMLElement;
 
     const norm = (gsap.getProperty(proxy, 'x') as number) / wrapWidth || 0;
 
+    const computedHeight = window.getComputedStyle(slides[0]).height;
     slideWidth = (slides[0] as HTMLElement).offsetWidth;
-    slideHeight = largestCard(slides);
+    // console.log(slideWidth);
+
+    slideHeight = largestCard();
+    gsap.to(sliderGrid, { height: computedHeight });
+
     wrapWidth = slideWidth * slideCount;
 
-    gsap.set(sliderGrid, { height: slideHeight });
+    // console.log(slideHeight);
 
     gsap.set(proxy, {
       x: norm * wrapWidth,
@@ -116,18 +124,6 @@ export const draggableSlider = () => {
     return Math.round(x / slideWidth) * slideWidth;
   }
 
-  function largestCard(slides: Element[]) {
-    const cardHeights: number[] = [];
-    for (const i in slides) {
-      const temp = (slides[i] as HTMLElement).offsetHeight;
-      cardHeights.push(temp);
-    }
-
-    const maxHeight = Math.max(...cardHeights);
-
-    return maxHeight;
-  }
-
   // function autoPlay() {
   //   if (draggable.isPressed || draggable.isDragging || draggable.isThrowing) {
   //     timer.restart(true);
@@ -135,4 +131,23 @@ export const draggableSlider = () => {
   //     animateSlides(-1);
   //   }
   // }
+};
+
+export const largestCard = () => {
+  const slides = [...document.querySelectorAll('.about-team_item')];
+  console.log('computed', window.getComputedStyle(slides[0]).height);
+  console.log('offset', (slides[0] as HTMLElement).offsetWidth);
+
+  const cardHeights: number[] = [];
+  for (const i in slides) {
+    const temp = Number(window.getComputedStyle(slides[i]).height.split('.')[0]);
+    // const temp = (slides[i] as HTMLElement).offsetHeight;
+    // console.log('temp', temp);
+    cardHeights.push(temp);
+  }
+
+  console.log('heights', cardHeights);
+  const maxHeight = Math.max(...cardHeights);
+
+  return maxHeight;
 };

@@ -1,5 +1,4 @@
-import { draggableSlider } from '$components/draggableSlider';
-import { stickyHeader } from '$components/stickyHeader';
+import { draggableSlider, largestCard } from '$components/draggableSlider';
 import { abAwardsReveal, abClientsReveal, abPageReveal, abTeamReveal } from '$motion/aboutMotion';
 import { horizontalScrollText } from '$utils/horizontalScrollText';
 
@@ -16,6 +15,11 @@ export const about = () => {
   abClientsReveal();
 
   // Team
+  window.addEventListener('load', (e) => {
+    console.log('load', e);
+    const slideHeight = largestCard();
+    console.log('ab slide height', slideHeight);
+  });
   draggableSlider();
   abTeamReveal();
 
