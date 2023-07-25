@@ -1,3 +1,5 @@
+/* eslint-disable simple-import-sort/imports */
+import { getDeviceType } from '$utils/getDevice';
 import { gsap } from 'gsap';
 import { Draggable } from 'gsap/Draggable';
 import { InertiaPlugin } from 'gsap/InertiaPlugin';
@@ -5,11 +7,16 @@ import { InertiaPlugin } from 'gsap/InertiaPlugin';
 gsap.registerPlugin(InertiaPlugin, Draggable);
 
 export const draggableSlider = () => {
+  const device = getDeviceType();
+
   const sliderParent = document.querySelector('.about-team_wrapper') as HTMLElement;
   const sliderContainer = sliderParent.querySelector('.about-team_list') as HTMLElement;
 
   const slideDuration = 0.3;
-  const slideDelay = 1.5;
+  let paddingBottom = 16;
+  if (device === 'mobile') {
+    paddingBottom = 16 * 3;
+  }
 
   const slides = [...document.querySelectorAll('.about-team_item')];
   const prevButton = document.querySelector('#prevButton') as HTMLElement;
@@ -18,15 +25,11 @@ export const draggableSlider = () => {
 
   for (let i = 0; i < slideCount; i++) {
     const calcPercent = i * 100 + 10;
-    // console.log('perc', calcPercent);
 
     gsap.set(slides[i], {
-      // backgroundColor: '#' + ((Math.random() * 0xffffff) << 0).toString(16),
       xPercent: calcPercent,
     });
   }
-
-  // const timer = gsap.delayedCall(slideDelay, autoPlay);
 
   const animation = gsap.to(slides, {
     duration: 1,
@@ -48,8 +51,6 @@ export const draggableSlider = () => {
 
   init();
   // resize();
-  // animateSlides(0);
-  // slideAnimation.progress(1);
 
   Draggable.create(proxy, {
     trigger: sliderContainer,
@@ -76,7 +77,7 @@ export const draggableSlider = () => {
 
   // Functions
   function init() {
-    console.log('init');
+    // console.log('init');
     const sliderGrid = document.querySelector('.about-team_grid') as HTMLElement;
 
     const norm = (gsap.getProperty(proxy, 'x') as number) / wrapWidth || 0;
@@ -89,25 +90,21 @@ export const draggableSlider = () => {
 
     const slideHeight = calculateHeight();
     slideHeight.then((result) => {
-      console.log('now', result);
       gsap.set(sliderGrid, { height: result });
     });
-    // console.log('here', slideHeight);
 
     animateSlides(0);
     slideAnimation.progress(1);
   }
 
   function resize() {
-    console.log('resize');
+    // console.log('resize');
     const sliderGrid = document.querySelector('.about-team_grid') as HTMLElement;
 
     const norm = (gsap.getProperty(proxy, 'x') as number) / wrapWidth || 0;
 
     slideHeight = largestCard();
     slideWidth = (slides[0] as HTMLElement).offsetWidth;
-
-    console.log(slideHeight);
 
     gsap.set(sliderGrid, { height: slideHeight });
 
@@ -127,7 +124,6 @@ export const draggableSlider = () => {
   }
 
   function animateSlides(direction: number) {
-    // timer.restart(true);
     slideAnimation.kill();
 
     const x = snapX((gsap.getProperty(proxy, 'x') as number) + direction * slideWidth);
@@ -152,14 +148,14 @@ export const draggableSlider = () => {
     const cardHeights: number[] = [];
     for (const i in slides) {
       const temp = (slides[i] as HTMLElement).offsetHeight;
-      // console.log('temp', temp, temp2);
       cardHeights.push(temp);
     }
 
-    // console.log('heights', cardHeights);
     const maxHeight = Math.max(...cardHeights);
+    const totalHeight = maxHeight + paddingBottom;
+    // console.log('resize', totalHeight, maxHeight);
 
-    return maxHeight;
+    return totalHeight;
   }
 
   async function calculateHeight() {
@@ -169,21 +165,21 @@ export const draggableSlider = () => {
 
     await waitForImageToLoad(slideImage);
     const imageHeight = slideImage.offsetHeight;
+
     for (const i in slides) {
       const temp = slides[i] as HTMLElement;
       const tempOverview = temp.querySelector('.about-team_info-wrap') as HTMLElement;
       overviewHeights.push(tempOverview.offsetHeight);
     }
-    console.log('ov height', overviewHeights);
-    const maxHeight = Math.max(...overviewHeights);
-    // const overviewHeight = slideOverview.offsetHeight;
-    const totalHeight = imageHeight + maxHeight;
-    // console.log('DONE', slideImage, slideImage.offsetHeight);
+    const maxOvHeight = Math.max(...overviewHeights);
+    const totalHeight = imageHeight + maxOvHeight + paddingBottom;
+    // console.log('init', totalHeight, maxOvHeight);
+
     return totalHeight;
   }
 
   function waitForImageToLoad(imageElement: HTMLElement) {
-    console.log('waiting for image load');
+    // console.log('waiting for image load');
     return new Promise((resolve) => {
       imageElement.onload = resolve;
     });
