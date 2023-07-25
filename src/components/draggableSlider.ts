@@ -11,17 +11,20 @@ export const draggableSlider = () => {
 
   const sliderParent = document.querySelector('.about-team_wrapper') as HTMLElement;
   const sliderContainer = sliderParent.querySelector('.about-team_list') as HTMLElement;
-
-  const slideDuration = 0.3;
-  let paddingBottom = 16;
-  if (device === 'mobile') {
-    paddingBottom = 16 * 3;
-  }
-
   const slides = [...document.querySelectorAll('.about-team_item')];
   const prevButton = document.querySelector('#prevButton') as HTMLElement;
   const nextButton = document.querySelector('#nextButton') as HTMLElement;
   const slideCount = slides.length;
+
+  const slideDuration = 0.3;
+  let slideWidth = 0;
+  let slideHeight = 0;
+  let wrapWidth = 0;
+
+  const paddingBottom = 0;
+  // if (device === 'mobile') {
+  //   paddingBottom = 16 * 0;
+  // }
 
   for (let i = 0; i < slideCount; i++) {
     const calcPercent = i * 100 + 10;
@@ -45,9 +48,6 @@ export const draggableSlider = () => {
   const proxy = document.createElement('div');
   gsap.set(proxy, { x: 0 });
   let slideAnimation = gsap.to({}, { duration: 0.1 });
-  let slideWidth = 0;
-  let slideHeight = 0;
-  let wrapWidth = 0;
 
   init();
   // resize();
