@@ -46,7 +46,10 @@ export const draggableSlider = () => {
   let slideHeight = 0;
   let wrapWidth = 0;
 
-  resize();
+  init();
+  // resize();
+  // animateSlides(0);
+  // slideAnimation.progress(1);
 
   Draggable.create(proxy, {
     trigger: sliderContainer,
@@ -72,6 +75,51 @@ export const draggableSlider = () => {
   });
 
   // Functions
+  function init() {
+    console.log('init');
+    const sliderGrid = document.querySelector('.about-team_grid') as HTMLElement;
+
+    const norm = (gsap.getProperty(proxy, 'x') as number) / wrapWidth || 0;
+
+    slideWidth = (slides[0] as HTMLElement).offsetWidth;
+    wrapWidth = slideWidth * slideCount;
+    gsap.set(proxy, {
+      x: norm * wrapWidth,
+    });
+
+    const slideHeight = calculateHeight();
+    slideHeight.then((result) => {
+      console.log('now', result);
+      gsap.set(sliderGrid, { height: result });
+    });
+    // console.log('here', slideHeight);
+
+    animateSlides(0);
+    slideAnimation.progress(1);
+  }
+
+  function resize() {
+    console.log('resize');
+    const sliderGrid = document.querySelector('.about-team_grid') as HTMLElement;
+
+    const norm = (gsap.getProperty(proxy, 'x') as number) / wrapWidth || 0;
+
+    slideHeight = largestCard();
+    slideWidth = (slides[0] as HTMLElement).offsetWidth;
+
+    console.log(slideHeight);
+
+    gsap.set(sliderGrid, { height: slideHeight });
+
+    wrapWidth = slideWidth * slideCount;
+    gsap.set(proxy, {
+      x: norm * wrapWidth,
+    });
+
+    animateSlides(0);
+    slideAnimation.progress(1);
+  }
+
   function updateDraggable(this: any) {
     // timer.restart(true);
     slideAnimation.kill();
@@ -95,59 +143,49 @@ export const draggableSlider = () => {
     animation.progress(gsap.utils.wrap(0, 1, (gsap.getProperty(proxy, 'x') as number) / wrapWidth));
   }
 
-  function resize() {
-    console.log('resize');
-    const sliderGrid = document.querySelector('.about-team_grid') as HTMLElement;
-
-    const norm = (gsap.getProperty(proxy, 'x') as number) / wrapWidth || 0;
-
-    const computedHeight = window.getComputedStyle(slides[0]).height;
-    slideWidth = (slides[0] as HTMLElement).offsetWidth;
-    // console.log(slideWidth);
-
-    slideHeight = largestCard();
-    gsap.to(sliderGrid, { height: computedHeight });
-
-    wrapWidth = slideWidth * slideCount;
-
-    // console.log(slideHeight);
-
-    gsap.set(proxy, {
-      x: norm * wrapWidth,
-    });
-
-    animateSlides(0);
-    slideAnimation.progress(1);
-  }
-
   function snapX(x: number) {
     return Math.round(x / slideWidth) * slideWidth;
   }
+  function largestCard() {
+    const slides = [...document.querySelectorAll('.about-team_item')];
 
-  // function autoPlay() {
-  //   if (draggable.isPressed || draggable.isDragging || draggable.isThrowing) {
-  //     timer.restart(true);
-  //   } else {
-  //     animateSlides(-1);
-  //   }
-  // }
-};
+    const cardHeights: number[] = [];
+    for (const i in slides) {
+      const temp = (slides[i] as HTMLElement).offsetHeight;
+      // console.log('temp', temp, temp2);
+      cardHeights.push(temp);
+    }
 
-export const largestCard = () => {
-  const slides = [...document.querySelectorAll('.about-team_item')];
-  console.log('computed', window.getComputedStyle(slides[0]).height);
-  console.log('offset', (slides[0] as HTMLElement).offsetWidth);
+    // console.log('heights', cardHeights);
+    const maxHeight = Math.max(...cardHeights);
 
-  const cardHeights: number[] = [];
-  for (const i in slides) {
-    const temp = Number(window.getComputedStyle(slides[i]).height.split('.')[0]);
-    // const temp = (slides[i] as HTMLElement).offsetHeight;
-    // console.log('temp', temp);
-    cardHeights.push(temp);
+    return maxHeight;
   }
 
-  console.log('heights', cardHeights);
-  const maxHeight = Math.max(...cardHeights);
+  async function calculateHeight() {
+    const slides = [...document.querySelectorAll('.about-team_item')];
+    const slideImage = slides[0].querySelector('.about-team_image') as HTMLImageElement;
+    const overviewHeights: number[] = [];
 
-  return maxHeight;
+    await waitForImageToLoad(slideImage);
+    const imageHeight = slideImage.offsetHeight;
+    for (const i in slides) {
+      const temp = slides[i] as HTMLElement;
+      const tempOverview = temp.querySelector('.about-team_info-wrap') as HTMLElement;
+      overviewHeights.push(tempOverview.offsetHeight);
+    }
+    console.log('ov height', overviewHeights);
+    const maxHeight = Math.max(...overviewHeights);
+    // const overviewHeight = slideOverview.offsetHeight;
+    const totalHeight = imageHeight + maxHeight;
+    // console.log('DONE', slideImage, slideImage.offsetHeight);
+    return totalHeight;
+  }
+
+  function waitForImageToLoad(imageElement: HTMLElement) {
+    console.log('waiting for image load');
+    return new Promise((resolve) => {
+      imageElement.onload = resolve;
+    });
+  }
 };

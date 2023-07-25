@@ -1,4 +1,4 @@
-import { draggableSlider, largestCard } from '$components/draggableSlider';
+import { draggableSlider } from '$components/draggableSlider';
 import { abAwardsReveal, abClientsReveal, abPageReveal, abTeamReveal } from '$motion/aboutMotion';
 import { horizontalScrollText } from '$utils/horizontalScrollText';
 
@@ -15,11 +15,12 @@ export const about = () => {
   abClientsReveal();
 
   // Team
-  window.addEventListener('load', (e) => {
-    console.log('load', e);
-    const slideHeight = largestCard();
-    console.log('ab slide height', slideHeight);
-  });
+  // window.addEventListener('load', (e) => {
+  //   console.log('load', e);
+  //   const slideHeight = largestCard();
+  //   console.log('ab slide height', slideHeight);
+  // });
+  // console.log([...document.querySelectorAll('.about-team_item')]);
   draggableSlider();
   abTeamReveal();
 
