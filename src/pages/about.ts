@@ -15,12 +15,6 @@ export const about = () => {
   abClientsReveal();
 
   // Team
-  // window.addEventListener('load', (e) => {
-  //   console.log('load', e);
-  //   const slideHeight = largestCard();
-  //   console.log('ab slide height', slideHeight);
-  // });
-  // console.log([...document.querySelectorAll('.about-team_item')]);
   draggableSlider();
   abTeamReveal();
 

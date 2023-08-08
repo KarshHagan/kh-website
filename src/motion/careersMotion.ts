@@ -45,7 +45,7 @@ export const careersPageReveal = () => {
     stagger: 0.1,
     ease: 'power4.inOut',
   });
-  animation.from(overline, { duration: 1, width: 0, ease: 'expo.inOut' }, '<');
+  animation.from(overline, { duration: 1, width: '0%', ease: 'expo.inOut' }, '<');
   animation.from(headerOverview, { duration: 1, y: '1rem', opacity: 0, ease: 'power4.inOut' }, '<');
   animation.from(heroComponent, { duration: 1, y: '2rem', opacity: 0, ease: 'expo.out' }, '<0.6');
 };
