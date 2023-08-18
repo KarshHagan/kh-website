@@ -78,6 +78,9 @@ export const cursorHover = () => {
     if (type === 'drag') {
       returnIcon = cursorImages[3] as HTMLElement;
     }
+    if (type === 'expand') {
+      returnIcon = cursorImages[4] as HTMLElement;
+    }
     return returnIcon;
   }
 };

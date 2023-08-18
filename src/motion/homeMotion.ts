@@ -247,6 +247,7 @@ export const overviewReveal = () => {
   const overviewStamp = overviewSection.querySelector('.text-left_image');
   const overviewTexture = overviewSection.querySelector('.home-overview_texture-overlay');
   const overviewLabel = overviewSection.querySelector('.module_label-container');
+  const overviewVideo = overviewSection.querySelector('.home-overview_video-embed');
 
   const animation = gsap.timeline({
     scrollTrigger: {
@@ -286,6 +287,16 @@ export const overviewReveal = () => {
       opacity: 0,
       stagger: 0.1,
       y: '2rem',
+      ease: 'power4.out',
+    },
+    '<'
+  );
+  animation.from(
+    overviewVideo,
+    {
+      duration: setDuration,
+      y: setYOffset,
+      opacity: 0,
       ease: 'power4.out',
     },
     '<'
