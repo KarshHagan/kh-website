@@ -47,7 +47,7 @@ window.Webflow.push(() => {
   // Page Routing
   // ---------------
 
-  if (windowLocation === '/' || windowLocation === '/home2') {
+  if (windowLocation === '/') {
     home();
   } else if (windowLocation === '/about') {
     about();

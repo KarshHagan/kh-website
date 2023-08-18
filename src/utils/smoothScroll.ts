@@ -49,18 +49,22 @@ export const smoothScroll = () => {
   });
 
   // video Modal functions
-  const overviewVideo = document.querySelector('.home-overview_video') as HTMLElement;
-  const modalCloseButton = document.querySelector('.home-video_close') as HTMLElement;
-  const modalCloseArea = document.querySelector('.home-video_close-area') as HTMLElement;
+  const windowLocation = window.location.pathname as string;
 
-  overviewVideo.addEventListener('click', () => {
-    lenis.stop();
-  });
+  if (windowLocation === '/') {
+    const overviewVideo = document.querySelector('.home-overview_video') as HTMLElement;
+    const modalCloseButton = document.querySelector('.home-video_close') as HTMLElement;
+    const modalCloseArea = document.querySelector('.home-video_close-area') as HTMLElement;
 
-  modalCloseButton.addEventListener('click', () => {
-    lenis.start();
-  });
-  modalCloseArea.addEventListener('click', () => {
-    lenis.start();
-  });
+    overviewVideo.addEventListener('click', () => {
+      lenis.stop();
+    });
+
+    modalCloseButton.addEventListener('click', () => {
+      lenis.start();
+    });
+    modalCloseArea.addEventListener('click', () => {
+      lenis.start();
+    });
+  }
 };
