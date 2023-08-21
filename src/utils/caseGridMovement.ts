@@ -1,4 +1,6 @@
+/* eslint-disable simple-import-sort/imports */
 import { getDeviceType } from '$utils/getDevice';
+import { gsap } from 'gsap';
 
 export const caseGridMovement = (items: Element[]) => {
   clearMovementValues();
