@@ -38,7 +38,7 @@ export const home = () => {
   featuredWork();
 
   // Services
-  setDeepLinks();
+  // setDeepLinks();
   servicesReveal();
   accordianList();
 

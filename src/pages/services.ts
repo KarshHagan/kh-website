@@ -4,7 +4,7 @@ import {
   servicesOverviewReveal,
   servicesPageReveal,
 } from '$motion/servicesMotion';
-import { checkDeepLinks } from '$utils/scrollToDeepLink';
+import { scrollToDeepLinks } from '$utils/scrollToDeepLink';
 import { scrollToServices } from '$utils/scrollToService';
 
 export const services = () => {
@@ -13,7 +13,7 @@ export const services = () => {
   // ---------------
   stickyHeader();
 
-  checkDeepLinks();
+  scrollToDeepLinks();
   scrollToServices();
 
   // Hero

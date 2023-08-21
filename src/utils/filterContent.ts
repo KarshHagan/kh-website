@@ -15,7 +15,8 @@ export const filterContent = () => {
       const clickedCheckbox = e.target as HTMLInputElement;
       const clickedParent = clickedCheckbox.parentElement as HTMLElement;
       const clickedSpan = clickedParent.querySelector('span') as HTMLElement;
-      const filterText = clickedSpan.innerHTML as string;
+      let filterText = clickedSpan.innerHTML as string;
+      filterText = filterText.split(' ')[0] as string;
 
       renderQueue = masterList;
 
@@ -26,10 +27,8 @@ export const filterContent = () => {
           activeFilters.push(filterText);
           const tempList = filterList(renderQueue, activeFilters);
           renderQueue = tempList;
-          console.log('render', renderQueue);
           hideAll();
           filterReveal(renderQueue);
-          // renderUpdate(renderQueue);
           updateInitialCheckbox(initialFilter, 'hide');
         }
 
@@ -38,7 +37,6 @@ export const filterContent = () => {
           renderQueue = masterList;
           hideAll();
           filterReveal(renderQueue);
-          // renderUpdate(renderQueue);
           allReset();
         }
       } else {
@@ -66,35 +64,36 @@ export const filterContent = () => {
   }
 };
 
-function renderUpdate(items: Element[]) {
+export const renderUpdate = (items: Element[]) => {
   hideAll();
 
   for (const i in items) {
     items[i].classList.remove('hide');
   }
-}
+};
 
-function filterList(items: Element[], filters: string[]) {
+export const filterList = (items: Element[], filters: string[]) => {
   const filteredList = items.filter((item) => {
     const itemTemp = item as HTMLElement;
-    const itemType = itemTemp.querySelector('[data-filter-item-type]')?.innerHTML as string;
+    let itemType = itemTemp.querySelector('[data-filter-item-type]')?.innerHTML as string;
+    itemType = itemType.split(' ')[0] as string;
     if (filters.includes(itemType)) {
       return itemTemp;
     }
   });
 
   return filteredList;
-}
+};
 
-function hideAll() {
+export const hideAll = () => {
   const masterList = [...document.querySelectorAll('[data-filter-item]')];
   for (const item of masterList) {
     const temp = item as HTMLElement;
     temp.style.display = 'none';
   }
-}
+};
 
-function updateInitialCheckbox(initialFilter: Element, setState: string) {
+export const updateInitialCheckbox = (initialFilter: Element, setState: string) => {
   const checkboxContainer = initialFilter.children[0] as HTMLElement;
   const checkboxInput = initialFilter.children[1] as HTMLInputElement;
   const checkboxText = initialFilter.children[2] as HTMLElement;
@@ -108,7 +107,7 @@ function updateInitialCheckbox(initialFilter: Element, setState: string) {
     checkboxContainer.classList.add('w--redirected-checked');
     checkboxText.style.color = '#EEEBE6';
   }
-}
+};
 
 function allReset() {
   const filterCheckboxes = [...document.querySelectorAll('[data-filter-checkbox]')];

@@ -15,6 +15,7 @@ import { peopleTemplate } from '$pages/peopleTemplate';
 import { services } from '$pages/services';
 import { terms } from '$pages/terms';
 import { inertiaMovement } from '$utils/intertiaMovement';
+import { setDeepLinks } from '$utils/scrollToDeepLink';
 import { smoothScroll } from '$utils/smoothScroll';
 
 window.Webflow ||= [];
@@ -40,7 +41,7 @@ window.Webflow.push(() => {
   pageTransition();
   cursorMovement();
   cursorHover();
-
+  setDeepLinks();
   footer();
 
   // ---------------
