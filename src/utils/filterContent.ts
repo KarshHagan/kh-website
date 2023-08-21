@@ -1,12 +1,15 @@
+/* eslint-disable simple-import-sort/imports */
 import { filterReveal } from '$motion/filterReveal';
+import { caseGridMovement } from './caseGridMovement';
 
 export const filterContent = () => {
   let activeFilters: string[] = [];
   let renderQueue: Element[] = [];
   const masterList = [...document.querySelectorAll('[data-filter-item]')];
   const filterCheckboxes = [...document.querySelectorAll('[data-filter-checkbox]')];
-
   const initialFilter = filterCheckboxes[0].parentElement as HTMLElement;
+
+  caseGridMovement(masterList);
 
   for (const i in filterCheckboxes) {
     const tempCheckbox = filterCheckboxes[i] as HTMLInputElement;
@@ -29,6 +32,7 @@ export const filterContent = () => {
           renderQueue = tempList;
           hideAll();
           filterReveal(renderQueue);
+          caseGridMovement(renderQueue);
           updateInitialCheckbox(initialFilter, 'hide');
         }
 
@@ -37,6 +41,7 @@ export const filterContent = () => {
           renderQueue = masterList;
           hideAll();
           filterReveal(renderQueue);
+          caseGridMovement(renderQueue);
           allReset();
         }
       } else {
@@ -49,14 +54,14 @@ export const filterContent = () => {
           if (activeFilters.length < 1) {
             hideAll();
             filterReveal(renderQueue);
-            // renderUpdate(renderQueue);
+            caseGridMovement(renderQueue);
             updateInitialCheckbox(initialFilter, 'show');
           } else {
             const tempList = filterList(renderQueue, activeFilters);
             renderQueue = tempList;
             hideAll();
             filterReveal(renderQueue);
-            // renderUpdate(renderQueue);
+            caseGridMovement(renderQueue);
           }
         }
       }
