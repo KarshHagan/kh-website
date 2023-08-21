@@ -1,5 +1,4 @@
 /* eslint-disable simple-import-sort/imports */
-import { caseScrollEffect } from '$motion/caseOverviewMotion';
 import { filterReveal } from '$motion/filterReveal';
 import { filterList, hideAll, updateInitialCheckbox } from '$utils/filterContent';
 import { gsap } from 'gsap';
@@ -81,7 +80,7 @@ export const filterDeepLinks = () => {
     hideAll();
     setTimeout(() => {
       filterReveal(filteredList);
-    }, 1000);
+    }, 1500);
     updateInitialCheckbox(initialFilter, 'hide');
 
     localStorage.clear();
