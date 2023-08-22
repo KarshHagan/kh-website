@@ -7,7 +7,7 @@ export const contact = () => {
   // Page Globals
   // ---------------
 
-  contactPageReveal();
+  // contactPageReveal();
 
   // Link Hover
   contactHover();

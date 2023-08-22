@@ -1,3 +1,5 @@
+/* eslint-disable simple-import-sort/imports */
+import { getDeviceType } from '$utils/getDevice';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 
@@ -18,6 +20,8 @@ const lenisContainer = document.querySelector('html');
 
 const menuOpen = document.querySelector('.nav-ui_menu-text.is-menu');
 const menuClose = document.querySelector('.nav-ui_menu-text.is-close');
+
+const device = getDeviceType();
 
 export const menuInit = (page: string) => {
   const hasFurtherIndex = page.substring(1);
@@ -41,7 +45,7 @@ export const menuInit = (page: string) => {
 
 export const menuMotionOpen = () => {
   const animation = gsap.timeline({ paused: true });
-  // animation.set(lenisContainer, { height: '100%' });
+  animation.set(lenisContainer, { height: '100%' });
   animation.set('body', { overflow: 'hidden' });
 
   animation.set(menuClose, { y: '100%' });
@@ -53,7 +57,11 @@ export const menuMotionOpen = () => {
   animation.to(navIconSpans[0], { duration: 1.5, y: '3px', ease: 'expo.out' }, '<');
   animation.to(navIconSpans[1], { duration: 1.5, y: '-3px', ease: 'expo.out' }, '<');
 
-  animation.to(navBG, { y: '-100%', ease: 'power3.out' }, '<');
+  if (device === 'mobile' || device === 'tablet') {
+    animation.to(navBG, { backgroundColor: '#212929', opacity: 1 }, '<');
+  } else {
+    animation.to(navBG, { y: '-100%', ease: 'power3.out' }, '<');
+  }
 
   animation.from(navMenu, { duration: 0.6, width: '0%', ease: 'power3.inOut' }, '<');
 
@@ -178,7 +186,12 @@ export const menuMotionClose = () => {
   animation.to(navIconSpans[1], { duration: 1.5, y: '0px', ease: 'expo.out' }, '<');
 
   animation.to(navMenu, { duration: 0.6, width: '0%', ease: 'power3.inOut' }, '<0.4');
-  animation.to(navBG, { y: '0%', ease: 'power3.out' }, '<0.4');
+
+  if (device === 'mobile' || device === 'tablet') {
+    animation.to(navBG, { backgroundColor: 'transparent', opacity: 1 }, '<');
+  } else {
+    animation.to(navBG, { y: '0%', ease: 'power3.out' }, '<0.4');
+  }
 
   animation.set(navMenu, { display: 'none' });
 
