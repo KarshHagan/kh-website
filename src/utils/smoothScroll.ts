@@ -29,9 +29,9 @@ export const smoothScroll = () => {
     menuIsOpen = !menuIsOpen;
 
     if (menuIsOpen === true) {
-      lenis.stop();
+      // lenis.stop();
     } else {
-      lenis.start();
+      // lenis.start();
     }
   });
 
