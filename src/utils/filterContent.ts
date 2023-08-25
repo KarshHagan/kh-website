@@ -1,6 +1,11 @@
 /* eslint-disable simple-import-sort/imports */
 import { filterReveal } from '$motion/filterReveal';
-import { caseGridMovement } from './caseGridMovement';
+import {
+  clearMovementValues,
+  refreshScrollTrigger,
+  setGridSpeeds,
+  toggleScrollTrigger,
+} from './caseGridMovement';
 
 export const filterContent = () => {
   let activeFilters: string[] = [];
@@ -9,7 +14,7 @@ export const filterContent = () => {
   const filterCheckboxes = [...document.querySelectorAll('[data-filter-checkbox]')];
   const initialFilter = filterCheckboxes[0].parentElement as HTMLElement;
 
-  caseGridMovement(masterList);
+  // caseGridMovement(masterList);
 
   for (const i in filterCheckboxes) {
     const tempCheckbox = filterCheckboxes[i] as HTMLInputElement;
@@ -30,10 +35,17 @@ export const filterContent = () => {
           activeFilters.push(filterText);
           const tempList = filterList(renderQueue, activeFilters);
           renderQueue = tempList;
+
+          // toggleScrollTrigger('disable');
+
           hideAll();
           filterReveal(renderQueue);
-          caseGridMovement(renderQueue);
           updateInitialCheckbox(initialFilter, 'hide');
+
+          // clearMovementValues();
+          setGridSpeeds(renderQueue);
+
+          refreshScrollTrigger();
         }
 
         if (filterText === 'All') {
@@ -41,8 +53,12 @@ export const filterContent = () => {
           renderQueue = masterList;
           hideAll();
           filterReveal(renderQueue);
-          caseGridMovement(renderQueue);
           allReset();
+
+          // clearMovementValues();
+          setGridSpeeds(renderQueue);
+
+          refreshScrollTrigger();
         }
       } else {
         clickedSpan.style.color = '#EC2543';
@@ -54,14 +70,14 @@ export const filterContent = () => {
           if (activeFilters.length < 1) {
             hideAll();
             filterReveal(renderQueue);
-            caseGridMovement(renderQueue);
+            // caseGridMovement(renderQueue);
             updateInitialCheckbox(initialFilter, 'show');
           } else {
             const tempList = filterList(renderQueue, activeFilters);
             renderQueue = tempList;
             hideAll();
             filterReveal(renderQueue);
-            caseGridMovement(renderQueue);
+            // caseGridMovement(renderQueue);
           }
         }
       }
@@ -80,10 +96,15 @@ export const renderUpdate = (items: Element[]) => {
 export const filterList = (items: Element[], filters: string[]) => {
   const filteredList = items.filter((item) => {
     const itemTemp = item as HTMLElement;
-    let itemType = itemTemp.querySelector('[data-filter-item-type]')?.innerHTML as string;
-    itemType = itemType.split(' ')[0] as string;
-    if (filters.includes(itemType)) {
-      return itemTemp;
+    const itemTypes = [...itemTemp.querySelectorAll('[data-filter-item-type]')];
+
+    for (const i in itemTypes) {
+      const ele = itemTypes[i] as HTMLElement;
+      const serviceType = ele.innerHTML.split(' ')[0] as string;
+
+      if (filters.includes(serviceType)) {
+        return serviceType;
+      }
     }
   });
 

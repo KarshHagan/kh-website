@@ -20,34 +20,6 @@ export const smoothScroll = () => {
 
   requestAnimationFrame(raf);
 
-  // Menu functions
-  // const menuButton = document.querySelector('#navMenuButton') as HTMLElement;
-  // const menuCloseOffset = document.querySelector('.nav_x-offset') as HTMLElement;
-
-  // let menuIsOpen = false;
-  // menuButton.addEventListener('click', () => {
-  //   menuIsOpen = !menuIsOpen;
-
-  //   if (menuIsOpen === true) {
-  //     // lenis.stop();
-  //   } else {
-  //     // lenis.start();
-  //   }
-  // });
-
-  // menuCloseOffset.addEventListener('click', () => {
-  //   menuIsOpen = false;
-  //   lenis.start();
-  // });
-
-  // document.addEventListener('keydown', (e) => {
-  //   const keyPressed = e.key;
-
-  //   if (keyPressed === 'Escape') {
-  //     lenis.start();
-  //   }
-  // });
-
   // video Modal functions
   const windowLocation = window.location.pathname as string;
 

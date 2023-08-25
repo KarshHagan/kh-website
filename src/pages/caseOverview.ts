@@ -1,6 +1,7 @@
 import { stickyHeader } from '$components/stickyHeader';
 import { caseHover, csoPageReveal } from '$motion/caseOverviewMotion';
 import { cursorArrowYMovement } from '$motion/cursorMotion';
+import { caseScrollEffect } from '$utils/caseGridMovement';
 import { filterContent } from '$utils/filterContent';
 import { filterDeepLinks } from '$utils/scrollToDeepLink';
 
@@ -22,7 +23,7 @@ export const caseOverview = () => {
   caseHover();
 
   // Page Scrolling
-  // caseScrollEffect();
+  caseScrollEffect();
 
   // Cursor Y Scroll
   const workGrid = document.querySelector('.work-grid_wrapper') as HTMLElement;
