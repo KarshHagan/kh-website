@@ -1,11 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 import { filterReveal } from '$motion/filterReveal';
-import {
-  clearMovementValues,
-  refreshScrollTrigger,
-  setGridSpeeds,
-  toggleScrollTrigger,
-} from './caseGridMovement';
+import { updateScrollEffect } from '$utils/caseGridMovement';
 
 export const filterContent = () => {
   let activeFilters: string[] = [];
@@ -42,10 +37,11 @@ export const filterContent = () => {
           filterReveal(renderQueue);
           updateInitialCheckbox(initialFilter, 'hide');
 
-          // clearMovementValues();
-          setGridSpeeds(renderQueue);
+          updateScrollEffect();
 
-          refreshScrollTrigger();
+          // clearMovementValues();
+          // setGridSpeeds(renderQueue);
+          // refreshScrollTrigger();
         }
 
         if (filterText === 'All') {
@@ -56,9 +52,8 @@ export const filterContent = () => {
           allReset();
 
           // clearMovementValues();
-          setGridSpeeds(renderQueue);
-
-          refreshScrollTrigger();
+          // setGridSpeeds(renderQueue);
+          // refreshScrollTrigger();
         }
       } else {
         clickedSpan.style.color = '#EC2543';

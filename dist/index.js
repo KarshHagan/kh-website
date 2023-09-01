@@ -169,9 +169,9 @@
       tween && tween._lazy && (tween.render(tween._lazy[0], tween._lazy[1], true)._lazy = 0);
     }
   };
-  var _lazySafeRender = function _lazySafeRender2(animation, time, suppressEvents, force) {
+  var _lazySafeRender = function _lazySafeRender2(animation2, time, suppressEvents, force) {
     _lazyTweens.length && !_reverting && _lazyRender();
-    animation.render(time, suppressEvents, force || _reverting && time < 0 && (animation._initted || animation._startAt));
+    animation2.render(time, suppressEvents, force || _reverting && time < 0 && (animation2._initted || animation2._startAt));
     _lazyTweens.length && !_reverting && _lazyRender();
   };
   var _numericIfPossible = function _numericIfPossible2(value) {
@@ -283,33 +283,33 @@
     child.parent && (!onlyIfParentHasAutoRemove || child.parent.autoRemoveChildren) && child.parent.remove(child);
     child._act = 0;
   };
-  var _uncache = function _uncache2(animation, child) {
-    if (animation && (!child || child._end > animation._dur || child._start < 0)) {
-      var a = animation;
+  var _uncache = function _uncache2(animation2, child) {
+    if (animation2 && (!child || child._end > animation2._dur || child._start < 0)) {
+      var a = animation2;
       while (a) {
         a._dirty = 1;
         a = a.parent;
       }
     }
-    return animation;
+    return animation2;
   };
-  var _recacheAncestors = function _recacheAncestors2(animation) {
-    var parent = animation.parent;
+  var _recacheAncestors = function _recacheAncestors2(animation2) {
+    var parent = animation2.parent;
     while (parent && parent.parent) {
       parent._dirty = 1;
       parent.totalDuration();
       parent = parent.parent;
     }
-    return animation;
+    return animation2;
   };
   var _rewindStartAt = function _rewindStartAt2(tween, totalTime, suppressEvents, force) {
     return tween._startAt && (_reverting ? tween._startAt.revert(_revertConfigNoKill) : tween.vars.immediateRender && !tween.vars.autoRevert || tween._startAt.render(totalTime, true, force));
   };
-  var _hasNoPausedAncestors = function _hasNoPausedAncestors2(animation) {
-    return !animation || animation._ts && _hasNoPausedAncestors2(animation.parent);
+  var _hasNoPausedAncestors = function _hasNoPausedAncestors2(animation2) {
+    return !animation2 || animation2._ts && _hasNoPausedAncestors2(animation2.parent);
   };
-  var _elapsedCycleDuration = function _elapsedCycleDuration2(animation) {
-    return animation._repeat ? _animationCycle(animation._tTime, animation = animation.duration() + animation._rDelay) * animation : 0;
+  var _elapsedCycleDuration = function _elapsedCycleDuration2(animation2) {
+    return animation2._repeat ? _animationCycle(animation2._tTime, animation2 = animation2.duration() + animation2._rDelay) * animation2 : 0;
   };
   var _animationCycle = function _animationCycle2(tTime, cycleDuration) {
     var whole = Math.floor(tTime /= cycleDuration);
@@ -318,17 +318,17 @@
   var _parentToChildTotalTime = function _parentToChildTotalTime2(parentTime, child) {
     return (parentTime - child._start) * child._ts + (child._ts >= 0 ? 0 : child._dirty ? child.totalDuration() : child._tDur);
   };
-  var _setEnd = function _setEnd2(animation) {
-    return animation._end = _roundPrecise(animation._start + (animation._tDur / Math.abs(animation._ts || animation._rts || _tinyNum) || 0));
+  var _setEnd = function _setEnd2(animation2) {
+    return animation2._end = _roundPrecise(animation2._start + (animation2._tDur / Math.abs(animation2._ts || animation2._rts || _tinyNum) || 0));
   };
-  var _alignPlayhead = function _alignPlayhead2(animation, totalTime) {
-    var parent = animation._dp;
-    if (parent && parent.smoothChildTiming && animation._ts) {
-      animation._start = _roundPrecise(parent._time - (animation._ts > 0 ? totalTime / animation._ts : ((animation._dirty ? animation.totalDuration() : animation._tDur) - totalTime) / -animation._ts));
-      _setEnd(animation);
-      parent._dirty || _uncache(parent, animation);
+  var _alignPlayhead = function _alignPlayhead2(animation2, totalTime) {
+    var parent = animation2._dp;
+    if (parent && parent.smoothChildTiming && animation2._ts) {
+      animation2._start = _roundPrecise(parent._time - (animation2._ts > 0 ? totalTime / animation2._ts : ((animation2._dirty ? animation2.totalDuration() : animation2._tDur) - totalTime) / -animation2._ts));
+      _setEnd(animation2);
+      parent._dirty || _uncache(parent, animation2);
     }
-    return animation;
+    return animation2;
   };
   var _postAddChecks = function _postAddChecks2(timeline2, child) {
     var t2;
@@ -359,8 +359,8 @@
     timeline2._ts < 0 && _alignPlayhead(timeline2, timeline2._tTime);
     return timeline2;
   };
-  var _scrollTrigger = function _scrollTrigger2(animation, trigger) {
-    return (_globals.ScrollTrigger || _missingPlugin("scrollTrigger", trigger)) && _globals.ScrollTrigger.create(trigger, animation);
+  var _scrollTrigger = function _scrollTrigger2(animation2, trigger) {
+    return (_globals.ScrollTrigger || _missingPlugin("scrollTrigger", trigger)) && _globals.ScrollTrigger.create(trigger, animation2);
   };
   var _attemptInitTween = function _attemptInitTween2(tween, time, force, suppressEvents, tTime) {
     _initTween(tween, time, tTime);
@@ -422,10 +422,10 @@
       tween._zTime = totalTime;
     }
   };
-  var _findNextPauseTween = function _findNextPauseTween2(animation, prevTime, time) {
+  var _findNextPauseTween = function _findNextPauseTween2(animation2, prevTime, time) {
     var child;
     if (time > prevTime) {
-      child = animation._first;
+      child = animation2._first;
       while (child && child._start <= time) {
         if (child.data === "isPause" && child._start > prevTime) {
           return child;
@@ -433,7 +433,7 @@
         child = child._next;
       }
     } else {
-      child = animation._last;
+      child = animation2._last;
       while (child && child._start >= time) {
         if (child.data === "isPause" && child._start < prevTime) {
           return child;
@@ -442,26 +442,26 @@
       }
     }
   };
-  var _setDuration = function _setDuration2(animation, duration2, skipUncache, leavePlayhead) {
-    var repeat = animation._repeat, dur = _roundPrecise(duration2) || 0, totalProgress = animation._tTime / animation._tDur;
-    totalProgress && !leavePlayhead && (animation._time *= dur / animation._dur);
-    animation._dur = dur;
-    animation._tDur = !repeat ? dur : repeat < 0 ? 1e10 : _roundPrecise(dur * (repeat + 1) + animation._rDelay * repeat);
-    totalProgress > 0 && !leavePlayhead && _alignPlayhead(animation, animation._tTime = animation._tDur * totalProgress);
-    animation.parent && _setEnd(animation);
-    skipUncache || _uncache(animation.parent, animation);
-    return animation;
+  var _setDuration = function _setDuration2(animation2, duration2, skipUncache, leavePlayhead) {
+    var repeat = animation2._repeat, dur = _roundPrecise(duration2) || 0, totalProgress = animation2._tTime / animation2._tDur;
+    totalProgress && !leavePlayhead && (animation2._time *= dur / animation2._dur);
+    animation2._dur = dur;
+    animation2._tDur = !repeat ? dur : repeat < 0 ? 1e10 : _roundPrecise(dur * (repeat + 1) + animation2._rDelay * repeat);
+    totalProgress > 0 && !leavePlayhead && _alignPlayhead(animation2, animation2._tTime = animation2._tDur * totalProgress);
+    animation2.parent && _setEnd(animation2);
+    skipUncache || _uncache(animation2.parent, animation2);
+    return animation2;
   };
-  var _onUpdateTotalDuration = function _onUpdateTotalDuration2(animation) {
-    return animation instanceof Timeline ? _uncache(animation) : _setDuration(animation, animation._dur);
+  var _onUpdateTotalDuration = function _onUpdateTotalDuration2(animation2) {
+    return animation2 instanceof Timeline ? _uncache(animation2) : _setDuration(animation2, animation2._dur);
   };
   var _zeroPosition = {
     _start: 0,
     endTime: _emptyFunc,
     totalDuration: _emptyFunc
   };
-  var _parsePosition = function _parsePosition2(animation, position, percentAnimation) {
-    var labels = animation.labels, recent = animation._recent || _zeroPosition, clippedDuration = animation.duration() >= _bigNum ? recent.endTime(false) : animation._dur, i2, offset, isPercent;
+  var _parsePosition = function _parsePosition2(animation2, position, percentAnimation) {
+    var labels = animation2.labels, recent = animation2._recent || _zeroPosition, clippedDuration = animation2.duration() >= _bigNum ? recent.endTime(false) : animation2._dur, i2, offset, isPercent;
     if (_isString(position) && (isNaN(position) || position in labels)) {
       offset = position.charAt(0);
       isPercent = position.substr(-1) === "%";
@@ -478,7 +478,7 @@
       if (isPercent && percentAnimation) {
         offset = offset / 100 * (_isArray(percentAnimation) ? percentAnimation[0] : percentAnimation).totalDuration();
       }
-      return i2 > 1 ? _parsePosition2(animation, position.substr(0, i2 - 1), percentAnimation) + offset : clippedDuration + offset;
+      return i2 > 1 ? _parsePosition2(animation2, position.substr(0, i2 - 1), percentAnimation) + offset : clippedDuration + offset;
     }
     return position == null ? clippedDuration : +position;
   };
@@ -744,24 +744,24 @@
     }
     return label;
   };
-  var _callback = function _callback2(animation, type, executeLazyFirst) {
-    var v = animation.vars, callback = v[type], prevContext = _context, context3 = animation._ctx, params, scope, result;
+  var _callback = function _callback2(animation2, type, executeLazyFirst) {
+    var v = animation2.vars, callback = v[type], prevContext = _context, context3 = animation2._ctx, params, scope, result;
     if (!callback) {
       return;
     }
     params = v[type + "Params"];
-    scope = v.callbackScope || animation;
+    scope = v.callbackScope || animation2;
     executeLazyFirst && _lazyTweens.length && _lazyRender();
     context3 && (_context = context3);
     result = params ? callback.apply(scope, params) : callback.call(scope);
     _context = prevContext;
     return result;
   };
-  var _interrupt = function _interrupt2(animation) {
-    _removeFromParent(animation);
-    animation.scrollTrigger && animation.scrollTrigger.kill(!!_reverting);
-    animation.progress() < 1 && _callback(animation, "onInterrupt");
-    return animation;
+  var _interrupt = function _interrupt2(animation2) {
+    _removeFromParent(animation2);
+    animation2.scrollTrigger && animation2.scrollTrigger.kill(!!_reverting);
+    animation2.progress() < 1 && _callback(animation2, "onInterrupt");
+    return animation2;
   };
   var _quickTween;
   var _createPlugin = function _createPlugin2(config3) {
@@ -1323,10 +1323,10 @@
       return this;
     };
     _proto.globalTime = function globalTime(rawTime) {
-      var animation = this, time = arguments.length ? rawTime : animation.rawTime();
-      while (animation) {
-        time = animation._start + time / (animation._ts || 1);
-        animation = animation._dp;
+      var animation2 = this, time = arguments.length ? rawTime : animation2.rawTime();
+      while (animation2) {
+        time = animation2._start + time / (animation2._ts || 1);
+        animation2 = animation2._dp;
       }
       return !this.parent && this._sat ? this._sat.vars.immediateRender ? -1 : this._sat.globalTime(rawTime) : time;
     };
@@ -4219,8 +4219,8 @@
   var cursor = document.querySelector(".cursor_component");
   var cursorRevealIn = (scaleTo) => {
     cursor.classList.add("mbm-ex");
-    const animation = gsapWithCSS.timeline();
-    animation.to(cursor, {
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(cursor, {
       width: scaleTo + "rem",
       height: scaleTo + "rem",
       ease: "power4.out"
@@ -4228,42 +4228,42 @@
   };
   var cursorRevealOut = () => {
     cursor.classList.remove("mbm-ex");
-    const animation = gsapWithCSS.timeline();
-    animation.to(cursor, { width: "0.75rem", height: "0.75rem", ease: "power4.out" });
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(cursor, { width: "0.75rem", height: "0.75rem", ease: "power4.out" });
   };
   var cursorIconRevealIn = (icon) => {
     cursor.classList.remove("mbm-ex");
-    const animation = gsapWithCSS.timeline();
-    animation.set(cursor, { padding: "1rem" });
-    animation.set(icon, { opacity: 1, display: "block" });
-    animation.to(cursor, { backgroundColor: "#4C9A8C" });
+    const animation2 = gsapWithCSS.timeline();
+    animation2.set(cursor, { padding: "1rem" });
+    animation2.set(icon, { opacity: 1, display: "block" });
+    animation2.to(cursor, { backgroundColor: "#4C9A8C" });
   };
   var cursorIconRevealOut = (icon) => {
-    const animation = gsapWithCSS.timeline();
-    animation.set(cursor, { padding: "0rem" });
-    animation.set(icon, { opacity: 0, display: "none" });
-    animation.to(cursor, { backgroundColor: "#F09F43" });
+    const animation2 = gsapWithCSS.timeline();
+    animation2.set(cursor, { padding: "0rem" });
+    animation2.set(icon, { opacity: 0, display: "none" });
+    animation2.to(cursor, { backgroundColor: "#F09F43" });
   };
   var cursorIconReset = () => {
-    const animation = gsapWithCSS.timeline();
-    animation.to(cursor, { duration: 0, rotate: "0deg" });
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(cursor, { duration: 0, rotate: "0deg" });
   };
   var cursorArrowSliderChange = (xType) => {
-    const animation = gsapWithCSS.timeline();
+    const animation2 = gsapWithCSS.timeline();
     if (xType === "rotate") {
-      animation.to(cursor, { duration: 1, rotate: "-180deg", ease: "expo.out" });
+      animation2.to(cursor, { duration: 1, rotate: "-180deg", ease: "expo.out" });
     } else {
-      animation.to(cursor, { duration: 1, rotate: "0deg", ease: "expo.out" });
+      animation2.to(cursor, { duration: 1, rotate: "0deg", ease: "expo.out" });
     }
-    return animation;
+    return animation2;
   };
   var cursorArrowYMovement = (cursorState, yMovement) => {
     const cursorArrow = document.querySelector(".cursor_image.is-arrow");
-    const animation = gsapWithCSS.timeline();
+    const animation2 = gsapWithCSS.timeline();
     if (cursorState === "rotate") {
-      animation.to(cursorArrow, { rotate: -yMovement });
+      animation2.to(cursorArrow, { rotate: -yMovement });
     } else {
-      animation.to(cursorArrow, { rotate: yMovement });
+      animation2.to(cursorArrow, { rotate: yMovement });
     }
   };
 
@@ -4429,12 +4429,12 @@
     const footerText = footerComponent.querySelector(".footer_large-text");
     const textWidth = footerText.scrollWidth;
     const textSpeed = 45;
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       onComplete: () => {
-        animation.restart();
+        animation2.restart();
       }
     });
-    animation.to(footerTextWrap, {
+    animation2.to(footerTextWrap, {
       duration: textSpeed,
       x: -textWidth,
       ease: "linear"
@@ -5021,23 +5021,23 @@
     menuTransition(setTransition);
   };
   var menuMotionOpen = () => {
-    const animation = gsapWithCSS.timeline({ paused: true });
-    animation.set(lenisContainer, { height: "100%" });
-    animation.set("body", { overflow: "hidden" });
-    animation.set(menuClose, { y: "100%" });
-    animation.to(navMenu, { display: "flex" });
-    animation.to(menuOpen, { duration: 1, y: "-100%", ease: "power4.out" }, "<");
-    animation.to(menuClose, { duration: 1, y: "0%", opacity: 1, ease: "power4.out" }, "<");
-    animation.to(navIconSpans[0], { duration: 1.5, y: "3px", ease: "expo.out" }, "<");
-    animation.to(navIconSpans[1], { duration: 1.5, y: "-3px", ease: "expo.out" }, "<");
+    const animation2 = gsapWithCSS.timeline({ paused: true });
+    animation2.set(lenisContainer, { height: "100%" });
+    animation2.set("body", { overflow: "hidden" });
+    animation2.set(menuClose, { y: "100%" });
+    animation2.to(navMenu, { display: "flex" });
+    animation2.to(menuOpen, { duration: 1, y: "-100%", ease: "power4.out" }, "<");
+    animation2.to(menuClose, { duration: 1, y: "0%", opacity: 1, ease: "power4.out" }, "<");
+    animation2.to(navIconSpans[0], { duration: 1.5, y: "3px", ease: "expo.out" }, "<");
+    animation2.to(navIconSpans[1], { duration: 1.5, y: "-3px", ease: "expo.out" }, "<");
     if (device === "mobile" || device === "tablet") {
-      animation.to(navBG, { backgroundColor: "#212929", opacity: 1 }, "<");
+      animation2.to(navBG, { backgroundColor: "#212929", opacity: 1 }, "<");
     } else {
-      animation.to(navBG, { y: "-100%", ease: "power3.out" }, "<");
+      animation2.to(navBG, { y: "-100%", ease: "power3.out" }, "<");
     }
-    animation.from(navMenu, { duration: 0.6, width: "0%", ease: "power3.inOut" }, "<");
-    animation.from(navSpan, { duration: 0.4, width: "0%", ease: "power3.inOut" }, "<0.4");
-    animation.from(
+    animation2.from(navMenu, { duration: 0.6, width: "0%", ease: "power3.inOut" }, "<");
+    animation2.from(navSpan, { duration: 0.4, width: "0%", ease: "power3.inOut" }, "<0.4");
+    animation2.from(
       navStamp,
       {
         duration: 0.6,
@@ -5047,7 +5047,7 @@
       },
       "<0.2"
     );
-    animation.from(
+    animation2.from(
       navOverview,
       {
         duration: 0.6,
@@ -5057,8 +5057,8 @@
       },
       "<"
     );
-    animation.from(navInfoLinks, { duration: 0.6, y: "2rem", opacity: 0, ease: "power3.out" }, "<");
-    animation.from(
+    animation2.from(navInfoLinks, { duration: 0.6, y: "2rem", opacity: 0, ease: "power3.out" }, "<");
+    animation2.from(
       navPageLinks,
       {
         stagger: { each: 0.1 },
@@ -5069,8 +5069,8 @@
       },
       "<"
     );
-    animation.from(navTexture, { duration: 1, opacity: 0, ease: "power1.inOut" }, "<");
-    animation.from(
+    animation2.from(navTexture, { duration: 1, opacity: 0, ease: "power1.inOut" }, "<");
+    animation2.from(
       menuSwatches,
       {
         opacity: 0,
@@ -5079,18 +5079,18 @@
       },
       "<"
     );
-    return animation;
+    return animation2;
   };
   var menuMotionClose = () => {
-    const animation = gsapWithCSS.timeline({ paused: true });
-    animation.set("body", { overflow: "auto" });
-    animation.to(menuSwatches, {
+    const animation2 = gsapWithCSS.timeline({ paused: true });
+    animation2.set("body", { overflow: "auto" });
+    animation2.to(menuSwatches, {
       opacity: 0,
       ease: "power1.out",
       duration: 1
     });
-    animation.to(navTexture, { duration: 0.4, opacity: 0, ease: "power3.inOut" }, "<");
-    animation.to(
+    animation2.to(navTexture, { duration: 0.4, opacity: 0, ease: "power3.inOut" }, "<");
+    animation2.to(
       navInfoLinks,
       {
         duration: 0.6,
@@ -5100,7 +5100,7 @@
       },
       "<"
     );
-    animation.to(
+    animation2.to(
       navOverview,
       {
         duration: 0.6,
@@ -5110,7 +5110,7 @@
       },
       "<"
     );
-    animation.to(
+    animation2.to(
       navPageLinks,
       {
         duration: 1,
@@ -5120,7 +5120,7 @@
       },
       "<"
     );
-    animation.to(
+    animation2.to(
       navStamp,
       {
         duration: 0.6,
@@ -5130,28 +5130,28 @@
       },
       "<"
     );
-    animation.to(navSpan, { duration: 0.4, width: "0%", ease: "expo.inOut" }, "<");
-    animation.to(menuOpen, { duration: 1, y: "0%", ease: "power4.out" }, "<");
-    animation.to(menuClose, { duration: 1, y: "100%", opacity: 0, ease: "power4.out" }, "<");
-    animation.to("#menuCloseText", { opacity: 0 }, "<");
-    animation.to(navIconSpans[0], { duration: 1.5, y: "0px", ease: "expo.out" }, "<");
-    animation.to(navIconSpans[1], { duration: 1.5, y: "0px", ease: "expo.out" }, "<");
-    animation.to(navMenu, { duration: 0.6, width: "0%", ease: "power3.inOut" }, "<0.4");
+    animation2.to(navSpan, { duration: 0.4, width: "0%", ease: "expo.inOut" }, "<");
+    animation2.to(menuOpen, { duration: 1, y: "0%", ease: "power4.out" }, "<");
+    animation2.to(menuClose, { duration: 1, y: "100%", opacity: 0, ease: "power4.out" }, "<");
+    animation2.to("#menuCloseText", { opacity: 0 }, "<");
+    animation2.to(navIconSpans[0], { duration: 1.5, y: "0px", ease: "expo.out" }, "<");
+    animation2.to(navIconSpans[1], { duration: 1.5, y: "0px", ease: "expo.out" }, "<");
+    animation2.to(navMenu, { duration: 0.6, width: "0%", ease: "power3.inOut" }, "<0.4");
     if (device === "mobile" || device === "tablet") {
-      animation.to(navBG, { backgroundColor: "transparent", opacity: 1 }, "<");
+      animation2.to(navBG, { backgroundColor: "transparent", opacity: 1 }, "<");
     } else {
-      animation.to(navBG, { y: "0%", ease: "power3.out" }, "<0.4");
+      animation2.to(navBG, { y: "0%", ease: "power3.out" }, "<0.4");
     }
-    animation.set(navMenu, { display: "none" });
-    return animation;
+    animation2.set(navMenu, { display: "none" });
+    return animation2;
   };
   var menuLinkHoverIn = (curLink) => {
-    const animation = gsapWithCSS.timeline({});
-    animation.to(curLink, { color: "rgba(248,244,238,1)", ease: "expo.out" });
+    const animation2 = gsapWithCSS.timeline({});
+    animation2.to(curLink, { color: "rgba(248,244,238,1)", ease: "expo.out" });
   };
   var menuLinkHoverOut = (curLink) => {
-    const animation = gsapWithCSS.timeline();
-    animation.to(curLink, { color: "rgba(248,244,238,0)", ease: "expo.out" });
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(curLink, { color: "rgba(248,244,238,0)", ease: "expo.out" });
     curLink.classList.add("text-stroke-white");
   };
   var menuTransition = (type) => {
@@ -5173,7 +5173,7 @@
       setStart = "-1% top";
       setEnd = "-1% top";
     }
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: triggerElement,
         start: setStart,
@@ -5182,15 +5182,15 @@
         // markers: { startColor: 'olive', endColor: 'lightblue' },
       }
     });
-    animation.set(navBG2, { backgroundColor: setColor });
+    animation2.set(navBG2, { backgroundColor: setColor });
     if (type === "default") {
-      animation.to(navBG2, { opacity: 1, ease: "power4.out" });
+      animation2.to(navBG2, { opacity: 1, ease: "power4.out" });
     } else {
-      animation.to(navBG2, { opacity: 1, ease: "power4.ouut" });
-      animation.to(navBrand[1], { opacity: 0, ease: "power4.out" }, "<");
-      animation.to(navBrand[0], { opacity: 1, ease: "power4.out" }, "<");
-      animation.to(navMenuText, { color: "#EC2543" }, "<");
-      animation.to(navMenuIcon, { backgroundColor: "#EC2543" }, "<");
+      animation2.to(navBG2, { opacity: 1, ease: "power4.ouut" });
+      animation2.to(navBrand[1], { opacity: 0, ease: "power4.out" }, "<");
+      animation2.to(navBrand[0], { opacity: 1, ease: "power4.out" }, "<");
+      animation2.to(navMenuText, { color: "#EC2543" }, "<");
+      animation2.to(navMenuIcon, { backgroundColor: "#EC2543" }, "<");
     }
   };
 
@@ -5243,27 +5243,27 @@
   // src/motion/pageTransitionMotion.ts
   var pageTransitionIn = () => {
     const transitionElement = document.querySelector(".transition_component");
-    const animation = gsapWithCSS.timeline({ paused: true });
-    animation.to(transitionElement, {
+    const animation2 = gsapWithCSS.timeline({ paused: true });
+    animation2.to(transitionElement, {
       display: "block",
       duration: 0.5,
       opacity: 1,
       ease: "power3.out"
     });
-    return animation;
+    return animation2;
   };
   var pageTransitionOut = () => {
     const transitionElement = document.querySelector(".transition_component");
-    const animation = gsapWithCSS.timeline();
-    animation.set(transitionElement, { display: "block", opacity: 1 });
-    animation.to(transitionElement, {
+    const animation2 = gsapWithCSS.timeline();
+    animation2.set(transitionElement, { display: "block", opacity: 1 });
+    animation2.to(transitionElement, {
       delay: 0.5,
       duration: 0.5,
       opacity: 0,
       display: "none",
       ease: "power3.out"
     });
-    return animation;
+    return animation2;
   };
 
   // src/components/pageTransition.ts
@@ -5280,9 +5280,9 @@
       if (linkSrc.includes("karshhagan") && !linkSrc.includes("#") && !linkSrc.includes("facebook") && !linkSrc.includes("twitter") && !linkSrc.includes("linkedin") && !linkSrc.includes("instagram")) {
         temp.addEventListener("click", (e2) => {
           e2.preventDefault();
-          const animation = pageTransitionIn();
-          animation.play();
-          const animationDuration = animation.duration() * 1e3;
+          const animation2 = pageTransitionIn();
+          animation2.play();
+          const animationDuration = animation2.duration() * 1e3;
           setTimeout(
             (url) => {
               window.location = url;
@@ -8012,7 +8012,7 @@
         xPercent: calcPercent
       });
     }
-    const animation = gsapWithCSS.to(slides, {
+    const animation2 = gsapWithCSS.to(slides, {
       duration: 1,
       xPercent: "+=" + slideCount * 100,
       ease: "none",
@@ -8086,7 +8086,7 @@
       });
     }
     function updateProgress() {
-      animation.progress(gsapWithCSS.utils.wrap(0, 1, gsapWithCSS.getProperty(proxy, "x") / wrapWidth));
+      animation2.progress(gsapWithCSS.utils.wrap(0, 1, gsapWithCSS.getProperty(proxy, "x") / wrapWidth));
     }
     function snapX(x) {
       return Math.round(x / slideWidth) * slideWidth;
@@ -8694,8 +8694,8 @@
   var _isObject7 = function _isObject8(value) {
     return typeof value === "object";
   };
-  var _endAnimation = function _endAnimation2(animation, reversed, pause) {
-    return animation && animation.progress(reversed ? 0 : 1) && pause && animation.pause();
+  var _endAnimation = function _endAnimation2(animation2, reversed, pause) {
+    return animation2 && animation2.progress(reversed ? 0 : 1) && pause && animation2.pause();
   };
   var _callback3 = function _callback4(self, func) {
     if (self.enabled) {
@@ -8759,9 +8759,9 @@
     }
     return a;
   };
-  var _getClosestLabel = function _getClosestLabel2(animation) {
+  var _getClosestLabel = function _getClosestLabel2(animation2) {
     return function(value) {
-      return gsap7.utils.snap(_getLabelRatioArray(animation), value);
+      return gsap7.utils.snap(_getLabelRatioArray(animation2), value);
     };
   };
   var _snapDirectional = function _snapDirectional2(snapIncrementOrArray) {
@@ -9231,12 +9231,12 @@
     return getTween;
   };
   var ScrollTrigger2 = /* @__PURE__ */ function() {
-    function ScrollTrigger4(vars, animation) {
+    function ScrollTrigger4(vars, animation2) {
       _coreInitted7 || ScrollTrigger4.register(gsap7) || console.warn("Please gsap.registerPlugin(ScrollTrigger)");
-      this.init(vars, animation);
+      this.init(vars, animation2);
     }
     var _proto = ScrollTrigger4.prototype;
-    _proto.init = function init6(vars, animation) {
+    _proto.init = function init6(vars, animation2) {
       this.progress = this.start = 0;
       this.vars && this.kill(true, true);
       if (!_enabled) {
@@ -9256,7 +9256,7 @@
       self.scroll = containerAnimation ? containerAnimation.time.bind(containerAnimation) : scrollFunc;
       scroll1 = scrollFunc();
       self.vars = vars;
-      animation = animation || vars.animation;
+      animation2 = animation2 || vars.animation;
       if ("refreshPriority" in vars) {
         _sort = 1;
         vars.refreshPriority === -9999 && (_primary = self);
@@ -9272,7 +9272,7 @@
           scrubTween && scrubTween.progress(1).kill();
           scrubTween = 0;
         } else {
-          scrubTween ? scrubTween.duration(value) : scrubTween = gsap7.to(animation, {
+          scrubTween ? scrubTween.duration(value) : scrubTween = gsap7.to(animation2, {
             ease: "expo",
             totalProgress: "+=0.001",
             duration: scrubSmooth,
@@ -9283,14 +9283,14 @@
           });
         }
       };
-      if (animation) {
-        animation.vars.lazy = false;
-        animation._initted || animation.vars.immediateRender !== false && vars.immediateRender !== false && animation.duration() && animation.render(0, true, true);
-        self.animation = animation.pause();
-        animation.scrollTrigger = self;
+      if (animation2) {
+        animation2.vars.lazy = false;
+        animation2._initted || animation2.vars.immediateRender !== false && vars.immediateRender !== false && animation2.duration() && animation2.render(0, true, true);
+        self.animation = animation2.pause();
+        animation2.scrollTrigger = self;
         self.scrubDuration(scrub);
         snap1 = 0;
-        id || (id = animation.vars.id);
+        id || (id = animation2.vars.id);
       }
       _triggers.push(self);
       if (snap3) {
@@ -9305,7 +9305,7 @@
         _scrollers.forEach(function(o2) {
           return _isFunction7(o2) && o2.target === (isViewport ? _doc7.scrollingElement || _docEl2 : scroller) && (o2.smooth = false);
         });
-        snapFunc = _isFunction7(snap3.snapTo) ? snap3.snapTo : snap3.snapTo === "labels" ? _getClosestLabel(animation) : snap3.snapTo === "labelsDirectional" ? _getLabelAtDirection(animation) : snap3.directional !== false ? function(value, st) {
+        snapFunc = _isFunction7(snap3.snapTo) ? snap3.snapTo : snap3.snapTo === "labels" ? _getClosestLabel(animation2) : snap3.snapTo === "labelsDirectional" ? _getLabelAtDirection(animation2) : snap3.directional !== false ? function(value, st) {
           return _snapDirectional(snap3.snapTo)(value, _getTime3() - lastRefresh < 500 ? 0 : st.direction);
         } : gsap7.utils.snap(snap3.snapTo);
         snapDurClamp = snap3.duration || {
@@ -9316,7 +9316,7 @@
         snapDelayedCall = gsap7.delayedCall(snap3.delay || scrubSmooth / 2 || 0.1, function() {
           var scroll = scrollFunc(), refreshedRecently = _getTime3() - lastRefresh < 500, tween = tweenTo.tween;
           if ((refreshedRecently || Math.abs(self.getVelocity()) < 10) && !tween && !_pointerIsDown && lastSnap !== scroll) {
-            var progress = (scroll - start) / change, totalProgress = animation && !isToggle ? animation.totalProgress() : progress, velocity = refreshedRecently ? 0 : (totalProgress - snap22) / (_getTime3() - _time22) * 1e3 || 0, change1 = gsap7.utils.clamp(-progress, 1 - progress, _abs(velocity / 2) * velocity / 0.185), naturalEnd = progress + (snap3.inertia === false ? 0 : change1), endValue = _clamp5(0, 1, snapFunc(naturalEnd, self)), endScroll = Math.round(start + endValue * change), _snap = snap3, onStart = _snap.onStart, _onInterrupt = _snap.onInterrupt, _onComplete = _snap.onComplete;
+            var progress = (scroll - start) / change, totalProgress = animation2 && !isToggle ? animation2.totalProgress() : progress, velocity = refreshedRecently ? 0 : (totalProgress - snap22) / (_getTime3() - _time22) * 1e3 || 0, change1 = gsap7.utils.clamp(-progress, 1 - progress, _abs(velocity / 2) * velocity / 0.185), naturalEnd = progress + (snap3.inertia === false ? 0 : change1), endValue = _clamp5(0, 1, snapFunc(naturalEnd, self)), endScroll = Math.round(start + endValue * change), _snap = snap3, onStart = _snap.onStart, _onInterrupt = _snap.onInterrupt, _onComplete = _snap.onComplete;
             if (scroll <= end && scroll >= start && endScroll !== scroll) {
               if (tween && !tween._initted && tween.data <= _abs(endScroll - scroll)) {
                 return;
@@ -9335,7 +9335,7 @@
                 onComplete: function onComplete() {
                   self.update();
                   lastSnap = scrollFunc();
-                  snap1 = snap22 = animation && !isToggle ? animation.totalProgress() : self.progress;
+                  snap1 = snap22 = animation2 && !isToggle ? animation2.totalProgress() : self.progress;
                   onSnapComplete && onSnapComplete(self);
                   _onComplete && _onComplete(self);
                 }
@@ -9425,7 +9425,7 @@
           if (r) {
             prevScroll = Math.max(scrollFunc(), self.scroll.rec || 0);
             prevProgress = self.progress;
-            prevAnimProgress = animation && animation.progress();
+            prevAnimProgress = animation2 && animation2.progress();
           }
           markerStart && [markerStart, markerEnd, markerStartTrigger, markerEndTrigger].forEach(function(m) {
             return m.style.display = r ? "none" : "block";
@@ -9462,7 +9462,7 @@
           tweenTo.tween = 0;
         }
         scrubTween && scrubTween.pause();
-        invalidateOnRefresh && animation && animation.revert({
+        invalidateOnRefresh && animation2 && animation2.revert({
           kill: false
         }).invalidate();
         self.isReverted || self.revert(true, true);
@@ -9568,16 +9568,16 @@
             pinActiveState = _copyState(pinOriginalState, override, pinReparent);
             _refreshingAll && scrollFunc(0);
           }
-          if (animation) {
-            initted = animation._initted;
+          if (animation2) {
+            initted = animation2._initted;
             _suppressOverwrites2(1);
-            animation.render(animation.duration(), true, true);
+            animation2.render(animation2.duration(), true, true);
             pinChange = pinGetter(direction.a) - pinStart + change + otherPinOffset;
             pinMoves = Math.abs(change - pinChange) > 1;
             useFixedPosition && pinMoves && pinActiveState.splice(pinActiveState.length - 2, 2);
-            animation.render(0, true, true);
-            initted || animation.invalidate(true);
-            animation.parent || animation.totalTime(animation.totalTime());
+            animation2.render(0, true, true);
+            initted || animation2.invalidate(true);
+            animation2.parent || animation2.totalTime(animation2.totalTime());
             _suppressOverwrites2(0);
           } else {
             pinChange = change;
@@ -9610,9 +9610,9 @@
           snapDelayedCall.restart(true);
         }
         _refreshing = 0;
-        animation && isToggle && (animation._initted || prevAnimProgress) && animation.progress() !== prevAnimProgress && animation.progress(prevAnimProgress, true).render(animation.time(), true, true);
+        animation2 && isToggle && (animation2._initted || prevAnimProgress) && animation2.progress() !== prevAnimProgress && animation2.progress(prevAnimProgress, true).render(animation2.time(), true, true);
         if (prevProgress !== self.progress || containerAnimation) {
-          animation && !isToggle && animation.totalProgress(prevProgress, true);
+          animation2 && !isToggle && animation2.totalProgress(prevProgress, true);
           self.progress = (scroll1 - start) / change === prevProgress ? 0 : prevProgress;
         }
         pin && pinSpacing && (spacer._pinOffset = Math.round(self.progress * pinChange));
@@ -9623,12 +9623,12 @@
       };
       self.endAnimation = function() {
         _endAnimation(self.callbackAnimation);
-        if (animation) {
-          scrubTween ? scrubTween.progress(1) : !animation.paused() ? _endAnimation(animation, animation.reversed()) : isToggle || _endAnimation(animation, self.direction < 0, 1);
+        if (animation2) {
+          scrubTween ? scrubTween.progress(1) : !animation2.paused() ? _endAnimation(animation2, animation2.reversed()) : isToggle || _endAnimation(animation2, self.direction < 0, 1);
         }
       };
       self.labelToScroll = function(label) {
-        return animation && animation.labels && (start || self.refresh() || start) + animation.labels[label] / animation.duration() * change || 0;
+        return animation2 && animation2.labels && (start || self.refresh() || start) + animation2.labels[label] / animation2.duration() * change || 0;
       };
       self.getTrailing = function(name) {
         var i2 = _triggers.indexOf(self), a = self.direction > 0 ? _triggers.slice(0, i2).reverse() : _triggers.slice(i2 + 1);
@@ -9648,7 +9648,7 @@
           scroll1 = containerAnimation ? scrollFunc() : scroll;
           if (snap3) {
             snap22 = snap1;
-            snap1 = animation && !isToggle ? animation.totalProgress() : clipped;
+            snap1 = animation2 && !isToggle ? animation2.totalProgress() : clipped;
           }
         }
         anticipatePin && !clipped && pin && !_refreshing && !_startup2 && _lastScrollTime && start < scroll + (scroll - scroll2) / (_getTime3() - _time22) * anticipatePin && (clipped = 1e-4);
@@ -9663,23 +9663,23 @@
             toggleState = clipped && !prevProgress2 ? 0 : clipped === 1 ? 1 : prevProgress2 === 1 ? 2 : 3;
             if (isToggle) {
               action = !toggled && toggleActions[toggleState + 1] !== "none" && toggleActions[toggleState + 1] || toggleActions[toggleState];
-              isTakingAction = animation && (action === "complete" || action === "reset" || action in animation);
+              isTakingAction = animation2 && (action === "complete" || action === "reset" || action in animation2);
             }
           }
-          preventOverlaps && (toggled || isTakingAction) && (isTakingAction || scrub || !animation) && (_isFunction7(preventOverlaps) ? preventOverlaps(self) : self.getTrailing(preventOverlaps).forEach(function(t2) {
+          preventOverlaps && (toggled || isTakingAction) && (isTakingAction || scrub || !animation2) && (_isFunction7(preventOverlaps) ? preventOverlaps(self) : self.getTrailing(preventOverlaps).forEach(function(t2) {
             return t2.endAnimation();
           }));
           if (!isToggle) {
             if (scrubTween && !_refreshing && !_startup2) {
               scrubTween._dp._time - scrubTween._start !== scrubTween._time && scrubTween.render(scrubTween._dp._time - scrubTween._start);
               if (scrubTween.resetTo) {
-                scrubTween.resetTo("totalProgress", clipped, animation._tTime / animation._tDur);
+                scrubTween.resetTo("totalProgress", clipped, animation2._tTime / animation2._tDur);
               } else {
                 scrubTween.vars.totalProgress = clipped;
                 scrubTween.invalidate().restart();
               }
-            } else if (animation) {
-              animation.totalProgress(clipped, !!_refreshing);
+            } else if (animation2) {
+              animation2.totalProgress(clipped, !!_refreshing);
             }
           }
           if (pin) {
@@ -9709,13 +9709,13 @@
             if (isToggle) {
               if (isTakingAction) {
                 if (action === "complete") {
-                  animation.pause().totalProgress(1);
+                  animation2.pause().totalProgress(1);
                 } else if (action === "reset") {
-                  animation.restart(true).pause();
+                  animation2.restart(true).pause();
                 } else if (action === "restart") {
-                  animation.restart(true);
+                  animation2.restart(true);
                 } else {
-                  animation[action]();
+                  animation2[action]();
                 }
               }
               onUpdate && onUpdate(self);
@@ -9731,7 +9731,7 @@
             }
             if (fastScrollEnd && !isActive && Math.abs(self.getVelocity()) > (_isNumber5(fastScrollEnd) ? fastScrollEnd : 2500)) {
               _endAnimation(self.callbackAnimation);
-              scrubTween ? scrubTween.progress(1) : _endAnimation(animation, action === "reverse" ? 1 : !clipped, 1);
+              scrubTween ? scrubTween.progress(1) : _endAnimation(animation2, action === "reverse" ? 1 : !clipped, 1);
             }
           } else if (isToggle && onUpdate && !_refreshing) {
             onUpdate(self);
@@ -9815,12 +9815,12 @@
           return t2.scroller === self.scroller && (i2 = 1);
         });
         i2 || _refreshingAll || (self.scroll.rec = 0);
-        if (animation) {
-          animation.scrollTrigger = null;
-          revert && animation.revert({
+        if (animation2) {
+          animation2.scrollTrigger = null;
+          revert && animation2.revert({
             kill: false
           });
-          allowAnimation || animation.kill();
+          allowAnimation || animation2.kill();
         }
         markerStart && [markerStart, markerEnd, markerStartTrigger, markerEndTrigger].forEach(function(m) {
           return m.parentNode && m.parentNode.removeChild(m);
@@ -9838,7 +9838,7 @@
       };
       self.enable(false, false);
       customRevertReturn && customRevertReturn(self);
-      !animation || !animation.add || change ? self.refresh() : gsap7.delayedCall(0.01, function() {
+      !animation2 || !animation2.add || change ? self.refresh() : gsap7.delayedCall(0.01, function() {
         return start || end || self.refresh();
       }) && (change = 0.01) && (start = end = 0);
       pin && _queueRefreshAll();
@@ -10027,8 +10027,8 @@
   ScrollTrigger2.revert = function(soft, media) {
     return _revertAll(!soft, media);
   };
-  ScrollTrigger2.create = function(vars, animation) {
-    return new ScrollTrigger2(vars, animation);
+  ScrollTrigger2.create = function(vars, animation2) {
+    return new ScrollTrigger2(vars, animation2);
   };
   ScrollTrigger2.refresh = function(safe) {
     return safe ? _onResize() : (_coreInitted7 || ScrollTrigger2.register()) && _refreshAll(true);
@@ -10355,13 +10355,13 @@
     const aboutTitle = aboutSecton.querySelector("p.text-size-large");
     const aboutOverview = aboutSecton.querySelector("p.text-size-medium");
     const aboutImage = aboutSecton.querySelector(".about-hero_image");
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       onComplete: () => {
         textSplitParent.revert();
         headerSplit.revert();
       }
     });
-    animation.from(headerSplit.lines, {
+    animation2.from(headerSplit.lines, {
       delay: 1,
       duration: 1,
       y: "4rem",
@@ -10369,8 +10369,8 @@
       stagger: 0.1,
       ease: "power4.inOut"
     });
-    animation.from(aboutOverline, { duration: 1, width: "0%", ease: "expo.inOut" }, "<");
-    animation.from(
+    animation2.from(aboutOverline, { duration: 1, width: "0%", ease: "expo.inOut" }, "<");
+    animation2.from(
       [aboutTitle, aboutOverview],
       {
         duration: 1.5,
@@ -10380,7 +10380,7 @@
       },
       "<0.5"
     );
-    animation.from(
+    animation2.from(
       heroStamp,
       {
         duration: 1.5,
@@ -10391,7 +10391,7 @@
       },
       "<"
     );
-    animation.from(
+    animation2.from(
       aboutImage,
       {
         duration: 1,
@@ -10416,7 +10416,7 @@
       const logoRow = clientLogos.slice(i2, i2 + sortSize);
       sortLogo.push(logoRow);
     }
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: clientSection,
         start: scrollTriggerStart,
@@ -10425,9 +10425,9 @@
         // toggleActions: 'play none none reverse',
       }
     });
-    animation.from(clientLabel, { duration: 2, opacity: 0, ease: "power4.out" });
+    animation2.from(clientLabel, { duration: 2, opacity: 0, ease: "power4.out" });
     for (const i2 in sortLogo) {
-      animation.from(
+      animation2.from(
         sortLogo[i2],
         { duration: 1, y: "2rem", opacity: 0, stagger: 0.1, ease: "power4.out" },
         "<"
@@ -10442,7 +10442,7 @@
     const seeMore = teamSection.querySelector(".show-more_component");
     const lastCard = teamCards[teamCards.length - 1];
     teamCards.pop();
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: teamSection,
         start: scrollTriggerStart,
@@ -10451,10 +10451,10 @@
         // toggleActions: 'play none none reverse',
       }
     });
-    animation.from(sectionLabel, { duration: 2, opacity: 0, ease: "power4.out" });
-    animation.from(controls, { duration: 2, opacity: 0, ease: "power4.out" }, "<0.2");
-    animation.from(lastCard, { duration: 1, x: "2rem", opacity: 0, ease: "power4.out" }, "<0.2");
-    animation.from(
+    animation2.from(sectionLabel, { duration: 2, opacity: 0, ease: "power4.out" });
+    animation2.from(controls, { duration: 2, opacity: 0, ease: "power4.out" }, "<0.2");
+    animation2.from(lastCard, { duration: 1, x: "2rem", opacity: 0, ease: "power4.out" }, "<0.2");
+    animation2.from(
       teamCards,
       { duration: 1, x: "2rem", opacity: 0, stagger: 0.1, ease: "power4.out" },
       "<0.1"
@@ -10467,7 +10467,7 @@
     const overviewText = awardsSection.querySelector("p");
     const overviewSpan = awardsSection.querySelector(".about-awards_span");
     const awardItems = [...awardsSection.querySelectorAll(".about-awards_item")];
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: awardsSection,
         start: scrollTriggerStart,
@@ -10476,11 +10476,11 @@
         // toggleActions: 'play none none reverse',
       }
     });
-    animation.from(bgText, { duration: 1.5, y: "2rem", opacity: 0, ease: "power4.out" });
-    animation.from(maskedText, { duration: 1.5, y: "2rem", opacity: 0, ease: "power4.out" }, "<");
-    animation.from(overviewText, { duration: 1, y: "2rem", opacity: 0, ease: "power4.out" }, "<");
-    animation.from(overviewSpan, { duration: 1, width: 0, ease: "power4.out" }, "<");
-    animation.from(
+    animation2.from(bgText, { duration: 1.5, y: "2rem", opacity: 0, ease: "power4.out" });
+    animation2.from(maskedText, { duration: 1.5, y: "2rem", opacity: 0, ease: "power4.out" }, "<");
+    animation2.from(overviewText, { duration: 1, y: "2rem", opacity: 0, ease: "power4.out" }, "<");
+    animation2.from(overviewSpan, { duration: 1, width: 0, ease: "power4.out" }, "<");
+    animation2.from(
       awardItems,
       { duration: 1, y: "2rem", opacity: 0, stagger: 0.1, ease: "power4.out" },
       "<0.6"
@@ -10493,7 +10493,7 @@
     for (const i2 in scrollSections) {
       const tempSection = scrollSections[i2];
       const textElement = [...tempSection.querySelectorAll("[data-scroll-text]")];
-      const animation = gsapWithCSS.timeline({
+      const animation2 = gsapWithCSS.timeline({
         scrollTrigger: {
           trigger: tempSection,
           start: "top bottom",
@@ -10502,8 +10502,8 @@
           scrub: true
         }
       });
-      animation.to(textElement[0], { inertia: { x: { velocity: -300 } } });
-      animation.to(textElement[1], { inertia: { x: { velocity: -300 } } }, "<");
+      animation2.to(textElement[0], { inertia: { x: { velocity: -300 } } });
+      animation2.to(textElement[1], { inertia: { x: { velocity: -300 } } }, "<");
     }
   };
 
@@ -10561,13 +10561,13 @@
     const headerOverview = fixedHeaderSection.querySelector("p");
     const overline = heroSection.querySelector(".fixed-header_overline");
     const heroComponent = heroSection.querySelector(".careers-hero_wrap");
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       onComplete: () => {
         textSplitParent.revert();
         headerSplit.revert();
       }
     });
-    animation.from(headerSplit.lines, {
+    animation2.from(headerSplit.lines, {
       delay: 1,
       duration: 1,
       y: "4rem",
@@ -10575,9 +10575,9 @@
       stagger: 0.1,
       ease: "power4.inOut"
     });
-    animation.from(overline, { duration: 1, width: "0%", ease: "expo.inOut" }, "<");
-    animation.from(headerOverview, { duration: 1, y: "1rem", opacity: 0, ease: "power4.inOut" }, "<");
-    animation.from(heroComponent, { duration: 1, y: "2rem", opacity: 0, ease: "expo.out" }, "<0.6");
+    animation2.from(overline, { duration: 1, width: "0%", ease: "expo.inOut" }, "<");
+    animation2.from(headerOverview, { duration: 1, y: "1rem", opacity: 0, ease: "power4.inOut" }, "<");
+    animation2.from(heroComponent, { duration: 1, y: "2rem", opacity: 0, ease: "expo.out" }, "<0.6");
   };
   var careersOverviewReveal = () => {
     const overviewSection = document.querySelector(".careers-hero_overview-wrap");
@@ -10588,7 +10588,7 @@
       linesClass: "split-text_parent"
     });
     const overviewRichText = overviewSection.querySelector("p");
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: overviewSection,
         start: scrollTriggerStart2,
@@ -10601,14 +10601,14 @@
         headerSplit.revert();
       }
     });
-    animation.from(headerSplit.lines, {
+    animation2.from(headerSplit.lines, {
       duration: 1,
       y: "4rem",
       opacity: 0,
       stagger: 0.1,
       ease: "power4.inOut"
     });
-    animation.from(
+    animation2.from(
       overviewRichText,
       { duration: 1, y: "2rem", opacity: 0, ease: "power4.inOut" },
       "<"
@@ -10645,13 +10645,13 @@
     const overline = workSection.querySelector(".fixed-header_overline");
     const filterButton = [...document.querySelectorAll(".work-filter_item")];
     const workGrid = [...document.querySelectorAll(".work-grid_item")];
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       onComplete: () => {
         textSplitParent.revert();
         headerSplit.revert();
       }
     });
-    animation.from(headerSplit.lines, {
+    animation2.from(headerSplit.lines, {
       delay: 1,
       duration: 1,
       y: "4rem",
@@ -10659,9 +10659,9 @@
       stagger: 0.1,
       ease: "power4.inOut"
     });
-    animation.from(overline, { duration: 1, width: "0%", ease: "expo.inOut" }, "<");
-    animation.from(headerOverview, { duration: 1, opacity: 0, y: "1rem", ease: "power4.inOut" }, "<");
-    animation.from(
+    animation2.from(overline, { duration: 1, width: "0%", ease: "expo.inOut" }, "<");
+    animation2.from(headerOverview, { duration: 1, opacity: 0, y: "1rem", ease: "power4.inOut" }, "<");
+    animation2.from(
       filterButton,
       {
         duration: 1,
@@ -10672,7 +10672,7 @@
       },
       "<0.2"
     );
-    animation.from(
+    animation2.from(
       workGrid,
       {
         duration: 1,
@@ -10692,112 +10692,84 @@
       temp.addEventListener("mouseenter", (e2) => {
         const target = e2.target;
         const targetImage = target.querySelector("img");
-        const animation = gsapWithCSS.timeline();
-        animation.to(targetImage, { scale: 1.1, ease: "power3.out" });
+        const animation2 = gsapWithCSS.timeline();
+        animation2.to(targetImage, { scale: 1.1, ease: "power3.out" });
       });
       temp.addEventListener("mouseleave", (e2) => {
         const target = e2.target;
         const targetImage = target.querySelector("img");
-        const animation = gsapWithCSS.timeline();
-        animation.to(targetImage, { duration: 0.6, scale: 1, ease: "power3.out" });
+        const animation2 = gsapWithCSS.timeline();
+        animation2.to(targetImage, { duration: 0.6, scale: 1, ease: "power3.out" });
       });
     }
   };
 
   // src/utils/caseGridMovement.ts
   var scrollSection = document.querySelector(".section_work");
-  var sAnimation = gsapWithCSS.timeline({
-    onUpdate: () => {
-      const array = [];
-      const items = [...document.querySelectorAll("[data-scroll-speed]")];
-      for (let i2 = 0; i2 < items.length; i2++) {
-        const temp = items[i2];
-        const style = getComputedStyle(temp).transform;
-        const styleY = style.split(",")[5];
-        if (styleY !== void 0) {
-          array.push(temp);
-          array.push(temp.dataset.scrollSpeed);
-          array.push(styleY);
-        }
+  var animation = gsapWithCSS.timeline({
+    scrollTrigger: {
+      trigger: scrollSection,
+      start: "top 40%",
+      end: "bottom bottom",
+      scrub: true,
+      toggleActions: "play none none reverse",
+      markers: {
+        startColor: "yellow",
+        endColor: "orange"
       }
-      console.log(array);
-    }
-  });
-  var sTrigger = ScrollTrigger2.create({
-    trigger: scrollSection,
-    animation: sAnimation,
-    start: "top 20%",
-    end: "bottom bottom",
-    scrub: true,
-    toggleActions: "play none none reverse",
-    markers: {
-      startColor: "yellow",
-      endColor: "lightblue"
     }
   });
   var caseScrollEffect = () => {
-    const workItems = [...document.querySelectorAll(".work-grid_item")];
-    setGridSpeeds(workItems);
-    updateAnimation();
+    setScrollSpeed();
+    createTimeline();
   };
-  var updateAnimation = () => {
-    const scrollSection2 = document.querySelector(".section_work");
-    const scrollElements = [...scrollSection2.querySelectorAll("[data-scroll-speed]")];
-    console.log("update animation");
-    console.log(sAnimation.vars);
-    for (const j in scrollElements) {
-      const tempElement = scrollElements[j];
-      const elementSpeed = Number(tempElement.dataset.scrollSpeed);
-      const setSpeed = elementSpeed;
-      sAnimation.to(tempElement, { yPercent: setSpeed, ease: "none" }, "<");
-    }
-  };
-  var refreshScrollTrigger = () => {
-    console.log("refresh");
-    updateAnimation();
-    setTimeout(() => {
-      sTrigger.refresh();
-    }, 500);
-  };
-  var setGridSpeeds = (items) => {
+  var setScrollSpeed = () => {
     const windowWidth = window.innerWidth;
+    const workItems = [...document.querySelectorAll(".work-grid_item")];
     const device11 = getDeviceType();
     if (device11 === "desktop" && windowWidth > 767) {
       const leftItems = [];
       const rightItems = [];
-      for (let i2 = 0; i2 < items.length; i2 += 2) {
-        leftItems.push(items[i2]);
+      for (let i2 = 0; i2 < workItems.length; i2 += 2) {
+        leftItems.push(workItems[i2]);
       }
-      for (let i2 = 1; i2 < items.length; i2 += 2) {
-        rightItems.push(items[i2]);
+      for (let i2 = 1; i2 < workItems.length; i2 += 2) {
+        rightItems.push(workItems[i2]);
       }
       for (const i2 in leftItems) {
         const temp = leftItems[i2];
-        const checkSpeed = temp.dataset.scrollSpeed;
-        const setSpeed = 15;
-        console.log("LEFT", temp, checkSpeed, setSpeed);
-        temp.dataset.scrollSpeed = "15";
+        temp.dataset.scrollSpeed = "3";
       }
       for (const i2 in rightItems) {
         const temp = rightItems[i2];
-        const checkSpeed = temp.dataset.scrollSpeed;
-        const setSpeed = -15;
-        console.log("right", temp, checkSpeed, setSpeed);
-        temp.dataset.scrollSpeed = "-15";
+        temp.dataset.scrollSpeed = "-3";
       }
     } else {
-      for (const i2 in items) {
-        const temp = items[i2];
+      for (const i2 in workItems) {
+        const temp = workItems[i2];
         temp.dataset.scrollSpeed = "8";
       }
+    }
+  };
+  var updateScrollEffect = () => {
+    const updatedAnimation = animation;
+    animation.kill();
+  };
+  var createTimeline = () => {
+    const scrollElements = [...scrollSection.querySelectorAll("[data-scroll-speed]")];
+    for (const j in scrollElements) {
+      const tempElement = scrollElements[j];
+      const elementSpeed = Number(tempElement.dataset.scrollSpeed);
+      const setSpeed = elementSpeed;
+      animation.to(tempElement, { yPercent: setSpeed * 5, ease: "none" }, "<");
     }
   };
 
   // src/motion/filterReveal.ts
   var filterReveal = (elements) => {
-    const animation = gsapWithCSS.timeline();
-    animation.set(elements, { y: "16px", display: "block", opacity: 0 });
-    animation.to(elements, {
+    const animation2 = gsapWithCSS.timeline();
+    animation2.set(elements, { y: "16px", display: "block", opacity: 0 });
+    animation2.to(elements, {
       duration: 1,
       y: "0px",
       opacity: 1,
@@ -10831,8 +10803,7 @@
             hideAll();
             filterReveal(renderQueue);
             updateInitialCheckbox(initialFilter, "hide");
-            setGridSpeeds(renderQueue);
-            refreshScrollTrigger();
+            updateScrollEffect();
           }
           if (filterText === "All") {
             activeFilters = [];
@@ -10840,8 +10811,6 @@
             hideAll();
             filterReveal(renderQueue);
             allReset();
-            setGridSpeeds(renderQueue);
-            refreshScrollTrigger();
           }
         } else {
           clickedSpan.style.color = "#EC2543";
@@ -11318,13 +11287,13 @@
     const headerTexture = document.querySelector(".case-hero_texture");
     const overline = featuredSection.querySelector(".fixed-header_overline");
     const featuredContent = featuredSection.querySelector(".case-hero_featured-wrap");
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       onComplete: () => {
         textSplitParent.revert();
         headerSplit.revert();
       }
     });
-    animation.from(headerSplit.lines, {
+    animation2.from(headerSplit.lines, {
       delay: 1,
       duration: 1,
       y: "4rem",
@@ -11332,14 +11301,14 @@
       stagger: 0.1,
       ease: "power4.inOut"
     });
-    animation.from(overline, { duration: 1, width: 0, ease: "expo.inOut" }, "<");
-    animation.from(headerOverview, { duration: 1, opacity: 0, y: "1rem", ease: "power4.inOut" }, "<");
-    animation.from(
+    animation2.from(overline, { duration: 1, width: 0, ease: "expo.inOut" }, "<");
+    animation2.from(headerOverview, { duration: 1, opacity: 0, y: "1rem", ease: "power4.inOut" }, "<");
+    animation2.from(
       featuredContent,
       { duration: 1, opacity: 0, y: "2rem", ease: "power4.out" },
       "<0.6"
     );
-    animation.from(headerTexture, { opacity: 0, ease: "power4.out" });
+    animation2.from(headerTexture, { opacity: 0, ease: "power4.out" });
   };
   var csOverviewReveal = () => {
     const overviewSection = document.querySelector(".section_case-overview");
@@ -11350,7 +11319,7 @@
       linesClass: "split-text_parent"
     });
     const overviewRichText = overviewSection.querySelector(".rich-text");
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: overviewSection,
         start: scrollTriggerStart4,
@@ -11364,14 +11333,14 @@
         headerSplit.revert();
       }
     });
-    animation.from(headerSplit.lines, {
+    animation2.from(headerSplit.lines, {
       duration: 1,
       y: "2rem",
       opacity: 0,
       stagger: 0.1,
       ease: "power4.inOut"
     });
-    animation.from(
+    animation2.from(
       overviewRichText,
       { duration: 1, y: "2rem", opacity: 0, ease: "power4.inOut" },
       "<"
@@ -11382,7 +11351,7 @@
     const revealContainer = sliderSection.querySelector(".media-slider_reveal-wrap");
     const mediaControls = [...sliderSection.querySelectorAll(".media-slider_button")];
     gsapWithCSS.set(revealContainer, { y: 0 });
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: sliderSection,
         start: scrollTriggerStart4,
@@ -11391,13 +11360,13 @@
         // toggleActions: 'play none none reverse',
       }
     });
-    animation.to(revealContainer, { duration: 1, y: "-100%", ease: "power4.inOut" });
-    animation.from(mediaControls, { duration: 1, y: "2rem", opacity: 0, ease: "power4.inOut" }, "<");
+    animation2.to(revealContainer, { duration: 1, y: "-100%", ease: "power4.inOut" });
+    animation2.from(mediaControls, { duration: 1, y: "2rem", opacity: 0, ease: "power4.inOut" }, "<");
   };
   var csStatsReveal = () => {
     const statsSection = document.querySelector(".section_case-stats");
     const statsComponent = statsSection.querySelector(".case-overview_component");
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: statsSection,
         start: scrollTriggerStart4,
@@ -11406,7 +11375,7 @@
         // toggleActions: 'play none none reverse',
       }
     });
-    animation.from(statsComponent, { duration: 1, y: "2rem", opacity: 0, ease: "power4.inOut" });
+    animation2.from(statsComponent, { duration: 1, y: "2rem", opacity: 0, ease: "power4.inOut" });
   };
 
   // src/pages/caseTemplate.ts
@@ -11444,40 +11413,40 @@
     gsapWithCSS.set(sublinks, { y: "1rem", opacity: 0 });
   };
   var linkHoverIn = (curNote, curLink) => {
-    const animation = gsapWithCSS.timeline();
-    animation.to(curLink.children[0], { color: "#D5CFC6", ease: "expo.out" });
-    animation.to(curNote, { color: "#EC2543", ease: "expo.inout" }, "<");
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(curLink.children[0], { color: "#D5CFC6", ease: "expo.out" });
+    animation2.to(curNote, { color: "#EC2543", ease: "expo.inout" }, "<");
   };
   var linkHoverOut = (curNote, curLink) => {
-    const animation = gsapWithCSS.timeline();
-    animation.to(curLink.children[0], { color: "rgba(248,244,238,0)", ease: "expo.out" });
-    animation.to(curNote, { color: "rgb(238, 235, 230, .2)", ease: "expo.out" }, "<");
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(curLink.children[0], { color: "rgba(248,244,238,0)", ease: "expo.out" });
+    animation2.to(curNote, { color: "rgb(238, 235, 230, .2)", ease: "expo.out" }, "<");
     curLink.classList.add("text-stroke-white");
   };
   var sublinksHoverIn = (sublinks) => {
-    const animation = gsapWithCSS.timeline();
-    animation.to(sublinks, { opacity: 1, y: "0rem", stagger: { each: 0.1 }, ease: "expo.out" });
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(sublinks, { opacity: 1, y: "0rem", stagger: { each: 0.1 }, ease: "expo.out" });
   };
   var sublinksHoverOut = (sublinks) => {
-    const animation = gsapWithCSS.timeline();
-    animation.to(sublinks, { opacity: 0, y: "1rem", stagger: { each: 0.1 }, ease: "expo.out" });
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(sublinks, { opacity: 0, y: "1rem", stagger: { each: 0.1 }, ease: "expo.out" });
   };
   var openContactForm = () => {
     const formParent = document.querySelector(".section_contact-form");
     const formComponent = formParent.querySelector(".contact-form_component");
-    const animation = gsapWithCSS.timeline();
-    animation.set(formParent, { duration: 0, opacity: 0, display: "block" });
-    animation.set(formComponent, { duration: 0, opacity: 0 });
-    animation.to(formParent, { opacity: 1, ease: "power4.out" });
-    animation.to(formComponent, { opacity: 1, ease: "power4.out" });
+    const animation2 = gsapWithCSS.timeline();
+    animation2.set(formParent, { duration: 0, opacity: 0, display: "block" });
+    animation2.set(formComponent, { duration: 0, opacity: 0 });
+    animation2.to(formParent, { opacity: 1, ease: "power4.out" });
+    animation2.to(formComponent, { opacity: 1, ease: "power4.out" });
   };
   var closeContactForm = () => {
     const formParent = document.querySelector(".section_contact-form");
     const formComponent = formParent.querySelector(".contact-form_component");
-    const animation = gsapWithCSS.timeline();
-    animation.to(formParent, { opacity: 0, ease: "power4.out" });
-    animation.to(formComponent, { opacity: 0, ease: "power4.out" }, "<");
-    animation.set(formParent, { duration: 0, display: "none" });
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(formParent, { opacity: 0, ease: "power4.out" });
+    animation2.to(formComponent, { opacity: 0, ease: "power4.out" }, "<");
+    animation2.set(formParent, { duration: 0, display: "none" });
   };
 
   // src/components/contactMain.ts
@@ -11563,9 +11532,9 @@
   var accordianOpen = (element) => {
     const hiddenContent = element.children[1];
     const buttonWrap = element.children[2];
-    const animation = gsapWithCSS.timeline();
-    animation.set([hiddenContent, buttonWrap], { display: "flex", opacity: 0 });
-    animation.to([hiddenContent, buttonWrap], {
+    const animation2 = gsapWithCSS.timeline();
+    animation2.set([hiddenContent, buttonWrap], { display: "flex", opacity: 0 });
+    animation2.to([hiddenContent, buttonWrap], {
       duration: 1,
       height: "auto",
       opacity: 1,
@@ -11575,33 +11544,33 @@
   var accordianClose = (element) => {
     const hiddenContent = element.children[1];
     const buttonWrap = element.children[2];
-    const animation = gsapWithCSS.timeline();
-    animation.to([hiddenContent, buttonWrap], {
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to([hiddenContent, buttonWrap], {
       duration: 1,
       height: "0",
       opacity: 0,
       ease: "power4.out"
     });
-    animation.set([hiddenContent, buttonWrap], { display: "none" });
+    animation2.set([hiddenContent, buttonWrap], { display: "none" });
   };
   var duration = 0.8;
   var accordianHoverIn = (element) => {
     const defaultImage = servicesImages[0];
-    const animation = gsapWithCSS.timeline();
-    animation.to(element, { duration, opacity: 1, display: "block", ease: "power3.out" });
-    animation.to(defaultImage, { duration, opacity: 0, ease: "power3.out" }, "<");
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(element, { duration, opacity: 1, display: "block", ease: "power3.out" });
+    animation2.to(defaultImage, { duration, opacity: 0, ease: "power3.out" }, "<");
   };
   var accordianHoverOut = (element) => {
     const defaultImage = servicesImages[0];
-    const animation = gsapWithCSS.timeline();
-    animation.to(element, { duration, opacity: 0, display: "none", ease: "power3.out" });
-    animation.to(defaultImage, { duration, opacity: 1, ease: "power3.out" }, "<");
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(element, { duration, opacity: 0, display: "none", ease: "power3.out" });
+    animation2.to(defaultImage, { duration, opacity: 1, ease: "power3.out" }, "<");
   };
   var scale = 0.05;
   var accordianImageHover = (movementX, movementY) => {
     const serviceImageMask = document.querySelector(".home-services_list");
-    const animation = gsapWithCSS.timeline();
-    animation.to(serviceImageMask, { x: movementX * scale, y: movementY * scale });
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(serviceImageMask, { x: movementX * scale, y: movementY * scale });
   };
 
   // src/components/accordianList.ts
@@ -11680,10 +11649,10 @@
     const prevParent = pInfoParent[prevIndex];
     const curItem = pInfoItem[curIndex];
     const prevItem = pInfoItem[prevIndex];
-    const animation = gsapWithCSS.timeline();
-    animation.set(curParent, { display: "flex" });
-    animation.to(curItem, { duration: 0.8, opacity: 1, y: "0%", ease: "power4.inOut" });
-    animation.to(
+    const animation2 = gsapWithCSS.timeline();
+    animation2.set(curParent, { display: "flex" });
+    animation2.to(curItem, { duration: 0.8, opacity: 1, y: "0%", ease: "power4.inOut" });
+    animation2.to(
       prevItem,
       {
         duration: 0.8,
@@ -11693,19 +11662,19 @@
       },
       "<"
     );
-    animation.set(prevItem, { y: "100%" });
-    animation.set(prevParent, { display: "none" });
+    animation2.set(prevItem, { y: "100%" });
+    animation2.set(prevParent, { display: "none" });
   };
   var showPrevContent = (curIndex, prevIndex) => {
     const curParent = pInfoParent[curIndex];
     const prevParent = pInfoParent[prevIndex];
     const curItem = pInfoItem[curIndex];
     const prevItem = pInfoItem[prevIndex];
-    const animation = gsapWithCSS.timeline();
-    animation.set(curParent, { display: "flex" });
-    animation.set(curItem, { y: "-100%" });
-    animation.to(curItem, { duration: 0.8, opacity: 1, y: "0%", ease: "power4.inOut" });
-    animation.to(
+    const animation2 = gsapWithCSS.timeline();
+    animation2.set(curParent, { display: "flex" });
+    animation2.set(curItem, { y: "-100%" });
+    animation2.to(curItem, { duration: 0.8, opacity: 1, y: "0%", ease: "power4.inOut" });
+    animation2.to(
       prevItem,
       {
         duration: 0.8,
@@ -11715,17 +11684,17 @@
       },
       "<"
     );
-    animation.set(prevParent, { display: "none" });
+    animation2.set(prevParent, { display: "none" });
   };
   var viewMoreHoverIn = (element) => {
     const linkIcon = element.children[1];
-    const animation = gsapWithCSS.timeline();
-    animation.to(linkIcon, { duration: 1, scale: 0.8, rotate: "45deg", ease: "expo.inOut" }, "<");
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(linkIcon, { duration: 1, scale: 0.8, rotate: "45deg", ease: "expo.inOut" }, "<");
   };
   var viewMoreHoverOut = (element) => {
     const linkIcon = element.children[1];
-    const animation = gsapWithCSS.timeline();
-    animation.to(linkIcon, { duration: 1, scale: 1, rotate: "0deg", ease: "expo.inOut" }, "<");
+    const animation2 = gsapWithCSS.timeline();
+    animation2.to(linkIcon, { duration: 1, scale: 1, rotate: "0deg", ease: "expo.inOut" }, "<");
   };
 
   // src/components/featuredWork.ts
@@ -11823,21 +11792,21 @@
   var openModal = () => {
     const modalSection = document.querySelector(".home-video_reel");
     const modalVideo = modalSection.querySelector(".home-video_emebed");
-    const animation = gsapWithCSS.timeline();
-    animation.set(lenisContainer2, { height: "100%" });
-    animation.set(modalSection, { display: "block" });
-    animation.set(modalVideo, { opacity: 0, y: "3rem" });
-    animation.to(modalSection, { duration: 1, opacity: 1, ease: "power3.out" });
-    animation.to(modalVideo, { duration: 2, opacity: 1, y: "0rem", ease: "power4.out" }, "<");
+    const animation2 = gsapWithCSS.timeline();
+    animation2.set(lenisContainer2, { height: "100%" });
+    animation2.set(modalSection, { display: "block" });
+    animation2.set(modalVideo, { opacity: 0, y: "3rem" });
+    animation2.to(modalSection, { duration: 1, opacity: 1, ease: "power3.out" });
+    animation2.to(modalVideo, { duration: 2, opacity: 1, y: "0rem", ease: "power4.out" }, "<");
   };
   var closeModal = () => {
     const modalSection = document.querySelector(".home-video_reel");
     const modalVideo = modalSection.querySelector(".home-video_emebed");
-    const animation = gsapWithCSS.timeline();
-    animation.set(lenisContainer2, { height: "auto" });
-    animation.set("body", { overflow: "auto" });
-    animation.to([modalVideo, modalSection], { duration: 1, opacity: 0, ease: "power4.out" });
-    animation.set(modalSection, { display: "none" });
+    const animation2 = gsapWithCSS.timeline();
+    animation2.set(lenisContainer2, { height: "auto" });
+    animation2.set("body", { overflow: "auto" });
+    animation2.to([modalVideo, modalSection], { duration: 1, opacity: 0, ease: "power4.out" });
+    animation2.set(modalSection, { display: "none" });
   };
 
   // src/motion/homeMotion.ts
@@ -11874,7 +11843,7 @@
       setHeight = "50%";
       setCornerRadius = "2rem 2rem 2rem 2rem";
     }
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: maskedComponent,
         start: "top top",
@@ -11884,16 +11853,16 @@
         scrub: 1
       }
     });
-    animation.set(heroMainComponent, { zIndex: 2 });
-    animation.to(maskElement, {
+    animation2.set(heroMainComponent, { zIndex: 2 });
+    animation2.to(maskElement, {
       width: setWidth,
       height: setHeight,
       bottom: 0,
       borderRadius: setCornerRadius,
       ease: "linear"
     });
-    animation.to(heroMainComponent, { opacity: 0, ease: "power4.out" }, "<");
-    animation.to(heroImageText, { opacity: 1 }, "<0.3");
+    animation2.to(heroMainComponent, { opacity: 0, ease: "power4.out" }, "<");
+    animation2.to(heroImageText, { opacity: 1 }, "<0.3");
     let setIndicator = "-5rem";
     if (device11 === "tablet") {
       setIndicator = "-4rem";
@@ -11933,7 +11902,7 @@
     const heroBGText = document.querySelector(".bg-text_track");
     const heroScrollIcon = document.querySelector("#heroScrollIndicator");
     const heroTexture = document.querySelector(".home-hero_texture");
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: ".section_home-overview",
         start: "bottom top",
@@ -11942,9 +11911,9 @@
         // markers: true,
       }
     });
-    animation.to([heroBGText, heroScrollIcon, heroTexture], { duration: 0, display: "none" });
-    animation.to(heroBG, { duration: 0, opacity: 0 });
-    animation.to(heroBG, { duration: 0, pointerEvents: "none" });
+    animation2.to([heroBGText, heroScrollIcon, heroTexture], { duration: 0, display: "none" });
+    animation2.to(heroBG, { duration: 0, opacity: 0 });
+    animation2.to(heroBG, { duration: 0, pointerEvents: "none" });
   };
   var heroZText = () => {
     const heroSection = document.querySelector(".section_home-hero");
@@ -12005,8 +11974,8 @@
     const heroHeaders = [...heroSection.querySelectorAll(".home-hero_header")];
     const heroOverview = heroSection.querySelector(".home-hero_description");
     const hero3D = heroSection.querySelector(".home-hero_3d-embed.is-production");
-    const animation = gsapWithCSS.timeline();
-    animation.from(heroHeaders, {
+    const animation2 = gsapWithCSS.timeline();
+    animation2.from(heroHeaders, {
       delay: 2,
       duration: 1,
       opacity: 0,
@@ -12014,8 +11983,8 @@
       stagger: 0.1,
       ease: "power4.inOut"
     });
-    animation.from(heroOverview, { duration: 1.3, y: "2rem", opacity: 0, ease: "power4.inOut" }, "<");
-    animation.from(hero3D, { duration: 1.3, y: "2rem", opacity: 0, ease: "power3.inOut" }, "<");
+    animation2.from(heroOverview, { duration: 1.3, y: "2rem", opacity: 0, ease: "power4.inOut" }, "<");
+    animation2.from(hero3D, { duration: 1.3, y: "2rem", opacity: 0, ease: "power3.inOut" }, "<");
   };
   var overviewReveal = () => {
     const overviewSection = document.querySelector(".section_home-overview");
@@ -12030,7 +11999,7 @@
     const overviewTexture = overviewSection.querySelector(".home-overview_texture-overlay");
     const overviewLabel = overviewSection.querySelector(".module_label-container");
     const overviewVideo = overviewSection.querySelector(".home-overview_video-embed");
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: overviewSection,
         start: scrollTriggerStart5,
@@ -12043,23 +12012,23 @@
         headerSplit.revert();
       }
     });
-    animation.from(overviewLabel, {
+    animation2.from(overviewLabel, {
       duration: setDuration,
       opacity: 0,
       ease: "power4.out"
     });
-    animation.from(overviewTexture, { opacity: 0, duration: 2 }, "<");
-    animation.from(
+    animation2.from(overviewTexture, { opacity: 0, duration: 2 }, "<");
+    animation2.from(
       overviewText,
       { duration: setDuration, y: setYOffset, opacity: 0, ease: "power4.out" },
       "<"
     );
-    animation.from(
+    animation2.from(
       overviewStamp,
       { duration: setDuration, opacity: 0, scale: 1.2, ease: "power4.out" },
       "<"
     );
-    animation.from(
+    animation2.from(
       headerSplit.lines,
       {
         duration: 1,
@@ -12070,7 +12039,7 @@
       },
       "<"
     );
-    animation.from(
+    animation2.from(
       overviewVideo,
       {
         duration: setDuration,
@@ -12084,7 +12053,7 @@
   var featuredReveal = () => {
     const featuredSection = document.querySelector(".section_home-featured");
     const featuedContent = featuredSection.querySelector(".home-featured_item-wrap");
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: featuredSection,
         start: "top 10%",
@@ -12093,7 +12062,7 @@
         // markers: { startColor: 'green', endColor: 'olive' },
       }
     });
-    animation.from(featuedContent, {
+    animation2.from(featuedContent, {
       duration: 1,
       opacity: 0,
       y: "100%",
@@ -12106,7 +12075,7 @@
     const servicesOverview = servicesSection.querySelector("p");
     const servicesImageMask = servicesSection.querySelector(".home-services_image-mask");
     const serviceItems = [...servicesSection.querySelectorAll(".home-services_item")];
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: servicesSection,
         start: scrollTriggerStart5,
@@ -12115,14 +12084,14 @@
         // toggleActions: 'play none none reverse',
       }
     });
-    animation.from(servicesLabel, { duration: 2, opacity: 0, ease: "power4.out" });
-    animation.from(
+    animation2.from(servicesLabel, { duration: 2, opacity: 0, ease: "power4.out" });
+    animation2.from(
       servicesImageMask,
       { duration: 2, y: "4rem", opacity: 0, ease: "power4.out" },
       "<"
     );
-    animation.from(servicesOverview, { duration: 2, y: "4rem", opacity: 0, ease: "power4.out" }, "<");
-    animation.from(
+    animation2.from(servicesOverview, { duration: 2, y: "4rem", opacity: 0, ease: "power4.out" }, "<");
+    animation2.from(
       serviceItems,
       { duration: 2, y: "4rem", opacity: 0, stagger: 0.2, ease: "expo.out" },
       "<"
@@ -12139,7 +12108,7 @@
     });
     const focusParagraph = focusSection.querySelector("p");
     const focusStamp = focusSection.querySelector("img");
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: focusSection,
         start: scrollTriggerStart5,
@@ -12152,8 +12121,8 @@
         textSplit.revert();
       }
     });
-    animation.from(focusLabel, { duration: 2, opacity: 0, ease: "power4.out" });
-    animation.from(
+    animation2.from(focusLabel, { duration: 2, opacity: 0, ease: "power4.out" });
+    animation2.from(
       textSplit.lines,
       {
         duration: 0.8,
@@ -12164,12 +12133,12 @@
       },
       "<"
     );
-    animation.from(
+    animation2.from(
       focusParagraph,
       { duration: 2, opacity: 0, y: "4rem", ease: "power4.out" },
       "<0.4"
     );
-    animation.from(focusStamp, { duration: 2, scale: 1.2, opacity: 0, ease: "power4.out" }, "<");
+    animation2.from(focusStamp, { duration: 2, scale: 1.2, opacity: 0, ease: "power4.out" }, "<");
   };
 
   // src/motion/preloaderMotion.ts
@@ -12178,28 +12147,28 @@
     const preloaderImage = preloaderElement.querySelector("img");
     const pageTransition2 = document.querySelector(".transition_component");
     const lenisContainer3 = document.querySelector("html");
-    const animation = gsapWithCSS.timeline();
-    animation.set(lenisContainer3, { height: "100%" });
-    animation.set(preloaderElement, { display: "flex", opacity: 1 });
-    animation.set(preloaderImage, { opacity: 0, y: "2rem" });
-    animation.set(pageTransition2, { display: "none", opacity: 0 });
-    animation.to(preloaderImage, {
+    const animation2 = gsapWithCSS.timeline();
+    animation2.set(lenisContainer3, { height: "100%" });
+    animation2.set(preloaderElement, { display: "flex", opacity: 1 });
+    animation2.set(preloaderImage, { opacity: 0, y: "2rem" });
+    animation2.set(pageTransition2, { display: "none", opacity: 0 });
+    animation2.to(preloaderImage, {
       delay: 0.4,
       duration: 1,
       y: "0rem",
       opacity: 1,
       ease: "power4.out"
     });
-    animation.to(preloaderImage, {
+    animation2.to(preloaderImage, {
       delay: 0.4,
       duration: 1,
       y: "-2rem",
       opacity: 0,
       ease: "power4.out"
     });
-    animation.to(preloaderElement, { duration: 1, opacity: 0, ease: "power4.out" }, "<0.3");
-    animation.set(preloaderElement, { display: "none" });
-    animation.set(lenisContainer3, { height: "auto" });
+    animation2.to(preloaderElement, { duration: 1, opacity: 0, ease: "power4.out" }, "<0.3");
+    animation2.set(preloaderElement, { display: "none" });
+    animation2.set(lenisContainer3, { height: "auto" });
   };
 
   // src/pages/home.ts
@@ -12241,13 +12210,13 @@
     const overline = heroSection.querySelector(".fixed-header_overline");
     const filterButton = [...document.querySelectorAll(".work-filter_item")];
     const workGrid = [...document.querySelectorAll(".insights_wrapper")];
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       onComplete: () => {
         textSplitParent.revert();
         headerSplit.revert();
       }
     });
-    animation.from(headerSplit.lines, {
+    animation2.from(headerSplit.lines, {
       delay: 1,
       duration: 1,
       y: "4rem",
@@ -12255,9 +12224,9 @@
       stagger: 0.1,
       ease: "power4.inOut"
     });
-    animation.from(overline, { duration: 1, width: 0, ease: "expo.inOut" }, "<");
-    animation.from(headerOverview, { duration: 1.5, opacity: 0, ease: "power4.inOut" }, "<");
-    animation.from(
+    animation2.from(overline, { duration: 1, width: 0, ease: "expo.inOut" }, "<");
+    animation2.from(headerOverview, { duration: 1.5, opacity: 0, ease: "power4.inOut" }, "<");
+    animation2.from(
       filterButton,
       {
         duration: 1,
@@ -12268,7 +12237,7 @@
       },
       "<0.2"
     );
-    animation.from(
+    animation2.from(
       workGrid,
       {
         duration: 1,
@@ -12288,14 +12257,14 @@
       temp.addEventListener("mouseenter", (e2) => {
         const target = e2.target;
         const targetImage = target.querySelector("img");
-        const animation = gsapWithCSS.timeline();
-        animation.to(targetImage, { scale: 1.1, ease: "power3.out" });
+        const animation2 = gsapWithCSS.timeline();
+        animation2.to(targetImage, { scale: 1.1, ease: "power3.out" });
       });
       temp.addEventListener("mouseleave", (e2) => {
         const target = e2.target;
         const targetImage = target.querySelector("img");
-        const animation = gsapWithCSS.timeline();
-        animation.to(targetImage, { duration: 0.6, scale: 1, ease: "power3.out" });
+        const animation2 = gsapWithCSS.timeline();
+        animation2.to(targetImage, { duration: 0.6, scale: 1, ease: "power3.out" });
       });
     }
   };
@@ -12334,13 +12303,13 @@
     const headerOverview = fixedHeaderSection.querySelector(".fixed-head_info-wrap");
     const overline = heroSection.querySelector(".fixed-header_overline");
     const heroContent = heroSection.querySelector(".news_featured-wrap");
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       onComplete: () => {
         textSplitParent.revert();
         headerSplit.revert();
       }
     });
-    animation.from(headerSplit.lines, {
+    animation2.from(headerSplit.lines, {
       delay: 1,
       duration: 1,
       y: "4rem",
@@ -12348,9 +12317,9 @@
       stagger: 0.1,
       ease: "power4.inOut"
     });
-    animation.from(overline, { duration: 1, width: 0, ease: "expo.inOut" }, "<");
-    animation.from(headerOverview, { duration: 1.5, opacity: 0, ease: "power4.inOut" }, "<");
-    animation.from(
+    animation2.from(overline, { duration: 1, width: 0, ease: "expo.inOut" }, "<");
+    animation2.from(headerOverview, { duration: 1.5, opacity: 0, ease: "power4.inOut" }, "<");
+    animation2.from(
       heroContent,
       {
         duration: 1,
@@ -12398,13 +12367,13 @@
     const headerOverview = fixedHeaderSection.querySelector("h2");
     const overline = heroSection.querySelector(".fixed-header_overline");
     const heroContent = heroSection.querySelector(".people_main-wrap");
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       onComplete: () => {
         textSplitParent.revert();
         headerSplit.revert();
       }
     });
-    animation.from(headerSplit.lines, {
+    animation2.from(headerSplit.lines, {
       delay: 1,
       duration: 1,
       y: "4rem",
@@ -12412,9 +12381,9 @@
       stagger: 0.1,
       ease: "power4.inOut"
     });
-    animation.from(overline, { duration: 1, width: 0, ease: "expo.inOut" }, "<");
-    animation.from(headerOverview, { duration: 1.5, opacity: 0, ease: "power4.inOut" }, "<");
-    animation.from(
+    animation2.from(overline, { duration: 1, width: 0, ease: "expo.inOut" }, "<");
+    animation2.from(headerOverview, { duration: 1.5, opacity: 0, ease: "power4.inOut" }, "<");
+    animation2.from(
       heroContent,
       {
         duration: 1,
@@ -12456,13 +12425,13 @@
     const heroText = heroSection.querySelector("h2");
     const heroImageWrap = heroSection.querySelector(".services-hero_image-wrap");
     const heroChildren = [...heroImageWrap.children];
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       onComplete: () => {
         textSplitParent.revert();
         headerSplit.revert();
       }
     });
-    animation.from(headerSplit.lines, {
+    animation2.from(headerSplit.lines, {
       delay: 1,
       duration: 1,
       y: "4rem",
@@ -12470,9 +12439,9 @@
       stagger: 0.1,
       ease: "power4.inOut"
     });
-    animation.from(overline, { duration: 1, width: 0, ease: "expo.inOut" }, "<");
-    animation.from(headerOverview, { duration: 1, opacity: 0, y: "1rem", ease: "power4.inOut" }, "<");
-    animation.from(
+    animation2.from(overline, { duration: 1, width: 0, ease: "expo.inOut" }, "<");
+    animation2.from(headerOverview, { duration: 1, opacity: 0, y: "1rem", ease: "power4.inOut" }, "<");
+    animation2.from(
       filterButtons,
       {
         duration: 1,
@@ -12483,8 +12452,8 @@
       },
       "<0.2"
     );
-    animation.from(heroText, { duration: 1, opacity: 0, y: "2rem", ease: "power4.out" }, "<0.5");
-    animation.from(heroChildren, { duration: 1, opacity: 0, scale: 1.05, ease: "power4.out" }, "<");
+    animation2.from(heroText, { duration: 1, opacity: 0, y: "2rem", ease: "power4.out" }, "<0.5");
+    animation2.from(heroChildren, { duration: 1, opacity: 0, scale: 1.05, ease: "power4.out" }, "<");
   };
   var servicesOverviewReveal = () => {
     const overviewSection = document.querySelector(".section_serivces-info");
@@ -12495,7 +12464,7 @@
     );
     const industriesHeader = industriesSection.querySelector("h2");
     const industriesTag = industriesSection.querySelectorAll(".services-info_grid");
-    const animation = gsapWithCSS.timeline({
+    const animation2 = gsapWithCSS.timeline({
       scrollTrigger: {
         trigger: overviewSection,
         start: scrollTriggerStart9,
@@ -12504,10 +12473,10 @@
         // toggleActions: 'play none none reverse',
       }
     });
-    animation.from(overviewHeader, { duration: 1, opacity: 0, y: "2rem", ease: "power4.out" });
-    animation.from(overviewSpan, { duration: 1, width: 0, ease: "power4.out" }, "<");
-    animation.from(industriesHeader, { duration: 1, opacity: 0, y: "2rem", ease: "power4.out" }, "<");
-    animation.from(
+    animation2.from(overviewHeader, { duration: 1, opacity: 0, y: "2rem", ease: "power4.out" });
+    animation2.from(overviewSpan, { duration: 1, width: 0, ease: "power4.out" }, "<");
+    animation2.from(industriesHeader, { duration: 1, opacity: 0, y: "2rem", ease: "power4.out" }, "<");
+    animation2.from(
       industriesTag,
       {
         duration: 1,
@@ -12538,7 +12507,7 @@
       const contentSecondary = tempSection.querySelector(".services_info-grid");
       const sectionSpan = [...tempSection.querySelectorAll(".services_span")];
       gsapWithCSS.set(revealWrap, { y: "0%" });
-      const animation = gsapWithCSS.timeline({
+      const animation2 = gsapWithCSS.timeline({
         scrollTrigger: {
           trigger: tempSection,
           start: scrollTriggerStart9,
@@ -12547,14 +12516,14 @@
           // toggleActions: 'play none none reverse',
         }
       });
-      animation.to(revealWrap, { duration: 1, y: "-100%", ease: "expo.inOut" }, "<");
-      animation.from(contentMain, { duration: 1, opacity: 0, y: "2rem", ease: "power4.inOut" }, "<");
-      animation.from(
+      animation2.to(revealWrap, { duration: 1, y: "-100%", ease: "expo.inOut" }, "<");
+      animation2.from(contentMain, { duration: 1, opacity: 0, y: "2rem", ease: "power4.inOut" }, "<");
+      animation2.from(
         contentSecondary,
         { duration: 1, opacity: 0, y: "2rem", ease: "power4.inOut" },
         "<"
       );
-      animation.from(sectionSpan, { duration: 1, width: "0%", ease: "power4.inOut" }, "<");
+      animation2.from(sectionSpan, { duration: 1, width: "0%", ease: "power4.inOut" }, "<");
     }
   };
 
@@ -12611,7 +12580,7 @@
     for (const i2 in scrollSections) {
       const tempSection = scrollSections[i2];
       const scrollElements = [...tempSection.querySelectorAll("[data-scroll-speed]")];
-      const animation = gsapWithCSS.timeline({
+      const animation2 = gsapWithCSS.timeline({
         scrollTrigger: {
           trigger: tempSection,
           start: "top 50%",
@@ -12628,7 +12597,7 @@
         const tempElement = scrollElements[j];
         const elementSpeed = Number(tempElement.dataset.scrollSpeed);
         const setSpeed = elementSpeed;
-        animation.to(tempElement, { yPercent: setSpeed * movementMuliplier, ease: "none" }, "<");
+        animation2.to(tempElement, { yPercent: setSpeed * movementMuliplier, ease: "none" }, "<");
       }
     }
   };
