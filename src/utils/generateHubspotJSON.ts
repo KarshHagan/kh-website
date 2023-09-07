@@ -1,6 +1,8 @@
 export const generateHubspotJSON = (formData: FormData, target: HTMLFormElement) => {
-  const checkbox = target.querySelector('#newsletter_signup_checkbox') as HTMLElement;
-  checkbox.classList.add('w-input');
+  if (window.location.pathname.includes('/contact')) {
+    const checkbox = target.querySelector('#newsletter_signup_checkbox') as HTMLElement;
+    checkbox.classList.add('w-input');
+  }
 
   const formInputs = [...target.querySelectorAll('.w-input')];
   const parsedFormData: { name: string; value: string }[] = [];

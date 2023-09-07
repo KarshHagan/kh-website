@@ -1,6 +1,6 @@
 import { accordianList } from '$components/accordianList';
 import { featuredWork } from '$components/featuredWork';
-import { videoModal } from '$components/videoModal';
+import { quickFSModule, videoModal } from '$components/videoModal';
 import {
   featuredReveal,
   focusReveal,
@@ -30,7 +30,8 @@ export const home = () => {
 
   // Overview
   overviewReveal();
-  videoModal();
+  // videoModal();
+  quickFSModule();
 
   // Featured Work
   horizontalScrollText();

@@ -49,3 +49,25 @@ export const closeModal = () => {
   animation.to([modalVideo, modalSection], { duration: 1, opacity: 0, ease: 'power4.out' });
   animation.set(modalSection, { display: 'none' });
 };
+
+export const quickFSModule = () => {
+  const overviewVideo = document.querySelector('.home-overview_video') as HTMLVideoElement;
+
+  overviewVideo.addEventListener('click', (e) => {
+    console.log('FULLSCREEN');
+    toggleFullscreen(overviewVideo);
+  });
+  console.log('VIDEO', overviewVideo);
+};
+
+function toggleFullscreen(elem: HTMLVideoElement) {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) {
+    /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}

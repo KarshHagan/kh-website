@@ -16,7 +16,8 @@ export const postContactData = (data: string, target: HTMLFormElement) => {
       } else {
       }
     },
-    error: function () {
+    error: function (error) {
+      console.log('ERROR', error.responseJSON);
       $(target).css('display', 'none').siblings('.w-form-fail').css('display', 'block');
     },
   });

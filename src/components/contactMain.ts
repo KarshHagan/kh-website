@@ -49,7 +49,7 @@ export const contactHover = () => {
       });
     }
 
-    const formMainWrapper = document.querySelector('.contact_main-wrap') as HTMLElement;
+    const formMainWrapper = document.querySelector('.contact_main') as HTMLElement;
     formMainWrapper.addEventListener('mousemove', (e) => {
       const mouseYMovement = e.movementY;
       cursorArrowYMovement('default', mouseYMovement);
