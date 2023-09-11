@@ -19,24 +19,4 @@ export const smoothScroll = () => {
   }
 
   requestAnimationFrame(raf);
-
-  // video Modal functions
-  const windowLocation = window.location.pathname as string;
-
-  if (windowLocation === '/') {
-    const overviewVideo = document.querySelector('.home-overview_video') as HTMLElement;
-    const modalCloseButton = document.querySelector('.home-video_close') as HTMLElement;
-    const modalCloseArea = document.querySelector('.home-video_close-area') as HTMLElement;
-
-    overviewVideo.addEventListener('click', () => {
-      lenis.stop();
-    });
-
-    modalCloseButton.addEventListener('click', () => {
-      lenis.start();
-    });
-    modalCloseArea.addEventListener('click', () => {
-      lenis.start();
-    });
-  }
 };

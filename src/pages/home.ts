@@ -1,6 +1,6 @@
 import { accordianList } from '$components/accordianList';
 import { featuredWork } from '$components/featuredWork';
-import { quickFSModule, videoModal } from '$components/videoModal';
+import { videoPlayer } from '$components/videoPlayer';
 import {
   featuredReveal,
   focusReveal,
@@ -13,7 +13,6 @@ import {
 } from '$motion/homeMotion';
 import { preloaderMotion } from '$motion/preloaderMotion';
 import { horizontalScrollText } from '$utils/horizontalScrollText';
-import { setDeepLinks } from '$utils/scrollToDeepLink';
 
 export const home = () => {
   // ---------------
@@ -31,7 +30,7 @@ export const home = () => {
   // Overview
   overviewReveal();
   // videoModal();
-  quickFSModule();
+  videoPlayer();
 
   // Featured Work
   horizontalScrollText();
