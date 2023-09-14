@@ -9,8 +9,6 @@ export const filterContent = () => {
   const filterCheckboxes = [...document.querySelectorAll('[data-filter-checkbox]')];
   const initialFilter = filterCheckboxes[0].parentElement as HTMLElement;
 
-  // caseGridMovement(masterList);
-
   for (const i in filterCheckboxes) {
     const tempCheckbox = filterCheckboxes[i] as HTMLInputElement;
 
@@ -31,17 +29,11 @@ export const filterContent = () => {
           const tempList = filterList(renderQueue, activeFilters);
           renderQueue = tempList;
 
-          // toggleScrollTrigger('disable');
-
           hideAll();
           filterReveal(renderQueue);
           updateInitialCheckbox(initialFilter, 'hide');
 
           updateScrollEffect();
-
-          // clearMovementValues();
-          // setGridSpeeds(renderQueue);
-          // refreshScrollTrigger();
         }
 
         if (filterText === 'All') {
@@ -51,9 +43,7 @@ export const filterContent = () => {
           filterReveal(renderQueue);
           allReset();
 
-          // clearMovementValues();
-          // setGridSpeeds(renderQueue);
-          // refreshScrollTrigger();
+          updateScrollEffect();
         }
       } else {
         clickedSpan.style.color = '#EC2543';
@@ -65,14 +55,14 @@ export const filterContent = () => {
           if (activeFilters.length < 1) {
             hideAll();
             filterReveal(renderQueue);
-            // caseGridMovement(renderQueue);
             updateInitialCheckbox(initialFilter, 'show');
+            updateScrollEffect();
           } else {
             const tempList = filterList(renderQueue, activeFilters);
             renderQueue = tempList;
             hideAll();
             filterReveal(renderQueue);
-            // caseGridMovement(renderQueue);
+            updateScrollEffect();
           }
         }
       }
