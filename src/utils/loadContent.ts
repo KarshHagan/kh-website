@@ -11,12 +11,9 @@ export const loadContent = () => {
 
   let transitionItem: HTMLElement;
 
-  console.log(loadStep, itemTotal);
-
   init();
 
-  loadButton.addEventListener('click', (e) => {
-    console.log(e);
+  loadButton.addEventListener('click', () => {
     renderUpdate();
   });
 
@@ -28,12 +25,10 @@ export const loadContent = () => {
       }
     }
     transitionItem = loadItems[curVisible - 1] as HTMLElement;
-    console.log(transitionItem.offsetTop);
   }
   function renderUpdate() {
     curVisible = curVisible + loadStep;
     if (curVisible > itemTotal) {
-      console.log('Reached Limit');
       curVisible = itemTotal;
       updateUIComplete();
     }
@@ -48,13 +43,10 @@ export const loadContent = () => {
         renderElements.push(tempItem);
       }
     }
-    console.log(renderElements);
     revealLoad(renderElements);
   }
 
   function revealLoad(newElements: HTMLElement[]) {
-    console.log('HERE', window.scrollY);
-
     const animation = gsap.timeline();
     animation.to(newElements, {
       duration: 1,
@@ -64,8 +56,6 @@ export const loadContent = () => {
       ease: 'power4.out',
     });
     animation.set(window, { scrollTo: transitionItem.offsetTop }, '<');
-
-    console.log('HERE', window.scrollY);
   }
 
   function updateUIComplete() {
