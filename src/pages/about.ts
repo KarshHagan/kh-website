@@ -1,6 +1,7 @@
 import { draggableSlider } from '$components/draggableSlider';
 import { abAwardsReveal, abClientsReveal, abPageReveal, abTeamReveal } from '$motion/aboutMotion';
 import { horizontalScrollText } from '$utils/horizontalScrollText';
+import { loadContent } from '$utils/loadContent';
 
 export const about = () => {
   // ---------------
@@ -22,5 +23,6 @@ export const about = () => {
   horizontalScrollText();
 
   // Awwards
+  loadContent();
   abAwardsReveal();
 };
