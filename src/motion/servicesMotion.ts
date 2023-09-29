@@ -73,9 +73,9 @@ export const servicesOverviewReveal = () => {
   const overviewSpan = overviewSection.querySelector('.services-info_span');
 
   const industriesSection = overviewSection.querySelector(
-    '.service-info_industries'
+    '.services-info_industries'
   ) as HTMLElement;
-  const industriesHeader = industriesSection.querySelector('h2');
+  const industriesHeader = industriesSection.querySelector('.services-info_industries-header');
   const industriesTag = industriesSection.querySelectorAll('.services-info_grid');
 
   const animation = gsap.timeline({

@@ -19,4 +19,6 @@ export const smoothScroll = () => {
   }
 
   requestAnimationFrame(raf);
+
+  return lenis;
 };

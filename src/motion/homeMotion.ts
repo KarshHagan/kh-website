@@ -50,7 +50,6 @@ export const heroScroll = () => {
     setHeight = '50%';
     setCornerRadius = '2rem 2rem 2rem 2rem';
   }
-
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: maskedComponent,

@@ -5035,7 +5035,7 @@
     animation.to(navIconSpans[0], { duration: 1.5, y: "3px", ease: "expo.out" }, "<");
     animation.to(navIconSpans[1], { duration: 1.5, y: "-3px", ease: "expo.out" }, "<");
     if (device === "mobile" || device === "tablet") {
-      animation.to(navBG, { backgroundColor: "#212929", opacity: 1 }, "<");
+      animation.to(navBG, { backgroundColor: "#212929" }, "<");
     } else {
       animation.to(navBG, { y: "-100%", ease: "power3.out" }, "<");
     }
@@ -5087,6 +5087,7 @@
   };
   var menuMotionClose = () => {
     const animation = gsapWithCSS.timeline({ paused: true });
+    animation.set(lenisContainer, { height: "auto" });
     animation.set("body", { overflow: "auto" });
     animation.to(menuSwatches, {
       opacity: 0,
@@ -5141,9 +5142,7 @@
     animation.to(navIconSpans[0], { duration: 1.5, y: "0px", ease: "expo.out" }, "<");
     animation.to(navIconSpans[1], { duration: 1.5, y: "0px", ease: "expo.out" }, "<");
     animation.to(navMenu, { duration: 0.6, width: "0%", ease: "power3.inOut" }, "<0.4");
-    if (device === "mobile" || device === "tablet") {
-      animation.to(navBG, { backgroundColor: "transparent", opacity: 1 }, "<");
-    } else {
+    if (device === "desktop") {
       animation.to(navBG, { y: "0%", ease: "power3.out" }, "<0.4");
     }
     animation.set(navMenu, { display: "none" });
@@ -5164,7 +5163,7 @@
     const navMenuText = [...document.querySelectorAll(".nav-ui_menu-text")];
     const navMenuIcon = [...document.querySelectorAll(".nav-ui_icon-span")];
     const triggerElement = document.querySelector(".nav_scroll-trigger");
-    let setColor = "##eeebe6";
+    let setColor = "#eeebe6";
     const windowLocation = window.location.pathname;
     let setStart = "60% top";
     let setEnd = "60% top";
@@ -5214,18 +5213,42 @@
         menuOpenAnimation.play(0);
       } else {
         menuCloseAnimation.play(0);
+        resetNav();
       }
     });
     menuCloseOffset.addEventListener("click", () => {
       menuIsOpen = false;
       menuCloseAnimation.play(0);
+      resetNav();
     });
     document.addEventListener("keydown", (e2) => {
       const keyPressed = e2.key;
       if (keyPressed === "Escape") {
-        menuCloseAnimation.play(0);
+        if (menuIsOpen === true) {
+          menuIsOpen = false;
+          menuCloseAnimation.play(0);
+          resetNav();
+        }
       }
     });
+    function resetNav() {
+      const device11 = getDeviceType();
+      if (device11 === "tablet" || device11 === "mobile") {
+        const navBG2 = document.querySelector(".nav-ui_bg-container");
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        let navTransitionTrigger;
+        if (windowLocation === "/") {
+          navTransitionTrigger = window.innerHeight;
+        } else {
+          navTransitionTrigger = window.innerHeight * 0.6;
+        }
+        if (scrollTop < navTransitionTrigger) {
+          gsapWithCSS.to(navBG2, { delay: 1, backgroundColor: "transparent" });
+        } else {
+          gsapWithCSS.to(navBG2, { delay: 1, backgroundColor: "#eeebe6" });
+        }
+      }
+    }
     const navLinks = [...document.querySelectorAll(".nav_link")];
     for (let i2 = 0; i2 < navLinks.length; i2++) {
       const linkTemp = navLinks[i2];
@@ -12569,9 +12592,9 @@
     const overviewHeader = overviewSection.querySelector(".services-info_overview-header");
     const overviewSpan = overviewSection.querySelector(".services-info_span");
     const industriesSection = overviewSection.querySelector(
-      ".service-info_industries"
+      ".services-info_industries"
     );
-    const industriesHeader = industriesSection.querySelector("h2");
+    const industriesHeader = industriesSection.querySelector(".services-info_industries-header");
     const industriesTag = industriesSection.querySelectorAll(".services-info_grid");
     const animation = gsapWithCSS.timeline({
       scrollTrigger: {
@@ -12927,6 +12950,7 @@
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
+    return lenis;
   };
 
   // src/index.ts

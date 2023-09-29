@@ -58,7 +58,7 @@ export const menuMotionOpen = () => {
   animation.to(navIconSpans[1], { duration: 1.5, y: '-3px', ease: 'expo.out' }, '<');
 
   if (device === 'mobile' || device === 'tablet') {
-    animation.to(navBG, { backgroundColor: '#212929', opacity: 1 }, '<');
+    animation.to(navBG, { backgroundColor: '#212929' }, '<');
   } else {
     animation.to(navBG, { y: '-100%', ease: 'power3.out' }, '<');
   }
@@ -121,6 +121,7 @@ export const menuMotionOpen = () => {
 export const menuMotionClose = () => {
   const animation = gsap.timeline({ paused: true });
 
+  animation.set(lenisContainer, { height: 'auto' });
   animation.set('body', { overflow: 'auto' });
 
   animation.to(menuSwatches, {
@@ -187,9 +188,8 @@ export const menuMotionClose = () => {
 
   animation.to(navMenu, { duration: 0.6, width: '0%', ease: 'power3.inOut' }, '<0.4');
 
-  if (device === 'mobile' || device === 'tablet') {
-    animation.to(navBG, { backgroundColor: 'transparent', opacity: 1 }, '<');
-  } else {
+  if (device === 'desktop') {
+    // animation.to(navBG, { backgroundColor: '#eeebe6', opacity: 1 }, '<');
     animation.to(navBG, { y: '0%', ease: 'power3.out' }, '<0.4');
   }
 
@@ -217,7 +217,7 @@ export const menuTransition = (type: string) => {
   const navMenuIcon = [...document.querySelectorAll('.nav-ui_icon-span')];
   const triggerElement = document.querySelector('.nav_scroll-trigger');
 
-  let setColor = '##eeebe6';
+  let setColor = '#eeebe6';
 
   const windowLocation = window.location.pathname as string;
 
