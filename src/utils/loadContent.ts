@@ -4,12 +4,20 @@ export const loadContent = () => {
   const loadParent = document.querySelector('[data-load-content]') as HTMLElement;
   const loadItems = [...loadParent.children];
   const loadButton = document.querySelector('[data-load-button]') as HTMLElement;
+  const pageWrapper = document.querySelector('.main-wrapper') as HTMLElement;
 
   const loadStep = Number(loadParent.dataset.loadContent);
   const itemTotal = loadItems.length;
   let curVisible = loadStep;
 
-  let transitionItem: HTMLElement;
+  // const marker = document.createElement('div');
+  // marker.style.backgroundColor = 'lightpink';
+  // marker.style.position = 'absolute';
+  // marker.style.height = '5px';
+  // marker.style.width = '100%';
+  // marker.style.zIndex = '99999';
+  // marker.style.top = '0px';
+  // pageWrapper.appendChild(marker);
 
   init();
 
@@ -24,30 +32,31 @@ export const loadContent = () => {
         gsap.set(tempItem, { display: 'none' });
       }
     }
-    transitionItem = loadItems[curVisible - 1] as HTMLElement;
   }
   function renderUpdate() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    // gsap.to(marker, { y: scrollTop });
+
     curVisible = curVisible + loadStep;
     if (curVisible > itemTotal) {
       curVisible = itemTotal;
       updateUIComplete();
     }
 
-    // console.log('CUR', curVisible);
     const renderElements: HTMLElement[] = [];
     for (let i = 0; i < curVisible; i++) {
       const tempItem = loadItems[i] as HTMLElement;
 
       if (tempItem.style.display === 'none') {
-        gsap.set(tempItem, { display: 'grid', opacity: 0, y: '2rem' });
         renderElements.push(tempItem);
       }
     }
-    revealLoad(renderElements);
+    revealLoad(renderElements, scrollTop);
   }
 
-  function revealLoad(newElements: HTMLElement[]) {
+  function revealLoad(newElements: HTMLElement[], scrollPos: number) {
     const animation = gsap.timeline();
+    animation.set(newElements, { display: 'grid', opacity: 0, y: '2rem' });
     animation.to(newElements, {
       duration: 1,
       y: '0rem',
@@ -55,7 +64,7 @@ export const loadContent = () => {
       stagger: 0.1,
       ease: 'power4.out',
     });
-    animation.set(window, { scrollTo: transitionItem.offsetTop }, '<');
+    animation.set(window, { scrollTo: scrollPos }, '<');
   }
 
   function updateUIComplete() {

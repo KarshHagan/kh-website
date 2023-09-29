@@ -1,5 +1,11 @@
 import { draggableSlider } from '$components/draggableSlider';
-import { abAwardsReveal, abClientsReveal, abPageReveal, abTeamReveal } from '$motion/aboutMotion';
+import {
+  abAwardsReveal,
+  abClientsReveal,
+  abPageReveal,
+  abTeamReveal,
+  clientsHover,
+} from '$motion/aboutMotion';
 import { horizontalScrollText } from '$utils/horizontalScrollText';
 import { loadContent } from '$utils/loadContent';
 
@@ -14,6 +20,7 @@ export const about = () => {
 
   // Clients
   abClientsReveal();
+  clientsHover();
 
   // Team
   draggableSlider();
