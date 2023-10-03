@@ -14,6 +14,7 @@ import { insightsTemplate } from '$pages/insightsTemplate';
 import { peopleTemplate } from '$pages/peopleTemplate';
 import { services } from '$pages/services';
 import { terms } from '$pages/terms';
+import { editorCheck } from '$utils/editorCheck';
 import { inertiaMovement } from '$utils/intertiaMovement';
 import { setDeepLinks } from '$utils/scrollToDeepLink';
 import { smoothScroll } from '$utils/smoothScroll';
@@ -28,7 +29,6 @@ window.Webflow.push(() => {
   // Site Globals
   // ---------------
   menu();
-
   smoothScroll();
   inertiaMovement();
   pageTransition();
@@ -36,6 +36,7 @@ window.Webflow.push(() => {
   cursorHover();
   setDeepLinks();
   footer();
+  editorCheck();
 
   // ---------------
   // Page Routing

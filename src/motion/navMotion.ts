@@ -41,6 +41,7 @@ export const menuInit = (page: string) => {
   }
 
   menuTransition(setTransition);
+  navBrandHover();
 };
 
 export const menuMotionOpen = () => {
@@ -213,6 +214,7 @@ export const menuLinkHoverOut = (curLink: HTMLElement) => {
 export const menuTransition = (type: string) => {
   const navBG = document.querySelector('.nav-ui_bg-container');
   const navBrand = [...document.querySelectorAll('.nav-ui_brand-image')];
+  const navBrandIcons = [...document.querySelectorAll('.nav-ui_interactive-logo')];
   const navMenuText = [...document.querySelectorAll('.nav-ui_menu-text')];
   const navMenuIcon = [...document.querySelectorAll('.nav-ui_icon-span')];
   const triggerElement = document.querySelector('.nav_scroll-trigger');
@@ -244,6 +246,7 @@ export const menuTransition = (type: string) => {
       // markers: { startColor: 'olive', endColor: 'lightblue' },
     },
   });
+  // console.log(navBrandIcons);
   animation.set(navBG, { backgroundColor: setColor });
   if (type === 'default') {
     animation.to(navBG, { opacity: 1, ease: 'power4.out' });
@@ -251,7 +254,47 @@ export const menuTransition = (type: string) => {
     animation.to(navBG, { opacity: 1, ease: 'power4.ouut' });
     animation.to(navBrand[1], { opacity: 0, ease: 'power4.out' }, '<');
     animation.to(navBrand[0], { opacity: 1, ease: 'power4.out' }, '<');
+    animation.to(navBrandIcons[0], { opacity: 0, ease: 'power4.out' }, '<');
+    animation.to(navBrandIcons[1], { opacity: 1, ease: 'power4.out' }, '<');
     animation.to(navMenuText, { color: '#EC2543' }, '<');
     animation.to(navMenuIcon, { backgroundColor: '#EC2543' }, '<');
+  }
+};
+
+export const navBrandHover = () => {
+  const navBrandIcons = [...document.querySelectorAll('.nav-ui_brand-icon')];
+  const kWrappers = [...document.querySelectorAll('.nav-ui_brand-wrap.is-karsh')];
+  const hWrappers = [...document.querySelectorAll('.nav-ui_brand-wrap.is-hagan')];
+
+  console.log(navBrandIcons);
+
+  const animation = gsap.timeline();
+  // animation.set();
+
+  sortIcons();
+
+  // console.log(kWrappers);
+
+  function sortIcons() {
+    const navBrandIcons = [...document.querySelectorAll('.nav-ui_brand-icon')];
+    const holdKs = [];
+    const holdHs = [];
+    const holdSs = [];
+
+    for (let i = 0; i < navBrandIcons.length; i++) {
+      const temp = navBrandIcons[i];
+
+      if (i <= 4) {
+        holdKs.push(temp);
+      } else if (i > 4 && i <= 6) {
+        holdSs.push(temp);
+      } else if (i > 6 && i <= 11) {
+        holdHs.push(temp);
+      }
+    }
+
+    const returnArray = [holdKs, holdSs, holdHs];
+
+    console.log(returnArray);
   }
 };
