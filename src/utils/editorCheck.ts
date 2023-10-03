@@ -5,7 +5,7 @@ export const editorCheck = () => {
     ) as HTMLElement;
 
     if (editorButton) {
-      console.log('editor avaiable');
+      console.log('//editor avaiable');
       editorButton.addEventListener('click', () => {
         const body = document.querySelector('body') as HTMLElement;
         body.style.cursor = 'default';

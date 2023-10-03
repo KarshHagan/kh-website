@@ -18,10 +18,13 @@ import { editorCheck } from '$utils/editorCheck';
 import { inertiaMovement } from '$utils/intertiaMovement';
 import { setDeepLinks } from '$utils/scrollToDeepLink';
 import { smoothScroll } from '$utils/smoothScroll';
+import type { Webflow } from '@finsweet/ts-utils';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
-  console.log('/// kh ///');
+  const flow = window.Webflow as Webflow;
+  const fEnv = flow.env();
+  console.log('/// dev ///', flow, fEnv);
 
   const windowLocation = window.location.pathname as string;
 
