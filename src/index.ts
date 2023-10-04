@@ -30,48 +30,49 @@ window.Webflow.push(() => {
   console.log('edit', isEditor);
 
   if (!isEditor) {
-    menu();
     smoothScroll();
-    inertiaMovement();
-    pageTransition();
-    cursorMovement();
-    cursorHover();
-    setDeepLinks();
-    footer();
-    editorCheck();
+  }
 
-    // ---------------
-    // Page Routing
-    // ---------------
+  menu();
+  inertiaMovement();
+  pageTransition();
+  cursorMovement();
+  cursorHover();
+  setDeepLinks();
+  footer();
+  editorCheck();
 
-    if (windowLocation === '/') {
-      home();
-    } else if (windowLocation === '/about') {
-      about();
-    } else if (windowLocation.includes('/services')) {
-      services();
-    } else if (windowLocation.includes('/jobs')) {
-      careers();
-    } else if (windowLocation.includes('/case-studies')) {
-      const hasFurtherIndex = windowLocation.substring(13);
-      if (hasFurtherIndex === '') {
-        caseOverview();
-      } else {
-        caseTemplate();
-      }
-    } else if (windowLocation.includes('/insights')) {
-      const hasFurtherIndex = windowLocation.substring(14);
-      if (hasFurtherIndex === '') {
-        insights();
-      } else {
-        insightsTemplate();
-      }
-    } else if (windowLocation.includes('/contact')) {
-      contact();
-    } else if (windowLocation.includes('/terms')) {
-      terms();
-    } else if (windowLocation.includes('/people')) {
-      peopleTemplate();
+  // ---------------
+  // Page Routing
+  // ---------------
+
+  if (windowLocation === '/') {
+    home();
+  } else if (windowLocation === '/about') {
+    about();
+  } else if (windowLocation.includes('/services')) {
+    services();
+  } else if (windowLocation.includes('/jobs')) {
+    careers();
+  } else if (windowLocation.includes('/case-studies')) {
+    const hasFurtherIndex = windowLocation.substring(13);
+    if (hasFurtherIndex === '') {
+      caseOverview();
+    } else {
+      caseTemplate();
     }
+  } else if (windowLocation.includes('/insights')) {
+    const hasFurtherIndex = windowLocation.substring(14);
+    if (hasFurtherIndex === '') {
+      insights();
+    } else {
+      insightsTemplate();
+    }
+  } else if (windowLocation.includes('/contact')) {
+    contact();
+  } else if (windowLocation.includes('/terms')) {
+    terms();
+  } else if (windowLocation.includes('/people')) {
+    peopleTemplate();
   }
 });
