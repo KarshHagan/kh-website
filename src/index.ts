@@ -27,8 +27,6 @@ window.Webflow.push(() => {
   // Site Globals
   // ---------------
   const isEditor = editorCheck();
-  console.log('edit', isEditor);
-
   if (!isEditor) {
     smoothScroll();
   }
