@@ -70,7 +70,7 @@ export const servicesOverviewReveal = () => {
   const overviewSection = document.querySelector('.section_serivces-info') as HTMLElement;
 
   const overviewHeader = overviewSection.querySelector('.services-info_overview-header');
-  const overviewSpan = overviewSection.querySelector('.services-info_span');
+  const overviewSpan = overviewSection.querySelector('.span');
 
   const industriesSection = overviewSection.querySelector(
     '.services-info_industries'

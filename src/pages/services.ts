@@ -17,9 +17,9 @@ export const services = () => {
   scrollToServices();
 
   // Hero
-  servicesPageReveal();
+  // servicesPageReveal();
 
   // Services
-  servicesOverviewReveal();
-  serviceSectionReveal();
+  // servicesOverviewReveal();
+  // serviceSectionReveal();
 };
