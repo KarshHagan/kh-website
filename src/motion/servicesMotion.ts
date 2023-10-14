@@ -1,5 +1,6 @@
 // eslint-disable-next-line simple-import-sort/imports
 import { getDeviceType } from '$utils/getDevice';
+import { cloneNode } from '@finsweet/ts-utils';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 
@@ -15,6 +16,97 @@ if (device === 'tablet' || device === 'mobile') {
   scrollTriggerStart = 'top 80%';
   scrollTriggerEnd = 'top 80%';
 }
+
+export const servicesScrollEffect = () => {
+  setup();
+
+  const sItems = [...document.querySelectorAll('.services_item')];
+  const sMarkers = [...document.querySelectorAll('.services_scroll-spacer')].filter((e) => {
+    if (!e.classList.contains('hide')) {
+      return e;
+    }
+  });
+  const splitHeaders = generateSplitText();
+  console.log('here', splitHeaders);
+
+  //skip first loop
+  for (let i = 1; i < sMarkers.length; i++) {
+    const curMarker = sMarkers[i] as HTMLElement;
+
+    const inSection = sItems[i] as HTMLElement;
+    const inContent = inSection.querySelector('.services_info-main') as HTMLElement;
+    const inHeader = splitHeaders[i];
+    console.log(inHeader);
+
+    const outSection = sItems[i - 1] as HTMLElement;
+    const outContent = outSection.querySelector('.services_info-main') as HTMLElement;
+    const outHeader = splitHeaders[i - 1];
+    console.log(i, inSection, outSection);
+
+    const st = gsap.timeline({
+      scrollTrigger: {
+        trigger: curMarker,
+        start: 'top 20%',
+        end: 'bottom 100%',
+        markers: true,
+        // scrub: 1,
+        toggleActions: 'play none none reverse',
+      },
+    });
+    st.to(outHeader.words, {
+      duration: 1,
+      y: '-100%',
+      rotate: '-5deg',
+      opacity: 0,
+      ease: 'power4.out',
+    });
+    st.from(inHeader.words, {
+      duration: 1,
+      y: '100%',
+      rotate: '5deg',
+      opacity: 0,
+      ease: 'power4.out',
+    });
+  }
+
+  function setup() {
+    const sWrapper = document.querySelector('.services_wrapper') as HTMLElement;
+    const sItems = [...document.querySelectorAll('.services_item')];
+    const markerWrapper = document.querySelector('.services_scroll-spacers') as HTMLElement;
+    const markerTemplate = document.querySelector('.services_scroll-spacer') as HTMLElement;
+
+    sWrapper.style.height = String(sWrapper.dataset.nativeSize);
+    markerWrapper.style.top = String('-' + sWrapper.dataset.nativeSize);
+
+    for (let i = 0; i < sItems.length; i++) {
+      const item = sItems[i] as HTMLElement;
+      item.style.position = 'absolute';
+
+      const newMarker = cloneNode(markerTemplate);
+      newMarker.classList.remove('hide');
+      markerWrapper.appendChild(newMarker);
+
+      newMarker.style.backgroundColor =
+        '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0');
+      newMarker.style.opacity = '0.3';
+    }
+  }
+  function generateSplitText() {
+    const headerParent = [...document.querySelectorAll('.services-info_wrap')];
+    const splitHeaders = [];
+    for (const i in headerParent) {
+      const temp = headerParent[i] as HTMLElement;
+      const tempHeader = temp.querySelector('h2');
+      gsap.set(tempHeader, { perspective: 400, transformOrigin: '0 0' });
+      const gSplit = new SplitText(tempHeader, {
+        type: 'lines, words',
+        linesClass: 'split-text_parent',
+      });
+      splitHeaders.push(gSplit);
+    }
+    return splitHeaders;
+  }
+};
 
 // Page Reveal
 export const servicesPageReveal = () => {

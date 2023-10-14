@@ -3,6 +3,7 @@ import {
   serviceSectionReveal,
   servicesOverviewReveal,
   servicesPageReveal,
+  servicesScrollEffect,
 } from '$motion/servicesMotion';
 import { scrollToDeepLinks } from '$utils/scrollToDeepLink';
 import { scrollToServices } from '$utils/scrollToService';
@@ -15,6 +16,8 @@ export const services = () => {
 
   scrollToDeepLinks();
   scrollToServices();
+
+  servicesScrollEffect();
 
   // Hero
   // servicesPageReveal();
