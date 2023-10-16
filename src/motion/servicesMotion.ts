@@ -26,22 +26,39 @@ export const servicesScrollEffect = () => {
       return e;
     }
   });
-  const splitHeaders = generateSplitText();
-  console.log('here', splitHeaders);
+  const splitMain = generateSplitText();
+  const splitItems = splitMain[0];
+  const splitHeaders = splitItems[0] as SplitText[];
+  const splitOvers = splitItems[1] as SplitText[];
+  const parentOvers = splitMain[1] as HTMLElement[];
+
+  console.log('H', splitHeaders, splitOvers);
 
   //skip first loop
   for (let i = 1; i < sMarkers.length; i++) {
     const curMarker = sMarkers[i] as HTMLElement;
 
-    const inSection = sItems[i] as HTMLElement;
-    const inContent = inSection.querySelector('.services_info-main') as HTMLElement;
-    const inHeader = splitHeaders[i];
-    console.log(inHeader);
-
     const outSection = sItems[i - 1] as HTMLElement;
     const outContent = outSection.querySelector('.services_info-main') as HTMLElement;
     const outHeader = splitHeaders[i - 1];
-    console.log(i, inSection, outSection);
+    const outSpan = outContent.querySelector('.span');
+    const outOverview = splitOvers[i - 1];
+    const outOverParent = parentOvers[i - 1];
+    const outButton = outContent.querySelector('a');
+    const outInfo = outContent.querySelector('.services_info-grid');
+    const outSeperator = outContent.querySelector('.span.is-vertical');
+
+    const inSection = sItems[i] as HTMLElement;
+    const inContent = inSection.querySelector('.services_info-main') as HTMLElement;
+    const inHeader = splitHeaders[i];
+    const inSpan = inContent.querySelector('.span');
+    const inOverview = splitOvers[i];
+    const inOverParent = parentOvers[i];
+    const inButton = inContent.querySelector('a');
+    const inInfo = inContent.querySelector('.services_info-grid');
+    const inSeperator = inContent.querySelector('.span.is-vertical');
+
+    console.log(i, outSeperator, inSeperator);
 
     const st = gsap.timeline({
       scrollTrigger: {
@@ -53,20 +70,36 @@ export const servicesScrollEffect = () => {
         toggleActions: 'play none none reverse',
       },
     });
-    st.to(outHeader.words, {
+
+    st.to(outHeader.lines, {
       duration: 1,
       y: '-100%',
-      rotate: '-5deg',
+      // rotate: '-5deg',
       opacity: 0,
-      ease: 'power4.out',
+      stagger: 0.1,
+      ease: 'power4.inOut',
     });
-    st.from(inHeader.words, {
+    st.to(outSpan, { duration: 1, width: '0%', ease: 'power4.inOut' }, '<');
+    st.to(outOverParent, { duration: 1, y: '-2rem', ease: 'power2.inOut' }, '<');
+    st.to(outOverview.lines, { duration: 1, y: '-100%', stagger: 0.1, ease: 'power2.inOut' }, '<');
+    st.to(outButton, { duration: 1, y: '-2rem', opacity: 0, ease: 'power2.inOut' }, '<');
+    st.to(outSeperator, { duration: 1, height: '0%', ease: 'power4.inOut' }, '<');
+    st.to(outInfo, { duration: 2, y: '-2rem', opacity: 0, ease: 'power4.inOut' }, '<');
+
+    st.from(inHeader.lines, {
       duration: 1,
       y: '100%',
-      rotate: '5deg',
+      // rotate: '5deg',
       opacity: 0,
-      ease: 'power4.out',
+      stagger: 0.1,
+      ease: 'power4.inOut',
     });
+    st.from(inSpan, { duration: 1, width: '0%', ease: 'power4.inOut' }, '<');
+    st.from(inOverParent, { duration: 1, y: '2rem', ease: 'power2.inOut' }, '<');
+    st.from(inOverview.lines, { duration: 1, y: '100%', stagger: 0.1, ease: 'power2.inOut' }, '<');
+    st.from(inButton, { duration: 1, y: '2rem', opacity: 0, ease: 'power2.inOut' }, '<');
+    st.from(inSeperator, { duration: 1, height: '0%', ease: 'power4.inOut' }, '<');
+    st.from(inInfo, { duration: 2, y: '2rem', opacity: 0, ease: 'power4.inOut' }, '<');
   }
 
   function setup() {
@@ -93,18 +126,32 @@ export const servicesScrollEffect = () => {
   }
   function generateSplitText() {
     const headerParent = [...document.querySelectorAll('.services-info_wrap')];
+
     const splitHeaders = [];
+    const splitOvers = [];
+    const parentOvers = [];
+
     for (const i in headerParent) {
       const temp = headerParent[i] as HTMLElement;
       const tempHeader = temp.querySelector('h2');
-      gsap.set(tempHeader, { perspective: 400, transformOrigin: '0 0' });
-      const gSplit = new SplitText(tempHeader, {
+      const tempOver = temp.querySelector('p') as HTMLElement;
+      gsap.set(tempHeader, { perspective: 100 });
+      const gSplit = new SplitText(tempHeader, { linesClass: 'lineChild' });
+      const gSplitParent = new SplitText(tempHeader, {
         type: 'lines, words',
         linesClass: 'split-text_parent',
       });
+      const oSplit = new SplitText(tempOver, { linesClass: 'lineChild' });
+      const oSplitParent = new SplitText(tempOver, {
+        type: 'lines',
+        linesClass: 'lines-parent',
+      });
       splitHeaders.push(gSplit);
+      splitOvers.push(oSplit);
+      parentOvers.push(tempOver);
     }
-    return splitHeaders;
+    const final = [[splitHeaders, splitOvers], parentOvers];
+    return final;
   }
 };
 
