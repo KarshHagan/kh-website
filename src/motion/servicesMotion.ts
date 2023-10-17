@@ -18,6 +18,22 @@ if (device === 'tablet' || device === 'mobile') {
 }
 
 export const servicesScrollEffect = () => {
+  const sectionBG = document.querySelector('.section_services');
+  const colors = ['#336968', '#4C9A8C', '#677B8D', '#AFD8DB', '#D58430', '#F09F43', '#EC2543'];
+  const docStyle = getComputedStyle(document.documentElement);
+  const colorCombos = [
+    [docStyle.getPropertyValue('--paper-light'), docStyle.getPropertyValue('--brand-red')],
+    [docStyle.getPropertyValue('--orange'), docStyle.getPropertyValue('--paper-light')],
+    [docStyle.getPropertyValue('--brand-red'), docStyle.getPropertyValue('--paper-light')],
+    [docStyle.getPropertyValue('--brand-green'), docStyle.getPropertyValue('--paper-light')],
+  ];
+
+  const splitMain = generateSplitText();
+  const splitItems = splitMain[0];
+  const splitHeaders = splitItems[0] as SplitText[];
+  const splitOvers = splitItems[1] as SplitText[];
+  const parentOvers = splitMain[1] as HTMLElement[];
+
   setup();
 
   const sItems = [...document.querySelectorAll('.services_item')];
@@ -26,11 +42,6 @@ export const servicesScrollEffect = () => {
       return e;
     }
   });
-  const splitMain = generateSplitText();
-  const splitItems = splitMain[0];
-  const splitHeaders = splitItems[0] as SplitText[];
-  const splitOvers = splitItems[1] as SplitText[];
-  const parentOvers = splitMain[1] as HTMLElement[];
 
   console.log('H', splitHeaders, splitOvers);
 
@@ -38,6 +49,7 @@ export const servicesScrollEffect = () => {
   for (let i = 1; i < sMarkers.length; i++) {
     const curMarker = sMarkers[i] as HTMLElement;
 
+    // OUT SECTION
     const outSection = sItems[i - 1] as HTMLElement;
     const outContent = outSection.querySelector('.services_info-main') as HTMLElement;
     const outHeader = splitHeaders[i - 1];
@@ -45,9 +57,11 @@ export const servicesScrollEffect = () => {
     const outOverview = splitOvers[i - 1];
     const outOverParent = parentOvers[i - 1];
     const outButton = outContent.querySelector('a');
-    const outInfo = outContent.querySelector('.services_info-grid');
+    const outInfoParent = outContent.querySelector('.services_info-grid');
+    const outInfo = [...outContent.querySelectorAll('li')];
     const outSeperator = outContent.querySelector('.span.is-vertical');
-
+    const outBolt = outContent.querySelector('.services-info_float-image');
+    // IN SECTION
     const inSection = sItems[i] as HTMLElement;
     const inContent = inSection.querySelector('.services_info-main') as HTMLElement;
     const inHeader = splitHeaders[i];
@@ -55,24 +69,28 @@ export const servicesScrollEffect = () => {
     const inOverview = splitOvers[i];
     const inOverParent = parentOvers[i];
     const inButton = inContent.querySelector('a');
-    const inInfo = inContent.querySelector('.services_info-grid');
+    const inInfoParent = inContent.querySelector('.services_info-grid');
+    const inInfo = [...inContent.querySelectorAll('li')];
     const inSeperator = inContent.querySelector('.span.is-vertical');
+    const inBolt = inContent.querySelector('.services-info_float-image');
 
-    console.log(i, outSeperator, inSeperator);
+    console.log(i, inContent, outContent);
 
     const st = gsap.timeline({
       scrollTrigger: {
         trigger: curMarker,
         start: 'top 20%',
-        end: 'bottom 100%',
+        end: 'top bottom',
+        preventOverlaps: true,
         markers: true,
         // scrub: 1,
         toggleActions: 'play none none reverse',
       },
     });
 
+    // OUT ANIMATION
     st.to(outHeader.lines, {
-      duration: 1,
+      // duration: 1,
       y: '-100%',
       // rotate: '-5deg',
       opacity: 0,
@@ -83,23 +101,56 @@ export const servicesScrollEffect = () => {
     st.to(outOverParent, { duration: 1, y: '-2rem', ease: 'power2.inOut' }, '<');
     st.to(outOverview.lines, { duration: 1, y: '-100%', stagger: 0.1, ease: 'power2.inOut' }, '<');
     st.to(outButton, { duration: 1, y: '-2rem', opacity: 0, ease: 'power2.inOut' }, '<');
-    st.to(outSeperator, { duration: 1, height: '0%', ease: 'power4.inOut' }, '<');
-    st.to(outInfo, { duration: 2, y: '-2rem', opacity: 0, ease: 'power4.inOut' }, '<');
+    st.to(
+      outSeperator,
+      { duration: 1, height: '0%', backgroundColor: colorCombos[i - 1][1], ease: 'power4.inOut' },
+      '<'
+    );
+    st.to(
+      outInfo,
+      { duration: 1, y: '-2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
+      '<'
+    );
+    st.to(
+      sectionBG,
+      { duration: 1, backgroundColor: colorCombos[i - 1][0], ease: 'power4.inOut' },
+      '<'
+    );
+    st.to(inContent, { color: colorCombos[i - 1][1], ease: 'power4.inOut' }, '<');
+    st.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
 
-    st.from(inHeader.lines, {
-      duration: 1,
-      y: '100%',
-      // rotate: '5deg',
-      opacity: 0,
-      stagger: 0.1,
-      ease: 'power4.inOut',
-    });
+    // IN ANIMATION
+    st.from(
+      inHeader.lines,
+      {
+        // duration: 1,
+        y: '100%',
+        // rotate: '5deg',
+        opacity: 0,
+        stagger: 0.1,
+        ease: 'power4.inOut',
+      },
+      '<0.8'
+    );
     st.from(inSpan, { duration: 1, width: '0%', ease: 'power4.inOut' }, '<');
     st.from(inOverParent, { duration: 1, y: '2rem', ease: 'power2.inOut' }, '<');
     st.from(inOverview.lines, { duration: 1, y: '100%', stagger: 0.1, ease: 'power2.inOut' }, '<');
     st.from(inButton, { duration: 1, y: '2rem', opacity: 0, ease: 'power2.inOut' }, '<');
     st.from(inSeperator, { duration: 1, height: '0%', ease: 'power4.inOut' }, '<');
-    st.from(inInfo, { duration: 2, y: '2rem', opacity: 0, ease: 'power4.inOut' }, '<');
+    st.to(inSeperator, { backgroundColor: colorCombos[i][1], ease: 'power4.inOut' }, '<');
+    st.from(
+      inInfo,
+      { duration: 1, y: '2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
+      '<'
+    );
+    st.to(
+      sectionBG,
+      { duration: 1, backgroundColor: colorCombos[i][0], ease: 'power4.inOut' },
+      '<'
+    );
+    st.to(inContent, { color: colorCombos[i][1], ease: 'power4.inOut' }, '<');
+    // st.to(inBolt, {})
+    st.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
   }
 
   function setup() {
@@ -119,9 +170,17 @@ export const servicesScrollEffect = () => {
       newMarker.classList.remove('hide');
       markerWrapper.appendChild(newMarker);
 
-      newMarker.style.backgroundColor =
-        '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0');
-      newMarker.style.opacity = '0.3';
+      // for (let i = 1; i < sItems.length; i++) {
+      //   const inSection = sItems[i] as HTMLElement;
+      //   const inContent = inSection.querySelector('.services_info-main') as HTMLElement;
+      //   const inHeader = splitHeaders[i];
+
+      //   // gsap.set(inHeader.lines, { y: '100%', opacity: 0 });
+      // }
+
+      // newMarker.style.backgroundColor =
+      //   '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0');
+      // newMarker.classList.add('mbm-ex');
     }
   }
   function generateSplitText() {
