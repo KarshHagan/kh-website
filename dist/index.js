@@ -12577,14 +12577,30 @@
   }
   var servicesScrollEffect = () => {
     const sectionBG = document.querySelector(".section_services");
-    const colors = ["#336968", "#4C9A8C", "#677B8D", "#AFD8DB", "#D58430", "#F09F43", "#EC2543"];
     const docStyle = getComputedStyle(document.documentElement);
     const colorCombos = [
-      [docStyle.getPropertyValue("--paper-light"), docStyle.getPropertyValue("--brand-red")],
-      [docStyle.getPropertyValue("--orange"), docStyle.getPropertyValue("--paper-light")],
-      [docStyle.getPropertyValue("--brand-red"), docStyle.getPropertyValue("--paper-light")],
-      [docStyle.getPropertyValue("--brand-green"), docStyle.getPropertyValue("--paper-light")]
+      [
+        docStyle.getPropertyValue("--paper-light"),
+        docStyle.getPropertyValue("--brand-red"),
+        docStyle.getPropertyValue("--paper-light")
+      ],
+      [
+        docStyle.getPropertyValue("--brand-red"),
+        docStyle.getPropertyValue("--paper-light"),
+        docStyle.getPropertyValue("--dark")
+      ],
+      [
+        docStyle.getPropertyValue("--orange"),
+        docStyle.getPropertyValue("--paper-light"),
+        docStyle.getPropertyValue("--dark")
+      ],
+      [
+        docStyle.getPropertyValue("--brand-green"),
+        docStyle.getPropertyValue("--paper-light"),
+        docStyle.getPropertyValue("--dark")
+      ]
     ];
+    infoHover();
     const splitMain = generateSplitText();
     const splitItems = splitMain[0];
     const splitHeaders = splitItems[0];
@@ -12597,7 +12613,6 @@
         return e2;
       }
     });
-    console.log("H", splitHeaders, splitOvers);
     for (let i2 = 1; i2 < sMarkers.length; i2++) {
       const curMarker = sMarkers[i2];
       const outSection = sItems[i2 - 1];
@@ -12610,7 +12625,7 @@
       const outInfoParent = outContent.querySelector(".services_info-grid");
       const outInfo = [...outContent.querySelectorAll("li")];
       const outSeperator = outContent.querySelector(".span.is-vertical");
-      const outBolt = outContent.querySelector(".services-info_float-image");
+      const outBolt = outContent.querySelector(".services-info_float-image")?.querySelector("path");
       const inSection = sItems[i2];
       const inContent = inSection.querySelector(".services_info-main");
       const inHeader = splitHeaders[i2];
@@ -12622,7 +12637,7 @@
       const inInfo = [...inContent.querySelectorAll("li")];
       const inSeperator = inContent.querySelector(".span.is-vertical");
       const inBolt = inContent.querySelector(".services-info_float-image");
-      console.log(i2, inContent, outContent);
+      const inBoltPath = inBolt.querySelector("path");
       const st = gsapWithCSS.timeline({
         scrollTrigger: {
           trigger: curMarker,
@@ -12658,10 +12673,10 @@
       );
       st.to(
         sectionBG,
-        { duration: 1, backgroundColor: colorCombos[i2 - 1][0], ease: "power4.inOut" },
+        { duration: 1, backgroundColor: colorCombos[i2 - 1][0], ease: "power4.out" },
         "<"
       );
-      st.to(inContent, { color: colorCombos[i2 - 1][1], ease: "power4.inOut" }, "<");
+      st.to(outContent, { color: colorCombos[i2 - 1][1], ease: "power4.inOut" }, "<");
       st.to(outInfoParent, { duration: 1, opacity: 0, ease: "power4.inOut" }, "<0.2");
       st.from(
         inHeader.lines,
@@ -12686,12 +12701,11 @@
         { duration: 1, y: "2rem", opacity: 0, stagger: 0.1, ease: "power4.inOut" },
         "<"
       );
-      st.to(
-        sectionBG,
-        { duration: 1, backgroundColor: colorCombos[i2][0], ease: "power4.inOut" },
-        "<"
-      );
-      st.to(inContent, { color: colorCombos[i2][1], ease: "power4.inOut" }, "<");
+      st.to(sectionBG, { duration: 1, backgroundColor: colorCombos[i2][0], ease: "power4.out" }, "<");
+      st.to(inContent, { color: colorCombos[i2][1] }, "<");
+      st.to(inBoltPath, { fill: colorCombos[i2][1] }, "<");
+      st.to([inButton, inSpan], { backgroundColor: colorCombos[i2][1] }, "<");
+      st.to(inButton, { color: colorCombos[i2][2] }, "<");
       st.from(inInfoParent, { duration: 1, opacity: 0, ease: "power4.inOut" }, "<0.2");
     }
     function setup() {
@@ -12735,6 +12749,12 @@
       }
       const final = [[splitHeaders2, splitOvers2], parentOvers2];
       return final;
+    }
+    function infoHover() {
+      const infoAreas = [...document.querySelectorAll(".services_info-grid")];
+      for (const i2 in infoAreas) {
+        const temp = infoAreas[i2];
+      }
     }
   };
 
