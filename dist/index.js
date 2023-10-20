@@ -12567,7 +12567,7 @@
   var cloneNode = (node, deep = true) => node.cloneNode(deep);
 
   // src/motion/servicesMotion.ts
-  gsapWithCSS.registerPlugin(SplitText);
+  gsapWithCSS.registerPlugin([SplitText, ScrollToPlugin]);
   var scrollTriggerStart9 = "top 70%";
   var scrollTriggerEnd9 = "top 70%";
   var device10 = getDeviceType();
@@ -12578,6 +12578,7 @@
   var servicesScrollEffect = () => {
     const sectionBG = document.querySelector(".section_services");
     const docStyle = getComputedStyle(document.documentElement);
+    let colorMode = "false";
     const colorCombos = [
       [
         docStyle.getPropertyValue("--paper-light"),
@@ -12600,13 +12601,13 @@
         docStyle.getPropertyValue("--dark")
       ]
     ];
-    infoHover();
     const splitMain = generateSplitText();
     const splitItems = splitMain[0];
     const splitHeaders = splitItems[0];
     const splitOvers = splitItems[1];
     const parentOvers = splitMain[1];
     setup();
+    infoHover();
     const sItems = [...document.querySelectorAll(".services_item")];
     const sMarkers = [...document.querySelectorAll(".services_scroll-spacer")].filter((e2) => {
       if (!e2.classList.contains("hide")) {
@@ -12652,7 +12653,7 @@
       st.to(outHeader.lines, {
         // duration: 1,
         y: "-100%",
-        // rotate: '-5deg',
+        rotateZ: "-5deg",
         opacity: 0,
         stagger: 0.1,
         ease: "power4.inOut"
@@ -12671,19 +12672,21 @@
         { duration: 1, y: "-2rem", opacity: 0, stagger: 0.1, ease: "power4.inOut" },
         "<"
       );
-      st.to(
-        sectionBG,
-        { duration: 1, backgroundColor: colorCombos[i2 - 1][0], ease: "power4.out" },
-        "<"
-      );
-      st.to(outContent, { color: colorCombos[i2 - 1][1], ease: "power4.inOut" }, "<");
+      if (colorMode === "true") {
+        st.to(
+          sectionBG,
+          { duration: 1, backgroundColor: colorCombos[i2 - 1][0], ease: "power4.out" },
+          "<"
+        );
+        st.to(outContent, { color: colorCombos[i2 - 1][1], ease: "power4.inOut" }, "<");
+      }
       st.to(outInfoParent, { duration: 1, opacity: 0, ease: "power4.inOut" }, "<0.2");
       st.from(
         inHeader.lines,
         {
           // duration: 1,
           y: "100%",
-          // rotate: '5deg',
+          rotateZ: "5deg",
           opacity: 0,
           stagger: 0.1,
           ease: "power4.inOut"
@@ -12695,17 +12698,23 @@
       st.from(inOverview.lines, { duration: 1, y: "100%", stagger: 0.1, ease: "power2.inOut" }, "<");
       st.from(inButton, { duration: 1, y: "2rem", opacity: 0, ease: "power2.inOut" }, "<");
       st.from(inSeperator, { duration: 1, height: "0%", ease: "power4.inOut" }, "<");
-      st.to(inSeperator, { backgroundColor: colorCombos[i2][1], ease: "power4.inOut" }, "<");
       st.from(
         inInfo,
         { duration: 1, y: "2rem", opacity: 0, stagger: 0.1, ease: "power4.inOut" },
         "<"
       );
-      st.to(sectionBG, { duration: 1, backgroundColor: colorCombos[i2][0], ease: "power4.out" }, "<");
-      st.to(inContent, { color: colorCombos[i2][1] }, "<");
-      st.to(inBoltPath, { fill: colorCombos[i2][1] }, "<");
-      st.to([inButton, inSpan], { backgroundColor: colorCombos[i2][1] }, "<");
-      st.to(inButton, { color: colorCombos[i2][2] }, "<");
+      if (colorMode === "true") {
+        st.to(inSeperator, { backgroundColor: colorCombos[i2][1], ease: "power4.inOut" }, "<");
+        st.to(
+          sectionBG,
+          { duration: 1, backgroundColor: colorCombos[i2][0], ease: "power4.out" },
+          "<"
+        );
+        st.to(inContent, { color: colorCombos[i2][1] }, "<");
+        st.to(inBoltPath, { fill: colorCombos[i2][1] }, "<");
+        st.to([inButton, inSpan], { backgroundColor: colorCombos[i2][1] }, "<");
+        st.to(inButton, { color: colorCombos[i2][2] }, "<");
+      }
       st.from(inInfoParent, { duration: 1, opacity: 0, ease: "power4.inOut" }, "<0.2");
     }
     function setup() {
@@ -12715,6 +12724,8 @@
       const markerTemplate = document.querySelector(".services_scroll-spacer");
       sWrapper.style.height = String(sWrapper.dataset.nativeSize);
       markerWrapper.style.top = String("-" + sWrapper.dataset.nativeSize);
+      colorMode = String(sWrapper.dataset.colorMode);
+      console.log(colorMode);
       for (let i2 = 0; i2 < sItems2.length; i2++) {
         const item = sItems2[i2];
         item.style.position = "absolute";
@@ -12757,40 +12768,36 @@
       }
     }
   };
-
-  // src/utils/scrollToService.ts
-  gsapWithCSS.registerPlugin(ScrollToPlugin);
   var scrollToServices = () => {
     const serviceSections = [...document.querySelectorAll(".services_item")];
-    const serviceLinks = [...document.querySelectorAll(".services-hero_link-item")];
-    for (const i2 in serviceSections) {
-      const tempSection = serviceSections[i2];
-      const sectionTitle = tempSection.querySelector("h2");
-      let sectionTag = sectionTitle.innerHTML;
-      sectionTag = sectionTag.split(" ")[0];
-      tempSection.id = sectionTag;
-    }
+    const serviceLinks = [...document.querySelectorAll(".services_link-item")];
+    const servicesScrollSections = [...document.querySelectorAll(".services_scroll-spacer")].filter(
+      (e2) => {
+        if (!e2.classList.contains("hide")) {
+          return e2;
+        }
+      }
+    );
+    console.log("HERE", serviceLinks);
+    window.addEventListener("click", (e2) => {
+      console.log(e2.target);
+    });
     for (const i2 in serviceLinks) {
       const tempLink = serviceLinks[i2];
       tempLink.addEventListener("click", (e2) => {
         const target = e2.target;
         let linkTag = target.innerHTML;
         linkTag = linkTag.split(" ")[0];
-        gsapWithCSS.to(window, {
-          duration: 2,
-          scrollTo: { y: "#" + linkTag, offsetY: 50 },
-          ease: "power4.out"
-        });
+        console.log("click", linkTag);
       });
     }
   };
 
   // src/pages/services.ts
   var services2 = () => {
-    stickyHeader();
+    servicesScrollEffect();
     scrollToDeepLinks();
     scrollToServices();
-    servicesScrollEffect();
   };
 
   // src/pages/terms.ts

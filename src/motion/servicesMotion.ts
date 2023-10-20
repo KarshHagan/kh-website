@@ -2,9 +2,10 @@
 import { getDeviceType } from '$utils/getDevice';
 import { cloneNode } from '@finsweet/ts-utils';
 import { gsap } from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { SplitText } from 'gsap/SplitText';
 
-gsap.registerPlugin(SplitText);
+gsap.registerPlugin([SplitText, ScrollToPlugin]);
 
 // Reveal global properties
 let scrollTriggerStart = 'top 70%';
@@ -17,9 +18,11 @@ if (device === 'tablet' || device === 'mobile') {
   scrollTriggerEnd = 'top 80%';
 }
 
+//  Main scroll effect
 export const servicesScrollEffect = () => {
   const sectionBG = document.querySelector('.section_services');
   const docStyle = getComputedStyle(document.documentElement);
+  let colorMode = 'false';
   const colorCombos = [
     [
       docStyle.getPropertyValue('--paper-light'),
@@ -43,8 +46,6 @@ export const servicesScrollEffect = () => {
     ],
   ];
 
-  infoHover();
-
   const splitMain = generateSplitText();
   const splitItems = splitMain[0];
   const splitHeaders = splitItems[0] as SplitText[];
@@ -52,6 +53,7 @@ export const servicesScrollEffect = () => {
   const parentOvers = splitMain[1] as HTMLElement[];
 
   setup();
+  infoHover();
 
   const sItems = [...document.querySelectorAll('.services_item')];
   const sMarkers = [...document.querySelectorAll('.services_scroll-spacer')].filter((e) => {
@@ -106,7 +108,7 @@ export const servicesScrollEffect = () => {
     st.to(outHeader.lines, {
       // duration: 1,
       y: '-100%',
-      // rotate: '-5deg',
+      rotateZ: '-5deg',
       opacity: 0,
       stagger: 0.1,
       ease: 'power4.inOut',
@@ -125,12 +127,15 @@ export const servicesScrollEffect = () => {
       { duration: 1, y: '-2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
       '<'
     );
-    st.to(
-      sectionBG,
-      { duration: 1, backgroundColor: colorCombos[i - 1][0], ease: 'power4.out' },
-      '<'
-    );
-    st.to(outContent, { color: colorCombos[i - 1][1], ease: 'power4.inOut' }, '<');
+    if (colorMode === 'true') {
+      st.to(
+        sectionBG,
+        { duration: 1, backgroundColor: colorCombos[i - 1][0], ease: 'power4.out' },
+        '<'
+      );
+      st.to(outContent, { color: colorCombos[i - 1][1], ease: 'power4.inOut' }, '<');
+    }
+
     st.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
 
     // IN ANIMATION
@@ -139,7 +144,7 @@ export const servicesScrollEffect = () => {
       {
         // duration: 1,
         y: '100%',
-        // rotate: '5deg',
+        rotateZ: '5deg',
         opacity: 0,
         stagger: 0.1,
         ease: 'power4.inOut',
@@ -151,17 +156,24 @@ export const servicesScrollEffect = () => {
     st.from(inOverview.lines, { duration: 1, y: '100%', stagger: 0.1, ease: 'power2.inOut' }, '<');
     st.from(inButton, { duration: 1, y: '2rem', opacity: 0, ease: 'power2.inOut' }, '<');
     st.from(inSeperator, { duration: 1, height: '0%', ease: 'power4.inOut' }, '<');
-    st.to(inSeperator, { backgroundColor: colorCombos[i][1], ease: 'power4.inOut' }, '<');
     st.from(
       inInfo,
       { duration: 1, y: '2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
       '<'
     );
-    st.to(sectionBG, { duration: 1, backgroundColor: colorCombos[i][0], ease: 'power4.out' }, '<');
-    st.to(inContent, { color: colorCombos[i][1] }, '<');
-    st.to(inBoltPath, { fill: colorCombos[i][1] }, '<');
-    st.to([inButton, inSpan], { backgroundColor: colorCombos[i][1] }, '<');
-    st.to(inButton, { color: colorCombos[i][2] }, '<');
+    if (colorMode === 'true') {
+      st.to(inSeperator, { backgroundColor: colorCombos[i][1], ease: 'power4.inOut' }, '<');
+      st.to(
+        sectionBG,
+        { duration: 1, backgroundColor: colorCombos[i][0], ease: 'power4.out' },
+        '<'
+      );
+      st.to(inContent, { color: colorCombos[i][1] }, '<');
+      st.to(inBoltPath, { fill: colorCombos[i][1] }, '<');
+      st.to([inButton, inSpan], { backgroundColor: colorCombos[i][1] }, '<');
+      st.to(inButton, { color: colorCombos[i][2] }, '<');
+    }
+
     st.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
   }
 
@@ -173,7 +185,9 @@ export const servicesScrollEffect = () => {
 
     sWrapper.style.height = String(sWrapper.dataset.nativeSize);
     markerWrapper.style.top = String('-' + sWrapper.dataset.nativeSize);
+    colorMode = String(sWrapper.dataset.colorMode);
 
+    console.log(colorMode);
     for (let i = 0; i < sItems.length; i++) {
       const item = sItems[i] as HTMLElement;
       item.style.position = 'absolute';
@@ -223,6 +237,51 @@ export const servicesScrollEffect = () => {
     for (const i in infoAreas) {
       const temp = infoAreas[i] as HTMLElement;
     }
+  }
+};
+
+// Scroll to Service
+export const scrollToServices = () => {
+  const serviceSections = [...document.querySelectorAll('.services_item')];
+  const serviceLinks = [...document.querySelectorAll('.services_link-item')];
+
+  const servicesScrollSections = [...document.querySelectorAll('.services_scroll-spacer')].filter(
+    (e) => {
+      if (!e.classList.contains('hide')) {
+        return e;
+      }
+    }
+  );
+
+  console.log('HERE', serviceLinks);
+
+  // for (const i in servicesScrollSections) {
+  //   const tempSection = serviceSections[i] as HTMLElement;
+  //   const sectionTitle = tempSection.querySelector('h2') as HTMLElement;
+  //   let sectionTag = sectionTitle.innerHTML as string;
+  //   sectionTag = sectionTag.split(' ')[0] as string;
+
+  //   tempSection.id = sectionTag;
+  // }
+
+  window.addEventListener('click', (e) => {
+    console.log(e.target);
+  });
+
+  for (const i in serviceLinks) {
+    const tempLink = serviceLinks[i] as HTMLElement;
+    tempLink.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      let linkTag = target.innerHTML as string;
+      linkTag = linkTag.split(' ')[0] as string;
+
+      console.log('click', linkTag);
+      // gsap.to(window, {
+      //   duration: 2,
+      //   scrollTo: { y: '#' + linkTag, offsetY: 50 },
+      //   ease: 'power4.out',
+      // });
+    });
   }
 };
 
