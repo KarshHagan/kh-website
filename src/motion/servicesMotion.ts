@@ -2,10 +2,12 @@
 import { getDeviceType } from '$utils/getDevice';
 import { cloneNode } from '@finsweet/ts-utils';
 import { gsap } from 'gsap';
+import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { SplitText } from 'gsap/SplitText';
 
 gsap.registerPlugin([SplitText, ScrollToPlugin]);
+gsap.registerPlugin(MorphSVGPlugin);
 
 // Reveal global properties
 let scrollTriggerStart = 'top 70%';
@@ -46,138 +48,179 @@ export const servicesScrollEffect = () => {
     ],
   ];
 
+  // Split service headers
   const splitMain = generateSplitText();
   const splitItems = splitMain[0];
   const splitHeaders = splitItems[0] as SplitText[];
   const splitOvers = splitItems[1] as SplitText[];
   const parentOvers = splitMain[1] as HTMLElement[];
 
+  // Initializers
   setup();
   infoHover();
 
-  const sItems = [...document.querySelectorAll('.services_item')];
-  const sMarkers = [...document.querySelectorAll('.services_scroll-spacer')].filter((e) => {
-    if (!e.classList.contains('hide')) {
-      return e;
-    }
-  });
+  // SVG Morph
+  setTimeout(() => {
+    const svgEmbed = document.querySelector('.services_graphic-embed') as HTMLElement;
+    const kGraphics = [...svgEmbed.querySelectorAll('.k-graphic')];
+    const hGraphics = [...svgEmbed.querySelectorAll('.h-graphic')];
 
-  //skip first loop
-  for (let i = 1; i < sMarkers.length; i++) {
-    const curMarker = sMarkers[i] as HTMLElement;
-
-    // OUT SECTION
-    const outSection = sItems[i - 1] as HTMLElement;
-    const outContent = outSection.querySelector('.services_info-main') as HTMLElement;
-    const outHeader = splitHeaders[i - 1];
-    const outSpan = outContent.querySelector('.span');
-    const outOverview = splitOvers[i - 1];
-    const outOverParent = parentOvers[i - 1];
-    const outButton = outContent.querySelector('a');
-    const outInfoParent = outContent.querySelector('.services_info-grid');
-    const outInfo = [...outContent.querySelectorAll('li')];
-    const outSeperator = outContent.querySelector('.span.is-vertical');
-    const outBolt = outContent.querySelector('.services-info_float-image')?.querySelector('path');
-    // IN SECTION
-    const inSection = sItems[i] as HTMLElement;
-    const inContent = inSection.querySelector('.services_info-main') as HTMLElement;
-    const inHeader = splitHeaders[i];
-    const inSpan = inContent.querySelector('.span');
-    const inOverview = splitOvers[i];
-    const inOverParent = parentOvers[i];
-    const inButton = inContent.querySelector('a');
-    const inInfoParent = inContent.querySelector('.services_info-grid');
-    const inInfo = [...inContent.querySelectorAll('li')];
-    const inSeperator = inContent.querySelector('.span.is-vertical');
-    const inBolt = inContent.querySelector('.services-info_float-image') as HTMLElement;
-    const inBoltPath = inBolt.querySelector('path');
-
-    const st = gsap.timeline({
-      scrollTrigger: {
-        trigger: curMarker,
-        start: 'top 20%',
-        end: 'top bottom',
-        preventOverlaps: true,
-        markers: true,
-        // scrub: 1,
-        toggleActions: 'play none none reverse',
-      },
+    const kPathPoints = [...kGraphics].slice(0).map((e) => {
+      return e.getAttribute('d') as gsap.SVGPathValue;
+    });
+    const hPathPoints = [...hGraphics].slice(0).map((e) => {
+      return e.getAttribute('d') as gsap.SVGPathValue;
     });
 
-    // OUT ANIMATION
-    st.to(outHeader.lines, {
-      // duration: 1,
-      y: '-100%',
-      rotateZ: '-5deg',
-      opacity: 0,
-      stagger: 0.1,
-      ease: 'power4.inOut',
+    const kBase = kGraphics[0] as HTMLElement;
+    const hBase = hGraphics[0] as HTMLElement;
+
+    console.log('SVG MORPH', kBase, kPathPoints);
+
+    // Service Scroll Main
+    const sItems = [...document.querySelectorAll('.services_item')];
+    const sMarkers = [...document.querySelectorAll('.services_scroll-spacer')].filter((e) => {
+      if (!e.classList.contains('hide')) {
+        return e;
+      }
     });
-    st.to(outSpan, { duration: 1, width: '0%', ease: 'power4.inOut' }, '<');
-    st.to(outOverParent, { duration: 1, y: '-2rem', ease: 'power2.inOut' }, '<');
-    st.to(outOverview.lines, { duration: 1, y: '-100%', stagger: 0.1, ease: 'power2.inOut' }, '<');
-    st.to(outButton, { duration: 1, y: '-2rem', opacity: 0, ease: 'power2.inOut' }, '<');
-    st.to(
-      outSeperator,
-      { duration: 1, height: '0%', backgroundColor: colorCombos[i - 1][1], ease: 'power4.inOut' },
-      '<'
-    );
-    st.to(
-      outInfo,
-      { duration: 1, y: '-2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
-      '<'
-    );
-    if (colorMode === 'true') {
-      st.to(
-        sectionBG,
-        { duration: 1, backgroundColor: colorCombos[i - 1][0], ease: 'power4.out' },
-        '<'
-      );
-      st.to(outContent, { color: colorCombos[i - 1][1], ease: 'power4.inOut' }, '<');
-    }
 
-    st.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
+    //skip first loop
+    for (let i = 1; i < sMarkers.length; i++) {
+      const curMarker = sMarkers[i] as HTMLElement;
 
-    // IN ANIMATION
-    st.from(
-      inHeader.lines,
-      {
+      // OUT SECTION
+      const outSection = sItems[i - 1] as HTMLElement;
+      const outContent = outSection.querySelector('.services_info-main') as HTMLElement;
+      const outHeader = splitHeaders[i - 1];
+      const outSpan = outContent.querySelector('.span');
+      const outOverview = splitOvers[i - 1];
+      const outOverParent = parentOvers[i - 1];
+      const outButton = outContent.querySelector('a');
+      const outInfoParent = outContent.querySelector('.services_info-grid');
+      const outInfo = [...outContent.querySelectorAll('li')];
+      const outSeperator = outContent.querySelector('.span.is-vertical');
+      const outGraphicKPoints = kPathPoints[i - 1];
+      // IN SECTION
+      const inSection = sItems[i] as HTMLElement;
+      const inContent = inSection.querySelector('.services_info-main') as HTMLElement;
+      const inHeader = splitHeaders[i];
+      const inSpan = inContent.querySelector('.span');
+      const inOverview = splitOvers[i];
+      const inOverParent = parentOvers[i];
+      const inButton = inContent.querySelector('a');
+      const inInfoParent = inContent.querySelector('.services_info-grid');
+      const inInfo = [...inContent.querySelectorAll('li')];
+      const inSeperator = inContent.querySelector('.span.is-vertical');
+      const inBolt = inContent.querySelector('.services-info_float-image') as HTMLElement;
+      const inBoltPath = inBolt.querySelector('path');
+      const inGraphicKPoints = kPathPoints[i];
+      const inGraphicHPoints = hPathPoints[i];
+
+      // console.log('POINTS', kPathPoints, inGraphicKPoints);
+
+      const st = gsap.timeline({
+        scrollTrigger: {
+          trigger: curMarker,
+          start: 'top 20%',
+          end: 'top bottom',
+          preventOverlaps: true,
+          markers: true,
+          // scrub: 1,
+          toggleActions: 'play none none reverse',
+        },
+      });
+
+      // OUT ANIMATION
+      st.to(outHeader.lines, {
         // duration: 1,
-        y: '100%',
-        rotateZ: '5deg',
+        y: '-100%',
+        rotateZ: '-5deg',
         opacity: 0,
         stagger: 0.1,
         ease: 'power4.inOut',
-      },
-      '<0.8'
-    );
-    st.from(inSpan, { duration: 1, width: '0%', ease: 'power4.inOut' }, '<');
-    st.from(inOverParent, { duration: 1, y: '2rem', ease: 'power2.inOut' }, '<');
-    st.from(inOverview.lines, { duration: 1, y: '100%', stagger: 0.1, ease: 'power2.inOut' }, '<');
-    st.from(inButton, { duration: 1, y: '2rem', opacity: 0, ease: 'power2.inOut' }, '<');
-    st.from(inSeperator, { duration: 1, height: '0%', ease: 'power4.inOut' }, '<');
-    st.from(
-      inInfo,
-      { duration: 1, y: '2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
-      '<'
-    );
-    if (colorMode === 'true') {
-      st.to(inSeperator, { backgroundColor: colorCombos[i][1], ease: 'power4.inOut' }, '<');
+      });
+      st.to(outSpan, { duration: 1, width: '0%', ease: 'power4.inOut' }, '<');
+      st.to(outOverParent, { duration: 1, y: '-2rem', ease: 'power2.inOut' }, '<');
       st.to(
-        sectionBG,
-        { duration: 1, backgroundColor: colorCombos[i][0], ease: 'power4.out' },
+        outOverview.lines,
+        { duration: 1, y: '-100%', stagger: 0.1, ease: 'power2.inOut' },
         '<'
       );
-      st.to(inContent, { color: colorCombos[i][1] }, '<');
-      st.to(inBoltPath, { fill: colorCombos[i][1] }, '<');
-      st.to([inButton, inSpan], { backgroundColor: colorCombos[i][1] }, '<');
-      st.to(inButton, { color: colorCombos[i][2] }, '<');
-    }
+      st.to(outButton, { duration: 1, y: '-2rem', opacity: 0, ease: 'power2.inOut' }, '<');
+      st.to(
+        outSeperator,
+        { duration: 1, height: '0%', backgroundColor: colorCombos[i - 1][1], ease: 'power4.inOut' },
+        '<'
+      );
+      st.to(
+        outInfo,
+        { duration: 1, y: '-2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
+        '<'
+      );
+      if (colorMode === 'true') {
+        st.to(
+          sectionBG,
+          { duration: 1, backgroundColor: colorCombos[i - 1][0], ease: 'power4.out' },
+          '<'
+        );
+        st.to(outContent, { color: colorCombos[i - 1][1], ease: 'power4.inOut' }, '<');
+      }
 
-    st.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
-  }
+      st.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
+
+      // IN ANIMATION
+      st.from(
+        inHeader.lines,
+        {
+          // duration: 1,
+          y: '100%',
+          rotateZ: '5deg',
+          opacity: 0,
+          stagger: 0.1,
+          ease: 'power4.inOut',
+        },
+        '<0.8'
+      );
+      st.from(inSpan, { duration: 1, width: '0%', ease: 'power4.inOut' }, '<');
+      st.from(inOverParent, { duration: 1, y: '2rem', ease: 'power2.inOut' }, '<');
+      st.from(
+        inOverview.lines,
+        { duration: 1, y: '100%', stagger: 0.1, ease: 'power2.inOut' },
+        '<'
+      );
+      st.from(inButton, { duration: 1, y: '2rem', opacity: 0, ease: 'power2.inOut' }, '<');
+      st.from(inSeperator, { duration: 1, height: '0%', ease: 'power4.inOut' }, '<');
+      st.from(
+        inInfo,
+        { duration: 1, y: '2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
+        '<'
+      );
+      if (colorMode === 'true') {
+        st.to(inSeperator, { backgroundColor: colorCombos[i][1], ease: 'power4.inOut' }, '<');
+        st.to(
+          sectionBG,
+          { duration: 1, backgroundColor: colorCombos[i][0], ease: 'power4.out' },
+          '<'
+        );
+        st.to(inContent, { color: colorCombos[i][1] }, '<');
+        st.to(inBoltPath, { fill: colorCombos[i][1] }, '<');
+        st.to([inButton, inSpan], { backgroundColor: colorCombos[i][1] }, '<');
+        st.to(inButton, { color: colorCombos[i][2] }, '<');
+      }
+
+      st.to(kBase, { duration: 1.2, morphSVG: inGraphicKPoints, ease: 'expo.out' }, '<');
+      st.to(hBase, { duration: 1.2, morphSVG: inGraphicHPoints, ease: 'expo.out' }, '<');
+      st.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
+    }
+  }, 500);
 
   function setup() {
+    const svgWrapper = document.querySelector('.services_graphic-data') as HTMLImageElement;
+    const svgData = svgWrapper.src;
+
+    loadSVGData(svgData);
+
     const sWrapper = document.querySelector('.services_wrapper') as HTMLElement;
     const sItems = [...document.querySelectorAll('.services_item')];
     const markerWrapper = document.querySelector('.services_scroll-spacers') as HTMLElement;
@@ -187,7 +230,6 @@ export const servicesScrollEffect = () => {
     markerWrapper.style.top = String('-' + sWrapper.dataset.nativeSize);
     colorMode = String(sWrapper.dataset.colorMode);
 
-    console.log(colorMode);
     for (let i = 0; i < sItems.length; i++) {
       const item = sItems[i] as HTMLElement;
       item.style.position = 'absolute';
@@ -238,6 +280,20 @@ export const servicesScrollEffect = () => {
       const temp = infoAreas[i] as HTMLElement;
     }
   }
+
+  function loadSVGData(file: string) {
+    const svgEmbed = document.querySelector('.services_graphic-embed') as HTMLElement;
+    console.log('load', svgEmbed);
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState === 4 && this.status === 200) {
+        svgEmbed.innerHTML = xhttp.responseText;
+      }
+    };
+
+    xhttp.open('GET', file, true);
+    xhttp.send();
+  }
 };
 
 // Scroll to Service
@@ -253,7 +309,7 @@ export const scrollToServices = () => {
     }
   );
 
-  console.log('HERE', serviceLinks);
+  // console.log('HERE', serviceLinks);
 
   // for (const i in servicesScrollSections) {
   //   const tempSection = serviceSections[i] as HTMLElement;
