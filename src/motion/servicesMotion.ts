@@ -182,10 +182,9 @@ export const servicesScrollEffect = () => {
 
       st.to(outBottomGraphic, { duration: 1, y: '-100%', opacity: 0, ease: 'expo.out' }, '<');
       st.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
-      st.to(outSection, { duration: 0, display: 'none' });
 
       // IN ANIMATION
-      st.to(inSection, { duration: 0, display: 'flex' });
+      st.to(inSection, { duration: 0, display: 'flex' }, '<');
       st.from(
         inHeader.lines,
         {
@@ -244,6 +243,7 @@ export const servicesScrollEffect = () => {
       );
       st.from(inBottomGraphic, { duration: 1.2, y: '100%', opacity: 0, ease: 'expo.out' }, '<');
 
+      st.to(outSection, { duration: 0, display: 'none' }, '<0.2');
       st.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
     }
   }, 500);
