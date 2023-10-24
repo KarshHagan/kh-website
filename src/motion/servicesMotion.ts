@@ -31,7 +31,8 @@ export const servicesScrollEffect = () => {
     docStyle.getPropertyValue('--orange'),
     docStyle.getPropertyValue('--brand-blue'),
     docStyle.getPropertyValue('--brand-green'),
-    docStyle.getPropertyValue('----dark-green'),
+    docStyle.getPropertyValue('--dark-blue'),
+    docStyle.getPropertyValue('--dark-green'),
   ];
   const colorCombos = [
     [
@@ -93,6 +94,7 @@ export const servicesScrollEffect = () => {
       }
     });
     const bottomGraphics = [...document.querySelectorAll('.services_bottom-image')];
+    const topGraphicWrapper = document.querySelector('.services_graphic-wrap');
 
     //skip first loop
     for (let i = 1; i < sMarkers.length; i++) {
@@ -130,23 +132,20 @@ export const servicesScrollEffect = () => {
 
       gsap.set(sItems[i], { display: 'none' });
 
-      // console.log('POINTS', kPathPoints, inGraphicKPoints);
-
       const st = gsap.timeline({
         scrollTrigger: {
           trigger: curMarker,
           start: 'top 20%',
           end: 'top bottom',
           preventOverlaps: true,
-          markers: true,
-          // scrub: 1,
+          // markers: true,
           toggleActions: 'play none none reverse',
         },
       });
 
       // OUT ANIMATION
       st.to(outHeader.lines, {
-        // duration: 1,
+        duration: 1,
         y: '-100%',
         rotateZ: '-5deg',
         opacity: 0,
@@ -174,13 +173,13 @@ export const servicesScrollEffect = () => {
       if (colorMode === 'true') {
         st.to(
           sectionBG,
-          { duration: 1, backgroundColor: colorCombos[i - 1][0], ease: 'power4.out' },
+          { duration: 1, backgroundColor: colorCombos[i - 1][0], ease: 'power4.inOut' },
           '<'
         );
         st.to(outContent, { color: colorCombos[i - 1][1], ease: 'power4.inOut' }, '<');
       }
 
-      st.to(outBottomGraphic, { duration: 1, y: '-100%', opacity: 0, ease: 'expo.out' }, '<');
+      st.to(outBottomGraphic, { duration: 1, y: '-100%', opacity: 0, ease: 'power4.inOut' }, '<');
       st.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
 
       // IN ANIMATION
@@ -188,7 +187,7 @@ export const servicesScrollEffect = () => {
       st.from(
         inHeader.lines,
         {
-          // duration: 1,
+          duration: 1,
           y: '100%',
           rotateZ: '5deg',
           opacity: 0,
@@ -215,7 +214,7 @@ export const servicesScrollEffect = () => {
         st.to(inSeperator, { backgroundColor: colorCombos[i][1], ease: 'power4.inOut' }, '<');
         st.to(
           sectionBG,
-          { duration: 1, backgroundColor: colorCombos[i][0], ease: 'power4.out' },
+          { duration: 1, backgroundColor: colorCombos[i][0], ease: 'power4.inOut' },
           '<'
         );
         st.to(inContent, { color: colorCombos[i][1] }, '<');
@@ -226,25 +225,30 @@ export const servicesScrollEffect = () => {
       st.to(
         kBase,
         {
-          duration: 1.2,
+          duration: 1,
           morphSVG: { shape: inGraphicKPoints, type: 'rotational' },
-          ease: 'expo.out',
+          ease: 'power4.inOut',
         },
         '<'
       );
       st.to(
         hBase,
         {
-          duration: 1.2,
+          duration: 1,
           morphSVG: { shape: inGraphicHPoints, type: 'rotational' },
-          ease: 'expo.out',
+          ease: 'power4.inOut',
         },
         '<'
       );
-      st.from(inBottomGraphic, { duration: 1.2, y: '100%', opacity: 0, ease: 'expo.out' }, '<');
+      st.from(inBottomGraphic, { duration: 1, y: '100%', opacity: 0, ease: 'power4.inOut' }, '<');
 
       st.to(outSection, { duration: 0, display: 'none' }, '<0.2');
       st.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
+
+      // if (i === 3) {
+      //   console.log('HERE');
+      //   st.to(topGraphicWrapper, { height: '100vh' });
+      // }
     }
   }, 500);
 
@@ -309,26 +313,44 @@ export const servicesScrollEffect = () => {
   function infoHover() {
     const infoAreas = [...document.querySelectorAll('.services_info-cursor-wrap')];
 
-    for (let i = 0; i < infoAreas.length; i++) {
+    for (const i in infoAreas) {
       const temp = infoAreas[i] as HTMLElement;
-      const tempBolt = temp.querySelector('.services-info_float-image');
-
-      // console.log(calcOffset);
+      const bounds = temp.getBoundingClientRect();
+      const tempBolt = temp.querySelector('.services-info_float-image') as HTMLElement;
+      const boltFill = tempBolt.querySelector('.bolt');
+      const cursorRange = bounds.bottom - bounds.top;
+      const paletteRange = colorPalette.length;
+      const segmentRange = Math.floor(cursorRange / paletteRange);
 
       temp.addEventListener('mousemove', (e) => {
         const bounds = temp.getBoundingClientRect();
-        const relativeY = e.clientY - bounds.top;
-        const calcOffset = bounds.bottom / colorPalette.length;
+        const cursorY = e.clientY - bounds.top;
 
-        gsap.set(tempBolt, { y: relativeY });
+        gsap.to(tempBolt, { y: cursorY, ease: 'power2.out' });
 
-        if (relativeY > calcOffset * i && relativeY <= calcOffset * (i + 1)) {
-          console.log(i, 'here');
+        if (cursorY <= segmentRange) {
+          gsap.to(boltFill, { fill: colorPalette[0], ease: 'power2.out' });
+        } else if (cursorY > segmentRange && cursorY <= segmentRange * 2) {
+          gsap.to(boltFill, { fill: colorPalette[1], ease: 'power2.out' });
+        } else if (cursorY > segmentRange * 2 && cursorY <= segmentRange * 3) {
+          gsap.to(boltFill, { fill: colorPalette[2], ease: 'power2.out' });
+        } else if (cursorY > segmentRange * 3 && cursorY <= segmentRange * 4) {
+          gsap.to(boltFill, { fill: colorPalette[3], ease: 'power2.out' });
+        } else if (cursorY > segmentRange * 4 && cursorY <= segmentRange * 5) {
+          gsap.to(boltFill, { fill: colorPalette[4], ease: 'power2.out' });
+        } else if (cursorY > segmentRange * 5 && cursorY <= segmentRange * 6) {
+          gsap.to(boltFill, { fill: colorPalette[5], ease: 'power2.out' });
+        } else if (cursorY > segmentRange * 6 && cursorY <= segmentRange * 7) {
+          gsap.to(boltFill, { fill: colorPalette[6], ease: 'power2.out' });
         }
-        if (relativeY > calcOffset * (i + 1) && relativeY <= calcOffset * (i + 2)) {
-          console.log(i + 1, 'here');
-        }
-        console.log(relativeY, i, calcOffset, calcOffset * (i + 1));
+      });
+
+      temp.addEventListener('mouseenter', () => {
+        gsap.to(tempBolt, { scale: 1.5 });
+      });
+      temp.addEventListener('mouseleave', () => {
+        gsap.to(tempBolt, { scale: 1 });
+        gsap.to(boltFill, { fill: colorPalette[0], ease: 'power2.out' });
       });
     }
   }

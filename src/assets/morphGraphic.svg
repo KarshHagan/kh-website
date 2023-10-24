@@ -5,11 +5,11 @@
 
 <style>
 	.k-graphic{
-  		fill: #E23544;
+  		fill: #ec2543;
 		display: none;
   	}
     .h-graphic{
-  		fill: #E23544;
+  		fill: #ec2543 ;
 		display: none;
   	}
 	.is-initial{
