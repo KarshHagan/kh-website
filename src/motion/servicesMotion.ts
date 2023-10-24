@@ -25,6 +25,14 @@ export const servicesScrollEffect = () => {
   const sectionBG = document.querySelector('.section_services');
   const docStyle = getComputedStyle(document.documentElement);
   let colorMode = 'false';
+  const colorPalette = [
+    docStyle.getPropertyValue('--brand-red'),
+    docStyle.getPropertyValue('--dark-orange'),
+    docStyle.getPropertyValue('--orange'),
+    docStyle.getPropertyValue('--brand-blue'),
+    docStyle.getPropertyValue('--brand-green'),
+    docStyle.getPropertyValue('----dark-green'),
+  ];
   const colorCombos = [
     [
       docStyle.getPropertyValue('--paper-light'),
@@ -75,7 +83,7 @@ export const servicesScrollEffect = () => {
     const kBase = kGraphics[0] as HTMLElement;
     const hBase = hGraphics[0] as HTMLElement;
 
-    console.log('SVG MORPH', kBase, kPathPoints);
+    // console.log('SVG MORPH', svgEmbed, kPathPoints);
 
     // Service Scroll Main
     const sItems = [...document.querySelectorAll('.services_item')];
@@ -84,6 +92,7 @@ export const servicesScrollEffect = () => {
         return e;
       }
     });
+    const bottomGraphics = [...document.querySelectorAll('.services_bottom-image')];
 
     //skip first loop
     for (let i = 1; i < sMarkers.length; i++) {
@@ -101,6 +110,7 @@ export const servicesScrollEffect = () => {
       const outInfo = [...outContent.querySelectorAll('li')];
       const outSeperator = outContent.querySelector('.span.is-vertical');
       const outGraphicKPoints = kPathPoints[i - 1];
+      const outBottomGraphic = bottomGraphics[i - 1];
       // IN SECTION
       const inSection = sItems[i] as HTMLElement;
       const inContent = inSection.querySelector('.services_info-main') as HTMLElement;
@@ -116,6 +126,9 @@ export const servicesScrollEffect = () => {
       const inBoltPath = inBolt.querySelector('path');
       const inGraphicKPoints = kPathPoints[i];
       const inGraphicHPoints = hPathPoints[i];
+      const inBottomGraphic = bottomGraphics[i];
+
+      gsap.set(sItems[i], { display: 'none' });
 
       // console.log('POINTS', kPathPoints, inGraphicKPoints);
 
@@ -167,9 +180,12 @@ export const servicesScrollEffect = () => {
         st.to(outContent, { color: colorCombos[i - 1][1], ease: 'power4.inOut' }, '<');
       }
 
+      st.to(outBottomGraphic, { duration: 1, y: '-100%', opacity: 0, ease: 'expo.out' }, '<');
       st.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
+      st.to(outSection, { duration: 0, display: 'none' });
 
       // IN ANIMATION
+      st.to(inSection, { duration: 0, display: 'flex' });
       st.from(
         inHeader.lines,
         {
@@ -208,9 +224,26 @@ export const servicesScrollEffect = () => {
         st.to([inButton, inSpan], { backgroundColor: colorCombos[i][1] }, '<');
         st.to(inButton, { color: colorCombos[i][2] }, '<');
       }
+      st.to(
+        kBase,
+        {
+          duration: 1.2,
+          morphSVG: { shape: inGraphicKPoints, type: 'rotational' },
+          ease: 'expo.out',
+        },
+        '<'
+      );
+      st.to(
+        hBase,
+        {
+          duration: 1.2,
+          morphSVG: { shape: inGraphicHPoints, type: 'rotational' },
+          ease: 'expo.out',
+        },
+        '<'
+      );
+      st.from(inBottomGraphic, { duration: 1.2, y: '100%', opacity: 0, ease: 'expo.out' }, '<');
 
-      st.to(kBase, { duration: 1.2, morphSVG: inGraphicKPoints, ease: 'expo.out' }, '<');
-      st.to(hBase, { duration: 1.2, morphSVG: inGraphicHPoints, ease: 'expo.out' }, '<');
       st.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
     }
   }, 500);
@@ -274,16 +307,35 @@ export const servicesScrollEffect = () => {
   }
 
   function infoHover() {
-    const infoAreas = [...document.querySelectorAll('.services_info-grid')];
+    const infoAreas = [...document.querySelectorAll('.services_info-cursor-wrap')];
 
-    for (const i in infoAreas) {
+    for (let i = 0; i < infoAreas.length; i++) {
       const temp = infoAreas[i] as HTMLElement;
+      const tempBolt = temp.querySelector('.services-info_float-image');
+
+      // console.log(calcOffset);
+
+      temp.addEventListener('mousemove', (e) => {
+        const bounds = temp.getBoundingClientRect();
+        const relativeY = e.clientY - bounds.top;
+        const calcOffset = bounds.bottom / colorPalette.length;
+
+        gsap.set(tempBolt, { y: relativeY });
+
+        if (relativeY > calcOffset * i && relativeY <= calcOffset * (i + 1)) {
+          console.log(i, 'here');
+        }
+        if (relativeY > calcOffset * (i + 1) && relativeY <= calcOffset * (i + 2)) {
+          console.log(i + 1, 'here');
+        }
+        console.log(relativeY, i, calcOffset, calcOffset * (i + 1));
+      });
     }
   }
 
   function loadSVGData(file: string) {
     const svgEmbed = document.querySelector('.services_graphic-embed') as HTMLElement;
-    console.log('load', svgEmbed);
+    // console.log('load', svgEmbed);
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
