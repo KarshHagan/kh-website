@@ -1,5 +1,6 @@
 import { accordianList } from '$components/accordianList';
 import { featuredWork } from '$components/featuredWork';
+import { initSVGMorph } from '$components/morphSVG';
 import { videoPlayer } from '$components/videoPlayer';
 import {
   featuredReveal,
@@ -39,6 +40,7 @@ export const home = () => {
 
   // Services
   // setDeepLinks();
+  initSVGMorph();
   servicesReveal();
   accordianList();
 

@@ -1,4 +1,5 @@
 // eslint-disable-next-line simple-import-sort/imports
+import { getSVGPathData } from '$components/morphSVG';
 import { getDeviceType } from '$utils/getDevice';
 import { cloneNode } from '@finsweet/ts-utils';
 import { gsap } from 'gsap';
@@ -66,25 +67,31 @@ export const servicesScrollEffect = () => {
 
   // Initializers
   setup();
-  infoHover();
+  if (device === 'desktop') {
+    infoHover();
+  }
+
+  console.log(device);
+
+  if (device === 'mobile') {
+    if (window.innerHeight < 767 && window.innerWidth > 479) {
+      console.log('Special');
+      const sectionInfo = [...document.querySelectorAll('.services_info-cursor-wrap')];
+      const graphicWrap = document.querySelector('.services_graphic-wrap') as HTMLElement;
+      for (const i in sectionInfo) {
+        const temp = sectionInfo[i] as HTMLElement;
+        temp.style.display = 'none';
+      }
+    }
+  }
 
   // SVG Morph
   setTimeout(() => {
-    const svgEmbed = document.querySelector('.services_graphic-embed') as HTMLElement;
-    const kGraphics = [...svgEmbed.querySelectorAll('.k-graphic')];
-    const hGraphics = [...svgEmbed.querySelectorAll('.h-graphic')];
-
-    const kPathPoints = [...kGraphics].slice(0).map((e) => {
-      return e.getAttribute('d') as gsap.SVGPathValue;
-    });
-    const hPathPoints = [...hGraphics].slice(0).map((e) => {
-      return e.getAttribute('d') as gsap.SVGPathValue;
-    });
-
-    const kBase = kGraphics[0] as HTMLElement;
-    const hBase = hGraphics[0] as HTMLElement;
-
-    // console.log('SVG MORPH', svgEmbed, kPathPoints);
+    const svgData = getSVGPathData();
+    const kBase = svgData[0] as HTMLElement;
+    const kPoints = svgData[1] as gsap.SVGPathValue[];
+    const hBase = svgData[2] as HTMLElement;
+    const hPoints = svgData[3] as gsap.SVGPathValue[];
 
     // Service Scroll Main
     const sItems = [...document.querySelectorAll('.services_item')];
@@ -93,8 +100,6 @@ export const servicesScrollEffect = () => {
         return e;
       }
     });
-    const bottomGraphics = [...document.querySelectorAll('.services_bottom-image')];
-    const topGraphicWrapper = document.querySelector('.services_graphic-wrap');
 
     //skip first loop
     for (let i = 1; i < sMarkers.length; i++) {
@@ -111,8 +116,6 @@ export const servicesScrollEffect = () => {
       const outInfoParent = outContent.querySelector('.services_info-grid');
       const outInfo = [...outContent.querySelectorAll('li')];
       const outSeperator = outContent.querySelector('.span.is-vertical');
-      const outGraphicKPoints = kPathPoints[i - 1];
-      const outBottomGraphic = bottomGraphics[i - 1];
       // IN SECTION
       const inSection = sItems[i] as HTMLElement;
       const inContent = inSection.querySelector('.services_info-main') as HTMLElement;
@@ -126,9 +129,8 @@ export const servicesScrollEffect = () => {
       const inSeperator = inContent.querySelector('.span.is-vertical');
       const inBolt = inContent.querySelector('.services-info_float-image') as HTMLElement;
       const inBoltPath = inBolt.querySelector('path');
-      const inGraphicKPoints = kPathPoints[i];
-      const inGraphicHPoints = hPathPoints[i];
-      const inBottomGraphic = bottomGraphics[i];
+      const inGraphicKPoints = kPoints[i];
+      const inGraphicHPoints = hPoints[i];
 
       gsap.set(sItems[i], { display: 'none' });
 
@@ -178,8 +180,6 @@ export const servicesScrollEffect = () => {
         );
         st.to(outContent, { color: colorCombos[i - 1][1], ease: 'power4.inOut' }, '<');
       }
-
-      st.to(outBottomGraphic, { duration: 1, y: '-100%', opacity: 0, ease: 'power4.inOut' }, '<');
       st.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
 
       // IN ANIMATION
@@ -240,24 +240,13 @@ export const servicesScrollEffect = () => {
         },
         '<'
       );
-      st.from(inBottomGraphic, { duration: 1, y: '100%', opacity: 0, ease: 'power4.inOut' }, '<');
 
       st.to(outSection, { duration: 0, display: 'none' }, '<0.2');
       st.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
-
-      // if (i === 3) {
-      //   console.log('HERE');
-      //   st.to(topGraphicWrapper, { height: '100vh' });
-      // }
     }
   }, 500);
 
   function setup() {
-    const svgWrapper = document.querySelector('.services_graphic-data') as HTMLImageElement;
-    const svgData = svgWrapper.src;
-
-    loadSVGData(svgData);
-
     const sWrapper = document.querySelector('.services_wrapper') as HTMLElement;
     const sItems = [...document.querySelectorAll('.services_item')];
     const markerWrapper = document.querySelector('.services_scroll-spacers') as HTMLElement;
@@ -353,20 +342,6 @@ export const servicesScrollEffect = () => {
         gsap.to(boltFill, { fill: colorPalette[0], ease: 'power2.out' });
       });
     }
-  }
-
-  function loadSVGData(file: string) {
-    const svgEmbed = document.querySelector('.services_graphic-embed') as HTMLElement;
-    // console.log('load', svgEmbed);
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState === 4 && this.status === 200) {
-        svgEmbed.innerHTML = xhttp.responseText;
-      }
-    };
-
-    xhttp.open('GET', file, true);
-    xhttp.send();
   }
 };
 

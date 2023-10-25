@@ -1,3 +1,4 @@
+import { initSVGMorph } from '$components/morphSVG';
 import { stickyHeader } from '$components/stickyHeader';
 import {
   scrollToServices,
@@ -14,10 +15,11 @@ export const services = () => {
   // ---------------
   // Page Globals
   // ---------------
+  initSVGMorph();
   servicesScrollEffect();
 
-  scrollToDeepLinks();
-  scrollToServices();
+  // scrollToDeepLinks();
+  // scrollToServices();
 
   // Hero
   // servicesPageReveal();
