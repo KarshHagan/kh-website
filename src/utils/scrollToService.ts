@@ -1,33 +1,57 @@
-// import { gsap } from 'gsap';
-// import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { gsap } from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
-// gsap.registerPlugin(ScrollToPlugin);
+gsap.registerPlugin(ScrollToPlugin);
 
-// export const scrollToServices = () => {
-//   const serviceSections = [...document.querySelectorAll('.services_item')];
-//   const serviceLinks = [...document.querySelectorAll('.services-hero_link-item')];
+export const scrollToServices = () => {
+  const serviceLinks = [...document.querySelectorAll('.services_link-item')];
+  const sMarkers = [...document.querySelectorAll('.services_scroll-spacer')].filter((e) => {
+    if (!e.classList.contains('hide')) {
+      return e;
+    }
+  });
 
-//   for (const i in serviceSections) {
-//     const tempSection = serviceSections[i] as HTMLElement;
-//     const sectionTitle = tempSection.querySelector('h2') as HTMLElement;
-//     let sectionTag = sectionTitle.innerHTML as string;
-//     sectionTag = sectionTag.split(' ')[0] as string;
+  const sPoints: number[] = [];
 
-//     tempSection.id = sectionTag;
-//   }
+  for (const i in sMarkers) {
+    const tMarker = sMarkers[i] as HTMLElement;
+    const tLink = serviceLinks[i] as HTMLElement;
 
-//   for (const i in serviceLinks) {
-//     const tempLink = serviceLinks[i] as HTMLElement;
-//     tempLink.addEventListener('click', (e) => {
-//       const target = e.target as HTMLElement;
-//       let linkTag = target.innerHTML as string;
-//       linkTag = linkTag.split(' ')[0] as string;
+    const tag = tLink.children[0].innerHTML.split(' ')[0];
+    tMarker.id = tag;
 
-//       gsap.to(window, {
-//         duration: 2,
-//         scrollTo: { y: '#' + linkTag, offsetY: 50 },
-//         ease: 'power4.out',
-//       });
-//     });
-//   }
-// };
+    console.log('TAG', tag);
+
+    // const bounds = temp.getBoundingClientRect();
+    // sPoints.push(bounds.top);
+  }
+
+  for (let i = 0; i < serviceLinks.length; i++) {
+    const tempLink = serviceLinks[i] as HTMLElement;
+    const matchTag = tempLink.children[0].innerHTML.split(' ')[0].toLowerCase();
+    tempLink.addEventListener('click', (e) => {
+      gsap.to(window, {
+        duration: 2,
+        scrollTo: { y: '#' + matchTag, offsetY: 50 },
+        ease: 'power4.out',
+      });
+    });
+  }
+
+  //   for (const i in sMarkers) {
+  //     const temp = sMarkers[i] as HTMLElement;
+  //     const bounds = temp.getBoundingClientRect();
+  //     sPoints.push(bounds.top);
+  //   }
+
+  //   for (let i = 0; i < serviceLinks.length; i++) {
+  //     const tempLink = serviceLinks[i] as HTMLElement;
+  //     tempLink.addEventListener('click', (e) => {
+  //       gsap.to(window, {
+  //         duration: 2,
+  //         scrollTo: { y: sPoints[i], offsetY: 50 },
+  //         ease: 'power4.out',
+  //       });
+  //     });
+  //   }
+};

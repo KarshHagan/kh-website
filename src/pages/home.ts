@@ -39,7 +39,6 @@ export const home = () => {
   featuredWork();
 
   // Services
-  // setDeepLinks();
   initSVGMorph();
   servicesReveal();
   accordianList();

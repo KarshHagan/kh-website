@@ -9,6 +9,8 @@ gsap.registerPlugin(ScrollToPlugin);
 export const setDeepLinks = () => {
   const deepLinks = [...document.querySelectorAll('[data-deep-link]')];
 
+  console.log('set', deepLinks);
+
   if (deepLinks.length !== 0) {
     for (const i in deepLinks) {
       const tempLink = deepLinks[i] as HTMLElement;
@@ -19,7 +21,7 @@ export const setDeepLinks = () => {
       if (linkType === 'services') {
         const tempTitle = tempLink.querySelector('h3') as HTMLElement;
         setText = tempTitle.innerHTML as string;
-      } else if (linkType === 'footer') {
+      } else if (linkType === 'work') {
         const tempTitle = tempLink.children[0] as HTMLElement;
         setText = tempTitle.innerHTML as string;
       }
@@ -35,21 +37,25 @@ export const setDeepLinks = () => {
 };
 
 export const scrollToDeepLinks = () => {
+  console.log('SCROLL TO', localStorage);
   if (localStorage.length > 0) {
     const scrollSection = localStorage.getItem('tag');
 
-    gsap.to(window, {
-      duration: 2,
-      scrollTo: { y: '#' + scrollSection, offsetY: 100 },
-      ease: 'power4.out',
-      onComplete: () => {
-        localStorage.clear();
-      },
-    });
+    console.log(document.querySelector('#' + scrollSection));
+
+    // gsap.to(window, {
+    //   duration: 2,
+    //   scrollTo: { y: '#' + scrollSection, offsetY: 100 },
+    //   ease: 'power4.out',
+    //   onComplete: () => {
+    //     localStorage.clear();
+    //   },
+    // });
   }
 };
 
 export const filterDeepLinks = () => {
+  console.log('filter');
   if (localStorage.length > 0) {
     const filterTag = localStorage.getItem('tag') as string;
     const masterList = [...document.querySelectorAll('[data-filter-item]')];

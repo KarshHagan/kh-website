@@ -1,13 +1,12 @@
 import { initSVGMorph } from '$components/morphSVG';
-import { stickyHeader } from '$components/stickyHeader';
+import { servicesScrollEffect } from '$components/servicesScroll';
 import {
-  scrollToServices,
   serviceSectionReveal,
   servicesOverviewReveal,
   servicesPageReveal,
-  servicesScrollEffect,
 } from '$motion/servicesMotion';
 import { scrollToDeepLinks } from '$utils/scrollToDeepLink';
+import { scrollToServices } from '$utils/scrollToService';
 
 // import { scrollToServices } from '$utils/scrollToService';
 
@@ -18,8 +17,8 @@ export const services = () => {
   initSVGMorph();
   servicesScrollEffect();
 
-  // scrollToDeepLinks();
-  // scrollToServices();
+  scrollToDeepLinks();
+  scrollToServices();
 
   // Hero
   // servicesPageReveal();

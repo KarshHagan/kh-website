@@ -4307,12 +4307,12 @@
 
   // src/components/videoPlayer.ts
   var videoPlayer = () => {
-    const device11 = getDeviceType();
+    const device12 = getDeviceType();
     const videoEmbed = document.querySelector("[data-video-player]");
     const videoElement = videoEmbed.querySelector("video");
     const muteButton = document.querySelector(".case-hero_mute-button.is-mute");
     const expandButton = document.querySelector(".case-hero_mute-button.is-expand");
-    if (device11 !== "mobile") {
+    if (device12 !== "mobile") {
       videoElement.addEventListener("click", () => {
         togglePlay(videoElement);
       });
@@ -4555,8 +4555,8 @@
     const footerCornerFix = 4 * 16;
     const footerHeight = footerElement.clientHeight;
     let setHeight = footerHeight - footerCornerFix + "px";
-    const device11 = getDeviceType();
-    if (device11 === "mobile") {
+    const device12 = getDeviceType();
+    if (device12 === "mobile") {
       setHeight = "0vh";
     }
     footerSpacer.style.height = setHeight;
@@ -5262,8 +5262,8 @@
       }
     });
     function resetNav() {
-      const device11 = getDeviceType();
-      if (device11 === "tablet" || device11 === "mobile") {
+      const device12 = getDeviceType();
+      if (device12 === "tablet" || device12 === "mobile") {
         const navBG2 = document.querySelector(".nav-ui_bg-container");
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
         let navTransitionTrigger;
@@ -8051,7 +8051,7 @@
   // src/components/draggableSlider.ts
   gsapWithCSS.registerPlugin(InertiaPlugin2, Draggable);
   var draggableSlider = () => {
-    const device11 = getDeviceType();
+    const device12 = getDeviceType();
     const sliderParent = document.querySelector(".about-team_wrapper");
     const sliderContainer = sliderParent.querySelector(".about-team_list");
     const slides = [...document.querySelectorAll(".about-team_item")];
@@ -10908,7 +10908,7 @@
     const workItems = [...document.querySelectorAll(".work-grid_item")];
     const renderQueue = [];
     const hideQueue = [];
-    const device11 = getDeviceType();
+    const device12 = getDeviceType();
     const windowWidth = window.innerWidth;
     for (const i2 in workItems) {
       const temp = workItems[i2];
@@ -10919,7 +10919,7 @@
         hideQueue.push(temp);
       }
     }
-    if (device11 === "desktop" && windowWidth > 767) {
+    if (device12 === "desktop" && windowWidth > 767) {
       const sortedQueue = sortRenderQueue(renderQueue);
       const leftItems = sortedQueue[0];
       const rightItems = sortedQueue[1];
@@ -11291,6 +11291,7 @@
   gsapWithCSS.registerPlugin(ScrollToPlugin);
   var setDeepLinks = () => {
     const deepLinks = [...document.querySelectorAll("[data-deep-link]")];
+    console.log("set", deepLinks);
     if (deepLinks.length !== 0) {
       for (const i2 in deepLinks) {
         const tempLink = deepLinks[i2];
@@ -11300,7 +11301,7 @@
         if (linkType === "services") {
           const tempTitle = tempLink.querySelector("h3");
           setText = tempTitle.innerHTML;
-        } else if (linkType === "footer") {
+        } else if (linkType === "work") {
           const tempTitle = tempLink.children[0];
           setText = tempTitle.innerHTML;
         }
@@ -11311,7 +11312,15 @@
       }
     }
   };
+  var scrollToDeepLinks = () => {
+    console.log("SCROLL TO", localStorage);
+    if (localStorage.length > 0) {
+      const scrollSection2 = localStorage.getItem("tag");
+      console.log(document.querySelector("#" + scrollSection2));
+    }
+  };
   var filterDeepLinks = () => {
+    console.log("filter");
     if (localStorage.length > 0) {
       const filterTag = localStorage.getItem("tag");
       const masterList = [...document.querySelectorAll("[data-filter-item]")];
@@ -11639,8 +11648,8 @@
 
   // src/components/contactMain.ts
   var contactHover = () => {
-    const device11 = getDeviceType();
-    if (device11 === "desktop") {
+    const device12 = getDeviceType();
+    if (device12 === "desktop") {
       initContact();
       const contactLinksWraps = [...document.querySelectorAll(".contact_block")];
       for (const i2 in contactLinksWraps) {
@@ -13068,12 +13077,12 @@
     let setWidth = "40%";
     let setHeight = "80%";
     let setCornerRadius = "50vw 50vw 4rem 4rem";
-    const device11 = getDeviceType();
-    if (device11 === "tablet") {
+    const device12 = getDeviceType();
+    if (device12 === "tablet") {
       setWidth = "80%";
       setHeight = "80%";
       setCornerRadius = "3rem 3rem 3rem 3rem";
-    } else if (device11 === "mobile") {
+    } else if (device12 === "mobile") {
       setWidth = "75%";
       setHeight = "50%";
       setCornerRadius = "2rem 2rem 2rem 2rem";
@@ -13099,9 +13108,9 @@
     animation.to(heroMainComponent, { opacity: 0, ease: "power4.out" }, "<");
     animation.to(heroImageText, { opacity: 1 }, "<0.3");
     let setIndicator = "-5rem";
-    if (device11 === "tablet") {
+    if (device12 === "tablet") {
       setIndicator = "-4rem";
-    } else if (device11 === "mobile") {
+    } else if (device12 === "mobile") {
       setIndicator = "-3rem";
     }
     const indicatorAnimation = gsapWithCSS.timeline({
@@ -13641,16 +13650,10 @@
   // node_modules/@finsweet/ts-utils/dist/helpers/cloneNode.js
   var cloneNode = (node, deep = true) => node.cloneNode(deep);
 
-  // src/motion/servicesMotion.ts
+  // src/components/servicesScroll.ts
   gsapWithCSS.registerPlugin([SplitText, ScrollToPlugin]);
   gsapWithCSS.registerPlugin(MorphSVGPlugin);
-  var scrollTriggerStart9 = "top 70%";
-  var scrollTriggerEnd9 = "top 70%";
   var device10 = getDeviceType();
-  if (device10 === "tablet" || device10 === "mobile") {
-    scrollTriggerStart9 = "top 80%";
-    scrollTriggerEnd9 = "top 80%";
-  }
   var servicesScrollEffect = () => {
     const sectionBG = document.querySelector(".section_services");
     const docStyle = getComputedStyle(document.documentElement);
@@ -13695,16 +13698,16 @@
     if (device10 === "desktop") {
       infoHover();
     }
-    console.log(device10);
     if (device10 === "mobile") {
-      if (window.innerHeight < 767 && window.innerWidth > 479) {
-        console.log("Special");
-        const sectionInfo = [...document.querySelectorAll(".services_info-cursor-wrap")];
+      const sectionInfo = [...document.querySelectorAll(".services_info-cursor-wrap")];
+      for (const i2 in sectionInfo) {
+        const temp = sectionInfo[i2];
+        temp.style.display = "none";
+      }
+      if (window.innerWidth > 479) {
         const graphicWrap = document.querySelector(".services_graphic-wrap");
-        for (const i2 in sectionInfo) {
-          const temp = sectionInfo[i2];
-          temp.style.display = "none";
-        }
+        graphicWrap.style.justifyContent = "flex-end";
+        graphicWrap.style.alignItems = "flex-end";
       }
     }
     setTimeout(() => {
@@ -13936,10 +13939,53 @@
     }
   };
 
+  // src/motion/servicesMotion.ts
+  gsapWithCSS.registerPlugin([SplitText, ScrollToPlugin]);
+  gsapWithCSS.registerPlugin(MorphSVGPlugin);
+  var scrollTriggerStart9 = "top 70%";
+  var scrollTriggerEnd9 = "top 70%";
+  var device11 = getDeviceType();
+  if (device11 === "tablet" || device11 === "mobile") {
+    scrollTriggerStart9 = "top 80%";
+    scrollTriggerEnd9 = "top 80%";
+  }
+
+  // src/utils/scrollToService.ts
+  gsapWithCSS.registerPlugin(ScrollToPlugin);
+  var scrollToServices = () => {
+    const serviceLinks = [...document.querySelectorAll(".services_link-item")];
+    const sMarkers = [...document.querySelectorAll(".services_scroll-spacer")].filter((e2) => {
+      if (!e2.classList.contains("hide")) {
+        return e2;
+      }
+    });
+    const sPoints = [];
+    for (const i2 in sMarkers) {
+      const tMarker = sMarkers[i2];
+      const tLink = serviceLinks[i2];
+      const tag = tLink.children[0].innerHTML.split(" ")[0];
+      tMarker.id = tag;
+      console.log("TAG", tag);
+    }
+    for (let i2 = 0; i2 < serviceLinks.length; i2++) {
+      const tempLink = serviceLinks[i2];
+      const matchTag = tempLink.children[0].innerHTML.split(" ")[0].toLowerCase();
+      tempLink.addEventListener("click", (e2) => {
+        gsapWithCSS.to(window, {
+          duration: 2,
+          scrollTo: { y: "#" + matchTag, offsetY: 50 },
+          ease: "power4.out"
+        });
+      });
+    }
+  };
+
   // src/pages/services.ts
   var services2 = () => {
     initSVGMorph();
     servicesScrollEffect();
+    scrollToDeepLinks();
+    scrollToServices();
   };
 
   // src/pages/terms.ts
@@ -13966,8 +14012,8 @@
   var inertiaMovement = () => {
     const scrollSections = [...document.querySelectorAll("[data-scroll-section]")];
     let movementMuliplier = 5;
-    const device11 = getDeviceType();
-    if (device11 === "tablet" || device11 === "mobile") {
+    const device12 = getDeviceType();
+    if (device12 === "tablet" || device12 === "mobile") {
       movementMuliplier = 3;
     }
     for (const i2 in scrollSections) {
