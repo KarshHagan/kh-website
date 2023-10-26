@@ -9,8 +9,6 @@ gsap.registerPlugin(ScrollToPlugin);
 export const setDeepLinks = () => {
   const deepLinks = [...document.querySelectorAll('[data-deep-link]')];
 
-  console.log('set', deepLinks);
-
   if (deepLinks.length !== 0) {
     for (const i in deepLinks) {
       const tempLink = deepLinks[i] as HTMLElement;
@@ -41,21 +39,20 @@ export const scrollToDeepLinks = () => {
   if (localStorage.length > 0) {
     const scrollSection = localStorage.getItem('tag');
 
-    console.log(document.querySelector('#' + scrollSection));
-
-    gsap.to(window, {
-      duration: 2,
-      scrollTo: { y: '#' + scrollSection, offsetY: 100 },
-      ease: 'power4.out',
-      onComplete: () => {
-        localStorage.clear();
-      },
-    });
+    setTimeout(() => {
+      gsap.to(window, {
+        duration: 2,
+        scrollTo: { y: '#' + scrollSection, offsetY: 100 },
+        ease: 'power4.out',
+        onComplete: () => {
+          localStorage.clear();
+        },
+      });
+    }, 1000);
   }
 };
 
 export const filterDeepLinks = () => {
-  console.log('filter');
   if (localStorage.length > 0) {
     const filterTag = localStorage.getItem('tag') as string;
     const masterList = [...document.querySelectorAll('[data-filter-item]')];

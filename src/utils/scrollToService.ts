@@ -11,24 +11,17 @@ export const scrollToServices = () => {
     }
   });
 
-  const sPoints: number[] = [];
-
   for (const i in sMarkers) {
     const tMarker = sMarkers[i] as HTMLElement;
     const tLink = serviceLinks[i] as HTMLElement;
 
     const tag = tLink.children[0].innerHTML.split(' ')[0];
     tMarker.id = tag;
-
-    console.log('TAG', tag);
-
-    // const bounds = temp.getBoundingClientRect();
-    // sPoints.push(bounds.top);
   }
 
   for (let i = 0; i < serviceLinks.length; i++) {
     const tempLink = serviceLinks[i] as HTMLElement;
-    const matchTag = tempLink.children[0].innerHTML.split(' ')[0].toLowerCase();
+    const matchTag = tempLink.children[0].innerHTML.split(' ')[0];
     tempLink.addEventListener('click', (e) => {
       gsap.to(window, {
         duration: 2,
@@ -37,21 +30,4 @@ export const scrollToServices = () => {
       });
     });
   }
-
-  //   for (const i in sMarkers) {
-  //     const temp = sMarkers[i] as HTMLElement;
-  //     const bounds = temp.getBoundingClientRect();
-  //     sPoints.push(bounds.top);
-  //   }
-
-  //   for (let i = 0; i < serviceLinks.length; i++) {
-  //     const tempLink = serviceLinks[i] as HTMLElement;
-  //     tempLink.addEventListener('click', (e) => {
-  //       gsap.to(window, {
-  //         duration: 2,
-  //         scrollTo: { y: sPoints[i], offsetY: 50 },
-  //         ease: 'power4.out',
-  //       });
-  //     });
-  //   }
 };
