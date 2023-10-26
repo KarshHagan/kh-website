@@ -43,14 +43,14 @@ export const scrollToDeepLinks = () => {
 
     console.log(document.querySelector('#' + scrollSection));
 
-    // gsap.to(window, {
-    //   duration: 2,
-    //   scrollTo: { y: '#' + scrollSection, offsetY: 100 },
-    //   ease: 'power4.out',
-    //   onComplete: () => {
-    //     localStorage.clear();
-    //   },
-    // });
+    gsap.to(window, {
+      duration: 2,
+      scrollTo: { y: '#' + scrollSection, offsetY: 100 },
+      ease: 'power4.out',
+      onComplete: () => {
+        localStorage.clear();
+      },
+    });
   }
 };
 

@@ -11317,6 +11317,14 @@
     if (localStorage.length > 0) {
       const scrollSection2 = localStorage.getItem("tag");
       console.log(document.querySelector("#" + scrollSection2));
+      gsapWithCSS.to(window, {
+        duration: 2,
+        scrollTo: { y: "#" + scrollSection2, offsetY: 100 },
+        ease: "power4.out",
+        onComplete: () => {
+          localStorage.clear();
+        }
+      });
     }
   };
   var filterDeepLinks = () => {
