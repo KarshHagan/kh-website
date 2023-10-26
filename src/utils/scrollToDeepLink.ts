@@ -86,6 +86,6 @@ export const filterDeepLinks = () => {
     }, 1500);
     updateInitialCheckbox(initialFilter, 'hide');
 
-    localStorage.clear();
+    // localStorage.clear();
   }
 };
