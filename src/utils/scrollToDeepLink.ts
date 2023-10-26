@@ -22,12 +22,14 @@ export const setDeepLinks = () => {
       } else if (linkType === 'work') {
         const tempTitle = tempLink.children[0] as HTMLElement;
         setText = tempTitle.innerHTML as string;
+        console.log('WORK', setText);
       }
 
       linkTag = setText.split(' ')[0] as string;
-      // console.log('here', linkTag);
+      console.log('here', linkTag);
 
       tempLink.addEventListener('click', () => {
+        console.log('click', linkTag);
         localStorage.setItem('tag', linkTag);
       });
     }
@@ -79,7 +81,11 @@ export const filterDeepLinks = () => {
     const activeFilters: string[] = [];
     activeFilters.push(filterTag);
 
+    console.log(filterTag);
+
     const filteredList = filterList(masterList, activeFilters);
+
+    console.log('HERE', filteredList);
     hideAll();
     setTimeout(() => {
       filterReveal(filteredList);
