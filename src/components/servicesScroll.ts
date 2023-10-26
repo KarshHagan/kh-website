@@ -336,47 +336,32 @@ export const servicesScrollEffect = () => {
   }
 };
 
-// Scroll to Service
-// export const scrollToServices = () => {
-//   const serviceSections = [...document.querySelectorAll('.services_item')];
-//   const serviceLinks = [...document.querySelectorAll('.services_link-item')];
+// Scroll To Section
+export const scrollToServices = () => {
+  const serviceLinks = [...document.querySelectorAll('.services_link-item')];
+  const sMarkers = [...document.querySelectorAll('.services_scroll-spacer')].filter((e) => {
+    if (!e.classList.contains('hide')) {
+      return e;
+    }
+  });
 
-//   const servicesScrollSections = [...document.querySelectorAll('.services_scroll-spacer')].filter(
-//     (e) => {
-//       if (!e.classList.contains('hide')) {
-//         return e;
-//       }
-//     }
-//   );
+  for (const i in sMarkers) {
+    const tMarker = sMarkers[i] as HTMLElement;
+    const tLink = serviceLinks[i] as HTMLElement;
 
-//   // console.log('HERE', serviceLinks);
+    const tag = tLink.children[0].innerHTML.split(' ')[0];
+    tMarker.id = tag;
+  }
 
-//   // for (const i in servicesScrollSections) {
-//   //   const tempSection = serviceSections[i] as HTMLElement;
-//   //   const sectionTitle = tempSection.querySelector('h2') as HTMLElement;
-//   //   let sectionTag = sectionTitle.innerHTML as string;
-//   //   sectionTag = sectionTag.split(' ')[0] as string;
-
-//   //   tempSection.id = sectionTag;
-//   // }
-
-//   window.addEventListener('click', (e) => {
-//     console.log(e.target);
-//   });
-
-//   for (const i in serviceLinks) {
-//     const tempLink = serviceLinks[i] as HTMLElement;
-//     tempLink.addEventListener('click', (e) => {
-//       const target = e.target as HTMLElement;
-//       let linkTag = target.innerHTML as string;
-//       linkTag = linkTag.split(' ')[0] as string;
-
-//       console.log('click', linkTag);
-//       // gsap.to(window, {
-//       //   duration: 2,
-//       //   scrollTo: { y: '#' + linkTag, offsetY: 50 },
-//       //   ease: 'power4.out',
-//       // });
-//     });
-//   }
-// };
+  for (let i = 0; i < serviceLinks.length; i++) {
+    const tempLink = serviceLinks[i] as HTMLElement;
+    const matchTag = tempLink.children[0].innerHTML.split(' ')[0];
+    tempLink.addEventListener('click', (e) => {
+      gsap.to(window, {
+        duration: 2,
+        scrollTo: { y: '#' + matchTag, offsetY: 50 },
+        ease: 'power4.out',
+      });
+    });
+  }
+};

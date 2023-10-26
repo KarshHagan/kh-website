@@ -16,20 +16,21 @@ export const setDeepLinks = () => {
       let setText = '';
       let linkTag = '';
 
-      if (linkType === 'services') {
+      if (linkType === 'home-services') {
         const tempTitle = tempLink.querySelector('h3') as HTMLElement;
         setText = tempTitle.innerHTML as string;
-      } else if (linkType === 'work') {
+      } else if (linkType === 'footer-work') {
         const tempTitle = tempLink.children[0] as HTMLElement;
         setText = tempTitle.innerHTML as string;
-        console.log('WORK', setText);
+      } else if (linkType === 'services-work') {
+        const tempParent = tempLink.parentNode as HTMLElement;
+        const tempTitle = tempParent.querySelector('h2') as HTMLElement;
+        setText = tempTitle.innerHTML;
       }
 
       linkTag = setText.split(' ')[0] as string;
-      console.log('here', linkTag);
 
       tempLink.addEventListener('click', () => {
-        console.log('click', linkTag);
         localStorage.setItem('tag', linkTag);
       });
     }
@@ -37,7 +38,6 @@ export const setDeepLinks = () => {
 };
 
 export const scrollToDeepLinks = () => {
-  console.log('SCROLL TO', localStorage);
   if (localStorage.length > 0) {
     const scrollSection = localStorage.getItem('tag');
 
@@ -81,17 +81,14 @@ export const filterDeepLinks = () => {
     const activeFilters: string[] = [];
     activeFilters.push(filterTag);
 
-    console.log(filterTag);
-
     const filteredList = filterList(masterList, activeFilters);
 
-    console.log('HERE', filteredList);
     hideAll();
     setTimeout(() => {
       filterReveal(filteredList);
     }, 1500);
     updateInitialCheckbox(initialFilter, 'hide');
 
-    // localStorage.clear();
+    localStorage.clear();
   }
 };

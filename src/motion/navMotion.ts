@@ -266,7 +266,7 @@ export const navBrandHover = () => {
   const kWrappers = [...document.querySelectorAll('.nav-ui_brand-wrap.is-karsh')];
   const hWrappers = [...document.querySelectorAll('.nav-ui_brand-wrap.is-hagan')];
 
-  console.log(navBrandIcons);
+  // console.log(navBrandIcons);
 
   const animation = gsap.timeline();
   // animation.set();
@@ -295,6 +295,6 @@ export const navBrandHover = () => {
 
     const returnArray = [holdKs, holdSs, holdHs];
 
-    console.log(returnArray);
+    // console.log(returnArray);
   }
 };

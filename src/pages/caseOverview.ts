@@ -1,4 +1,3 @@
-import { stickyHeader } from '$components/stickyHeader';
 import { caseHover, csoPageReveal } from '$motion/caseOverviewMotion';
 import { cursorArrowYMovement } from '$motion/cursorMotion';
 import { caseScrollEffect } from '$utils/caseGridMovement';
@@ -10,7 +9,6 @@ export const caseOverview = () => {
   // Page Globals
   // ---------------
 
-  // stickyHeader();
   filterDeepLinks();
 
   // Page Reveal

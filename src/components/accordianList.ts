@@ -29,6 +29,8 @@ export const initAccordian = () => {
   }
 };
 
+// MAIN
+// -----------
 export const accordianList = () => {
   initAccordian();
   accordianImageHover();

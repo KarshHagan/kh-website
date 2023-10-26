@@ -13,7 +13,6 @@ export const about = () => {
   // ---------------
   // Page Globals
   // ---------------
-  // stickyHeader();
 
   // Hero
   abPageReveal();

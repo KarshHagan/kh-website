@@ -19,55 +19,10 @@ if (device === 'tablet' || device === 'mobile') {
   scrollTriggerEnd = 'top 80%';
 }
 
-// Scroll to Service
-// export const scrollToServices = () => {
-//   const serviceSections = [...document.querySelectorAll('.services_item')];
-//   const serviceLinks = [...document.querySelectorAll('.services_link-item')];
-
-//   const servicesScrollSections = [...document.querySelectorAll('.services_scroll-spacer')].filter(
-//     (e) => {
-//       if (!e.classList.contains('hide')) {
-//         return e;
-//       }
-//     }
-//   );
-
-//   // console.log('HERE', serviceLinks);
-
-//   // for (const i in servicesScrollSections) {
-//   //   const tempSection = serviceSections[i] as HTMLElement;
-//   //   const sectionTitle = tempSection.querySelector('h2') as HTMLElement;
-//   //   let sectionTag = sectionTitle.innerHTML as string;
-//   //   sectionTag = sectionTag.split(' ')[0] as string;
-
-//   //   tempSection.id = sectionTag;
-//   // }
-
-//   window.addEventListener('click', (e) => {
-//     console.log(e.target);
-//   });
-
-//   for (const i in serviceLinks) {
-//     const tempLink = serviceLinks[i] as HTMLElement;
-//     tempLink.addEventListener('click', (e) => {
-//       const target = e.target as HTMLElement;
-//       let linkTag = target.innerHTML as string;
-//       linkTag = linkTag.split(' ')[0] as string;
-
-//       console.log('click', linkTag);
-//       // gsap.to(window, {
-//       //   duration: 2,
-//       //   scrollTo: { y: '#' + linkTag, offsetY: 50 },
-//       //   ease: 'power4.out',
-//       // });
-//     });
-//   }
-// };
-
 // Page Reveal
 export const servicesPageReveal = () => {
   const fixedHeaderSection = document.querySelector('.section_sticky-header') as HTMLElement;
-  const heroSection = document.querySelector('.section_services-hero') as HTMLElement;
+  const heroSection = document.querySelector('.section_services') as HTMLElement;
 
   const heroTitle = fixedHeaderSection.querySelector('h1');
   const headerSplit = new SplitText(heroTitle, { type: 'lines', linesClass: 'lineChild' });
@@ -77,10 +32,9 @@ export const servicesPageReveal = () => {
   });
   const headerOverview = fixedHeaderSection.querySelector('p');
   const overline = heroSection.querySelector('.fixed-header_overline');
-  const filterButtons = [...document.querySelectorAll('.services-hero_link-item')];
-  const heroText = heroSection.querySelector('h2');
-  const heroImageWrap = heroSection.querySelector('.services-hero_image-wrap') as HTMLElement;
-  const heroChildren = [...heroImageWrap.children];
+  const filterButtons = [...document.querySelectorAll('.services_link-item')];
+  const scrollSection = heroSection.querySelector('.services_sticky-section');
+  const sectionTexture = heroSection.querySelector('.services_scroll-texture');
 
   const animation = gsap.timeline({
     onComplete: () => {
@@ -109,26 +63,53 @@ export const servicesPageReveal = () => {
     },
     '<0.2'
   );
-  animation.from(heroText, { duration: 1, opacity: 0, y: '2rem', ease: 'power4.out' }, '<0.5');
-  animation.from(heroChildren, { duration: 1, opacity: 0, scale: 1.05, ease: 'power4.out' }, '<');
+  animation.from(scrollSection, { duration: 1, opacity: 0, y: '10%', ease: 'Power4.out' }, '<');
+  animation.from(sectionTexture, { duration: 1.5, opacity: 0, ease: 'power4.out' }, '<0.5');
 };
 
 // Overview Reveal
 export const servicesOverviewReveal = () => {
-  const overviewSection = document.querySelector('.section_serivces-info') as HTMLElement;
+  const parentElement = document.querySelector('.section_services-overview') as HTMLElement;
 
-  const overviewHeader = overviewSection.querySelector('.services-info_overview-header');
-  const overviewSpan = overviewSection.querySelector('.span');
-
-  const industriesSection = overviewSection.querySelector(
-    '.services-info_industries'
+  const overviewHeader = parentElement.querySelector('.services-overview_header');
+  const overviewImageParent = parentElement.querySelector(
+    '.services-overview_image-wrap'
   ) as HTMLElement;
-  const industriesHeader = industriesSection.querySelector('.services-info_industries-header');
-  const industriesTag = industriesSection.querySelectorAll('.services-info_grid');
+  const overviewGridItems = [...parentElement.querySelectorAll('.services-overview_grid-wrap')];
 
   const animation = gsap.timeline({
     scrollTrigger: {
-      trigger: overviewSection,
+      trigger: parentElement,
+      start: scrollTriggerStart,
+      end: scrollTriggerEnd,
+      // markers: true,
+      // toggleActions: 'play none none reverse',
+    },
+  });
+  animation.from(overviewHeader, { duration: 1, opacity: 0, y: '2rem', ease: 'power4.out' });
+  animation.from(
+    overviewImageParent,
+    { duration: 1, opacity: 0, y: '2rem', ease: 'power4.out' },
+    '<0.2'
+  );
+  animation.from(
+    overviewGridItems,
+    { duration: 1, opacity: 0, y: '2rem', stagger: 0.1, ease: 'power4.out' },
+    '<0.5'
+  );
+};
+
+// Industries Reveal
+export const servicesIndustriesReveal = () => {
+  const parentElement = document.querySelector('.section_serivces-industries') as HTMLElement;
+
+  const overviewHeader = parentElement.querySelector('.services-info_industries-header');
+  const overviewSpan = parentElement.querySelector('.span');
+  const industriesTags = [...parentElement.querySelectorAll('.serivces-industries_text')];
+
+  const animation = gsap.timeline({
+    scrollTrigger: {
+      trigger: parentElement,
       start: scrollTriggerStart,
       end: scrollTriggerEnd,
       // markers: true,
@@ -137,62 +118,15 @@ export const servicesOverviewReveal = () => {
   });
   animation.from(overviewHeader, { duration: 1, opacity: 0, y: '2rem', ease: 'power4.out' });
   animation.from(overviewSpan, { duration: 1, width: 0, ease: 'power4.out' }, '<');
-  animation.from(industriesHeader, { duration: 1, opacity: 0, y: '2rem', ease: 'power4.out' }, '<');
   animation.from(
-    industriesTag,
+    industriesTags,
     {
       duration: 1,
       opacity: 0,
       y: '2rem',
+      // stagger: 0.1,
       ease: 'power4.out',
     },
     '<'
   );
-};
-
-// Service Item Reveal
-export const serviceSectionReveal = () => {
-  const serviceSections = [...document.querySelectorAll('.services_item')];
-  const servicesHeader = document.querySelector('.services-info_header');
-
-  const headerAnimation = gsap.timeline({
-    scrollTrigger: {
-      trigger: serviceSections[0],
-      start: scrollTriggerStart,
-      end: scrollTriggerEnd,
-      // markers: true,
-      // toggleActions: 'play none none reverse',
-    },
-  });
-
-  headerAnimation.from(servicesHeader, { duration: 1, opacity: 0, y: '1rem', ease: 'power4.out' });
-
-  for (const i in serviceSections) {
-    const tempSection = serviceSections[i] as HTMLElement;
-    const revealWrap = tempSection.querySelector('.services_image-reveal');
-    const contentMain = tempSection.querySelector('.services_info-main');
-    const contentSecondary = tempSection.querySelector('.services_info-grid');
-    const sectionSpan = [...tempSection.querySelectorAll('.services_span')];
-
-    gsap.set(revealWrap, { y: '0%' });
-
-    const animation = gsap.timeline({
-      scrollTrigger: {
-        trigger: tempSection,
-        start: scrollTriggerStart,
-        end: scrollTriggerStart,
-        // markers: true,
-        // toggleActions: 'play none none reverse',
-      },
-    });
-
-    animation.to(revealWrap, { duration: 1, y: '-100%', ease: 'expo.inOut' }, '<');
-    animation.from(contentMain, { duration: 1, opacity: 0, y: '2rem', ease: 'power4.inOut' }, '<');
-    animation.from(
-      contentSecondary,
-      { duration: 1, opacity: 0, y: '2rem', ease: 'power4.inOut' },
-      '<'
-    );
-    animation.from(sectionSpan, { duration: 1, width: '0%', ease: 'power4.inOut' }, '<');
-  }
 };
