@@ -49,6 +49,18 @@ export const servicesScrollEffect = () => {
     ],
   ];
 
+  if (device === 'mobile') {
+    if (window.innerWidth > window.innerHeight) {
+      const servicesWrapper = document.querySelector('.services_wrapper') as HTMLElement;
+      const sectionHeaders = [...servicesWrapper.querySelectorAll('h2')];
+
+      for (const i in sectionHeaders) {
+        const temp = sectionHeaders[i] as HTMLElement;
+        temp.style.fontSize = '4rem';
+      }
+    }
+  }
+
   // Split service headers
   const splitMain = generateSplitText();
   const splitItems = splitMain[0];
@@ -60,20 +72,6 @@ export const servicesScrollEffect = () => {
   setup();
   if (device === 'desktop') {
     infoHover();
-  }
-
-  if (device === 'mobile') {
-    const sectionInfo = [...document.querySelectorAll('.services_info-cursor-wrap')];
-    for (const i in sectionInfo) {
-      const temp = sectionInfo[i] as HTMLElement;
-      temp.style.display = 'none';
-    }
-
-    if (window.innerWidth > 479) {
-      const graphicWrap = document.querySelector('.services_graphic-wrap') as HTMLElement;
-      graphicWrap.style.justifyContent = 'flex-end';
-      graphicWrap.style.alignItems = 'flex-end';
-    }
   }
 
   // SVG Morph
@@ -130,7 +128,6 @@ export const servicesScrollEffect = () => {
           trigger: curMarker,
           start: 'top 20%',
           end: 'top bottom',
-          preventOverlaps: true,
           // markers: true,
           toggleActions: 'play none none reverse',
         },
@@ -174,7 +171,7 @@ export const servicesScrollEffect = () => {
       st.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
 
       // IN ANIMATION
-      st.to(inSection, { duration: 0, display: 'flex' }, '<');
+      st.to(inSection, { duration: 0, display: 'block' }, '<');
       st.from(
         inHeader.lines,
         {
@@ -247,6 +244,7 @@ export const servicesScrollEffect = () => {
     markerWrapper.style.top = String('-' + sWrapper.dataset.nativeSize);
     colorMode = String(sWrapper.dataset.colorMode);
 
+    // Setup Scroll Marker Conatiners
     for (let i = 0; i < sItems.length; i++) {
       const item = sItems[i] as HTMLElement;
       item.style.position = 'absolute';
@@ -258,6 +256,26 @@ export const servicesScrollEffect = () => {
       // newMarker.style.backgroundColor =
       //   '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0');
       // newMarker.classList.add('mbm-ex');
+    }
+
+    // Mobile Lanscape optimizations
+    if (device === 'mobile') {
+      const servicesWrapper = document.querySelector('.services_wrapper') as HTMLElement;
+      const graphicWrap = document.querySelector('.services_graphic-wrap') as HTMLElement;
+      const sectionInfo = [...document.querySelectorAll('.services_info-cursor-wrap')];
+
+      if (window.innerWidth > window.innerHeight) {
+        servicesWrapper.style.height = '100vh';
+        graphicWrap.style.position = 'absolute';
+        graphicWrap.style.bottom = '1rem';
+        graphicWrap.style.justifyContent = 'flex-end';
+        graphicWrap.style.alignItems = 'flex-end';
+
+        for (const i in sectionInfo) {
+          const temp = sectionInfo[i] as HTMLElement;
+          temp.style.display = 'none';
+        }
+      }
     }
   }
   function generateSplitText() {
@@ -274,7 +292,7 @@ export const servicesScrollEffect = () => {
       gsap.set(tempHeader, { perspective: 100 });
       const gSplit = new SplitText(tempHeader, { linesClass: 'lineChild' });
       const gSplitParent = new SplitText(tempHeader, {
-        type: 'lines, words',
+        type: 'lines',
         linesClass: 'split-text_parent',
       });
       const oSplit = new SplitText(tempOver, { linesClass: 'lineChild' });
@@ -289,7 +307,6 @@ export const servicesScrollEffect = () => {
     const final = [[splitHeaders, splitOvers], parentOvers];
     return final;
   }
-
   function infoHover() {
     const infoAreas = [...document.querySelectorAll('.services_info-cursor-wrap')];
 
