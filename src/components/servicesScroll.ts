@@ -5,9 +5,10 @@ import { cloneNode } from '@finsweet/ts-utils';
 import { gsap } from 'gsap';
 import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 
-gsap.registerPlugin([SplitText, ScrollToPlugin]);
+gsap.registerPlugin([SplitText, ScrollToPlugin, ScrollTrigger]);
 gsap.registerPlugin(MorphSVGPlugin);
 
 const device = getDeviceType();
@@ -57,7 +58,8 @@ export const servicesScrollEffect = () => {
   const parentOvers = splitMain[1] as HTMLElement[];
 
   // Initializers
-  setup();
+  setupMarkers();
+  // setupSections();
   if (device === 'desktop') {
     infoHover();
   }
@@ -78,6 +80,7 @@ export const servicesScrollEffect = () => {
 
   // SVG Morph
   setTimeout(() => {
+    scrollProgress();
     const svgData = getSVGPathData();
     const kBase = svgData[0] as HTMLElement;
     const kPoints = svgData[1] as gsap.SVGPathValue[];
@@ -93,8 +96,15 @@ export const servicesScrollEffect = () => {
     });
 
     //skip first loop
+
     for (let i = 1; i < sMarkers.length; i++) {
       const curMarker = sMarkers[i] as HTMLElement;
+
+      // EX
+      // const outSection = sItems[i - 1] as HTMLElement;
+      // const inSection = sItems[i] as HTMLElement;
+      // st.to(outSection, { duration: 1, opacity: 0 });
+      // st.to(inSection, { duration: 1, opacity: 1 });
 
       // OUT SECTION
       const outSection = sItems[i - 1] as HTMLElement;
@@ -104,10 +114,10 @@ export const servicesScrollEffect = () => {
       const outOverview = splitOvers[i - 1];
       const outOverParent = parentOvers[i - 1];
       const outButton = outContent.querySelector('a');
-      const outInfoParent = outContent.querySelector('.services_info-grid');
+      // const outInfoParent = outContent.querySelector('.services_info-grid');
       const outInfo = [...outContent.querySelectorAll('li')];
-      const outSeperator = outContent.querySelector('.span.is-vertical');
-      // IN SECTION
+      // const outSeperator = outContent.querySelector('.span.is-vertical');
+      // // IN SECTION
       const inSection = sItems[i] as HTMLElement;
       const inContent = inSection.querySelector('.services_info-main') as HTMLElement;
       const inHeader = splitHeaders[i];
@@ -115,129 +125,153 @@ export const servicesScrollEffect = () => {
       const inOverview = splitOvers[i];
       const inOverParent = parentOvers[i];
       const inButton = inContent.querySelector('a');
-      const inInfoParent = inContent.querySelector('.services_info-grid');
+      // const inInfoParent = inContent.querySelector('.services_info-grid');
       const inInfo = [...inContent.querySelectorAll('li')];
-      const inSeperator = inContent.querySelector('.span.is-vertical');
-      const inBolt = inContent.querySelector('.services-info_float-image') as HTMLElement;
-      const inBoltPath = inBolt.querySelector('path');
-      const inGraphicKPoints = kPoints[i];
-      const inGraphicHPoints = hPoints[i];
-
-      gsap.set(sItems[i], { display: 'none' });
+      // const inSeperator = inContent.querySelector('.span.is-vertical');
+      // const inBolt = inContent.querySelector('.services-info_float-image') as HTMLElement;
+      // const inBoltPath = inBolt.querySelector('path');
+      // const inGraphicKPoints = kPoints[i];
+      // const inGraphicHPoints = hPoints[i];
 
       const st = gsap.timeline({
         scrollTrigger: {
           trigger: curMarker,
           start: 'top 20%',
-          end: 'top bottom',
+          end: '+=100%',
+          markers: true,
+          toggleActions: 'play complete none reverse',
           preventOverlaps: true,
-          // markers: true,
-          toggleActions: 'play none none reverse',
+          onLeave: () => {
+            console.log('left', i - 1);
+            st.set(inSection, { opacity: 0 });
+          },
+        },
+        onComplete: () => {
+          console.log('Complete');
         },
       });
 
-      // OUT ANIMATION
+      // gsap.set(sItems[i], { display: 'none' });
+
+      // const st = gsap.timeline({
+      //   scrollTrigger: {
+      //     trigger: curMarker,
+      //     start: 'top 20%',
+      //     end: 'top bottom',
+      //     preventOverlaps: true,
+      //     // markers: true,
+      //     toggleActions: 'play none none reverse',
+      //   },
+      // });
+
+      // // OUT ANIMATION
       st.to(outHeader.lines, {
         duration: 1,
         y: '-100%',
-        rotateZ: '-5deg',
+        skewX: '15deg',
+        skewY: '-4deg',
+        perspective: 400,
         opacity: 0,
         stagger: 0.1,
         ease: 'power4.inOut',
       });
-      st.to(outSpan, { duration: 1, width: '0%', ease: 'power4.inOut' }, '<');
-      st.to(outOverParent, { duration: 1, y: '-2rem', ease: 'power2.inOut' }, '<');
+      st.to(outSpan, { duration: 1, x: '100%', ease: 'power4.inOut' }, '<');
+      // st.to(outOverParent, { duration: 1, y: '-2rem', ease: 'power2.inOut' }, '<');
       st.to(
         outOverview.lines,
-        { duration: 1, y: '-100%', stagger: 0.1, ease: 'power2.inOut' },
+        { duration: 1, y: '-100%', stagger: 0.1, ease: 'power4.inOut' },
         '<'
       );
-      st.to(outButton, { duration: 1, y: '-2rem', opacity: 0, ease: 'power2.inOut' }, '<');
-      st.to(
-        outSeperator,
-        { duration: 1, height: '0%', backgroundColor: colorCombos[i - 1][1], ease: 'power4.inOut' },
-        '<'
-      );
-      st.to(
-        outInfo,
-        { duration: 1, y: '-2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
-        '<'
-      );
-      if (colorMode === 'true') {
-        st.to(
-          sectionBG,
-          { duration: 1, backgroundColor: colorCombos[i - 1][0], ease: 'power4.inOut' },
-          '<'
-        );
-        st.to(outContent, { color: colorCombos[i - 1][1], ease: 'power4.inOut' }, '<');
-      }
-      st.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
+      st.to(outButton, { duration: 1, y: '-100%', opacity: 0, ease: 'power4.inOut' }, '<');
+      // st.to(
+      //   outSeperator,
+      //   { duration: 1, height: '0%', backgroundColor: colorCombos[i - 1][1], ease: 'power4.inOut' },
+      //   '<'
+      // );
+      // st.to(
+      //   outInfo,
+      //   { duration: 1, y: '-2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
+      //   '<'
+      // );
+      // if (colorMode === 'true') {
+      //   st.to(
+      //     sectionBG,
+      //     { duration: 1, backgroundColor: colorCombos[i - 1][0], ease: 'power4.inOut' },
+      //     '<'
+      //   );
+      //   st.to(outContent, { color: colorCombos[i - 1][1], ease: 'power4.inOut' }, '<');
+      // }
+      // st.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
 
-      // IN ANIMATION
-      st.to(inSection, { duration: 0, display: 'flex' }, '<');
+      // // IN ANIMATION
+      // st.to(inSection, { duration: 0, display: 'flex' }, '<');
       st.from(
         inHeader.lines,
         {
           duration: 1,
           y: '100%',
-          rotateZ: '5deg',
+          skewX: '-15deg',
+          skewY: '4deg',
+          perspective: 400,
           opacity: 0,
           stagger: 0.1,
           ease: 'power4.inOut',
         },
-        '<0.8'
+        '<0.6'
       );
-      st.from(inSpan, { duration: 1, width: '0%', ease: 'power4.inOut' }, '<');
-      st.from(inOverParent, { duration: 1, y: '2rem', ease: 'power2.inOut' }, '<');
+      st.from(inSpan, { duration: 1, x: '-100%', ease: 'power4.inOut' }, '<');
+      // st.from(inOverParent, { duration: 1, y: '2rem', ease: 'power2.inOut' }, '<');
       st.from(
         inOverview.lines,
-        { duration: 1, y: '100%', stagger: 0.1, ease: 'power2.inOut' },
+        { duration: 1, y: '100%', stagger: 0.1, ease: 'power4.inOut' },
         '<'
       );
-      st.from(inButton, { duration: 1, y: '2rem', opacity: 0, ease: 'power2.inOut' }, '<');
-      st.from(inSeperator, { duration: 1, height: '0%', ease: 'power4.inOut' }, '<');
-      st.from(
-        inInfo,
-        { duration: 1, y: '2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
-        '<'
-      );
-      if (colorMode === 'true') {
-        st.to(inSeperator, { backgroundColor: colorCombos[i][1], ease: 'power4.inOut' }, '<');
-        st.to(
-          sectionBG,
-          { duration: 1, backgroundColor: colorCombos[i][0], ease: 'power4.inOut' },
-          '<'
-        );
-        st.to(inContent, { color: colorCombos[i][1] }, '<');
-        st.to(inBoltPath, { fill: colorCombos[i][1] }, '<');
-        st.to([inButton, inSpan], { backgroundColor: colorCombos[i][1] }, '<');
-        st.to(inButton, { color: colorCombos[i][2] }, '<');
-      }
-      st.to(
-        kBase,
-        {
-          duration: 1,
-          morphSVG: { shape: inGraphicKPoints, type: 'rotational' },
-          ease: 'power4.inOut',
-        },
-        '<'
-      );
-      st.to(
-        hBase,
-        {
-          duration: 1,
-          morphSVG: { shape: inGraphicHPoints, type: 'rotational' },
-          ease: 'power4.inOut',
-        },
-        '<'
-      );
+      st.from(inButton, { duration: 1, y: '100%', opacity: 0, ease: 'power4.inOut' }, '<');
+      // st.from(inSeperator, { duration: 1, height: '0%', ease: 'power4.inOut' }, '<');
+      // st.from(
+      //   inInfo,
+      //   { duration: 1, y: '2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
+      //   '<'
+      // );
+      // if (colorMode === 'true') {
+      //   st.to(inSeperator, { backgroundColor: colorCombos[i][1], ease: 'power4.inOut' }, '<');
+      //   st.to(
+      //     sectionBG,
+      //     { duration: 1, backgroundColor: colorCombos[i][0], ease: 'power4.inOut' },
+      //     '<'
+      //   );
+      //   st.to(inContent, { color: colorCombos[i][1] }, '<');
+      //   st.to(inBoltPath, { fill: colorCombos[i][1] }, '<');
+      //   st.to([inButton, inSpan], { backgroundColor: colorCombos[i][1] }, '<');
+      //   st.to(inButton, { color: colorCombos[i][2] }, '<');
+      // }
+      // st.to(
+      //   kBase,
+      //   {
+      //     duration: 1,
+      //     morphSVG: { shape: inGraphicKPoints, type: 'rotational' },
+      //     ease: 'power4.inOut',
+      //   },
+      //   '<'
+      // );
+      // st.to(
+      //   hBase,
+      //   {
+      //     duration: 1,
+      //     morphSVG: { shape: inGraphicHPoints, type: 'rotational' },
+      //     ease: 'power4.inOut',
+      //   },
+      //   '<'
+      // );
 
-      st.to(outSection, { duration: 0, display: 'none' }, '<0.2');
-      st.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
+      // st.to(outSection, { duration: 0, display: 'none' }, '<0.2');
+      // st.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
     }
   }, 500);
 
-  function setup() {
+  // HELPERS
+  // -------
+  function setupMarkers() {
     const sWrapper = document.querySelector('.services_wrapper') as HTMLElement;
     const sItems = [...document.querySelectorAll('.services_item')];
     const markerWrapper = document.querySelector('.services_scroll-spacers') as HTMLElement;
@@ -260,6 +294,21 @@ export const servicesScrollEffect = () => {
       // newMarker.classList.add('mbm-ex');
     }
   }
+
+  function setupSections() {
+    const sItems = [...document.querySelectorAll('.services_item')];
+
+    for (let i = 1; i < sItems.length; i++) {
+      const temp = sItems[i] as HTMLElement;
+      const inHeader = splitHeaders[i];
+
+      gsap.set(temp, { opacity: 0 });
+      // gsap.set(inHeader.lines, { y: '100%', opacity: 0 });
+
+      // console.log(temp, inHeader);
+    }
+  }
+
   function generateSplitText() {
     const headerParent = [...document.querySelectorAll('.services-info_wrap')];
 
@@ -334,6 +383,162 @@ export const servicesScrollEffect = () => {
       });
     }
   }
+
+  function scrollProgress() {
+    const sMarkers = [...document.querySelectorAll('.services_scroll-spacer')].filter((e) => {
+      if (!e.classList.contains('hide')) {
+        return e;
+      }
+    });
+    const sSpans = [...document.querySelectorAll('.services-info_span-abs')];
+
+    for (let i = 0; i < sMarkers.length; i++) {
+      const temp = sMarkers[i] as HTMLElement;
+      const moveSpan = sSpans[i];
+
+      // const st = gsap.timeline({
+      //   scrollTrigger: {
+      //     trigger: temp,
+      //     start: 'bottom bottom',
+      //     end: 'bottom 20%',
+      //     scrub: 1,
+      //     // markers: true,
+      //   },
+      // });
+      // st.to(moveSpan, { y: '0%' });
+    }
+  }
+
+  function animateIn(inSection: HTMLElement) {
+    const inContent = inSection.querySelector('.services_info-main') as HTMLElement;
+    // const inHeader = splitHeaders[i];
+
+    const inSpan = inContent.querySelector('.span');
+    // const inOverview = splitOvers[i];
+    // const inOverParent = parentOvers[i];
+    const inButton = inContent.querySelector('a');
+    const inInfoParent = inContent.querySelector('.services_info-grid');
+    const inInfo = [...inContent.querySelectorAll('li')];
+    // const inSeperator = inContent.querySelector('.span.is-vertical');
+    const inBolt = inContent.querySelector('.services-info_float-image') as HTMLElement;
+    const inBoltPath = inBolt.querySelector('path');
+    // const inGraphicKPoints = kPoints[i];
+    // const inGraphicHPoints = hPoints[i];
+
+    const tl = gsap.timeline({ paused: true });
+    tl.to(inSection, { opacity: 1 });
+    // tl.to(inSection, { duration: 0, display: 'flex' }, '<');
+    // tl.to(inHeader.lines, {
+    //   duration: 1,
+    //   y: '0%',
+    //   // rotateZ: '5deg',
+    //   opacity: 1,
+    //   stagger: 0.1,
+    //   ease: 'power4.inOut',
+    // });
+    // tl.from(inSpan, { duration: 1, width: '0%', ease: 'power4.inOut' }, '<');
+    // tl.from(inOverParent, { duration: 1, y: '2rem', ease: 'power2.inOut' }, '<');
+    // tl.from(inOverview.lines, { duration: 1, y: '100%', stagger: 0.1, ease: 'power2.inOut' }, '<');
+    // tl.from(inButton, { duration: 1, y: '2rem', opacity: 0, ease: 'power2.inOut' }, '<');
+    // // tl.from(inSeperator, { duration: 1, height: '0%', ease: 'power4.inOut' }, '<');
+    // tl.from(
+    //   inInfo,
+    //   { duration: 1, y: '2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
+    //   '<'
+    // );
+    // if (colorMode === 'true') {
+    //   // tl.to(inSeperator, { backgroundColor: colorCombos[i][1], ease: 'power4.inOut' }, '<');
+    //   tl.to(
+    //     sectionBG,
+    //     { duration: 1, backgroundColor: colorCombos[i][0], ease: 'power4.inOut' },
+    //     '<'
+    //   );
+    //   tl.to(inContent, { color: colorCombos[i][1] }, '<');
+    //   tl.to(inBoltPath, { fill: colorCombos[i][1] }, '<');
+    //   tl.to([inButton, inSpan], { backgroundColor: colorCombos[i][1] }, '<');
+    //   tl.to(inButton, { color: colorCombos[i][2] }, '<');
+    // }
+    // tl.to(
+    //   kBase,
+    //   {
+    //     duration: 1,
+    //     morphSVG: { shape: inGraphicKPoints, type: 'rotational' },
+    //     ease: 'power4.inOut',
+    //   },
+    //   '<'
+    // );
+    // tl.to(
+    //   hBase,
+    //   {
+    //     duration: 1,
+    //     morphSVG: { shape: inGraphicHPoints, type: 'rotational' },
+    //     ease: 'power4.inOut',
+    //   },
+    //   '<'
+    // );
+
+    // st.to(outSection, { duration: 0, display: 'none' }, '<0.2');
+    // tl.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
+
+    return tl;
+  }
+
+  function animateOut(outSection: HTMLElement) {
+    const outContent = outSection.querySelector('.services_info-main') as HTMLElement;
+    // const outHeader = splitHeaders[i - 1];
+    const outSpan = outContent.querySelector('.span');
+    // const outOverview = splitOvers[i - 1];
+    // const outOverParent = parentOvers[i - 1];
+    const outButton = outContent.querySelector('a');
+    const outInfoParent = outContent.querySelector('.services_info-grid');
+    const outInfo = [...outContent.querySelectorAll('li')];
+    // const outSeperator = outContent.querySelector('.span.is-vertical');
+
+    const tl = gsap.timeline({ paused: true });
+    tl.to(outSection, { opacity: 0 });
+
+    // tl.to(outHeader.lines, {
+    //   duration: 1,
+    //   y: '-100%',
+    //   rotateZ: '-5deg',
+    //   opacity: 0,
+    //   stagger: 0.1,
+    //   ease: 'power4.inOut',
+    // });
+    // tl.to(outSpan, { duration: 1, width: '0%', ease: 'power4.inOut' }, '<');
+    // tl.to(outOverParent, { duration: 1, y: '-2rem', ease: 'power2.inOut' }, '<');
+    // tl.to(outOverview.lines, { duration: 1, y: '-100%', stagger: 0.1, ease: 'power2.inOut' }, '<');
+    // tl.to(outButton, { duration: 1, y: '-2rem', opacity: 0, ease: 'power2.inOut' }, '<');
+    // tl.to(
+    //   outSeperator,
+    //   { duration: 1, height: '0%', backgroundColor: colorCombos[i - 1][1], ease: 'power4.inOut' },
+    //   '<'
+    // );
+    // tl.to(
+    //   outInfo,
+    //   { duration: 1, y: '-2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
+    //   '<'
+    // );
+    // if (colorMode === 'true') {
+    //   tl.to(
+    //     sectionBG,
+    //     { duration: 1, backgroundColor: colorCombos[i - 1][0], ease: 'power4.inOut' },
+    //     '<'
+    //   );
+    //   tl.to(outContent, { color: colorCombos[i - 1][1], ease: 'power4.inOut' }, '<');
+    // }
+    // tl.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
+
+    return tl;
+  }
+
+  function animateCombined(inSection: HTMLElement, outSection: HTMLElement) {
+    const tl = gsap.timeline({ paused: true });
+    tl.to(outSection, { opacity: 0 });
+    tl.to(inSection, { opacity: 1 }, '<0.4');
+
+    return tl;
+  }
 };
 
 // Scroll To Section
@@ -356,10 +561,10 @@ export const scrollToServices = () => {
   for (let i = 0; i < serviceLinks.length; i++) {
     const tempLink = serviceLinks[i] as HTMLElement;
     const matchTag = tempLink.children[0].innerHTML.split(' ')[0];
-    tempLink.addEventListener('click', (e) => {
+    tempLink.addEventListener('click', () => {
       gsap.to(window, {
-        duration: 2,
-        scrollTo: { y: '#' + matchTag, offsetY: 50 },
+        duration: 0.2,
+        scrollTo: { y: '#' + matchTag },
         ease: 'power4.out',
       });
     });

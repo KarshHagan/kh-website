@@ -23,7 +23,7 @@ export const setDeepLinks = () => {
         const tempTitle = tempLink.children[0] as HTMLElement;
         setText = tempTitle.innerHTML as string;
       } else if (linkType === 'services-work') {
-        const tempParent = tempLink.parentNode as HTMLElement;
+        const tempParent = tempLink.parentNode?.parentNode as HTMLElement;
         const tempTitle = tempParent.querySelector('h2') as HTMLElement;
         setText = tempTitle.innerHTML;
       }
