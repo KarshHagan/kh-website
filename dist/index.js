@@ -12832,6 +12832,7 @@
   gsapWithCSS.registerPlugin(MorphSVGPlugin);
   var services = [...document.querySelectorAll(".home-services_item")];
   var servicesImages = [...document.querySelectorAll(".home-services_image")];
+  var docStyle = getComputedStyle(document.documentElement);
   var initAccordian = () => {
     for (let i2 = 0; i2 < services.length; i2++) {
       const temp = services[i2];
@@ -12850,11 +12851,6 @@
   var accordianList = () => {
     initAccordian();
     accordianImageHover();
-    const serviceNumbers = [...document.querySelectorAll(".home-services_number")];
-    for (let i2 = 0; i2 < serviceNumbers.length; i2++) {
-      const temp = serviceNumbers[i2];
-      temp.innerHTML = "0" + (i2 + 1);
-    }
     const services3 = [...document.querySelectorAll(".home-services_item")];
     for (let i2 = 0; i2 < services3.length; i2++) {
       let isOpen = false;
@@ -12883,12 +12879,23 @@
           gsapWithCSS.to(kBase, { morphSVG: { shape: toKPoints, type: "rotational" }, ease: "Power4.out" });
           gsapWithCSS.to(hBase, { morphSVG: { shape: toHPoints, type: "rotational" }, ease: "Power4.out" });
         });
+        temp.addEventListener("touchstart", (e2) => {
+          const ele = e2.target;
+          const eleId = Number(ele.dataset.test);
+          const toKPoints = kPoints[eleId];
+          const toHPoints = hPoints[eleId];
+          gsapWithCSS.to(kBase, { morphSVG: { shape: toKPoints, type: "rotational" }, ease: "Power4.out" });
+          gsapWithCSS.to(hBase, { morphSVG: { shape: toHPoints, type: "rotational" }, ease: "Power4.out" });
+        });
       }, 500);
     }
   };
   var accordianOpen = (element) => {
+    console.log("HERE", element);
     const hiddenContent = element.children[1];
     const buttonWrap = element.children[2];
+    const sectionCarrot = element.querySelector(".home-services_carrot-icon");
+    console.log(hiddenContent, buttonWrap);
     const animation = gsapWithCSS.timeline();
     animation.set([hiddenContent, buttonWrap], { display: "flex", opacity: 0 });
     animation.to([hiddenContent, buttonWrap], {
@@ -12897,10 +12904,21 @@
       opacity: 1,
       ease: "power4.out"
     });
+    animation.to(
+      sectionCarrot,
+      {
+        duration: 1,
+        rotate: 60,
+        backgroundColor: docStyle.getPropertyValue("--brand-green"),
+        ease: "power4.out"
+      },
+      "<"
+    );
   };
   var accordianClose = (element) => {
     const hiddenContent = element.children[1];
     const buttonWrap = element.children[2];
+    const sectionCarrot = element.querySelector(".home-services_carrot-icon");
     const animation = gsapWithCSS.timeline();
     animation.to([hiddenContent, buttonWrap], {
       duration: 1,
@@ -12908,15 +12926,28 @@
       opacity: 0,
       ease: "power4.out"
     });
+    animation.to(
+      sectionCarrot,
+      {
+        duration: 1,
+        rotate: 0,
+        backgroundColor: docStyle.getPropertyValue("--brand-red"),
+        ease: "power4.out"
+      },
+      "<"
+    );
     animation.set([hiddenContent, buttonWrap], { display: "none" });
   };
   var accordianImageHover = () => {
-    const scale = 0.05;
-    const servicesContainer = document.querySelector(".section_home-services");
-    const serviceImageMask = document.querySelector(".home-services_sticky-wrap");
-    servicesContainer.addEventListener("mousemove", (e2) => {
-      gsapWithCSS.to(serviceImageMask, { x: e2.clientX * scale, y: e2.clientY * scale });
-    });
+    const device12 = getDeviceType();
+    if (device12 === "desktop") {
+      const scale = 0.05;
+      const servicesContainer = document.querySelector(".section_home-services");
+      const serviceImageMask = document.querySelector(".home-services_sticky-wrap");
+      servicesContainer.addEventListener("mousemove", (e2) => {
+        gsapWithCSS.to(serviceImageMask, { x: e2.clientX * 0.02, y: e2.clientY * scale, ease: "power4.out" });
+      });
+    }
   };
 
   // src/motion/featuredWorkMotion.ts
@@ -13664,39 +13695,49 @@
   var device10 = getDeviceType();
   var servicesScrollEffect = () => {
     const sectionBG = document.querySelector(".section_services");
-    const docStyle = getComputedStyle(document.documentElement);
+    const docStyle2 = getComputedStyle(document.documentElement);
     let colorMode = "false";
     const colorPalette = [
-      docStyle.getPropertyValue("--brand-red"),
-      docStyle.getPropertyValue("--dark-orange"),
-      docStyle.getPropertyValue("--orange"),
-      docStyle.getPropertyValue("--brand-blue"),
-      docStyle.getPropertyValue("--brand-green"),
-      docStyle.getPropertyValue("--dark-blue"),
-      docStyle.getPropertyValue("--dark-green")
+      docStyle2.getPropertyValue("--brand-red"),
+      docStyle2.getPropertyValue("--dark-orange"),
+      docStyle2.getPropertyValue("--orange"),
+      docStyle2.getPropertyValue("--brand-blue"),
+      docStyle2.getPropertyValue("--brand-green"),
+      docStyle2.getPropertyValue("--dark-blue"),
+      docStyle2.getPropertyValue("--dark-green")
     ];
     const colorCombos = [
       [
-        docStyle.getPropertyValue("--paper-light"),
-        docStyle.getPropertyValue("--brand-red"),
-        docStyle.getPropertyValue("--paper-light")
+        docStyle2.getPropertyValue("--paper-light"),
+        docStyle2.getPropertyValue("--brand-red"),
+        docStyle2.getPropertyValue("--paper-light")
       ],
       [
-        docStyle.getPropertyValue("--brand-red"),
-        docStyle.getPropertyValue("--paper-light"),
-        docStyle.getPropertyValue("--dark")
+        docStyle2.getPropertyValue("--brand-red"),
+        docStyle2.getPropertyValue("--paper-light"),
+        docStyle2.getPropertyValue("--dark")
       ],
       [
-        docStyle.getPropertyValue("--orange"),
-        docStyle.getPropertyValue("--paper-light"),
-        docStyle.getPropertyValue("--dark")
+        docStyle2.getPropertyValue("--orange"),
+        docStyle2.getPropertyValue("--paper-light"),
+        docStyle2.getPropertyValue("--dark")
       ],
       [
-        docStyle.getPropertyValue("--brand-green"),
-        docStyle.getPropertyValue("--paper-light"),
-        docStyle.getPropertyValue("--dark")
+        docStyle2.getPropertyValue("--brand-green"),
+        docStyle2.getPropertyValue("--paper-light"),
+        docStyle2.getPropertyValue("--dark")
       ]
     ];
+    if (device10 === "mobile") {
+      if (window.innerWidth > window.innerHeight) {
+        const servicesWrapper = document.querySelector(".services_wrapper");
+        const sectionHeaders = [...servicesWrapper.querySelectorAll("h2")];
+        for (const i2 in sectionHeaders) {
+          const temp = sectionHeaders[i2];
+          temp.style.fontSize = "4rem";
+        }
+      }
+    }
     const splitMain = generateSplitText();
     const splitItems = splitMain[0];
     const splitHeaders = splitItems[0];
@@ -13706,31 +13747,13 @@
     if (device10 === "desktop") {
       infoHover();
     }
-    if (device10 === "mobile") {
-      const sectionInfo = [...document.querySelectorAll(".services_info-cursor-wrap")];
-      for (const i2 in sectionInfo) {
-        const temp = sectionInfo[i2];
-        temp.style.display = "none";
-      }
-      if (window.innerWidth > 479) {
-        const graphicWrap = document.querySelector(".services_graphic-wrap");
-        graphicWrap.style.justifyContent = "flex-end";
-        graphicWrap.style.alignItems = "flex-end";
-      }
-    }
     setTimeout(() => {
       scrollProgress();
-      const svgData = getSVGPathData();
-      const kBase = svgData[0];
-      const kPoints = svgData[1];
-      const hBase = svgData[2];
-      const hPoints = svgData[3];
+      scrollSVG();
       const sItems = [...document.querySelectorAll(".services_item")];
-      const sMarkers = [...document.querySelectorAll(".services_scroll-spacer")].filter((e2) => {
-        if (!e2.classList.contains("hide")) {
-          return e2;
-        }
-      });
+      const sMarkers = [...document.querySelectorAll(".services_scroll-spacer")].filter(
+        (e2) => !e2.classList.contains("hide")
+      );
       for (let i2 = 1; i2 < sMarkers.length; i2++) {
         const curMarker = sMarkers[i2];
         const outSection = sItems[i2 - 1];
@@ -13738,32 +13761,25 @@
         const outHeader = splitHeaders[i2 - 1];
         const outSpan = outContent.querySelector(".span");
         const outOverview = splitOvers[i2 - 1];
-        const outOverParent = parentOvers[i2 - 1];
         const outButton = outContent.querySelector("a");
+        const outInfoParent = outContent.querySelector(".services_info-grid");
         const outInfo = [...outContent.querySelectorAll("li")];
         const inSection = sItems[i2];
         const inContent = inSection.querySelector(".services_info-main");
         const inHeader = splitHeaders[i2];
         const inSpan = inContent.querySelector(".span");
         const inOverview = splitOvers[i2];
-        const inOverParent = parentOvers[i2];
         const inButton = inContent.querySelector("a");
+        const inInfoParent = inContent.querySelector(".services_info-grid");
         const inInfo = [...inContent.querySelectorAll("li")];
         const st = gsapWithCSS.timeline({
           scrollTrigger: {
             trigger: curMarker,
             start: "top 20%",
-            end: "+=100%",
-            markers: true,
+            end: "top bottom",
             toggleActions: "play complete none reverse",
-            preventOverlaps: true,
-            onLeave: () => {
-              console.log("left", i2 - 1);
-              st.set(inSection, { opacity: 0 });
-            }
-          },
-          onComplete: () => {
-            console.log("Complete");
+            markers: true,
+            preventOverlaps: true
           }
         });
         st.to(outHeader.lines, {
@@ -13783,6 +13799,13 @@
           "<"
         );
         st.to(outButton, { duration: 1, y: "-100%", opacity: 0, ease: "power4.inOut" }, "<");
+        st.to(
+          outInfo,
+          { duration: 1, y: "-2rem", opacity: 0, stagger: 0.1, ease: "power4.inOut" },
+          "<"
+        );
+        st.to(outInfoParent, { duration: 1, opacity: 0, ease: "power4.inOut" }, "<0.2");
+        st.to(inSection, { duration: 0, display: "flex" }, "<");
         st.from(
           inHeader.lines,
           {
@@ -13804,6 +13827,13 @@
           "<"
         );
         st.from(inButton, { duration: 1, y: "100%", opacity: 0, ease: "power4.inOut" }, "<");
+        st.from(
+          inInfo,
+          { duration: 1, y: "2rem", opacity: 0, stagger: 0.1, ease: "power4.inOut" },
+          "<"
+        );
+        st.from(inInfoParent, { duration: 1, opacity: 0, ease: "power4.inOut" }, "<0.2");
+        st.set(outSection, { display: "none" });
       }
     }, 500);
     function setupMarkers() {
@@ -13821,13 +13851,21 @@
         newMarker.classList.remove("hide");
         markerWrapper.appendChild(newMarker);
       }
-    }
-    function setupSections() {
-      const sItems = [...document.querySelectorAll(".services_item")];
-      for (let i2 = 1; i2 < sItems.length; i2++) {
-        const temp = sItems[i2];
-        const inHeader = splitHeaders[i2];
-        gsapWithCSS.set(temp, { opacity: 0 });
+      if (device10 === "mobile") {
+        const servicesWrapper = document.querySelector(".services_wrapper");
+        const graphicWrap = document.querySelector(".services_graphic-wrap");
+        const sectionInfo = [...document.querySelectorAll(".services_info-cursor-wrap")];
+        if (window.innerWidth > window.innerHeight) {
+          servicesWrapper.style.height = "100vh";
+          graphicWrap.style.position = "absolute";
+          graphicWrap.style.bottom = "1rem";
+          graphicWrap.style.justifyContent = "flex-end";
+          graphicWrap.style.alignItems = "flex-end";
+          for (const i2 in sectionInfo) {
+            const temp = sectionInfo[i2];
+            temp.style.display = "none";
+          }
+        }
       }
     }
     function generateSplitText() {
@@ -13842,7 +13880,7 @@
         gsapWithCSS.set(tempHeader, { perspective: 100 });
         const gSplit = new SplitText(tempHeader, { linesClass: "lineChild" });
         const gSplitParent = new SplitText(tempHeader, {
-          type: "lines, words",
+          type: "lines",
           linesClass: "split-text_parent"
         });
         const oSplit = new SplitText(tempOver, { linesClass: "lineChild" });
@@ -13896,45 +13934,90 @@
         });
       }
     }
-    function scrollProgress() {
-      const sMarkers = [...document.querySelectorAll(".services_scroll-spacer")].filter((e2) => {
-        if (!e2.classList.contains("hide")) {
-          return e2;
+    function scrollSVG() {
+      const svgData = getSVGPathData();
+      const kBase = svgData[0];
+      const kPoints = svgData[1];
+      const hBase = svgData[2];
+      const hPoints = svgData[3];
+      const sMarkers = [...document.querySelectorAll(".services_scroll-spacer")].filter(
+        (e2) => !e2.classList.contains("hide")
+      );
+      sMarkers.forEach((marker, i2) => {
+        const isFirst = i2 === 0;
+        if (!isFirst) {
+          const inGraphicKPoints = kPoints[i2];
+          const inGraphicHPoints = hPoints[i2];
+          const st = gsapWithCSS.timeline({
+            scrollTrigger: {
+              trigger: marker,
+              start: "top 20%",
+              end: "top 20%",
+              // markers: true,
+              toggleActions: "play none none reverse",
+              preventOverlaps: true
+            }
+          });
+          st.to(kBase, {
+            duration: 1,
+            morphSVG: { shape: inGraphicKPoints, type: "rotational" },
+            ease: "power4.inOut"
+          });
+          st.to(
+            hBase,
+            {
+              duration: 1,
+              morphSVG: { shape: inGraphicHPoints, type: "rotational" },
+              ease: "power4.inOut"
+            },
+            "<"
+          );
         }
       });
-      const sSpans = [...document.querySelectorAll(".services-info_span-abs")];
-      for (let i2 = 0; i2 < sMarkers.length; i2++) {
-        const temp = sMarkers[i2];
-        const moveSpan = sSpans[i2];
-      }
     }
-    function animateIn(inSection) {
-      const inContent = inSection.querySelector(".services_info-main");
-      const inSpan = inContent.querySelector(".span");
-      const inButton = inContent.querySelector("a");
-      const inInfoParent = inContent.querySelector(".services_info-grid");
-      const inInfo = [...inContent.querySelectorAll("li")];
-      const inBolt = inContent.querySelector(".services-info_float-image");
-      const inBoltPath = inBolt.querySelector("path");
-      const tl = gsapWithCSS.timeline({ paused: true });
-      tl.to(inSection, { opacity: 1 });
-      return tl;
-    }
-    function animateOut(outSection) {
-      const outContent = outSection.querySelector(".services_info-main");
-      const outSpan = outContent.querySelector(".span");
-      const outButton = outContent.querySelector("a");
-      const outInfoParent = outContent.querySelector(".services_info-grid");
-      const outInfo = [...outContent.querySelectorAll("li")];
-      const tl = gsapWithCSS.timeline({ paused: true });
-      tl.to(outSection, { opacity: 0 });
-      return tl;
-    }
-    function animateCombined(inSection, outSection) {
-      const tl = gsapWithCSS.timeline({ paused: true });
-      tl.to(outSection, { opacity: 0 });
-      tl.to(inSection, { opacity: 1 }, "<0.4");
-      return tl;
+    function scrollProgress() {
+      const sMarkers = [...document.querySelectorAll(".services_scroll-spacer")].filter(
+        (e2) => !e2.classList.contains("hide")
+      );
+      const sSpans = [...document.querySelectorAll(".services-info_span-wrap")];
+      sSpans.forEach((span, i2) => {
+        const isFirst = i2 === 0;
+        if (!isFirst) {
+          gsapWithCSS.set(span, { opacity: 0 });
+        }
+      });
+      sMarkers.forEach((marker, i2) => {
+        const isLast = i2 === sMarkers.length - 1;
+        const st = gsapWithCSS.timeline({
+          scrollTrigger: {
+            trigger: marker,
+            start: "bottom bottom",
+            end: "bottom 20%",
+            scrub: 1,
+            // markers: true,
+            onLeave: () => {
+              if (!isLast) {
+                const tl = gsapWithCSS.timeline();
+                tl.to(sSpans[i2].children[0], {
+                  delay: 0.2,
+                  duration: 1,
+                  y: st.progress() + 100 + "%"
+                });
+                tl.to(sSpans[i2], { duration: 0.2, opacity: 0 });
+                tl.to(sSpans[i2 + 1], { duration: 0.2, opacity: 1 }, "<");
+              }
+            },
+            onEnterBack: () => {
+              if (!isLast) {
+                const tl = gsapWithCSS.timeline();
+                tl.to(sSpans[i2], { duration: 0.2, opacity: 1 });
+                tl.to(sSpans[i2 + 1], { duration: 0.2, opacity: 0 }, "<");
+              }
+            }
+          }
+        });
+        st.to(sSpans[i2].children[0], { y: st.progress() + "%", ease: "linear" });
+      });
     }
   };
   var scrollToServices = () => {
