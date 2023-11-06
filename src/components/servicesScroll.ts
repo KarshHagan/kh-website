@@ -67,138 +67,113 @@ export const servicesScrollEffect = () => {
   const splitItems = splitMain[0];
   const splitHeaders = splitItems[0] as SplitText[];
   const splitOvers = splitItems[1] as SplitText[];
-  const parentOvers = splitMain[1] as HTMLElement[];
 
   // Initializers
   setupMarkers();
-  // setupSections();
   if (device === 'desktop') {
     infoHover();
   }
 
-  // SVG Morph
+  // MAIN
   setTimeout(() => {
     scrollProgress();
     scrollSVG();
 
-    // Service Scroll Main
     const sItems = [...document.querySelectorAll('.services_item')];
     const sMarkers = [...document.querySelectorAll('.services_scroll-spacer')].filter(
       (e) => !e.classList.contains('hide')
     );
 
-    //skip first loop
-    for (let i = 1; i < sMarkers.length; i++) {
-      const curMarker = sMarkers[i] as HTMLElement;
+    sMarkers.forEach((marker, i) => {
+      const isFirst = i === 0,
+        isLast = i === sMarkers.length - 1;
 
-      // OUT SECTION
-      const outSection = sItems[i - 1] as HTMLElement;
-      const outContent = outSection.querySelector('.services_info-main') as HTMLElement;
-      const outHeader = splitHeaders[i - 1];
-      const outSpan = outContent.querySelector('.span');
-      const outOverview = splitOvers[i - 1];
-      const outButton = outContent.querySelector('a');
-      const outInfoParent = outContent.querySelector('.services_info-grid');
-      const outInfo = [...outContent.querySelectorAll('li')];
-      // // IN SECTION
-      const inSection = sItems[i] as HTMLElement;
-      const inContent = inSection.querySelector('.services_info-main') as HTMLElement;
-      const inHeader = splitHeaders[i];
-      const inSpan = inContent.querySelector('.span');
-      const inOverview = splitOvers[i];
-      const inButton = inContent.querySelector('a');
-      const inInfoParent = inContent.querySelector('.services_info-grid');
-      const inInfo = [...inContent.querySelectorAll('li')];
-      // const inBolt = inContent.querySelector('.services-info_float-image') as HTMLElement;
-      // const inBoltPath = inBolt.querySelector('path');
+      gsap.set(sItems.slice(1), { opacity: 0, pointerEvents: 'none' });
+      if (!isFirst) {
+        const st = gsap.timeline({
+          scrollTrigger: {
+            trigger: marker,
+            start: 'top 20%',
+            end: '+=100%',
+            // markers: true,
+            toggleActions: 'play complete none reverse',
+            preventOverlaps: true,
+          },
+        });
 
-      const st = gsap.timeline({
-        scrollTrigger: {
-          trigger: curMarker,
-          start: 'top 20%',
-          end: 'top bottom',
-          toggleActions: 'play complete none reverse',
-          markers: true,
-          preventOverlaps: true,
-        },
-      });
+        const outSection = sItems[i - 1] as HTMLElement;
+        const outHeader = splitHeaders[i - 1];
+        const outSpan = outSection.querySelector('.span');
+        const outOverview = splitOvers[i - 1];
+        const outButton = outSection.querySelector('a');
+        const outInfoParent = outSection.querySelector('.services_info-grid');
+        const outInfo = [...outSection.querySelectorAll('li')];
 
-      // OUT ANIMATION
-      st.to(outHeader.lines, {
-        duration: 1,
-        y: '-100%',
-        skewX: '15deg',
-        skewY: '-4deg',
-        perspective: 400,
-        opacity: 0,
-        stagger: 0.1,
-        ease: 'power4.inOut',
-      });
-      st.to(outSpan, { duration: 1, x: '100%', ease: 'power4.inOut' }, '<');
-      st.to(
-        outOverview.lines,
-        { duration: 1, y: '-100%', stagger: 0.1, ease: 'power4.inOut' },
-        '<'
-      );
-      st.to(outButton, { duration: 1, y: '-100%', opacity: 0, ease: 'power4.inOut' }, '<');
-      st.to(
-        outInfo,
-        { duration: 1, y: '-2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
-        '<'
-      );
-      // if (colorMode === 'true') {
-      //   st.to(
-      //     sectionBG,
-      //     { duration: 1, backgroundColor: colorCombos[i - 1][0], ease: 'power4.inOut' },
-      //     '<'
-      //   );
-      //   st.to(outContent, { color: colorCombos[i - 1][1], ease: 'power4.inOut' }, '<');
-      // }
-      st.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
+        const inSection = sItems[i] as HTMLElement;
+        const inHeader = splitHeaders[i];
+        const inSpan = inSection.querySelector('.span');
+        const inOverview = splitOvers[i];
+        const inButton = inSection.querySelector('a');
+        const inInfoParent = inSection.querySelector('.services_info-grid');
+        const inInfo = [...inSection.querySelectorAll('li')];
 
-      // IN ANIMATION
-      st.to(inSection, { duration: 0, display: 'flex' }, '<');
-      st.from(
-        inHeader.lines,
-        {
+        // OUT
+        st.to(outHeader.lines, {
           duration: 1,
-          y: '100%',
-          skewX: '-15deg',
-          skewY: '4deg',
+          y: '-100%',
+          skewX: '15deg',
+          skewY: '-4deg',
           perspective: 400,
           opacity: 0,
           stagger: 0.1,
           ease: 'power4.inOut',
-        },
-        '<0.6'
-      );
-      st.from(inSpan, { duration: 1, x: '-100%', ease: 'power4.inOut' }, '<');
-      st.from(
-        inOverview.lines,
-        { duration: 1, y: '100%', stagger: 0.1, ease: 'power4.inOut' },
-        '<'
-      );
-      st.from(inButton, { duration: 1, y: '100%', opacity: 0, ease: 'power4.inOut' }, '<');
-      st.from(
-        inInfo,
-        { duration: 1, y: '2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
-        '<'
-      );
-      // if (colorMode === 'true') {
-      //   st.to(inSeperator, { backgroundColor: colorCombos[i][1], ease: 'power4.inOut' }, '<');
-      //   st.to(
-      //     sectionBG,
-      //     { duration: 1, backgroundColor: colorCombos[i][0], ease: 'power4.inOut' },
-      //     '<'
-      //   );
-      //   st.to(inContent, { color: colorCombos[i][1] }, '<');
-      //   st.to(inBoltPath, { fill: colorCombos[i][1] }, '<');
-      //   st.to([inButton, inSpan], { backgroundColor: colorCombos[i][1] }, '<');
-      //   st.to(inButton, { color: colorCombos[i][2] }, '<');
-      // }
-      st.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
-      st.set(outSection, { display: 'none' });
-    }
+        });
+        st.to(outSpan, { duration: 1, x: '100%', ease: 'power4.inOut' }, '<');
+        st.to(
+          outOverview.lines,
+          { duration: 1, y: '-100%', stagger: 0.1, ease: 'power4.inOut' },
+          '<'
+        );
+        st.to(outButton, { duration: 1, y: '-100%', opacity: 0, ease: 'power4.inOut' }, '<');
+        st.to(
+          outInfo,
+          { duration: 1, y: '-2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
+          '<'
+        );
+        st.to(outInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<0.2');
+        st.to(outSection, { pointerEvents: 'none' }, '<0.6');
+
+        // IN
+        st.to(inSection, { opacity: 1, pointerEvents: 'auto' }, '<');
+        st.from(
+          inHeader.lines,
+          {
+            duration: 1,
+            y: '100%',
+            skewX: '-15deg',
+            skewY: '4deg',
+            perspective: 400,
+            opacity: 0,
+            stagger: 0.1,
+            ease: 'power4.inOut',
+          },
+          '<'
+        );
+        st.from(inSpan, { duration: 1, x: '-100%', ease: 'power4.inOut' }, '<');
+        st.from(
+          inOverview.lines,
+          { duration: 1, y: '100%', stagger: 0.1, ease: 'power4.inOut' },
+          '<'
+        );
+        st.from(inButton, { duration: 1, y: '100%', opacity: 0, ease: 'power4.inOut' }, '<');
+        st.from(
+          inInfo,
+          { duration: 1, y: '2rem', opacity: 0, stagger: 0.1, ease: 'power4.inOut' },
+          '<'
+        );
+        st.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<');
+      }
+    });
   }, 500);
 
   // HELPERS
@@ -345,7 +320,7 @@ export const servicesScrollEffect = () => {
           scrollTrigger: {
             trigger: marker,
             start: 'top 20%',
-            end: 'top 20%',
+            end: '+=100%',
             // markers: true,
             toggleActions: 'play none none reverse',
             preventOverlaps: true,
@@ -375,41 +350,20 @@ export const servicesScrollEffect = () => {
     );
     const sSpans = [...document.querySelectorAll('.services-info_span-wrap')];
 
-    sSpans.forEach((span, i) => {
-      const isFirst = i === 0;
-
-      if (!isFirst) {
-        gsap.set(span, { opacity: 0 });
-      }
-    });
-
     sMarkers.forEach((marker, i) => {
-      const isLast = i === sMarkers.length - 1;
+      const isFirst = i === 0,
+        isLast = i === sMarkers.length - 1;
 
       const st = gsap.timeline({
         scrollTrigger: {
           trigger: marker,
-          start: 'bottom bottom',
-          end: 'bottom 20%',
+          start: 'top 20%',
+          end: '+=100%',
           scrub: 1,
           // markers: true,
           onLeave: () => {
             if (!isLast) {
-              const tl = gsap.timeline();
-              tl.to(sSpans[i].children[0], {
-                delay: 0.2,
-                duration: 1,
-                y: st.progress() + 100 + '%',
-              });
-              tl.to(sSpans[i], { duration: 0.2, opacity: 0 });
-              tl.to(sSpans[i + 1], { duration: 0.2, opacity: 1 }, '<');
-            }
-          },
-          onEnterBack: () => {
-            if (!isLast) {
-              const tl = gsap.timeline();
-              tl.to(sSpans[i], { duration: 0.2, opacity: 1 });
-              tl.to(sSpans[i + 1], { duration: 0.2, opacity: 0 }, '<');
+              gsap.to(sSpans[i].children[0], { y: st.progress() + 100 + '%' });
             }
           },
         },
@@ -442,7 +396,7 @@ export const scrollToServices = () => {
     tempLink.addEventListener('click', () => {
       gsap.to(window, {
         duration: 0.2,
-        scrollTo: { y: '#' + matchTag },
+        scrollTo: { y: '#' + matchTag, offsetY: 50 },
         ease: 'power4.out',
       });
     });
