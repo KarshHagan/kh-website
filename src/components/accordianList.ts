@@ -1,5 +1,7 @@
 // eslint-disable-next-line simple-import-sort/imports
 import { getSVGPathData } from '$components/morphSVG';
+import { hideAll } from '$utils/filterContent';
+import { getDeviceType } from '$utils/getDevice';
 import { gsap } from 'gsap';
 import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin';
 
@@ -9,6 +11,7 @@ gsap.registerPlugin(MorphSVGPlugin);
 // -----------
 const services = [...document.querySelectorAll('.home-services_item')];
 const servicesImages = [...document.querySelectorAll('.home-services_image')];
+const docStyle = getComputedStyle(document.documentElement);
 
 export const initAccordian = () => {
   // Services Items
@@ -37,12 +40,12 @@ export const accordianList = () => {
 
   // Set service number
   // ------------------
-  const serviceNumbers = [...document.querySelectorAll('.home-services_number')];
+  // const serviceNumbers = [...document.querySelectorAll('.home-services_number')];
 
-  for (let i = 0; i < serviceNumbers.length; i++) {
-    const temp = serviceNumbers[i] as HTMLElement;
-    temp.innerHTML = '0' + (i + 1);
-  }
+  // for (let i = 0; i < serviceNumbers.length; i++) {
+  //   const temp = serviceNumbers[i] as HTMLElement;
+  //   temp.innerHTML = '0' + (i + 1);
+  // }
 
   // MAIN
   // ------------
@@ -80,6 +83,15 @@ export const accordianList = () => {
         gsap.to(kBase, { morphSVG: { shape: toKPoints, type: 'rotational' }, ease: 'Power4.out' });
         gsap.to(hBase, { morphSVG: { shape: toHPoints, type: 'rotational' }, ease: 'Power4.out' });
       });
+      temp.addEventListener('touchstart', (e) => {
+        const ele = e.target as HTMLElement;
+        const eleId = Number(ele.dataset.test);
+        const toKPoints = kPoints[eleId];
+        const toHPoints = hPoints[eleId];
+
+        gsap.to(kBase, { morphSVG: { shape: toKPoints, type: 'rotational' }, ease: 'Power4.out' });
+        gsap.to(hBase, { morphSVG: { shape: toHPoints, type: 'rotational' }, ease: 'Power4.out' });
+      });
     }, 500);
   }
 };
@@ -87,8 +99,11 @@ export const accordianList = () => {
 // MOTION
 // ----------------
 export const accordianOpen = (element: HTMLElement) => {
+  console.log('HERE', element);
   const hiddenContent = element.children[1] as HTMLElement;
   const buttonWrap = element.children[2] as HTMLElement;
+  const sectionCarrot = element.querySelector('.home-services_carrot-icon');
+  console.log(hiddenContent, buttonWrap);
   const animation = gsap.timeline();
   animation.set([hiddenContent, buttonWrap], { display: 'flex', opacity: 0 });
   animation.to([hiddenContent, buttonWrap], {
@@ -97,10 +112,21 @@ export const accordianOpen = (element: HTMLElement) => {
     opacity: 1,
     ease: 'power4.out',
   });
+  animation.to(
+    sectionCarrot,
+    {
+      duration: 1,
+      rotate: 60,
+      backgroundColor: docStyle.getPropertyValue('--brand-green'),
+      ease: 'power4.out',
+    },
+    '<'
+  );
 };
 export const accordianClose = (element: HTMLElement) => {
   const hiddenContent = element.children[1] as HTMLElement;
   const buttonWrap = element.children[2] as HTMLElement;
+  const sectionCarrot = element.querySelector('.home-services_carrot-icon');
   const animation = gsap.timeline();
   animation.to([hiddenContent, buttonWrap], {
     duration: 1,
@@ -108,17 +134,31 @@ export const accordianClose = (element: HTMLElement) => {
     opacity: 0,
     ease: 'power4.out',
   });
+  animation.to(
+    sectionCarrot,
+    {
+      duration: 1,
+      rotate: 0,
+      backgroundColor: docStyle.getPropertyValue('--brand-red'),
+      ease: 'power4.out',
+    },
+    '<'
+  );
+
   animation.set([hiddenContent, buttonWrap], { display: 'none' });
 };
 
 // Service Section Hover Effects
 // -----------------------------
 export const accordianImageHover = () => {
-  const scale = 0.05;
-  const servicesContainer = document.querySelector('.section_home-services') as HTMLElement;
-  const serviceImageMask = document.querySelector('.home-services_sticky-wrap');
+  const device = getDeviceType();
+  if (device === 'desktop') {
+    const scale = 0.05;
+    const servicesContainer = document.querySelector('.section_home-services') as HTMLElement;
+    const serviceImageMask = document.querySelector('.home-services_sticky-wrap');
 
-  servicesContainer.addEventListener('mousemove', (e) => {
-    gsap.to(serviceImageMask, { x: e.clientX * scale, y: e.clientY * scale });
-  });
+    servicesContainer.addEventListener('mousemove', (e) => {
+      gsap.to(serviceImageMask, { x: e.clientX * 0.02, y: e.clientY * scale, ease: 'power4.out' });
+    });
+  }
 };
