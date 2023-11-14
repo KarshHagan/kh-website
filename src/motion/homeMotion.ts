@@ -20,19 +20,17 @@ export const heroScroll = () => {
   // ------------
   // Main Scroll
   // ------------
-  const homeHeroSection = document.querySelector('.section_home-hero') as HTMLElement;
-  const maskedComponent = homeHeroSection.querySelector(
-    '.home-hero_masked-component'
-  ) as HTMLElement;
-  const scrolledComponent = homeHeroSection.querySelector('.home-hero_scrolled') as HTMLElement;
-  const heroMainComponent = homeHeroSection.querySelector(
-    '.home-hero_main-component'
-  ) as HTMLElement;
+  const heroParent = document.querySelector('.section_home-hero') as HTMLElement;
+  const maskedComponent = heroParent.querySelector('.home-hero_masked-component') as HTMLElement;
+  const scrolledComponent = heroParent.querySelector('.home-hero_scrolled') as HTMLElement;
+  const scrollSections = [...heroParent.querySelectorAll('.home-hero_sizing-wrap')];
 
+  const heroMainComponent = heroParent.querySelector('.home-hero_main-component');
   const maskElement = maskedComponent.querySelector('.home-hero_bg-mask');
-  const heroImageText = maskedComponent.querySelector('.home-hero_text-track');
-  const heroScrollIcon = scrolledComponent.querySelector('#heroScrollIndicator');
-  const heroBGText = scrolledComponent.querySelector('.bg-text_track');
+  const heroMaskText = maskedComponent.querySelector('.home-hero_text-track');
+  const heroIconWrap = maskedComponent.querySelector('.home-hero_indicator');
+  const heroIcon = maskedComponent.querySelector('.hero-scrolled_indicator-wrap');
+  const heroBgText = scrolledComponent.querySelector('.home-hero_text-track');
 
   let setWidth = '40%';
   let setHeight = '80%';
@@ -50,57 +48,42 @@ export const heroScroll = () => {
     setHeight = '50%';
     setCornerRadius = '2rem 2rem 2rem 2rem';
   }
-  const animation = gsap.timeline({
+
+  gsap.set(heroMainComponent, { zIndex: 2 });
+
+  const stMain = gsap.timeline({
     scrollTrigger: {
-      trigger: maskedComponent,
+      trigger: scrollSections[0],
       start: 'top top',
       end: 'bottom top',
       // markers: true,
       toggleActions: 'play none none reverse',
       scrub: 1,
+      onLeave: () => {
+        gsap.to(heroMaskText, { duration: 1, opacity: 1, ease: 'power4.out' });
+      },
+      onEnterBack: () => {
+        gsap.to(heroMaskText, { duration: 1, opacity: 0, ease: 'power4.out' });
+      },
     },
   });
-  animation.set(heroMainComponent, { zIndex: 2 });
-  animation.to(maskElement, {
+
+  stMain.to(maskElement, {
     width: setWidth,
     height: setHeight,
     bottom: 0,
     borderRadius: setCornerRadius,
     ease: 'linear',
   });
-  animation.to(heroMainComponent, { opacity: 0, ease: 'power4.out' }, '<');
-  animation.to(heroImageText, { opacity: 1 }, '<0.3');
-
-  //Indicator Animation
-  // ------------------
-  let setIndicator = '-5rem';
-  if (device === 'tablet') {
-    setIndicator = '-4rem';
-  } else if (device === 'mobile') {
-    setIndicator = '-3rem';
-  }
-  const indicatorAnimation = gsap.timeline({
-    scrollTrigger: {
-      trigger: scrolledComponent,
-      start: 'top top',
-      end: 'top top',
-      toggleActions: 'play none none reverse',
-      // markers: true,
-    },
-  });
-
-  indicatorAnimation.to(heroScrollIcon, {
-    duration: 0.8,
-    y: setIndicator,
-    opacity: 1,
-    ease: 'expo.out',
-  });
+  stMain.to(heroMainComponent, { opacity: 0, ease: 'power4.out' }, '<');
+  stMain.to(heroIconWrap, { bottom: '7%', opacity: 1, ease: 'linear' }, '<');
+  stMain.to(heroIcon, { width: '4rem', height: '4rem' }, '<');
 
   // Hero Scroll Text Rotation on exit
   // --------------------------
   const textScrollAniamtion = gsap.timeline({
     scrollTrigger: {
-      trigger: scrolledComponent,
+      trigger: scrollSections[2],
       start: 'top top',
       end: 'bottom top',
       // markers: true,
@@ -108,39 +91,15 @@ export const heroScroll = () => {
       scrub: 1,
     },
   });
-  textScrollAniamtion.to(heroImageText, { rotate: '4deg', scale: 1.05 });
-  textScrollAniamtion.to(heroBGText, { rotate: '4deg', scale: 1.05 }, '<');
-};
-
-// Hide Hero
-// ---------
-export const heroHide = () => {
-  const heroBG = document.querySelector('.home-hero_masked-component') as HTMLElement;
-  const heroBGText = document.querySelector('.bg-text_track');
-  const heroScrollIcon = document.querySelector('#heroScrollIndicator');
-  const heroTexture = document.querySelector('.home-hero_texture');
-
-  const animation = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.section_home-overview',
-      start: 'bottom top',
-      end: 'bottom top',
-      toggleActions: 'play none none reverse',
-
-      // markers: true,
-    },
-  });
-  animation.to([heroBGText, heroScrollIcon, heroTexture], { duration: 0, display: 'none' });
-  animation.to(heroBG, { duration: 0, opacity: 0 });
-  animation.to(heroBG, { duration: 0, pointerEvents: 'none' });
+  textScrollAniamtion.to([heroBgText, heroMaskText], { rotate: '4deg', scale: 1.05 });
 };
 
 // Hero Scrolled Text Movement
 // ---------------------------
-export const heroZText = () => {
+export const heroTextMovement = () => {
   const heroSection = document.querySelector('.section_home-hero') as HTMLElement;
-  const maskedTrack = heroSection.querySelector('.home-hero_text-track') as HTMLElement;
-  const bgTrack = heroSection.querySelector('.bg-text_track') as HTMLElement;
+  const maskedTrack = heroSection.querySelector('.home-hero_text-track.is-masked') as HTMLElement;
+  const bgTrack = heroSection.querySelector('.home-hero_text-track.is-bg') as HTMLElement;
 
   const maskedChildren = [...maskedTrack.childNodes];
   const bgChildren = [...bgTrack.childNodes];

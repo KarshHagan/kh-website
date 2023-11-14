@@ -5,10 +5,9 @@ import { videoPlayer } from '$components/videoPlayer';
 import {
   featuredReveal,
   focusReveal,
-  heroHide,
   heroReveal,
   heroScroll,
-  heroZText,
+  heroTextMovement,
   overviewReveal,
   servicesReveal,
 } from '$motion/homeMotion';
@@ -25,12 +24,10 @@ export const home = () => {
   // Hero
   heroReveal();
   heroScroll();
-  heroHide();
-  heroZText();
+  heroTextMovement();
 
   // Overview
   overviewReveal();
-  // videoModal();
   videoPlayer();
 
   // Featured Work
