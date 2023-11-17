@@ -206,14 +206,14 @@ export const overviewReveal = () => {
   const overviewTexture = overviewSection.querySelector('.home-overview_texture-overlay');
   const overviewLabel = overviewSection.querySelector('.module_label-container');
   const overviewVideo = overviewSection.querySelector('.home-overview_video-embed');
+  const overviewAwards = overviewSection.querySelector('.text-overview_award-wrap');
 
   const animation = gsap.timeline({
     scrollTrigger: {
       trigger: overviewSection,
       start: scrollTriggerStart,
       end: scrollTriggerEnd,
-      // markers: true,
-      // toggleActions: 'play none none reverse',
+      markers: true,
     },
     onComplete: () => {
       textSplitParent.revert();
@@ -247,6 +247,11 @@ export const overviewReveal = () => {
       y: '2rem',
       ease: 'power4.out',
     },
+    '<'
+  );
+  animation.from(
+    overviewAwards,
+    { duration: 1, opacity: 0, y: setYOffset, ease: 'power4.out' },
     '<'
   );
   animation.from(

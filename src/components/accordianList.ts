@@ -14,11 +14,15 @@ const servicesImages = [...document.querySelectorAll('.home-services_image')];
 const docStyle = getComputedStyle(document.documentElement);
 
 export const initAccordian = () => {
+  const morphSVGData = document.querySelector('.home-services_svg-data');
+  gsap.set(morphSVGData, { display: 'none' });
+
   // Services Items
   for (let i = 0; i < services.length; i++) {
     const temp = services[i] as HTMLElement;
     const hidenContent = temp.children[1] as HTMLElement;
     const hideButtons = temp.children[2] as HTMLElement;
+
     gsap.set(hidenContent, { height: '0', display: 'none' });
     gsap.set(hideButtons, { display: 'none', opacity: 0 });
   }
@@ -75,6 +79,7 @@ export const accordianList = () => {
       const hPoints = svgData[3] as gsap.SVGPathValue[];
 
       temp.addEventListener('mouseenter', (e) => {
+        console.log('morph');
         const ele = e.target as HTMLElement;
         const eleId = Number(ele.dataset.test);
         const toKPoints = kPoints[eleId];
@@ -99,11 +104,9 @@ export const accordianList = () => {
 // MOTION
 // ----------------
 export const accordianOpen = (element: HTMLElement) => {
-  console.log('HERE', element);
   const hiddenContent = element.children[1] as HTMLElement;
   const buttonWrap = element.children[2] as HTMLElement;
   const sectionCarrot = element.querySelector('.home-services_carrot-icon');
-  console.log(hiddenContent, buttonWrap);
   const animation = gsap.timeline();
   animation.set([hiddenContent, buttonWrap], { display: 'flex', opacity: 0 });
   animation.to([hiddenContent, buttonWrap], {
@@ -153,7 +156,7 @@ export const accordianClose = (element: HTMLElement) => {
 export const accordianImageHover = () => {
   const device = getDeviceType();
   if (device === 'desktop') {
-    const scale = 0.05;
+    const scale = 0.08;
     const servicesContainer = document.querySelector('.section_home-services') as HTMLElement;
     const serviceImageMask = document.querySelector('.home-services_sticky-wrap');
 
