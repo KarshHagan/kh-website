@@ -213,7 +213,7 @@ export const overviewReveal = () => {
       trigger: overviewSection,
       start: scrollTriggerStart,
       end: scrollTriggerEnd,
-      markers: true,
+      // markers: true,
     },
     onComplete: () => {
       textSplitParent.revert();
