@@ -304,6 +304,7 @@ export const servicesScrollEffect = () => {
     const kPoints = svgData[1] as gsap.SVGPathValue[];
     const hBase = svgData[2] as HTMLElement;
     const hPoints = svgData[3] as gsap.SVGPathValue[];
+    const hideElement = svgData[4];
 
     const sMarkers = [...document.querySelectorAll('.services_scroll-spacer')].filter(
       (e) => !e.classList.contains('hide')
@@ -312,34 +313,36 @@ export const servicesScrollEffect = () => {
     sMarkers.forEach((marker, i) => {
       const isFirst = i === 0;
 
+      const st = gsap.timeline({
+        scrollTrigger: {
+          trigger: marker,
+          start: 'top 20%',
+          end: '+=100%',
+          // markers: true,
+          toggleActions: 'play none none reverse',
+          preventOverlaps: true,
+        },
+      });
+
       if (!isFirst) {
         const inGraphicKPoints = kPoints[i];
         const inGraphicHPoints = hPoints[i];
 
-        const st = gsap.timeline({
-          scrollTrigger: {
-            trigger: marker,
-            start: 'top 20%',
-            end: '+=100%',
-            // markers: true,
-            toggleActions: 'play none none reverse',
-            preventOverlaps: true,
-          },
-        });
         st.to(kBase, {
           duration: 1,
-          morphSVG: { shape: inGraphicKPoints, type: 'rotational' },
-          ease: 'power4.inOut',
+          morphSVG: { shape: inGraphicKPoints },
+          ease: 'power4.out',
         });
         st.to(
           hBase,
           {
             duration: 1,
-            morphSVG: { shape: inGraphicHPoints, type: 'rotational' },
-            ease: 'power4.inOut',
+            morphSVG: { shape: inGraphicHPoints },
+            ease: 'power4.out',
           },
           '<'
         );
+        st.to(hideElement, { opacity: 0, ease: 'power4.out' }, '<');
       }
     });
   }
