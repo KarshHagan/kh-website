@@ -77,16 +77,20 @@ export const accordianList = () => {
       const kPoints = svgData[1] as gsap.SVGPathValue[];
       const hBase = svgData[2] as HTMLElement;
       const hPoints = svgData[3] as gsap.SVGPathValue[];
+      const hideElement = svgData[4];
 
       temp.addEventListener('mouseenter', (e) => {
-        console.log('morph');
         const ele = e.target as HTMLElement;
         const eleId = Number(ele.dataset.test);
         const toKPoints = kPoints[eleId];
         const toHPoints = hPoints[eleId];
 
-        gsap.to(kBase, { morphSVG: { shape: toKPoints, type: 'rotational' }, ease: 'Power4.out' });
-        gsap.to(hBase, { morphSVG: { shape: toHPoints, type: 'rotational' }, ease: 'Power4.out' });
+        gsap.to(kBase, { morphSVG: { shape: toKPoints }, ease: 'Power4.out' });
+        gsap.to(hBase, { morphSVG: { shape: toHPoints }, ease: 'Power4.out' });
+
+        if (eleId === 0) {
+          gsap.to(hideElement, { opacity: 1, ease: 'power4.out' });
+        }
       });
       temp.addEventListener('touchstart', (e) => {
         const ele = e.target as HTMLElement;
@@ -94,8 +98,21 @@ export const accordianList = () => {
         const toKPoints = kPoints[eleId];
         const toHPoints = hPoints[eleId];
 
-        gsap.to(kBase, { morphSVG: { shape: toKPoints, type: 'rotational' }, ease: 'Power4.out' });
-        gsap.to(hBase, { morphSVG: { shape: toHPoints, type: 'rotational' }, ease: 'Power4.out' });
+        gsap.to(kBase, { morphSVG: { shape: toKPoints }, ease: 'Power4.out' });
+        gsap.to(hBase, { morphSVG: { shape: toHPoints }, ease: 'Power4.out' });
+
+        if (eleId === 0) {
+          gsap.to(hideElement, { opacity: 1, ease: 'power4.out' });
+        }
+      });
+
+      temp.addEventListener('mouseleave', (e) => {
+        const ele = e.target as HTMLElement;
+        const eleId = Number(ele.dataset.test);
+
+        if (eleId === 0) {
+          gsap.to(hideElement, { opacity: 0, ease: 'power4.out' });
+        }
       });
     }, 500);
   }

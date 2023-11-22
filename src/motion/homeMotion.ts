@@ -54,7 +54,7 @@ export const heroScroll = () => {
   const stMain = gsap.timeline({
     scrollTrigger: {
       trigger: scrollSections[0],
-      start: 'top top',
+      start: '5% top',
       end: 'bottom top',
       // markers: true,
       toggleActions: 'play none none reverse',

@@ -42,6 +42,7 @@ export const getSVGPathData = () => {
   const svgEmbed = document.querySelector('[data-morph-embed]') as HTMLElement;
   const kGraphics = [...svgEmbed.querySelectorAll('.k-graphic')];
   const hGraphics = [...svgEmbed.querySelectorAll('.h-graphic')];
+  const hideSection = svgEmbed.querySelector('#hide01');
 
   const kPathPoints = [...kGraphics].slice(0).map((e) => {
     return e.getAttribute('d') as gsap.SVGPathValue;
@@ -53,7 +54,7 @@ export const getSVGPathData = () => {
   const kBase = kGraphics[0] as HTMLElement;
   const hBase = hGraphics[0] as HTMLElement;
 
-  const returnData = [kBase, kPathPoints, hBase, hPathPoints];
+  const returnData = [kBase, kPathPoints, hBase, hPathPoints, hideSection];
 
   return returnData;
 };
