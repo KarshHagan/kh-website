@@ -202,9 +202,6 @@ export const servicesScrollEffect = () => {
       // newMarker.classList.add('mbm-ex');
     }
 
-    if (window.innerWidth < window.innerHeight) {
-      console.log('yo');
-    }
     // Mobile Lanscape optimizations
     if (device === 'mobile' || window.innerWidth < window.innerHeight) {
       const servicesWrapper = document.querySelector('.services_wrapper') as HTMLElement;
@@ -212,8 +209,6 @@ export const servicesScrollEffect = () => {
       const graphicWrap = document.querySelector('.services_graphic-wrap') as HTMLElement;
       const morphGraphic = graphicWrap.children[0];
       const sectionInfo = [...document.querySelectorAll('.services_info-cursor-wrap')];
-
-      console.log('HERE', graphicWrap.getBoundingClientRect().bottom);
 
       // special setup for mobile landscape
       if (window.innerWidth > window.innerHeight) {
