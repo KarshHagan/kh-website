@@ -11,6 +11,7 @@ import { contact } from '$pages/contact';
 import { home } from '$pages/home';
 import { insights } from '$pages/insightsOverview';
 import { insightsTemplate } from '$pages/insightsTemplate';
+import { links } from '$pages/links';
 import { peopleTemplate } from '$pages/peopleTemplate';
 import { services } from '$pages/services';
 import { terms } from '$pages/terms';
@@ -72,5 +73,7 @@ window.Webflow.push(() => {
     terms();
   } else if (windowLocation.includes('/people')) {
     peopleTemplate();
+  } else if (windowLocation.includes('/links')) {
+    links();
   }
 });

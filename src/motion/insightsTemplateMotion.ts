@@ -32,6 +32,7 @@ export const istRevealAnimation = () => {
   const headerOverview = fixedHeaderSection.querySelector('.fixed-head_info-wrap');
   const overline = heroSection.querySelector('.fixed-header_overline');
   const heroContent = heroSection.querySelector('.news_featured-wrap');
+  const richText = document.querySelector('.news-overview_text');
 
   const animation = gsap.timeline({
     onComplete: () => {
@@ -47,7 +48,7 @@ export const istRevealAnimation = () => {
     stagger: 0.1,
     ease: 'power4.inOut',
   });
-  animation.from(overline, { duration: 1, width: 0, ease: 'expo.inOut' }, '<');
+  animation.from(overline, { duration: 1, width: '0%', ease: 'expo.inOut' }, '<');
   animation.from(headerOverview, { duration: 1.5, opacity: 0, ease: 'power4.inOut' }, '<');
   animation.from(
     heroContent,
@@ -59,4 +60,5 @@ export const istRevealAnimation = () => {
     },
     '<0.6'
   );
+  animation.from(richText, { duration: 1, opacity: 0, y: '2rem', ease: 'power4.out' }, '<');
 };

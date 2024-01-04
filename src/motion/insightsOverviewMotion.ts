@@ -48,7 +48,7 @@ export const isoRevealAnimation = () => {
     stagger: 0.1,
     ease: 'power4.inOut',
   });
-  animation.from(overline, { duration: 1, width: 0, ease: 'expo.inOut' }, '<');
+  animation.from(overline, { duration: 1, width: '0%', ease: 'expo.inOut' }, '<');
   animation.from(headerOverview, { duration: 1.5, opacity: 0, ease: 'power4.inOut' }, '<');
   animation.from(
     filterButton,

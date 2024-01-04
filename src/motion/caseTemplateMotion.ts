@@ -52,7 +52,7 @@ export const csPageReveal = () => {
     stagger: 0.1,
     ease: 'power4.inOut',
   });
-  animation.from(overline, { duration: 1, width: 0, ease: 'expo.inOut' }, '<');
+  animation.from(overline, { duration: 1, width: '0%', ease: 'expo.inOut' }, '<');
   animation.from(headerOverview, { duration: 1, opacity: 0, y: '1rem', ease: 'power4.inOut' }, '<');
   animation.from(
     featuredContent,
