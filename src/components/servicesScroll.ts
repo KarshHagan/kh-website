@@ -15,6 +15,10 @@ const device = getDeviceType();
 
 //  Main scroll effect
 export const servicesScrollEffect = () => {
+  window.addEventListener('resize', () => {
+    setupMarkers();
+  });
+
   const sectionBG = document.querySelector('.section_services');
   const docStyle = getComputedStyle(document.documentElement);
   let colorMode = 'false';
@@ -62,12 +66,6 @@ export const servicesScrollEffect = () => {
     }
   }
 
-  // Split service headers
-  const splitMain = generateSplitText();
-  const splitItems = splitMain[0];
-  const splitHeaders = splitItems[0] as SplitText[];
-  const splitOvers = splitItems[1] as SplitText[];
-
   // Initializers
   setupMarkers();
   if (device === 'desktop') {
@@ -78,11 +76,19 @@ export const servicesScrollEffect = () => {
   setTimeout(() => {
     scrollProgress();
     scrollSVG();
+    scrollEffect();
+  }, 500);
 
+  // HELPERS
+  // -------
+  function scrollEffect() {
     const sItems = [...document.querySelectorAll('.services_item')];
     const sMarkers = [...document.querySelectorAll('.services_scroll-spacer')].filter(
       (e) => !e.classList.contains('hide')
     );
+
+    // Split service headers
+    const splitMain = generateSplitText();
 
     sMarkers.forEach((marker, i) => {
       const isFirst = i === 0,
@@ -102,17 +108,17 @@ export const servicesScrollEffect = () => {
         });
 
         const outSection = sItems[i - 1] as HTMLElement;
-        const outHeader = splitHeaders[i - 1];
-        const outSpan = outSection.querySelector('.span');
-        const outOverview = splitOvers[i - 1];
+        const outHeader = splitMain[i - 1][0];
+        const outSpan = outSection.querySelector('.span') as HTMLElement;
+        const outDesc = outSection.querySelector('.services-info_description');
         const outButton = outSection.querySelector('a');
         const outInfoParent = outSection.querySelector('.services_info-grid');
         const outInfo = [...outSection.querySelectorAll('li')];
 
         const inSection = sItems[i] as HTMLElement;
-        const inHeader = splitHeaders[i];
-        const inSpan = inSection.querySelector('.span');
-        const inOverview = splitOvers[i];
+        const inHeader = splitMain[i][0];
+        const inSpan = inSection.querySelector('.span') as HTMLElement;
+        const inDesc = inSection.querySelector('.services-info_description');
         const inButton = inSection.querySelector('a');
         const inInfoParent = inSection.querySelector('.services_info-grid');
         const inInfo = [...inSection.querySelectorAll('li')];
@@ -128,12 +134,9 @@ export const servicesScrollEffect = () => {
           stagger: 0.1,
           ease: 'power4.inOut',
         });
+        st.to(outSpan.parentElement, { duration: 1, y: '-2rem', ease: 'power4.inOut' }, '<');
         st.to(outSpan, { duration: 1, x: '100%', ease: 'power4.inOut' }, '<');
-        st.to(
-          outOverview.lines,
-          { duration: 1, y: '-100%', stagger: 0.1, ease: 'power4.inOut' },
-          '<'
-        );
+        st.to(outDesc, { duration: 1, y: '-2rem', opacity: 0, ease: 'power4.inOut' }, '<');
         st.to(outButton, { duration: 1, y: '-100%', opacity: 0, ease: 'power4.inOut' }, '<');
         st.to(
           outInfo,
@@ -159,12 +162,9 @@ export const servicesScrollEffect = () => {
           },
           '<'
         );
+        st.from(inSpan.parentElement, { duration: 1, y: '2rem', ease: 'power4.inOut' }, '<');
         st.from(inSpan, { duration: 1, x: '-100%', ease: 'power4.inOut' }, '<');
-        st.from(
-          inOverview.lines,
-          { duration: 1, y: '100%', stagger: 0.1, ease: 'power4.inOut' },
-          '<'
-        );
+        st.from(inDesc, { duration: 1, y: '2rem', opacity: 0, ease: 'power4.inOut' }, '<');
         st.from(inButton, { duration: 1, y: '100%', opacity: 0, ease: 'power4.inOut' }, '<');
         st.from(
           inInfo,
@@ -172,12 +172,12 @@ export const servicesScrollEffect = () => {
           '<'
         );
         st.from(inInfoParent, { duration: 1, opacity: 0, ease: 'power4.inOut' }, '<');
+
+        st.to(outSection, { opacity: 0 });
       }
     });
-  }, 500);
+  }
 
-  // HELPERS
-  // -------
   function setupMarkers() {
     const sWrapper = document.querySelector('.services_wrapper') as HTMLElement;
     const sItems = [...document.querySelectorAll('.services_item')];
@@ -202,18 +202,32 @@ export const servicesScrollEffect = () => {
       // newMarker.classList.add('mbm-ex');
     }
 
+    if (window.innerWidth < window.innerHeight) {
+      console.log('yo');
+    }
     // Mobile Lanscape optimizations
-    if (device === 'mobile') {
+    if (device === 'mobile' || window.innerWidth < window.innerHeight) {
       const servicesWrapper = document.querySelector('.services_wrapper') as HTMLElement;
+      const servicesDescription = [...document.querySelectorAll('.services-info_description')];
       const graphicWrap = document.querySelector('.services_graphic-wrap') as HTMLElement;
+      const morphGraphic = graphicWrap.children[0];
       const sectionInfo = [...document.querySelectorAll('.services_info-cursor-wrap')];
 
+      console.log('HERE', graphicWrap.getBoundingClientRect().bottom);
+
+      // special setup for mobile landscape
       if (window.innerWidth > window.innerHeight) {
-        servicesWrapper.style.height = '100vh';
-        graphicWrap.style.position = 'absolute';
-        graphicWrap.style.bottom = '1rem';
-        graphicWrap.style.justifyContent = 'flex-end';
-        graphicWrap.style.alignItems = 'flex-end';
+        gsap.set(servicesWrapper, { height: '100vh' });
+        gsap.set(morphGraphic, { width: '25vh' });
+        servicesDescription.forEach((i) => {
+          gsap.set(i, { fontSize: '3.5vh' });
+        });
+        gsap.set(graphicWrap, {
+          position: 'absolute',
+          bottom: '3rem',
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+        });
 
         for (const i in sectionInfo) {
           const temp = sectionInfo[i] as HTMLElement;
@@ -227,30 +241,21 @@ export const servicesScrollEffect = () => {
     const headerParent = [...document.querySelectorAll('.services-info_wrap')];
 
     const splitHeaders = [];
-    const splitOvers = [];
-    const parentOvers = [];
 
     for (const i in headerParent) {
       const temp = headerParent[i] as HTMLElement;
       const tempHeader = temp.querySelector('h2');
-      const tempOver = temp.querySelector('p') as HTMLElement;
+      // const tempOver = temp.querySelector('p') as HTMLElement;
       gsap.set(tempHeader, { perspective: 100 });
       const gSplit = new SplitText(tempHeader, { linesClass: 'lineChild' });
       const gSplitParent = new SplitText(tempHeader, {
         type: 'lines',
         linesClass: 'split-text_parent',
       });
-      const oSplit = new SplitText(tempOver, { linesClass: 'lineChild' });
-      const oSplitParent = new SplitText(tempOver, {
-        type: 'lines',
-        linesClass: 'lines-parent',
-      });
-      splitHeaders.push(gSplit);
-      splitOvers.push(oSplit);
-      parentOvers.push(tempOver);
+      splitHeaders.push([gSplit, gSplitParent]);
     }
-    const final = [[splitHeaders, splitOvers], parentOvers];
-    return final;
+
+    return splitHeaders;
   }
 
   function infoHover() {

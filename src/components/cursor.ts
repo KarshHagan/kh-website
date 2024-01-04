@@ -5,12 +5,18 @@ import {
   cursorRevealIn,
   cursorRevealOut,
 } from '$motion/cursorMotion';
+import { getDeviceType } from '$utils/getDevice';
 import { getVideoState } from './videoPlayer';
 import { gsap } from 'gsap';
 
 const cursor = document.querySelector('.cursor_component') as HTMLElement;
 
 export const cursorMovement = () => {
+  const device = getDeviceType();
+  if (device === 'tablet' || device === 'mobile') {
+    gsap.set(cursor, { display: 'none' });
+  }
+
   gsap.set(cursor, { xPercent: -50, yPercent: -50 });
 
   const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
