@@ -15,10 +15,6 @@ const device = getDeviceType();
 
 //  Main scroll effect
 export const servicesScrollEffect = () => {
-  window.addEventListener('resize', () => {
-    setupMarkers();
-  });
-
   const sectionBG = document.querySelector('.section_services');
   const docStyle = getComputedStyle(document.documentElement);
   let colorMode = 'false';
@@ -203,7 +199,7 @@ export const servicesScrollEffect = () => {
     }
 
     // Mobile Lanscape optimizations
-    if (device === 'mobile' || window.innerWidth < window.innerHeight) {
+    if (device === 'mobile') {
       const servicesWrapper = document.querySelector('.services_wrapper') as HTMLElement;
       const servicesDescription = [...document.querySelectorAll('.services-info_description')];
       const graphicWrap = document.querySelector('.services_graphic-wrap') as HTMLElement;
