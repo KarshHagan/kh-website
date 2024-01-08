@@ -13,9 +13,9 @@ export const footerTextMovement = () => {
       animation.restart();
     },
   });
-  animation.to(footerTextWrap, {
-    duration: textSpeed,
-    x: -textWidth,
-    ease: 'linear',
-  });
+  // animation.to(footerText, {
+  //   duration: textSpeed,
+  //   x: -textWidth,
+  //   ease: 'linear',
+  // });
 };
