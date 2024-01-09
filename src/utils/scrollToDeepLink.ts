@@ -68,6 +68,7 @@ export const filterDeepLinks = () => {
 
       const checkboxContainer = tempParent.children[0] as HTMLElement;
       const checkboxInput = tempParent.children[1] as HTMLInputElement;
+
       const checkboxText = tempParent.querySelector('span') as HTMLElement;
       let filterText = checkboxText.innerHTML as string;
       filterText = filterText.split(' ')[0] as string;

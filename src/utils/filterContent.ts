@@ -127,7 +127,7 @@ function allReset() {
     const temp = filterCheckboxes[i] as HTMLInputElement;
     const tempParent = temp.parentElement as HTMLElement;
     const tempContainer = tempParent.children[0] as HTMLElement;
-    const tempText = tempParent.childNodes[2] as HTMLElement;
+    const tempText = tempParent.querySelector('span') as HTMLElement;
 
     if (i !== 0) {
       temp.checked = false;
