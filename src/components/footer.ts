@@ -5,21 +5,6 @@ import { getDeviceType } from '$utils/getDevice';
 import { postContactData } from '$utils/postContactForm';
 
 export const footer = () => {
-  // Footer Spacer Sizing
-  // --------------------
-  const footerElement = document.querySelector('.footer_component') as HTMLElement;
-  const footerSpacer = document.querySelector('.section_footer-spacer') as HTMLElement;
-
-  const footerCornerFix = 4 * 16;
-  const footerHeight = footerElement.clientHeight;
-  let setHeight = footerHeight - footerCornerFix + 'px';
-
-  const device = getDeviceType();
-  if (device === 'mobile') {
-    setHeight = '0vh';
-  }
-  footerSpacer.style.height = setHeight;
-
   // Footer Text Movement
   // --------------------
   footerTextMovement();
