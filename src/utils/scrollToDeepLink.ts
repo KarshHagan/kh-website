@@ -31,7 +31,7 @@ export const setDeepLinks = () => {
       linkTag = setText.split(' ')[0] as string;
 
       tempLink.addEventListener('click', () => {
-        localStorage.setItem('tag', linkTag);
+        localStorage.setItem('filterTag', linkTag);
       });
     }
   }
@@ -55,8 +55,9 @@ export const scrollToDeepLinks = () => {
 };
 
 export const filterDeepLinks = () => {
-  if (localStorage.length > 0) {
-    const filterTag = localStorage.getItem('tag') as string;
+  const hasTag = localStorage.getItem('tag');
+  if (hasTag !== null) {
+    const filterTag = localStorage.getItem('filterTag') as string;
     const masterList = [...document.querySelectorAll('[data-filter-item]')];
     const filterCheckboxes = [...document.querySelectorAll('[data-filter-checkbox]')];
     const initialFilter = filterCheckboxes[0].parentElement as HTMLElement;
