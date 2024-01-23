@@ -1,28 +1,32 @@
-var stableVersion = '3.1.8';
-var devVersion = '3.1.8.2';
+var stableVersion = '3.2.0';
+var devVersion = '3.2.0';
 // ------------------
 var isDev = window.location.search.includes('dev');
 var isTunnel = window.location.search.includes('tunnel');
-var prodURL = 'https://cdn.jsdelivr.net/gh/KarshHagan/kh-website@' + version + '/dist/index.js';
 
-var url = prodURL;
+var stableURL =
+  'https://cdn.jsdelivr.net/gh/KarshHagan/kh-website@' + stableVersion + '/dist/index.js';
+var devURL = 'https://cdn.jsdelivr.net/gh/KarshHagan/kh-website@' + devVersion + '/dist/index.js';
+var localURL = 'http://localhost:3000/index.js';
+var tunnelURL = 'https://khtunnel.loca.lt/index.js';
+
+var url = stableURL;
 var currentEnv = window.location.hostname;
 
 if (currentEnv.includes('.webflow.io')) {
-  console.log('// Staging //');
+  url = devURL;
   if (isDev) {
-    var localURL = 'http://localhost:3000/index.js';
+    console.log('// dev //');
     url = localURL;
   }
 
   if (isTunnel) {
     console.log('tunnel');
-    var tunnelURL = 'https://khtunnel.loca.lt/index.js';
     url = tunnelURL;
   }
-} else {
-  console.log('// Production //');
 }
+
+console.log('here', url);
 var script = document.createElement('script');
 script.src = url;
 script.setAttribute('defer', '');
