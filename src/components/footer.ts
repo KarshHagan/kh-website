@@ -7,7 +7,7 @@ import { postContactData } from '$utils/postContactForm';
 export const footer = () => {
   // Footer Text Movement
   // --------------------
-  // footerTextMovement();
+  footerTextMovement();
 
   // Footer Form
   // -----------
