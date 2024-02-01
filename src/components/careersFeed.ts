@@ -1,7 +1,13 @@
 export const careersFeed = () => {
-  const careersList = document.querySelector('.careers-list_feed') as HTMLElement;
-  const bambooList = [...careersList.querySelectorAll('.BambooHR-ATS-Department-Item')];
+  // console.log('AYO');
+  setTimeout(() => {
+    const careersList = document.querySelector('.careers-list_feed') as HTMLElement;
+    const bambooList = careersList.querySelector('#BambooHR') as HTMLElement;
 
-  console.log(careersList.children[0].children[0].children);
+    const bhImage = bambooList.querySelector('img') as HTMLElement;
+    bhImage.style.width = 'auto';
+
+    // console.log(bambooList, bhImage);
+  }, 500);
   // console.log('bamboo', bambooList);
 };
