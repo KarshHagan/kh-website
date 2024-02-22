@@ -1,6 +1,7 @@
 // import { generateHubspotJSON } from '$utils/generateHubspotJSON';
 import { footerTextMovement } from '$motion/footerMotion';
 import { generateHubspotJSON } from '$utils/generateHubspotJSON';
+import { getDeviceType } from '$utils/getDevice';
 import { postContactData } from '$utils/postContactForm';
 
 // import { gsap } from 'gsap';
@@ -8,11 +9,31 @@ import { postContactData } from '$utils/postContactForm';
 export const footer = () => {
   // Footer Size Adjustments
   // --------------------
-  const footerSpacer = document.querySelector('.section_footer-spacer') as HTMLElement;
-  const footer = document.querySelector('.footer_component') as HTMLElement;
-  const footerHeight = parseInt(getComputedStyle(footer).height.split('px')[0]) - 64;
 
-  footerSpacer.style.height = footerHeight + 'px';
+  console.log(window.innerWidth);
+
+  if (window.innerWidth >= 992) {
+    updateFooter();
+  }
+
+  window.addEventListener('resize', () => {
+    console.log('resize', window.innerWidth);
+
+    if (window.innerWidth >= 992) {
+      updateFooter();
+    } else {
+      const footerSpacer = document.querySelector('.section_footer-spacer') as HTMLElement;
+      footerSpacer.style.height = '0px';
+    }
+  });
+
+  function updateFooter() {
+    const footerSpacer = document.querySelector('.section_footer-spacer') as HTMLElement;
+    const footer = document.querySelector('.footer_component') as HTMLElement;
+    const footerHeight = parseInt(getComputedStyle(footer).height.split('px')[0]) - 64;
+
+    footerSpacer.style.height = footerHeight + 'px';
+  }
 
   // Footer Text Movement
   // --------------------
