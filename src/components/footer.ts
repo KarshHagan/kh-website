@@ -1,7 +1,6 @@
 // import { generateHubspotJSON } from '$utils/generateHubspotJSON';
 import { footerTextMovement } from '$motion/footerMotion';
 import { generateHubspotJSON } from '$utils/generateHubspotJSON';
-import { getDeviceType } from '$utils/getDevice';
 import { postContactData } from '$utils/postContactForm';
 
 // import { gsap } from 'gsap';
@@ -10,15 +9,11 @@ export const footer = () => {
   // Footer Size Adjustments
   // --------------------
 
-  console.log(window.innerWidth);
-
   if (window.innerWidth >= 992) {
     updateFooter();
   }
 
   window.addEventListener('resize', () => {
-    console.log('resize', window.innerWidth);
-
     if (window.innerWidth >= 992) {
       updateFooter();
     } else {
