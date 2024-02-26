@@ -10651,14 +10651,33 @@
     abAwardsReveal();
   };
 
+  // node_modules/@finsweet/ts-utils/dist/helpers/cloneNode.js
+  var cloneNode = (node, deep = true) => node.cloneNode(deep);
+
   // src/components/careersFeed.ts
   var careersFeed = () => {
     setTimeout(() => {
       const careersList = document.querySelector(".careers-list_feed");
-      const bambooList = careersList.querySelector("#BambooHR");
-      const bhImage = bambooList.querySelector("img");
-      bhImage.style.width = "auto";
-    }, 500);
+      const bambooContainer = careersList.querySelector("#BambooHR");
+      const jobsContainer = bambooContainer.querySelector(".BambooHR-ATS-Jobs-List");
+      const jobsList = [...jobsContainer.querySelectorAll("li")];
+      jobsList.forEach((item) => {
+        createJob(item);
+      });
+    }, 1500);
+    function createJob(data) {
+      const jobList = document.querySelector(".careers-list_list");
+      const jobTemplate = document.querySelector(".careers-list_item");
+      const newJob = cloneNode(jobTemplate);
+      newJob.classList.remove("is-template", "hide");
+      const titleData = data.querySelector("a");
+      const setLink = newJob.querySelector("a");
+      const setTitle = newJob.querySelector("h3");
+      setLink.href = titleData.href;
+      setTitle.innerText = titleData.innerText;
+      jobList.appendChild(newJob);
+      cursorHover();
+    }
   };
 
   // src/components/stickyHeader.ts
@@ -13662,9 +13681,6 @@
     stickyHeader();
     peopleRevealAnimation();
   };
-
-  // node_modules/@finsweet/ts-utils/dist/helpers/cloneNode.js
-  var cloneNode = (node, deep = true) => node.cloneNode(deep);
 
   // src/components/servicesScroll.ts
   gsapWithCSS.registerPlugin([SplitText, ScrollToPlugin, ScrollTrigger2]);
