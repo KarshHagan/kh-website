@@ -3,15 +3,11 @@ import { cursorHover } from '$components/cursor';
 import { cloneNode } from '@finsweet/ts-utils';
 
 export const careersFeed = () => {
-  // console.log('AYO');
   setTimeout(() => {
     const careersList = document.querySelector('.careers-list_feed') as HTMLElement;
     const bambooContainer = careersList.querySelector('#BambooHR') as HTMLElement;
     const jobsContainer = bambooContainer.querySelector('.BambooHR-ATS-Jobs-List') as HTMLElement;
     const jobsList = [...jobsContainer.querySelectorAll('li')];
-
-    // const bhImage = bambooContainer.querySelector('img') as HTMLElement;
-    // bhImage.style.width = 'auto';
 
     jobsList.forEach((item) => {
       createJob(item);
@@ -26,15 +22,18 @@ export const careersFeed = () => {
     newJob.classList.remove('is-template', 'hide');
 
     const titleData = data.querySelector('a') as HTMLAnchorElement;
+    const locationData = data.querySelector('span') as HTMLElement;
     const setLink = newJob.querySelector('a') as HTMLAnchorElement;
     const setTitle = newJob.querySelector('h3') as HTMLElement;
+    const setLocation = newJob.querySelector('.careers-list_location') as HTMLElement;
+    const formatLocation = locationData.innerText.split('\n')[2].split('\t')[19];
+
     setLink.href = titleData.href;
     setTitle.innerText = titleData.innerText;
+    setLocation.innerText = formatLocation;
 
     jobList.appendChild(newJob);
 
     cursorHover();
-
-    // console.log('create job', data, jobTemplate, setLink);
   }
 };
