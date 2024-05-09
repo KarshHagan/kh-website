@@ -77,7 +77,7 @@ export const heroScroll = () => {
   });
   stMain.to(heroMainComponent, { opacity: 0, ease: 'power4.out' }, '<');
   stMain.to(heroIconWrap, { bottom: '7%', opacity: 1, ease: 'linear' }, '<');
-  stMain.to(heroIcon, { width: '4rem', height: '4rem' }, '<');
+  stMain.to(heroIcon, { width: '4rem', height: '4rem', padding: '1rem' }, '<');
 
   // Hero Scroll Text Rotation on exit
   // --------------------------

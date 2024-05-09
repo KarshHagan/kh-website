@@ -49,10 +49,10 @@ export const menuMotionOpen = () => {
   animation.set(lenisContainer, { height: '100%' });
   animation.set('body', { overflow: 'hidden' });
 
-  animation.set(menuClose, { y: '100%' });
+  animation.set(menuClose, { y: '105%' });
 
   animation.to(navMenu, { display: 'flex' });
-  animation.to(menuOpen, { duration: 1, y: '-100%', ease: 'power4.out' }, '<');
+  animation.to(menuOpen, { duration: 1, y: '-105%', opacity: 0, ease: 'power4.out' }, '<');
   animation.to(menuClose, { duration: 1, y: '0%', opacity: 1, ease: 'power4.out' }, '<');
 
   animation.to(navIconSpans[0], { duration: 1.5, y: '3px', ease: 'expo.out' }, '<');
@@ -179,7 +179,7 @@ export const menuMotionClose = () => {
 
   animation.to(navSpan, { duration: 0.4, width: '0%', ease: 'expo.inOut' }, '<');
 
-  animation.to(menuOpen, { duration: 1, y: '0%', ease: 'power4.out' }, '<');
+  animation.to(menuOpen, { duration: 1, y: '0%', opacity: 1, ease: 'power4.out' }, '<');
   animation.to(menuClose, { duration: 1, y: '100%', opacity: 0, ease: 'power4.out' }, '<');
 
   animation.to('#menuCloseText', { opacity: 0 }, '<');
