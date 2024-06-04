@@ -26,6 +26,8 @@ const device = getDeviceType();
 export const menuInit = (page: string) => {
   const hasFurtherIndex = page.substring(1);
 
+  // const navComponent = document.querySelector('.nav_component') as htmle;
+
   const navMenuText = [...document.querySelectorAll('.nav-ui_menu-text')];
   const navMenuIcon = [...document.querySelectorAll('.nav-ui_icon-span')];
   const navBrand = [...document.querySelectorAll('.nav-ui_brand-image')];

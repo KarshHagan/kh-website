@@ -25,9 +25,12 @@ export const footer = () => {
   function updateFooter() {
     const footerSpacer = document.querySelector('.section_footer-spacer') as HTMLElement;
     const footer = document.querySelector('.footer_component') as HTMLElement;
-    const footerHeight = parseInt(getComputedStyle(footer).height.split('px')[0]) - 64;
+    footer &&
+      (() => {
+        const footerHeight = parseInt(getComputedStyle(footer).height.split('px')[0]) - 64;
 
-    footerSpacer.style.height = footerHeight + 'px';
+        footerSpacer.style.height = footerHeight + 'px';
+      })();
   }
 
   // Footer Text Movement
@@ -37,12 +40,15 @@ export const footer = () => {
   // Footer Form
   // -----------
   const footerForm = document.querySelector('.footer_form') as HTMLElement;
-  footerForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const target = e.target as HTMLFormElement;
-    const formData = new FormData(target);
+  footerForm &&
+    (() => {
+      footerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const target = e.target as HTMLFormElement;
+        const formData = new FormData(target);
 
-    const formattedData = generateHubspotJSON(formData, target);
-    postContactData(formattedData, target);
-  });
+        const formattedData = generateHubspotJSON(formData, target);
+        postContactData(formattedData, target);
+      });
+    })();
 };

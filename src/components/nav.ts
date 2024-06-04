@@ -15,30 +15,43 @@ export const menu = () => {
   const navMenu = document.querySelector('#navMenu') as HTMLElement;
   const menuButton = document.querySelector('#navMenuButton') as HTMLElement;
   const menuCloseOffset = document.querySelector('.nav_x-offset') as HTMLElement;
-  const menuOpenAnimation = menuMotionOpen();
-  const menuCloseAnimation = menuMotionClose();
 
-  menuInit(windowLocation);
+  let menuOpenAnimation: any;
+  let menuCloseAnimation: any;
+
+  navMenu &&
+    (() => {
+      menuOpenAnimation = menuMotionOpen();
+      menuCloseAnimation = menuMotionClose();
+
+      menuInit(windowLocation);
+    })();
 
   // Menu Open/Close
   // --------------
   let menuIsOpen = false;
-  menuButton.addEventListener('click', () => {
-    menuIsOpen = !menuIsOpen;
+  menuButton &&
+    (() => {
+      menuButton.addEventListener('click', () => {
+        menuIsOpen = !menuIsOpen;
 
-    if (menuIsOpen === true) {
-      menuOpenAnimation.play(0);
-    } else {
-      menuCloseAnimation.play(0);
-      resetNav();
-    }
-  });
+        if (menuIsOpen === true) {
+          menuOpenAnimation.play(0);
+        } else {
+          menuCloseAnimation.play(0);
+          resetNav();
+        }
+      });
+    })();
 
-  menuCloseOffset.addEventListener('click', () => {
-    menuIsOpen = false;
-    menuCloseAnimation.play(0);
-    resetNav();
-  });
+  menuCloseOffset &&
+    (() => {
+      menuCloseOffset.addEventListener('click', () => {
+        menuIsOpen = false;
+        menuCloseAnimation.play(0);
+        resetNav();
+      });
+    })();
 
   document.addEventListener('keydown', (e) => {
     const keyPressed = e.key;
@@ -89,9 +102,12 @@ export const menu = () => {
   }
 
   // Cursor Y Movement
-  navMenu.addEventListener('mousemove', (e) => {
-    const mouseY = e.movementY;
+  navMenu &&
+    (() => {
+      navMenu.addEventListener('mousemove', (e) => {
+        const mouseY = e.movementY;
 
-    cursorArrowYMovement('default', mouseY);
-  });
+        cursorArrowYMovement('default', mouseY);
+      });
+    })();
 };
