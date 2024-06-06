@@ -216,7 +216,6 @@ export const menuLinkHoverOut = (curLink: HTMLElement) => {
 export const menuTransition = (type: string) => {
   const navBG = document.querySelector('.nav-ui_bg-container');
   const navBrand = [...document.querySelectorAll('.nav-ui_brand-image')];
-  const navBrandIcons = [...document.querySelectorAll('.nav-ui_interactive-logo')];
   const navMenuText = [...document.querySelectorAll('.nav-ui_menu-text')];
   const navMenuIcon = [...document.querySelectorAll('.nav-ui_icon-span')];
   const triggerElement = document.querySelector('.nav_scroll-trigger');
@@ -256,8 +255,6 @@ export const menuTransition = (type: string) => {
     animation.to(navBG, { opacity: 1, ease: 'power4.ouut' });
     animation.to(navBrand[1], { opacity: 0, ease: 'power4.out' }, '<');
     animation.to(navBrand[0], { opacity: 1, ease: 'power4.out' }, '<');
-    animation.to(navBrandIcons[0], { opacity: 0, ease: 'power4.out' }, '<');
-    animation.to(navBrandIcons[1], { opacity: 1, ease: 'power4.out' }, '<');
     animation.to(navMenuText, { color: '#EC2543' }, '<');
     animation.to(navMenuIcon, { backgroundColor: '#EC2543' }, '<');
   }
