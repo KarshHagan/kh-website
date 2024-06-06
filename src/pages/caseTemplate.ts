@@ -1,6 +1,5 @@
-import { cmsMediaGrid } from '$components/cmsMediaGrid';
+// import { cmsMediaGrid } from '$components/cmsMediaGrid';
 import { mediaSlider } from '$components/mediaSlider';
-import { stickyHeader } from '$components/stickyHeader';
 import { videoPlayer } from '$components/videoPlayer';
 import {
   csMediaSliderReveal,
@@ -26,7 +25,7 @@ export const caseTemplate = () => {
   csOverviewReveal();
 
   // Media Grids
-  cmsMediaGrid();
+  // cmsMediaGrid();
 
   // Media Slider
   csMediaSliderReveal();

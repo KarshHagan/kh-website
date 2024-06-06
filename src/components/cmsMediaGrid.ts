@@ -1,5 +1,6 @@
 export const cmsMediaGrid = () => {
   const mediaBlocks = [...document.querySelectorAll('[data-media-block]')];
+  console.log([...mediaBlocks]);
   let setIndex = 0;
 
   for (let i = 0; i < mediaBlocks.length; i++) {
