@@ -7,6 +7,7 @@ export const filterContent = () => {
   let renderQueue: Element[] = [];
   const masterList = [...document.querySelectorAll('[data-filter-item]')];
   const filterCheckboxes = [...document.querySelectorAll('[data-filter-checkbox]')];
+  const searchInput = document.querySelector('[data-search-input]') as HTMLInputElement;
   const initialFilter = filterCheckboxes[0].parentElement as HTMLElement;
 
   for (const i in filterCheckboxes) {

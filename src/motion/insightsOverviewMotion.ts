@@ -32,6 +32,7 @@ export const isoRevealAnimation = () => {
   const headerOverview = fixedHeaderSection.querySelector('p');
   const overline = heroSection.querySelector('.fixed-header_overline');
   const filterButton = [...document.querySelectorAll('.work-filter_item')];
+  const searchInput = document.querySelector('[data-search-input]') as HTMLInputElement;
   const workGrid = [...document.querySelectorAll('.insights_wrapper')];
 
   const animation = gsap.timeline({
@@ -51,7 +52,7 @@ export const isoRevealAnimation = () => {
   animation.from(overline, { duration: 1, width: '0%', ease: 'expo.inOut' }, '<');
   animation.from(headerOverview, { duration: 1.5, opacity: 0, ease: 'power4.inOut' }, '<');
   animation.from(
-    filterButton,
+    [filterButton, searchInput],
     {
       duration: 1,
       y: '2rem',
