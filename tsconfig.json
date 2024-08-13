@@ -1,7 +1,7 @@
 {
   "extends": "@finsweet/tsconfig",
   "compilerOptions": {
-    "ignoreDeprecations": "5.0",
+    // "ignoreDeprecations": "5.0",
     "rootDir": ".",
     "baseUrl": "./",
     "paths": {
@@ -10,5 +10,8 @@
       "$pages/*": ["src/pages/*"],
       "$components/*": ["src/components/*"]
     }
-  }
+  },
+  "preserveValueImports": false,
+  "importsNotUsedAsValues": "remove",
+  "verbatimModuleSyntax": true,
 }
