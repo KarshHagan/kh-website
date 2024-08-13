@@ -14,7 +14,10 @@ const openai = new OpenAI({
 app.post('/khChat', async (req, res) => {
   try {
     const completion = await openai.chat.completions.create({
-      messages: [{ role: 'system', content: 'You are a helpful assistant.' }],
+      messages: [
+        { role: 'system', content: 'You are a helpful assistant.' },
+        // { role: 'user', content: 'Who won the world series in 2020?' },
+      ],
       model: 'gpt-3.5-turbo',
     });
     return res.status(200).json({
@@ -30,8 +33,8 @@ app.post('/khChat', async (req, res) => {
   }
 });
 // -------------
-
-const port = process.env.PORT || 3000;
+// console.log(process.env);
+const port = 4000;
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
