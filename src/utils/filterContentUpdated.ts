@@ -13,12 +13,8 @@ export const filterContentUpdated = () => {
   const formInputs = [...filterForm.querySelectorAll('input')];
 
   // Disable Form
-  formInputs.forEach((input) => {
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.code === 'Enter') {
-        e.preventDefault(); // Prevent the form submission
-      }
-    });
+  filterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
   });
 
   // Initial filtering setup
