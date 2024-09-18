@@ -31,7 +31,6 @@ export const footer = () => {
         const footerHeight = parseInt(getComputedStyle(footer).height.split('px')[0]) - 64;
 
         footerSpacer.style.height = footerHeight + 'px';
-        console.log(footerHeight);
       })();
   }
 
