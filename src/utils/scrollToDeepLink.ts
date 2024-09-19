@@ -16,59 +16,56 @@ export const setDeepLinks = () => {
       let setText = '';
       let linkTag = '';
 
-      console.log('here', linkType);
-
       if (linkType === 'home-services') {
-        const tempTitle = tempLink.querySelector('h3') as HTMLElement;
+        const tempTitle = tempLink.querySelector('h3')?.innerHTML as string;
         const tempButton = tempLink.querySelector('a');
 
-        // console.log(tempButton);
-        tempButton?.addEventListener('click', () => {
-          localStorage.setItem('filterTag', linkTag);
-        });
-
-        setText = tempTitle.innerHTML as string;
+        if (tempButton)
+          tempButton.addEventListener('click', () => {
+            linkTag = tempTitle.split(' ')[0] as string;
+            localStorage.setItem('filterTag', linkTag);
+          });
       } else if (linkType === 'footer-work') {
         const tempTitle = tempLink.children[0] as HTMLElement;
         setText = tempTitle.innerHTML as string;
+        linkTag = setText.split(' ')[0] as string;
+
+        tempLink.addEventListener('click', () => {
+          localStorage.setItem('filterTag', linkTag);
+        });
       } else if (linkType === 'services-work') {
         const tempParent = tempLink.parentNode?.parentNode as HTMLElement;
         const tempTitle = tempParent.querySelector('h2') as HTMLElement;
         setText = tempTitle.innerHTML;
+        linkTag = setText.split(' ')[0] as string;
+
+        tempLink.addEventListener('click', () => {
+          localStorage.setItem('filterTag', linkTag);
+        });
       }
-
-      linkTag = setText.split(' ')[0] as string;
-
-      // tempLink.addEventListener('click', () => {
-      //   console.log('set', linkTag);
-      //   localStorage.setItem('filterTag', linkTag);
-      // });
     }
   }
 };
 
 export const scrollToDeepLinks = () => {
-  console.log('scroll to services');
   if (localStorage.length > 0) {
-    const scrollSection = localStorage.getItem('tag');
-
-    console.log('has cookie');
-
-    setTimeout(() => {
-      gsap.to(window, {
-        duration: 2,
-        scrollTo: { y: '#' + scrollSection, offsetY: 100 },
-        ease: 'power4.out',
-        onComplete: () => {
-          localStorage.clear();
-        },
-      });
-    }, 1000);
+    const scrollSection = localStorage.getItem('filterTag');
+    if (scrollSection !== '')
+      setTimeout(() => {
+        gsap.to(window, {
+          duration: 2,
+          scrollTo: { y: '#' + scrollSection, offsetY: 100 },
+          ease: 'power4.out',
+          onComplete: () => {
+            localStorage.clear();
+          },
+        });
+      }, 1000);
   }
 };
 
 export const filterDeepLinks = () => {
-  const hasTag = localStorage.getItem('tag');
+  const hasTag = localStorage.getItem('filterTag');
   if (hasTag !== null) {
     const filterTag = localStorage.getItem('filterTag') as string;
     const masterList = [...document.querySelectorAll('[data-filter-item]')];
