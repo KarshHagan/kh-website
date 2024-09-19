@@ -42,15 +42,6 @@ export const accordianList = () => {
   initAccordian();
   accordianImageHover();
 
-  // Set service number
-  // ------------------
-  // const serviceNumbers = [...document.querySelectorAll('.home-services_number')];
-
-  // for (let i = 0; i < serviceNumbers.length; i++) {
-  //   const temp = serviceNumbers[i] as HTMLElement;
-  //   temp.innerHTML = '0' + (i + 1);
-  // }
-
   // MAIN
   // ------------
   const services = [...document.querySelectorAll('.home-services_item')];
@@ -61,13 +52,15 @@ export const accordianList = () => {
     temp.dataset.test = String(i);
     temp.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
-      if (isOpen === false) {
-        accordianOpen(target);
-      } else if (isOpen === true) {
-        accordianClose(target);
-      }
+      if (target.matches('.button') === false) {
+        if (isOpen === false) {
+          accordianOpen(target);
+        } else if (isOpen === true) {
+          accordianClose(target);
+        }
 
-      isOpen = !isOpen;
+        isOpen = !isOpen;
+      }
     });
 
     // Hover Effects
@@ -105,7 +98,6 @@ export const accordianList = () => {
           gsap.to(hideElement, { opacity: 1, ease: 'power4.out' });
         }
       });
-
       temp.addEventListener('mouseleave', (e) => {
         const ele = e.target as HTMLElement;
         const eleId = Number(ele.dataset.test);
@@ -147,6 +139,9 @@ export const accordianClose = (element: HTMLElement) => {
   const hiddenContent = element.children[1] as HTMLElement;
   const buttonWrap = element.children[2] as HTMLElement;
   const sectionCarrot = element.querySelector('.home-services_carrot-icon');
+
+  console.log('here', hiddenContent, element);
+
   const animation = gsap.timeline();
   animation.to([hiddenContent, buttonWrap], {
     duration: 1,

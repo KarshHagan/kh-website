@@ -32,6 +32,10 @@ window.Webflow.push(() => {
     smoothScroll();
   }
 
+  window.addEventListener('click', (e) => {
+    console.log('-->', e.target);
+  });
+
   menu();
   inertiaMovement();
   pageTransition();

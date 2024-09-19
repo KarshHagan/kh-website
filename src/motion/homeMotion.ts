@@ -206,7 +206,9 @@ export const overviewReveal = () => {
   const overviewTexture = overviewSection.querySelector('.home-overview_texture-overlay');
   const overviewLabel = overviewSection.querySelector('.module_label-container');
   const overviewVideo = overviewSection.querySelector('.home-overview_video-embed');
-  const overviewAwards = overviewSection.querySelector('.text-overview_award-wrap');
+  const overviewAwards = [...overviewSection.querySelectorAll('.about-awards_item')];
+
+  // console.log('here', overviewAwards);
 
   const animation = gsap.timeline({
     scrollTrigger: {
@@ -251,8 +253,8 @@ export const overviewReveal = () => {
   );
   animation.from(
     overviewAwards,
-    { duration: 1, opacity: 0, y: setYOffset, ease: 'power4.out' },
-    '<'
+    { duration: 1, opacity: 0, y: setYOffset, stagger: 0.2, ease: 'power4.out' },
+    '<0.8'
   );
   animation.from(
     overviewVideo,
@@ -262,7 +264,7 @@ export const overviewReveal = () => {
       opacity: 0,
       ease: 'power4.out',
     },
-    '<'
+    '<0.2'
   );
 };
 
