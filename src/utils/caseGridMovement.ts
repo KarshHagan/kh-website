@@ -31,10 +31,10 @@ export const createTimeline = () => {
       end: 'bottom bottom',
       scrub: true,
       toggleActions: 'play none none reverse',
-      markers: {
-        startColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
-        endColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
-      },
+      // markers: {
+      //   startColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
+      //   endColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
+      // },
     },
   });
 
@@ -122,14 +122,4 @@ export const updateScrollEffect = () => {
     curAnimation = updatedAnimation;
     createScrollerAnimation(curAnimation);
   }, 500);
-};
-
-export const logScrollDetails = () => {
-  const workItems = [...document.querySelectorAll('.work-grid_item')];
-  for (const i in workItems) {
-    const temp = workItems[i] as HTMLElement;
-    const tempScrollSpeed = temp.dataset.scrollSpeed;
-
-    console.log('SPEED', tempScrollSpeed);
-  }
 };

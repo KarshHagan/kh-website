@@ -56,7 +56,6 @@ export const loadContent = () => {
 
   function revealLoad(newElements: HTMLElement[], scrollPos: number) {
     const firstChildren = newElements.map((element) => element.firstElementChild as HTMLElement);
-    console.log('HERE', firstChildren);
     const animation = gsap.timeline();
     animation.set(firstChildren, { display: 'grid' });
     animation.set(newElements, { display: 'block', opacity: 0, y: '2rem' });

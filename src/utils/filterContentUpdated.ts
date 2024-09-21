@@ -43,39 +43,46 @@ export class FilterContent {
 
     this.renderQueue = [...this.masterList];
 
-    if (clickedCheckbox.checked) {
-      clickedSpan.style.color = '#EEEBE6';
-
-      if (filterText !== 'All') {
-        this.activeFilters.push(filterText);
-        this.renderQueue = this.filterList(this.renderQueue, this.activeFilters);
-
-        this.hideAll();
-        filterReveal(this.renderQueue);
-        this.updateInitialCheckbox('hide');
-      } else {
-        this.resetFilters();
-      }
+    if (filterText === 'All') {
+      this.activeFilters = [];
+      this.resetAllCheckboxes();
+      this.renderQueue = [...this.masterList];
+      this.hideAll();
+      filterReveal(this.renderQueue);
+      this.updateInitialCheckbox('show');
     } else {
-      clickedSpan.style.color = '#EC2543';
+      if (clickedCheckbox.checked) {
+        clickedSpan.style.color = '#EEEBE6';
 
-      if (filterText !== 'All') {
-        this.activeFilters = this.activeFilters.filter((filter) => filter !== filterText);
-
-        if (this.activeFilters.length === 0) {
-          this.hideAll();
-          filterReveal(this.renderQueue);
-          this.updateInitialCheckbox('show');
-        } else {
+        if (filterText !== 'All') {
+          this.activeFilters.push(filterText);
           this.renderQueue = this.filterList(this.renderQueue, this.activeFilters);
+
           this.hideAll();
           filterReveal(this.renderQueue);
+          this.updateInitialCheckbox('hide');
+        } else {
+          this.resetFilters();
+        }
+      } else {
+        clickedSpan.style.color = '#EC2543';
+
+        if (filterText !== 'All') {
+          this.activeFilters = this.activeFilters.filter((filter) => filter !== filterText);
+
+          if (this.activeFilters.length === 0) {
+            this.hideAll();
+            filterReveal(this.renderQueue);
+            this.updateInitialCheckbox('show');
+          } else {
+            this.renderQueue = this.filterList(this.renderQueue, this.activeFilters);
+            this.hideAll();
+            filterReveal(this.renderQueue);
+          }
         }
       }
     }
 
-    // const windowLocation = window.location.pathname;
-    // console.log('UU', windowLocation);
     updateScrollEffect();
   }
 
@@ -90,12 +97,15 @@ export class FilterContent {
   private updateInitialCheckbox(state: 'hide' | 'show') {
     const checkboxInput = this.initialFilter.querySelector('input') as HTMLInputElement;
     const checkboxText = this.initialFilter.querySelector('span') as HTMLElement;
+    const checkboxBG = this.initialFilter.querySelector('.work-filter_checkbox') as HTMLElement;
 
     if (state === 'hide') {
       checkboxInput.checked = false;
+      checkboxBG.style.backgroundColor = '#EEEBE6';
       checkboxText.style.color = '#EC2543';
     } else {
       checkboxInput.checked = true;
+      checkboxBG.style.backgroundColor = '#EC2543';
       checkboxText.style.color = '#EEEBE6';
     }
   }
@@ -111,10 +121,12 @@ export class FilterContent {
   private resetAllCheckboxes() {
     this.filterCheckboxes.forEach((checkbox, index) => {
       const parent = checkbox.parentElement as HTMLElement;
+      const tempContainer = parent.children[0] as HTMLElement;
       const textElement = parent.querySelector('span') as HTMLElement;
 
       if (index !== 0) {
         checkbox.checked = false;
+        tempContainer.classList.remove('w--redirected-checked');
         textElement.style.color = '#EC2543';
       }
     });
