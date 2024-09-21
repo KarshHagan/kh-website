@@ -31,10 +31,10 @@ export const createTimeline = () => {
       end: 'bottom bottom',
       scrub: true,
       toggleActions: 'play none none reverse',
-      // markers: {
-      //   startColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
-      //   endColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
-      // },
+      markers: {
+        startColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
+        endColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
+      },
     },
   });
 
@@ -42,6 +42,8 @@ export const createTimeline = () => {
 };
 
 export const createScrollerAnimation = (animation: gsap.core.Timeline) => {
+  console.log('HERE', scrollSection);
+
   const scrollElements = [...scrollSection.querySelectorAll('[data-scroll-speed]')];
 
   for (const j in scrollElements) {

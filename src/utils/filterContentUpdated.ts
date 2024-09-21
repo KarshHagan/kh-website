@@ -1,184 +1,156 @@
 import { filterReveal } from '$motion/filterReveal';
 import { updateScrollEffect } from '$utils/caseGridMovement';
 
-export const filterContentUpdated = () => {
-  const activeFilters: string[] = [];
-  const renderQueue: Element[] = [];
-  const filterForm = document.querySelector('#filter-form') as HTMLElement;
-  const masterList = [...document.querySelectorAll('[data-filter-item]')];
-  const filterCheckboxes = [...document.querySelectorAll('[data-filter-checkbox]')];
-  const searchInput = document.querySelector('[data-search-input]') as HTMLInputElement;
-  const initialFilter = filterCheckboxes[0].parentElement as HTMLElement;
+export class FilterContent {
+  private activeFilters: string[] = [];
+  private renderQueue: Element[] = [];
+  private filterForm: HTMLElement;
+  private masterList: Element[];
+  private filterCheckboxes: HTMLInputElement[];
+  private searchInput: HTMLInputElement;
+  private initialFilter: HTMLElement;
 
-  const formInputs = [...filterForm.querySelectorAll('input')];
+  constructor() {
+    this.filterForm = document.querySelector('#filter-form') as HTMLElement;
+    this.masterList = Array.from(document.querySelectorAll('[data-filter-item]'));
+    this.filterCheckboxes = Array.from(
+      document.querySelectorAll('[data-filter-checkbox]')
+    ) as HTMLInputElement[];
+    this.searchInput = document.querySelector('[data-search-input]') as HTMLInputElement;
+    this.initialFilter = this.filterCheckboxes[0].parentElement as HTMLElement;
 
-  // Disable Form
-  filterForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-  });
-
-  // Initial filtering setup
-  for (const i in filterCheckboxes) {
-    const tempCheckbox = filterCheckboxes[i] as HTMLInputElement;
-
-    tempCheckbox.addEventListener('click', (e) => {
-      handleFilterClick(e, masterList, activeFilters, renderQueue, initialFilter);
-    });
+    this.initEventListeners();
   }
 
-  // Search functionality
-  searchInput.addEventListener('input', (e) => {
-    const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
-    const filteredList = filterList(masterList, activeFilters);
-    const searchResults = searchList(filteredList, searchTerm);
+  private initEventListeners() {
+    // Disable form submission
+    this.filterForm.addEventListener('submit', (e) => e.preventDefault());
 
-    renderUpdate(searchResults);
-  });
+    // Initial filtering setup
+    this.filterCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener('click', (e) => this.handleFilterClick(e));
+    });
 
-  // Handle filter click events
-  function handleFilterClick(
-    e: Event,
-    masterList: Element[],
-    activeFilters: string[],
-    renderQueue: Element[],
-    initialFilter: HTMLElement
-  ) {
+    // Search functionality
+    this.searchInput.addEventListener('input', (e) => this.handleSearchInput(e));
+  }
+
+  private handleFilterClick(e: Event) {
     const clickedCheckbox = e.target as HTMLInputElement;
     const clickedParent = clickedCheckbox.parentElement as HTMLElement;
     const clickedSpan = clickedParent.querySelector('span') as HTMLElement;
-    let filterText = clickedSpan.innerHTML as string;
-    filterText = filterText.split(' ')[0] as string;
+    const filterText = clickedSpan?.innerHTML.split(' ')[0] || '';
 
-    renderQueue = masterList;
+    this.renderQueue = [...this.masterList];
 
-    if (clickedCheckbox.checked === true) {
+    if (clickedCheckbox.checked) {
       clickedSpan.style.color = '#EEEBE6';
 
       if (filterText !== 'All') {
-        activeFilters.push(filterText);
-        const tempList = filterList(renderQueue, activeFilters);
-        renderQueue = tempList;
+        this.activeFilters.push(filterText);
+        this.renderQueue = this.filterList(this.renderQueue, this.activeFilters);
 
-        hideAll();
-        filterReveal(renderQueue);
-        updateInitialCheckbox(initialFilter, 'hide');
-
-        // updateScrollEffect();
-      }
-
-      if (filterText === 'All') {
-        activeFilters = [];
-        renderQueue = masterList;
-        hideAll();
-        filterReveal(renderQueue);
-        allReset();
-
-        // updateScrollEffect();
+        this.hideAll();
+        filterReveal(this.renderQueue);
+        this.updateInitialCheckbox('hide');
+      } else {
+        this.resetFilters();
       }
     } else {
       clickedSpan.style.color = '#EC2543';
 
       if (filterText !== 'All') {
-        const updatedFilters = activeFilters.filter((item) => item !== filterText);
-        activeFilters = updatedFilters;
+        this.activeFilters = this.activeFilters.filter((filter) => filter !== filterText);
 
-        if (activeFilters.length < 1) {
-          hideAll();
-          filterReveal(renderQueue);
-          updateInitialCheckbox(initialFilter, 'show');
-          updateScrollEffect();
+        if (this.activeFilters.length === 0) {
+          this.hideAll();
+          filterReveal(this.renderQueue);
+          this.updateInitialCheckbox('show');
         } else {
-          const tempList = filterList(renderQueue, activeFilters);
-          renderQueue = tempList;
-          hideAll();
-          filterReveal(renderQueue);
-          updateScrollEffect();
+          this.renderQueue = this.filterList(this.renderQueue, this.activeFilters);
+          this.hideAll();
+          filterReveal(this.renderQueue);
         }
       }
     }
+    updateScrollEffect();
   }
 
-  // HELPERS
-  function updateInitialCheckbox(initialFilter: Element, setState: string) {
-    const checkboxContainer = initialFilter.children[0] as HTMLElement;
-    const checkboxInput = initialFilter.children[1] as HTMLInputElement;
-    const checkboxText = initialFilter.children[2] as HTMLElement;
+  private handleSearchInput(e: Event) {
+    const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+    const filteredList = this.filterList(this.masterList, this.activeFilters);
+    const searchResults = this.searchList(filteredList, searchTerm);
 
-    if (setState === 'hide') {
+    this.renderUpdate(searchResults);
+  }
+
+  private updateInitialCheckbox(state: 'hide' | 'show') {
+    const checkboxInput = this.initialFilter.querySelector('input') as HTMLInputElement;
+    const checkboxText = this.initialFilter.querySelector('span') as HTMLElement;
+
+    if (state === 'hide') {
       checkboxInput.checked = false;
-      checkboxContainer.classList.remove('w--redirected-checked');
       checkboxText.style.color = '#EC2543';
-    } else if (setState === 'show') {
+    } else {
       checkboxInput.checked = true;
-      checkboxContainer.classList.add('w--redirected-checked');
       checkboxText.style.color = '#EEEBE6';
     }
   }
-  function allReset() {
-    const filterCheckboxes = [...document.querySelectorAll('[data-filter-checkbox]')];
 
-    for (let i = 0; i < filterCheckboxes.length; i++) {
-      const temp = filterCheckboxes[i] as HTMLInputElement;
-      const tempParent = temp.parentElement as HTMLElement;
-      const tempContainer = tempParent.children[0] as HTMLElement;
-      const tempText = tempParent.querySelector('span') as HTMLElement;
+  private resetFilters() {
+    this.activeFilters = [];
+    this.renderQueue = [...this.masterList];
+    this.hideAll();
+    filterReveal(this.renderQueue);
+    this.resetAllCheckboxes();
+  }
 
-      if (i !== 0) {
-        temp.checked = false;
-        tempContainer.classList.remove('w--redirected-checked');
-        tempText.style.color = '#EC2543';
+  private resetAllCheckboxes() {
+    this.filterCheckboxes.forEach((checkbox, index) => {
+      const parent = checkbox.parentElement as HTMLElement;
+      const textElement = parent.querySelector('span') as HTMLElement;
+
+      if (index !== 0) {
+        checkbox.checked = false;
+        textElement.style.color = '#EC2543';
       }
-    }
-  }
-};
-
-export const renderUpdate = (items: Element[]) => {
-  // First, hide all elements
-  hideAll();
-
-  // Then, remove the hide class from the items to be displayed
-  for (const i in items) {
-    const element = items[i] as HTMLElement;
-    element.style.display = ''; // Reset any inline display styles
-    element.classList.remove('hide');
-  }
-};
-
-export const filterList = (items: Element[], filters: string[]) => {
-  if (filters.length === 0) {
-    return items;
+    });
   }
 
-  const filteredList = items.filter((item) => {
-    const itemTemp = item as HTMLElement;
-    const itemTypes = [...itemTemp.querySelectorAll('[data-filter-item-type]')];
-
-    for (const i in itemTypes) {
-      const ele = itemTypes[i] as HTMLElement;
-      const serviceType = ele.innerHTML.split(' ')[0] as string;
-
-      if (filters.includes(serviceType)) {
-        return serviceType;
-      }
-    }
-  });
-
-  return filteredList;
-};
-
-export const searchList = (items: Element[], searchTerm: string) => {
-  if (!searchTerm) return items; // Return all items if search term is empty
-
-  return items.filter((item) => {
-    const itemText = item.textContent?.toLowerCase() || '';
-    return itemText.includes(searchTerm);
-  });
-};
-
-export const hideAll = () => {
-  const masterList = [...document.querySelectorAll('[data-filter-item]')];
-  for (const item of masterList) {
-    const temp = item as HTMLElement;
-    temp.style.display = 'none';
+  private renderUpdate(items: Element[]) {
+    this.hideAll();
+    items.forEach((item) => {
+      (item as HTMLElement).style.display = '';
+      item.classList.remove('hide');
+    });
   }
+
+  private filterList(items: Element[], filters: string[]): Element[] {
+    if (filters.length === 0) return items;
+
+    return items.filter((item) => {
+      const itemTypes = Array.from(item.querySelectorAll('[data-filter-item-type]'));
+      return itemTypes.some((ele) => filters.includes(ele.innerHTML.split(' ')[0]));
+    });
+  }
+
+  private searchList(items: Element[], searchTerm: string): Element[] {
+    if (!searchTerm) return items;
+
+    return items.filter((item) => {
+      const itemText = item.textContent?.toLowerCase() || '';
+      return itemText.includes(searchTerm);
+    });
+  }
+
+  private hideAll() {
+    this.masterList.forEach((item) => {
+      (item as HTMLElement).style.display = 'none';
+    });
+  }
+}
+
+// Initialize the filter content functionality
+export const filterContentUpdated = () => {
+  new FilterContent();
 };
