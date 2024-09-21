@@ -42,16 +42,16 @@ export const createTimeline = () => {
 };
 
 export const createScrollerAnimation = (animation: gsap.core.Timeline) => {
-  console.log('HERE', scrollSection);
+  if (scrollSection) {
+    const scrollElements = [...scrollSection.querySelectorAll('[data-scroll-speed]')];
 
-  const scrollElements = [...scrollSection.querySelectorAll('[data-scroll-speed]')];
+    for (const j in scrollElements) {
+      const tempElement = scrollElements[j] as HTMLElement;
+      const elementSpeed = Number(tempElement.dataset.scrollSpeed);
+      const setSpeed = elementSpeed;
 
-  for (const j in scrollElements) {
-    const tempElement = scrollElements[j] as HTMLElement;
-    const elementSpeed = Number(tempElement.dataset.scrollSpeed);
-    const setSpeed = elementSpeed;
-
-    animation.to(tempElement, { yPercent: setSpeed * 5, ease: 'none' }, '<');
+      animation.to(tempElement, { yPercent: setSpeed * 5, ease: 'none' }, '<');
+    }
   }
 };
 

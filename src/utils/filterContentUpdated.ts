@@ -73,6 +73,9 @@ export class FilterContent {
         }
       }
     }
+
+    // const windowLocation = window.location.pathname;
+    // console.log('UU', windowLocation);
     updateScrollEffect();
   }
 
