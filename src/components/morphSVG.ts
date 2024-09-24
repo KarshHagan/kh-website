@@ -25,7 +25,7 @@ export const initSVGMorph = () => {
     try {
       const data: string = await requestSVG('GET', svgData);
       svgEmbed.innerHTML = data;
-      //   console.log('HERE', data);
+      // console.log('HERE', data);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);

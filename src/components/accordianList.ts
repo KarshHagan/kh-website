@@ -78,18 +78,7 @@ export const accordianList = () => {
         const toKPoints = kPoints[eleId];
         const toHPoints = hPoints[eleId];
 
-        gsap.to(kBase, { morphSVG: { shape: toKPoints }, ease: 'Power4.out' });
-        gsap.to(hBase, { morphSVG: { shape: toHPoints }, ease: 'Power4.out' });
-
-        if (eleId === 0) {
-          gsap.to(hideElement, { opacity: 1, ease: 'power4.out' });
-        }
-      });
-      temp.addEventListener('touchstart', (e) => {
-        const ele = e.target as HTMLElement;
-        const eleId = Number(ele.dataset.test);
-        const toKPoints = kPoints[eleId];
-        const toHPoints = hPoints[eleId];
+        console.log('mouse enter');
 
         gsap.to(kBase, { morphSVG: { shape: toKPoints }, ease: 'Power4.out' });
         gsap.to(hBase, { morphSVG: { shape: toHPoints }, ease: 'Power4.out' });
@@ -139,8 +128,6 @@ export const accordianClose = (element: HTMLElement) => {
   const hiddenContent = element.children[1] as HTMLElement;
   const buttonWrap = element.children[2] as HTMLElement;
   const sectionCarrot = element.querySelector('.home-services_carrot-icon');
-
-  console.log('here', hiddenContent, element);
 
   const animation = gsap.timeline();
   animation.to([hiddenContent, buttonWrap], {
