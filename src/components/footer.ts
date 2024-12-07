@@ -25,7 +25,7 @@ export const footer = () => {
   function updateFooter() {
     const footerSpacer = document.querySelector('.section_footer-spacer') as HTMLElement;
     const footer = document.querySelector('.footer_component') as HTMLElement;
-    footerSpacer.style.minHeight = 'auto';
+    if (footer) footerSpacer.style.minHeight = 'auto';
     footer &&
       (() => {
         const footerHeight = parseInt(getComputedStyle(footer).height.split('px')[0]) - 64;
