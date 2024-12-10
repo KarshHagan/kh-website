@@ -20,6 +20,7 @@ export const filterContent = () => {
       let filterText = clickedSpan.innerHTML as string;
       filterText = filterText.split(' ')[0] as string;
 
+      console.log('filter text', filterText);
       renderQueue = masterList;
 
       if (clickedCheckbox.checked === true) {

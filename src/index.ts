@@ -3,6 +3,7 @@ import { cursorHover } from '$components/cursor';
 import { footer } from '$components/footer';
 import { menu } from '$components/nav';
 import { pageTransition } from '$components/pageTransition';
+// import { spline } from '$components/spline';
 import { about } from '$pages/about';
 import { careers } from '$pages/careers';
 import { caseOverview } from '$pages/caseOverview';
@@ -32,9 +33,12 @@ window.Webflow.push(() => {
     smoothScroll();
   }
 
-  window.addEventListener('click', (e) => {
-    console.log('-->', e.target);
-  });
+  // TESTING
+  // spline();
+
+  // window.addEventListener('click', (e) => {
+  //   console.log('-->', e.target);
+  // });
 
   menu();
   inertiaMovement();
