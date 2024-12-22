@@ -1,5 +1,5 @@
 /* eslint-disable simple-import-sort/imports */
-import { cursorHover } from '$components/cursor';
+// import { cursorHover } from '$components/cursor';
 import { cloneNode } from '@finsweet/ts-utils';
 
 export const careersFeed = () => {
@@ -37,6 +37,6 @@ export const careersFeed = () => {
 
     jobList.appendChild(newJob);
 
-    cursorHover();
+    // cursorHover();
   }
 };

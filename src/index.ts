@@ -1,5 +1,3 @@
-import { cursorMovement } from '$components/cursor';
-import { cursorHover } from '$components/cursor';
 import { footer } from '$components/footer';
 import { menu } from '$components/nav';
 import { pageTransition } from '$components/pageTransition';
@@ -18,8 +16,10 @@ import { services } from '$pages/services';
 import { terms } from '$pages/terms';
 import { editorCheck } from '$utils/editorCheck';
 import { inertiaMovement } from '$utils/intertiaMovement';
+import { loadComponent } from '$utils/loadComponent';
 import { setDeepLinks } from '$utils/scrollToDeepLink';
-import { smoothScroll } from '$utils/smoothScroll';
+// import { smoothScroll } from '$utils/smoothScroll';
+import lenis from '$utils/smoothScroll';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
@@ -30,7 +30,8 @@ window.Webflow.push(() => {
   // ---------------
   const isEditor = editorCheck();
   if (!isEditor) {
-    smoothScroll();
+    // smoothScroll();
+    lenis.start();
   }
 
   // TESTING
@@ -43,22 +44,14 @@ window.Webflow.push(() => {
   menu();
   inertiaMovement();
   pageTransition();
-  cursorMovement();
-  cursorHover();
+  // cursorMovement();
+  // cursorHover();
   setDeepLinks();
   footer();
   editorCheck();
 
-  function initComponent(selector: string, importModule: () => Promise<{ default: () => void }>) {
-    const element = document.querySelector(selector);
-    if (element) {
-      importModule().then((module) => {
-        module.default(); // Assuming the module has a default export
-      });
-    }
-  }
-
-  initComponent('.inter-map_component', () => import('$components/interactiveMap'));
+  loadComponent('.inter-map_component', () => import('$components/interactiveMap'));
+  loadComponent('.cursor_component', () => import('$components/cursor'));
 
   // ---------------
   // Page Routing
