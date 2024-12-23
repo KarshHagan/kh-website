@@ -27,6 +27,7 @@ export const cursor = () => {
       }
 
       gsap.set(this.cursor, { xPercent: -50, yPercent: -50 });
+      gsap.fromTo(this.cursor, { opacity: 0 }, { delay: 3, opacity: 1 });
 
       const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
       const mouse = { x: pos.x, y: pos.y };

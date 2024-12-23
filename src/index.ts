@@ -1,4 +1,3 @@
-import { footer } from '$components/footer';
 import { menu } from '$components/nav';
 import { pageTransition } from '$components/pageTransition';
 // import { spline } from '$components/spline';
@@ -47,11 +46,12 @@ window.Webflow.push(() => {
   // cursorMovement();
   // cursorHover();
   setDeepLinks();
-  footer();
-  editorCheck();
+  // footer();
+  // editorCheck();
 
   loadComponent('.inter-map_component', () => import('$components/interactiveMap'));
   loadComponent('.cursor_component', () => import('$components/cursor'));
+  loadComponent('.footer_component', () => import('$components/footer'));
 
   // ---------------
   // Page Routing
