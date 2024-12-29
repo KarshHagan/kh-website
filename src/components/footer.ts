@@ -32,7 +32,7 @@ export const footer = () => {
       if (footer) footerSpacer.style.minHeight = 'auto';
       if (footer) {
         const footerHeight = parseInt(getComputedStyle(footer).height.split('px')[0]) - 64;
-        console.log('FH', footerHeight);
+        // console.log('FH', footerHeight);
         footerSpacer.style.height = `${footerHeight}px`;
       }
     }
