@@ -30,6 +30,6 @@ export const headerReveal = () => {
     ease: 'power4.inOut',
   });
   tl.from(overline, { duration: 1, width: '0%', ease: 'expo.inOut' }, '<');
-  tl.from(headerContent, { duration: 1, opacity: 0, y: '1rem', ease: 'power4.inOut' }, '<');
+  tl.from(headerContent, { duration: 1, opacity: 0, y: '1rem', ease: 'power4.inOut' }, '<0.5');
 };
 export default headerReveal;

@@ -1,4 +1,10 @@
-import { metricsMotion, offerMotion } from '$motion/mxkh/mxMotion';
+import {
+  capabilityMotion,
+  metricsMotion,
+  offerMotion,
+  teamMotion,
+  workMotion,
+} from '$motion/mxkh/mxMotion';
 import { editorCheck } from '$utils/editorCheck';
 import { horizontalScrollText } from '$utils/horizontalScrollText';
 import loadComponent from '$utils/loadComponent';
@@ -35,4 +41,7 @@ window.Webflow.push(() => {
   loadComponent('.overview_component', () => import('$motion/mxkh/overviewReveal'));
   metricsMotion();
   offerMotion();
+  workMotion();
+  capabilityMotion();
+  teamMotion();
 });
