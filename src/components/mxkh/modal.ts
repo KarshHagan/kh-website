@@ -8,40 +8,33 @@ export const modal = () => {
     private workLinks: HTMLElement[];
     private workModals: HTMLElement[];
     private modalClose: HTMLAnchorElement;
-    private activeModal: string;
+    private activeModal: HTMLElement | null;
 
     constructor() {
       this.component = document.querySelector('.section_work-modal') as HTMLElement;
       this.workLinks = [...document.querySelectorAll('.work_item')].map(
         (item) => item as HTMLElement
       );
-      this.workModals = [...document.querySelectorAll('.w-modal_item')].map(
+      this.workModals = [...document.querySelectorAll('.modal_item')].map(
         (item) => item as HTMLElement
       );
       this.modalClose = document.querySelector('.modal_close') as HTMLAnchorElement;
-
-      this.workModals.forEach((item) => {
-        console.log('bbbb', item.dataset);
-      });
-
-      this.activeModal = '';
-
-      console.log('MODAL', this.modalClose);
+      this.activeModal = null;
 
       this.setListeners();
     }
 
     private setListeners() {
       this.workLinks.forEach((item) => {
-        console.log('Item', item);
         item.addEventListener('click', (e) => {
-          console.log('click', e.target);
           const element = e.target as HTMLElement;
           const data = String(element.dataset.work);
-          this.activeModal = data;
-          this.animateIn(data);
+          const aModal = this.workModals.filter((item) => {
+            return item.dataset.work === data;
+          });
 
-          console.log(data);
+          this.activeModal = aModal[0] as HTMLElement;
+          this.animateIn(aModal[0]);
         });
       });
 
@@ -50,19 +43,32 @@ export const modal = () => {
       });
     }
 
-    private animateIn(work: string) {
+    private animateIn(work: HTMLElement) {
       lenis.stop();
-      const tl = gsap.timeline();
-      const setModal = this.getElementByDataWork(work);
+      work.classList.remove('hide');
 
-      console.log('SET', setModal);
-      tl.to(this.component, { duration: 1, opacity: 1, display: 'block' });
+      const tl = gsap.timeline();
+
+      tl.fromTo(
+        this.component,
+        { y: '100vh', opacity: 0, display: 'none' },
+        { duration: 1, y: '0vh', opacity: 1, display: 'block', ease: 'power2.inOut' }
+      );
+      tl.fromTo(
+        work,
+        { opacity: 0, display: 'none' },
+        { duration: 1, opacity: 1, display: 'grid' },
+        '<0.8'
+      );
     }
 
     private animateOut() {
       lenis.start();
       const tl = gsap.timeline();
-      tl.to(this.component, { duration: 1, opacity: 0, display: 'none' });
+      tl.to(this.component, { duration: 1, opacity: 0, display: 'none', ease: 'power2.inOut' });
+      tl.to(this.activeModal, { duration: 1, opacity: 0, display: 'none', ease: 'power2.inOut' });
+      if (this.activeModal !== null) this.activeModal.classList.add('hide');
+      console.log('HERE', this.activeModal);
     }
 
     private getElementByDataWork(value: string): HTMLElement | undefined {

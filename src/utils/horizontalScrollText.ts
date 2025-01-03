@@ -24,7 +24,7 @@ export const horizontalScrollText = () => {
         trigger: tempSection,
         start: 'top 90%',
         end: '80% 90%',
-        markers: true,
+        // markers: true,
         scrub: true,
       },
     });

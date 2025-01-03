@@ -19,7 +19,7 @@ export const about = () => {
 
   // Clients
   abClientsReveal();
-  clientsHover();
+  // clientsHover();
 
   // Team
   draggableSlider();

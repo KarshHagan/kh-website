@@ -51,6 +51,7 @@ window.Webflow.push(() => {
 
   loadComponent('.inter-map_component', () => import('$components/interactiveMap'));
   loadComponent('.cursor_component', () => import('$components/cursor'));
+  loadComponent('.clients_component', () => import('$components/logoHover'));
   loadComponent('.footer_component', () => import('$components/footer'));
 
   // ---------------
