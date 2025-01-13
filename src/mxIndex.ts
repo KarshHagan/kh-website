@@ -17,9 +17,9 @@ window.Webflow.push(() => {
   // ---------------
   console.log('MX INDEX');
 
-  window.addEventListener('click', (e) => {
-    console.log('-->', e.target);
-  });
+  // window.addEventListener('click', (e) => {
+  //   console.log('-->', e.target);
+  // });
 
   const isEditor = editorCheck();
   if (isEditor) {
@@ -27,8 +27,6 @@ window.Webflow.push(() => {
   }
 
   horizontalScrollText();
-
-  console.log(document.querySelector('.modal_component'));
 
   loadComponent('.preloader_component', () => import('$components/mxkh/preloader'));
   loadComponent('.cursor_component', () => import('$components/cursor'));

@@ -68,15 +68,6 @@ export const modal = () => {
       tl.to(this.component, { duration: 1, opacity: 0, display: 'none', ease: 'power2.inOut' });
       tl.to(this.activeModal, { duration: 1, opacity: 0, display: 'none', ease: 'power2.inOut' });
       if (this.activeModal !== null) this.activeModal.classList.add('hide');
-      console.log('HERE', this.activeModal);
-    }
-
-    private getElementByDataWork(value: string): HTMLElement | undefined {
-      console.log(
-        'ayp',
-        this.workModals.find((item) => item)
-      );
-      return this.workModals.find((item) => item.dataset.work === value);
     }
   }
   new Modal();
