@@ -10,9 +10,14 @@ export const overviewReveal = () => {
     tl.fromTo(
       header.children,
       { y: '2rem', opacity: 0 },
-      { delay: 3, duration: 1, y: '0rem', opacity: 1, ease: 'sine.out' }
+      { delay: 3.5, duration: 1, y: '0rem', opacity: 1, ease: 'sine.out' }
     );
-    tl.fromTo(image, { opacity: 1 }, { duration: 1, opacity: 0, ease: 'power2.inOut' }, '<');
+    tl.fromTo(
+      image,
+      { opacity: 1, left: 0 },
+      { duration: 1, opacity: 1, left: '100%', ease: 'expo.inOut' },
+      '<'
+    );
   }
 };
 export default overviewReveal;

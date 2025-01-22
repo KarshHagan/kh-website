@@ -52,12 +52,12 @@ export const modal = () => {
       tl.fromTo(
         this.component,
         { y: '100vh', opacity: 0, display: 'none' },
-        { duration: 1, y: '0vh', opacity: 1, display: 'block', ease: 'power2.inOut' }
+        { duration: 1, y: '0vh', opacity: 1, display: 'block', ease: 'expo.inOut' }
       );
       tl.fromTo(
         work,
         { opacity: 0, display: 'none' },
-        { duration: 1, opacity: 1, display: 'grid' },
+        { duration: 1, opacity: 1, display: 'grid', ease: 'sine.out' },
         '<0.8'
       );
     }
@@ -65,8 +65,14 @@ export const modal = () => {
     private animateOut() {
       lenis.start();
       const tl = gsap.timeline();
-      tl.to(this.component, { duration: 1, opacity: 0, display: 'none', ease: 'power2.inOut' });
-      tl.to(this.activeModal, { duration: 1, opacity: 0, display: 'none', ease: 'power2.inOut' });
+      tl.to(this.component, {
+        duration: 1,
+        y: '100vh',
+        opacity: 0,
+        display: 'none',
+        ease: 'expo.inOut',
+      });
+      tl.to(this.activeModal, { duration: 1, opacity: 0, display: 'none', ease: 'expo.inOut' });
       if (this.activeModal !== null) this.activeModal.classList.add('hide');
     }
   }

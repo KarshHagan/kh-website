@@ -17,6 +17,28 @@ export const metricsMotion = () => {
   );
 };
 
+export const capabilityMotion = () => {
+  const component = document.querySelector('.section_approach') as HTMLElement;
+  const header = component.querySelector('.header_component') as HTMLElement;
+  const items = [...component.querySelectorAll('.grid_item')];
+
+  const tl = gsap.timeline({
+    scrollTrigger: { trigger: component, start: 'top 70%', end: 'top 70%' },
+  });
+
+  tl.fromTo(
+    header,
+    { opacity: 0, y: '3rem' },
+    { duration: 1, opacity: 1, y: '0rem', ease: 'sine.inOut' }
+  );
+  tl.fromTo(
+    items,
+    { opacity: 0, y: '3rem' },
+    { duration: 1, opacity: 1, y: '0rem', stagger: 0.2, ease: 'sine.out' },
+    '<'
+  );
+};
+
 export const offerMotion = () => {
   const component = document.querySelector('.section_offer') as HTMLElement;
   const header = component.querySelector('.header_component') as HTMLElement;
@@ -55,28 +77,6 @@ export const workMotion = () => {
     { opacity: 0, y: '3rem' },
     { duration: 1, opacity: 1, y: '0rem', stagger: 0.2, ease: 'sine.out' },
     '<0.5'
-  );
-};
-
-export const capabilityMotion = () => {
-  const component = document.querySelector('.section_approach') as HTMLElement;
-  const header = component.querySelector('.header_component') as HTMLElement;
-  const items = [...component.querySelectorAll('.grid_item')];
-
-  const tl = gsap.timeline({
-    scrollTrigger: { trigger: component, start: 'top 70%', end: 'top 70%' },
-  });
-
-  tl.fromTo(
-    header,
-    { opacity: 0, y: '2rem' },
-    { duration: 1, opacity: 1, y: '0rem', ease: 'sine.inOut' }
-  );
-  tl.fromTo(
-    items,
-    { opacity: 0, y: '3rem' },
-    { duration: 1, opacity: 1, y: '0rem', stagger: 0.2, ease: 'sine.out' },
-    '<'
   );
 };
 

@@ -1,3 +1,5 @@
+// eslint-disable-next-line simple-import-sort/imports
+import { breakpoints } from './breakpoints';
 import { gsap } from 'gsap';
 import { InertiaPlugin } from 'gsap/InertiaPlugin';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -9,9 +11,19 @@ export const horizontalScrollText = () => {
   const scroll = scrollSections[0].scrollWidth;
   const windowWidth = window.innerWidth;
 
-  const calcWidth = scroll - windowWidth;
+  let sp = '25%, 100%';
+  let ep = '80% 100%';
 
-  // console.log('HERE', calcWidth);
+  const bp = breakpoints()[0];
+
+  if (bp === 'mobile-landscape' || bp === 'mobile-portrait') {
+    sp = '10% 90%';
+    ep = '50% 90%';
+  }
+
+  console.log('!!!!', bp);
+
+  const calcWidth = scroll - windowWidth;
 
   for (const i in scrollSections) {
     const tempSection = scrollSections[i] as HTMLElement;
@@ -22,14 +34,16 @@ export const horizontalScrollText = () => {
     const animation = gsap.timeline({
       scrollTrigger: {
         trigger: tempSection,
-        start: 'top 90%',
-        end: '80% 90%',
-        // markers: true,
+        start: sp,
+        end: ep,
+        markers: true,
         scrub: true,
       },
     });
-    animation.to(textElement, { x: -calcWidth });
-    // animation.to(textElement, { inertia: { x: { velocity: -350, max: -calcWidth, min: 0 } } });
+    animation.fromTo(textElement, { x: 0 }, { x: -calcWidth, ease: 'linear' });
+    // animation.to(textElement, {
+    // inertia: { x: { velocity: -100, max: -calcWidth, min: 0 } },
+    // });
     // animation.to(textElement[1], { inertia: { x: { velocity: -350 } } }, '<');
   }
 };
