@@ -33,6 +33,7 @@ window.Webflow.push(() => {
   loadComponent('.modal_component', () => import('$components/mxkh/modal'));
   loadComponent('.clients_component', () => import('$components/logoHover'));
   loadComponent('.footer_component', () => import('$components/footer'));
+  loadComponent('.section_form', () => import('$components/mxkh/hsSubmission'));
 
   // Motion
   loadComponent('.header_component', () => import('$motion/mxkh/headerReveal'));
