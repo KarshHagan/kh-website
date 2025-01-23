@@ -41,7 +41,7 @@ export const preloader = () => {
         { duration: 1, opacity: 1, y: '0%', ease: 'power2.inOut' },
         '<'
       );
-      tl.to(this.logo, { delay: 0.5, duration: 1, top: '0', ease: 'expo.inOut' });
+      tl.to(this.logo, { delay: 0.5, duration: 1, top: '1rem', ease: 'expo.inOut' });
       tl.to(this.component, { opacity: 0, display: 'none', ease: 'power2.inOut' });
     }
   }

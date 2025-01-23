@@ -9,13 +9,13 @@ export const overviewReveal = () => {
     const tl = gsap.timeline();
     tl.fromTo(
       header.children,
-      { y: '2rem', opacity: 0 },
-      { delay: 3.5, duration: 1, y: '0rem', opacity: 1, ease: 'sine.out' }
+      { y: '4rem', opacity: 0 },
+      { delay: 4, duration: 1.5, y: '0rem', opacity: 1, ease: 'power4.inOut' }
     );
     tl.fromTo(
       image,
       { opacity: 1, left: 0 },
-      { duration: 1, opacity: 1, left: '100%', ease: 'expo.inOut' },
+      { duration: 1.5, opacity: 1, left: '100%', ease: 'expo.inOut' },
       '<'
     );
   }

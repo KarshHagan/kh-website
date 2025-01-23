@@ -13,7 +13,7 @@ export const metricsMotion = () => {
   tl.fromTo(
     items,
     { opacity: 0, y: '3rem' },
-    { duration: 1, opacity: 1, y: '0rem', stagger: 0.25, ease: 'power2.inOut' }
+    { duration: 1, opacity: 1, y: '0rem', stagger: 0.25, ease: 'power4.inOut' }
   );
 };
 
@@ -28,14 +28,14 @@ export const capabilityMotion = () => {
 
   tl.fromTo(
     header,
-    { opacity: 0, y: '3rem' },
-    { duration: 1, opacity: 1, y: '0rem', ease: 'sine.inOut' }
+    { opacity: 0, y: '4rem' },
+    { duration: 1, opacity: 1, y: '0rem', ease: 'power4.inOut' }
   );
   tl.fromTo(
     items,
-    { opacity: 0, y: '3rem' },
+    { opacity: 0, y: '4rem' },
     { duration: 1, opacity: 1, y: '0rem', stagger: 0.2, ease: 'sine.out' },
-    '<'
+    '<0.5'
   );
 };
 
@@ -48,13 +48,13 @@ export const offerMotion = () => {
   });
   tl.fromTo(
     header,
-    { opacity: 0, y: '3rem' },
-    { duration: 1, opacity: 1, y: '0rem', ease: 'sine.inOut' }
+    { opacity: 0, y: '4rem' },
+    { duration: 1, opacity: 1, y: '0rem', ease: 'power4.inOut' }
   );
   tl.fromTo(
     items,
-    { opacity: 0, y: '3rem' },
-    { duration: 1, opacity: 1, y: '0rem', stagger: 0.2, ease: 'sine.out' },
+    { opacity: 0, y: '4rem' },
+    { duration: 1, opacity: 1, y: '0rem', stagger: 0.5, ease: 'sine.out' },
     '<'
   );
 };

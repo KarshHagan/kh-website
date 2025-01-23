@@ -11,25 +11,23 @@ export const horizontalScrollText = () => {
   const scroll = scrollSections[0].scrollWidth;
   const windowWidth = window.innerWidth;
 
+  console.log('!!!!');
+
   let sp = '25%, 100%';
-  let ep = '80% 100%';
+  let ep = '100% 100%';
 
   const bp = breakpoints()[0];
 
   if (bp === 'mobile-landscape' || bp === 'mobile-portrait') {
-    sp = '10% 90%';
-    ep = '50% 90%';
+    sp = '10% 100%';
+    ep = '60% 100%';
   }
-
-  console.log('!!!!', bp);
 
   const calcWidth = scroll - windowWidth;
 
   for (const i in scrollSections) {
     const tempSection = scrollSections[i] as HTMLElement;
     const textElement = [...tempSection.querySelectorAll('[data-scroll-text]')];
-
-    // console.log(tempSection, textElement);
 
     const animation = gsap.timeline({
       scrollTrigger: {
