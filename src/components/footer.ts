@@ -43,9 +43,8 @@ export const footer = () => {
         footerForm.addEventListener('submit', (e) => {
           e.preventDefault();
           const target = e.target as HTMLFormElement;
-          const formData = new FormData(target);
 
-          const formattedData = generateHubspotJSON(formData, target);
+          const formattedData = generateHubspotJSON(target);
           postContactData(formattedData, target);
         });
       }
