@@ -11,9 +11,6 @@ export const horizontalScrollText = () => {
   const scroll = scrollSections[0].scrollWidth;
   const windowWidth = window.innerWidth;
 
-  let sp = '25%, 100%';
-  let ep = '100% 100%';
-
   const bp = breakpoints()[0];
 
   const calcWidth = scroll - windowWidth;
