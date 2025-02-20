@@ -15,7 +15,7 @@ window.Webflow.push(() => {
   // ---------------
   // Site Globals
   // ---------------
-  console.log('MX INDEX');
+  console.log('🌐 MXKH 🌐');
 
   // window.addEventListener('click', (e) => {
   //   console.log('-->', e.target);
