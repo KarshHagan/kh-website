@@ -21,11 +21,7 @@ export const headerReveal = () => {
       headerSplit.revert();
     },
   });
-  tl.fromTo(
-    overline,
-    { width: '0%' },
-    { duration: 1, delay: 2.5, width: '100%', ease: 'expo.inOut' }
-  );
+  tl.fromTo(overline, { width: '0%' }, { duration: 1, delay: 3, width: '100%', ease: 'expo.out' });
   tl.from(
     headerSplit.lines,
     {
@@ -33,10 +29,10 @@ export const headerReveal = () => {
       y: '4rem',
       opacity: 0,
       stagger: 0.1,
-      ease: 'power4.inOut',
+      ease: 'power4.out',
     },
-    '<0.5'
+    '<'
   );
-  tl.from(headerContent, { duration: 1.5, opacity: 0, y: '4rem', ease: 'power4.inOut' }, '<');
+  tl.from(headerContent, { duration: 1.5, opacity: 0, y: '4rem', ease: 'power4.out' }, '<0.2');
 };
 export default headerReveal;

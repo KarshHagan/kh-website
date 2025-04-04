@@ -29,7 +29,6 @@ window.Webflow.push(() => {
   // ---------------
   const isEditor = editorCheck();
   if (!isEditor) {
-    // smoothScroll();
     lenis.start();
   }
 
@@ -43,11 +42,7 @@ window.Webflow.push(() => {
   menu();
   inertiaMovement();
   pageTransition();
-  // cursorMovement();
-  // cursorHover();
   setDeepLinks();
-  // footer();
-  // editorCheck();
 
   loadComponent('.section_home-hero', () => import('$components/heroTextMovement'));
   loadComponent('.inter-map_component', () => import('$components/interactiveMap'));

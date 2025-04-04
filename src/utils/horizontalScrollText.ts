@@ -13,12 +13,14 @@ export const horizontalScrollText = () => {
 
   const bp = breakpoints()[0];
 
-  const calcWidth = scroll - windowWidth;
+  let calcWidth = scroll - windowWidth;
 
   for (const i in scrollSections) {
     const tempSection = scrollSections[i] as HTMLElement;
     const textElement = [...tempSection.querySelectorAll('[data-scroll-text]')];
     const scrollType = tempSection.dataset.scrollTextWrap;
+
+    if (calcWidth > 1000) calcWidth = 1000;
 
     // Default
     let sp = '25%, 100%';
