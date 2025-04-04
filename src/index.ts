@@ -49,6 +49,7 @@ window.Webflow.push(() => {
   // footer();
   // editorCheck();
 
+  loadComponent('.section_home-hero', () => import('$components/heroTextMovement'));
   loadComponent('.inter-map_component', () => import('$components/interactiveMap'));
   loadComponent('.cursor_component', () => import('$components/cursor'));
   loadComponent('.clients_component', () => import('$components/logoHover'));

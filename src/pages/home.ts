@@ -7,7 +7,6 @@ import {
   focusReveal,
   heroReveal,
   heroScroll,
-  heroTextMovement,
   overviewReveal,
   servicesReveal,
 } from '$motion/homeMotion';
@@ -24,7 +23,7 @@ export const home = () => {
   // Hero
   heroReveal();
   heroScroll();
-  heroTextMovement();
+  // heroTextMovement();
 
   // Overview
   overviewReveal();

@@ -96,61 +96,78 @@ export const heroScroll = () => {
 
 // Hero Scrolled Text Movement
 // ---------------------------
-export const heroTextMovement = () => {
-  const heroSection = document.querySelector('.section_home-hero') as HTMLElement;
-  const maskedTrack = heroSection.querySelector('.home-hero_text-track.is-masked') as HTMLElement;
-  const bgTrack = heroSection.querySelector('.home-hero_text-track.is-bg') as HTMLElement;
+// export const heroTextMovement = () => {
+//   const heroSection = document.querySelector('.section_home-hero') as HTMLElement;
+//   const maskedTrack = heroSection.querySelector('.home-hero_text-track.is-masked') as HTMLElement;
+//   const bgTrack = heroSection.querySelector('.home-hero_text-track.is-bg') as HTMLElement;
 
-  const maskedChildren = [...maskedTrack.childNodes];
-  const bgChildren = [...bgTrack.childNodes];
+//   const maskedChildren = [...maskedTrack.childNodes];
+//   const bgChildren = [...bgTrack.childNodes];
 
-  const midChildren = [];
-  const outChildren = [];
+//   const midChildren = [];
+//   const outChildren = [];
 
-  for (let i = 0; i < 3; i++) {
-    const maskedTemp = maskedChildren[i] as HTMLElement;
-    const bgTemp = bgChildren[i] as HTMLElement;
+//   for (let i = 0; i < 3; i++) {
+//     const maskedTemp = maskedChildren[i] as HTMLElement;
+//     const bgTemp = bgChildren[i] as HTMLElement;
 
-    if (maskedTemp.classList.contains('is-mid') || bgTemp.classList.contains('is-mid')) {
-      midChildren.push(maskedTemp);
-      midChildren.push(bgTemp);
-    } else {
-      outChildren.push(maskedTemp);
-      outChildren.push(bgTemp);
-    }
-  }
+//     if (maskedTemp.classList.contains('is-mid') || bgTemp.classList.contains('is-mid')) {
+//       midChildren.push(maskedTemp);
+//       midChildren.push(bgTemp);
+//     } else {
+//       outChildren.push(maskedTemp);
+//       outChildren.push(bgTemp);
+//     }
+//   }
 
-  const paddingGlobal = document.querySelector('.padding-global') as HTMLElement;
-  const paddingObject = window
-    .getComputedStyle(paddingGlobal, null)
-    .getPropertyValue('padding-left');
+//   const paddingGlobal = document.querySelector('.padding-global') as HTMLElement;
+//   const paddingObject = window
+//     .getComputedStyle(paddingGlobal, null)
+//     .getPropertyValue('padding-left');
 
-  const paddingValue = parseInt(paddingObject);
+//   const winWidth = window.innerWidth;
 
-  const textWidth = bgTrack.scrollWidth;
-  const computedMovement = textWidth - textWidth / 3;
+//   const paddingValue = parseInt(paddingObject);
 
-  const textSpeed = 35;
+//   const textWidth = bgTrack.scrollWidth;
+//   const computedMovement = textWidth - textWidth / 3;
 
-  const midAnimation = gsap.timeline({
-    onComplete: () => {
-      midAnimation.restart();
-    },
-  });
-  midAnimation.set(midChildren, { x: -computedMovement - paddingValue });
-  midAnimation.to(midChildren, { duration: textSpeed, x: 0, ease: 'linear' });
+//   const newComputed = textWidth - winWidth;
 
-  const outAnimation = gsap.timeline({
-    onComplete: () => {
-      outAnimation.restart();
-    },
-  });
-  outAnimation.to(outChildren, {
-    duration: textSpeed,
-    x: -computedMovement - paddingValue,
-    ease: 'linear',
-  });
-};
+//   const textSpeed = 10;
+
+//   console.log('HERE', winWidth, textWidth, newComputed, computedMovement);
+
+//   const midAnimation = gsap.timeline({
+//     repeat: -1,
+//     yoyo: true,
+//     onComplete: () => {
+//       midAnimation.reverse();
+//     },
+//   });
+//   midAnimation.set(midChildren, { x: -newComputed - paddingValue });
+//   midAnimation.to(midChildren, { duration: textSpeed, x: 0, ease: 'linear' });
+//   midAnimation.to(
+//     outChildren,
+//     {
+//       duration: textSpeed,
+//       x: -newComputed - paddingValue,
+//       ease: 'linear',
+//     },
+//     '<'
+//   );
+
+//   // const outAnimation = gsap.timeline({
+//   //   onComplete: () => {
+//   //     outAnimation.restart();
+//   //   },
+//   // });
+//   // outAnimation.to(outChildren, {
+//   //   duration: textSpeed,
+//   //   x: -computedMovement - paddingValue,
+//   //   ease: 'linear',
+//   // });
+// };
 
 // -----------------
 // REVEAL ANIMATIONS
