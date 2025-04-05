@@ -59,12 +59,6 @@ export const heroScroll = () => {
       // markers: true,
       toggleActions: 'play none none reverse',
       scrub: 1,
-      onLeave: () => {
-        gsap.to(heroMaskText, { duration: 1, opacity: 1, ease: 'power4.out' });
-      },
-      onEnterBack: () => {
-        gsap.to(heroMaskText, { duration: 1, opacity: 0, ease: 'power4.out' });
-      },
     },
   });
 
@@ -78,6 +72,7 @@ export const heroScroll = () => {
   stMain.to(heroMainComponent, { opacity: 0, ease: 'power4.out' }, '<');
   stMain.to(heroIconWrap, { bottom: '7%', opacity: 1, ease: 'linear' }, '<');
   stMain.to(heroIcon, { width: '4rem', height: '4rem', padding: '1rem' }, '<');
+  stMain.to(heroMaskText, { opacity: 1 }, '<');
 
   // Hero Scroll Text Rotation on exit
   // --------------------------
@@ -93,81 +88,6 @@ export const heroScroll = () => {
   });
   textScrollAniamtion.to([heroBgText, heroMaskText], { rotate: '4deg', scale: 1.05 });
 };
-
-// Hero Scrolled Text Movement
-// ---------------------------
-// export const heroTextMovement = () => {
-//   const heroSection = document.querySelector('.section_home-hero') as HTMLElement;
-//   const maskedTrack = heroSection.querySelector('.home-hero_text-track.is-masked') as HTMLElement;
-//   const bgTrack = heroSection.querySelector('.home-hero_text-track.is-bg') as HTMLElement;
-
-//   const maskedChildren = [...maskedTrack.childNodes];
-//   const bgChildren = [...bgTrack.childNodes];
-
-//   const midChildren = [];
-//   const outChildren = [];
-
-//   for (let i = 0; i < 3; i++) {
-//     const maskedTemp = maskedChildren[i] as HTMLElement;
-//     const bgTemp = bgChildren[i] as HTMLElement;
-
-//     if (maskedTemp.classList.contains('is-mid') || bgTemp.classList.contains('is-mid')) {
-//       midChildren.push(maskedTemp);
-//       midChildren.push(bgTemp);
-//     } else {
-//       outChildren.push(maskedTemp);
-//       outChildren.push(bgTemp);
-//     }
-//   }
-
-//   const paddingGlobal = document.querySelector('.padding-global') as HTMLElement;
-//   const paddingObject = window
-//     .getComputedStyle(paddingGlobal, null)
-//     .getPropertyValue('padding-left');
-
-//   const winWidth = window.innerWidth;
-
-//   const paddingValue = parseInt(paddingObject);
-
-//   const textWidth = bgTrack.scrollWidth;
-//   const computedMovement = textWidth - textWidth / 3;
-
-//   const newComputed = textWidth - winWidth;
-
-//   const textSpeed = 10;
-
-//   console.log('HERE', winWidth, textWidth, newComputed, computedMovement);
-
-//   const midAnimation = gsap.timeline({
-//     repeat: -1,
-//     yoyo: true,
-//     onComplete: () => {
-//       midAnimation.reverse();
-//     },
-//   });
-//   midAnimation.set(midChildren, { x: -newComputed - paddingValue });
-//   midAnimation.to(midChildren, { duration: textSpeed, x: 0, ease: 'linear' });
-//   midAnimation.to(
-//     outChildren,
-//     {
-//       duration: textSpeed,
-//       x: -newComputed - paddingValue,
-//       ease: 'linear',
-//     },
-//     '<'
-//   );
-
-//   // const outAnimation = gsap.timeline({
-//   //   onComplete: () => {
-//   //     outAnimation.restart();
-//   //   },
-//   // });
-//   // outAnimation.to(outChildren, {
-//   //   duration: textSpeed,
-//   //   x: -computedMovement - paddingValue,
-//   //   ease: 'linear',
-//   // });
-// };
 
 // -----------------
 // REVEAL ANIMATIONS
@@ -212,15 +132,14 @@ export const heroReveal = () => {
 // Overview Reveal
 export const overviewReveal = () => {
   const overviewSection = document.querySelector('.section_home-overview') as HTMLElement;
-  const header = overviewSection.querySelector('h2');
-  const headerSplit = new SplitText(header, { type: 'lines', linesClass: 'lines' });
-  const textSplitParent = new SplitText(header, {
-    type: 'words',
+  const headerTitle = overviewSection.querySelector('h2');
+  const headerSplit = new SplitText(headerTitle, { type: 'lines', linesClass: 'lineChild' });
+  const textSplitParent = new SplitText(headerTitle, {
+    type: 'lines',
     linesClass: 'split-text_parent',
   });
   const overviewText = overviewSection.querySelector('p');
   const overviewStamp = overviewSection.querySelector('.text-left_image');
-  const overviewTexture = overviewSection.querySelector('.home-overview_texture-overlay');
   const overviewLabel = overviewSection.querySelector('.module_label-container');
   const overviewVideo = overviewSection.querySelector('.home-overview_video-embed');
   const overviewAwards = [...overviewSection.querySelectorAll('.about-awards_item')];
@@ -233,55 +152,54 @@ export const overviewReveal = () => {
       start: scrollTriggerStart,
       end: scrollTriggerEnd,
       // markers: true,
+      // toggleActions: 'play none none reverse',
     },
-    onComplete: () => {
-      textSplitParent.revert();
-      headerSplit.revert();
-    },
+    // onComplete: () => {
+    //   textSplitParent.revert();
+    //   headerSplit.revert();
+    // },
   });
 
-  animation.from(overviewLabel, {
-    duration: setDuration,
+  animation.from(headerSplit.lines, {
+    duration: 1,
+    y: '4rem',
     opacity: 0,
+    stagger: 0.1,
     ease: 'power4.out',
   });
-  animation.from(overviewTexture, { opacity: 0, duration: 2 }, '<');
   animation.from(
-    overviewText,
-    { duration: setDuration, y: setYOffset, opacity: 0, ease: 'power4.out' },
+    overviewLabel,
+    {
+      duration: 1,
+      opacity: 0,
+      ease: 'power4.out',
+    },
     '<'
   );
   animation.from(
     overviewStamp,
-    { duration: setDuration, opacity: 0, scale: 1.2, ease: 'power4.out' },
+    { duration: 1, opacity: 0, rotateZ: '0deg', scale: 1.1, ease: 'expo.inOut' },
     '<'
   );
-
   animation.from(
-    headerSplit.lines,
-    {
-      duration: 1,
-      opacity: 0,
-      stagger: 0.1,
-      y: '2rem',
-      ease: 'power4.out',
-    },
-    '<'
+    overviewText,
+    { duration: 2, y: setYOffset, opacity: 0, ease: 'power4.out' },
+    '<0.2'
   );
   animation.from(
     overviewAwards,
-    { duration: 1, opacity: 0, y: setYOffset, stagger: 0.2, ease: 'power4.out' },
-    '<0.8'
+    { duration: 1, opacity: 0, y: '2rem', stagger: 0.2, ease: 'power4.out' },
+    '<0.4'
   );
   animation.from(
     overviewVideo,
     {
-      duration: setDuration,
-      y: setYOffset,
+      duration: 1,
+      y: '2rem',
       opacity: 0,
       ease: 'power4.out',
     },
-    '<0.2'
+    '<0.4'
   );
 };
 

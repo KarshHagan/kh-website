@@ -1,5 +1,3 @@
-// eslint-disable-next-line simple-import-sort/imports
-import { breakpoints } from './breakpoints';
 import { gsap } from 'gsap';
 import { InertiaPlugin } from 'gsap/InertiaPlugin';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -11,30 +9,23 @@ export const horizontalScrollText = () => {
   const scroll = scrollSections[0].scrollWidth;
   const windowWidth = window.innerWidth;
 
-  const bp = breakpoints()[0];
-
   let calcWidth = scroll - windowWidth;
+
+  // Default
+  let sp = 'top bottom';
+  let ep = 'bottom top';
 
   for (const i in scrollSections) {
     const tempSection = scrollSections[i] as HTMLElement;
     const textElement = [...tempSection.querySelectorAll('[data-scroll-text]')];
     const scrollType = tempSection.dataset.scrollTextWrap;
 
-    if (calcWidth > 1000) calcWidth = 1000;
-
-    // Default
-    let sp = '25%, 100%';
-    let ep = '100% 100%';
-
-    if (bp === 'mobile-landscape' || bp === 'mobile-portrait') {
-      sp = '10% 100%';
-      ep = '60% 100%';
-    }
-
     if (scrollType === 'top') {
-      sp = '0% 100%';
-      ep = '100% 100%';
+      sp = 'top bottom';
+      ep = '10% top';
     }
+
+    if (calcWidth > 1000) calcWidth = 1000;
 
     const animation = gsap.timeline({
       scrollTrigger: {

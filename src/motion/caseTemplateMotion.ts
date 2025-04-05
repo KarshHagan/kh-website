@@ -50,7 +50,7 @@ export const csPageReveal = () => {
     y: '4rem',
     opacity: 0,
     stagger: 0.1,
-    ease: 'power4.inOut',
+    ease: 'power4.out',
   });
   animation.from(overline, { duration: 1, width: '0%', ease: 'expo.inOut' }, '<');
   animation.from(headerOverview, { duration: 1, opacity: 0, y: '1rem', ease: 'power4.inOut' }, '<');
@@ -66,11 +66,6 @@ export const csPageReveal = () => {
 export const csOverviewReveal = () => {
   const overviewSection = document.querySelector('.section_case-overview') as HTMLElement;
   const overviewTitle = document.querySelector('h2');
-  const headerSplit = new SplitText(overviewTitle, { type: 'lines', linesClass: 'lineChild' });
-  const textSplitParent = new SplitText(overviewTitle, {
-    type: 'lines',
-    linesClass: 'split-text_parent',
-  });
   const overviewRichText = overviewSection.querySelector('.rich-text') as HTMLElement;
 
   const animation = gsap.timeline({
@@ -81,14 +76,10 @@ export const csOverviewReveal = () => {
       // markers: true,
       // toggleActions: 'play none none reverse',
     },
-    delay: setDelay,
-    onComplete: () => {
-      textSplitParent.revert();
-      headerSplit.revert();
-    },
+    // delay: setDelay,
   });
 
-  animation.from(headerSplit.lines, {
+  animation.from(overviewTitle, {
     duration: 1,
     y: '2rem',
     opacity: 0,

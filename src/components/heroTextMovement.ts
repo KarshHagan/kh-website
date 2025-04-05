@@ -3,34 +3,34 @@ import { gsap } from 'gsap';
 export const heroTextMovement = () => {
   class HeroTextMovement {
     private heroSection: HTMLElement;
-    private maskedSection: HTMLElement;
-    private bgTrack: HTMLElement;
     private tracks: HTMLElement[];
     private midTracks: HTMLElement[];
     private outTracks: HTMLElement[];
     private computedMove: number;
-    // private maskedText: HTMLElement[];
-    // private bgText: HTMLElement[];
-    // private midText: HTMLElement[];
-    // private outText: HTMLElement[];
+    private tl: gsap.core.Timeline | null;
+    private speed: number;
 
     constructor() {
       this.heroSection = document.querySelector('.section_home-hero') as HTMLElement;
-      this.maskedSection = heroSection.querySelector(
-        '.home-hero_text-track.is-masked'
-      ) as HTMLElement;
-      this.bgTrack = heroSection.querySelector('.home-hero_text-track.is-bg') as HTMLElement;
-      this.tracks = [...heroSection.querySelectorAll('.home-hero_item-wrap')].map(
+      this.tracks = [...this.heroSection.querySelectorAll('.home-hero_item-wrap')].map(
         (item) => item as HTMLElement
       );
       this.midTracks = [];
       this.outTracks = [];
-
       this.computedMove = 0;
+      this.tl = null;
+      this.speed = parseInt(this.heroSection.dataset.textSpeed as string);
 
-      console.log('HERE', this.tracks);
+      // console.log('speed', this.speed);
+
       this.sortText();
       this.calculateMovement();
+      this.animate();
+
+      this.handleResize(() => {
+        this.calculateMovement();
+        this.animate();
+      }, 100);
     }
 
     private sortText() {
@@ -41,8 +41,6 @@ export const heroTextMovement = () => {
           this.outTracks.push(item);
         }
       });
-
-      console.log('mid', this.midTracks, 'out', this.outTracks);
     }
 
     private calculateMovement() {
@@ -52,93 +50,47 @@ export const heroTextMovement = () => {
         .getPropertyValue('padding-left');
 
       const winWidth = window.innerWidth;
-
       const paddingValue = parseInt(paddingObject);
+      const textWidth = this.tracks[0].scrollWidth;
 
-      const textWidth = bgTrack.scrollWidth;
-      const computedMovement = textWidth - textWidth / 3;
-
-      const newComputed = textWidth - winWidth;
-
-      const textSpeed = 10;
-
-      console.log('HERE', winWidth, textWidth, newComputed, computedMovement);
+      this.computedMove = textWidth - winWidth + paddingValue;
     }
 
     private animate() {
-      const midAnimation = gsap.timeline({
+      if (this.tl) {
+        this.tl.kill();
+      }
+
+      this.tl = gsap.timeline({
         repeat: -1,
         yoyo: true,
         onComplete: () => {
-          midAnimation.reverse();
+          if (this.tl) this.tl.reverse();
         },
       });
-      midAnimation.set(midChildren, { x: -newComputed - paddingValue });
-      midAnimation.to(midChildren, { duration: textSpeed, x: 0, ease: 'linear' });
-      midAnimation.to(
-        outChildren,
+
+      this.tl.set(this.midTracks, { x: -this.computedMove });
+      this.tl.set(this.outTracks, { x: 0 });
+      this.tl.to(this.midTracks, { duration: this.speed, x: 0, ease: 'linear' });
+      this.tl.to(
+        this.outTracks,
         {
-          duration: textSpeed,
-          x: -newComputed - paddingValue,
+          duration: this.speed,
+          x: -this.computedMove,
           ease: 'linear',
         },
         '<'
       );
     }
+
+    private handleResize(callback: () => void, delay = 200) {
+      let timeoutId: number;
+      window.addEventListener('resize', () => {
+        clearTimeout(timeoutId);
+        timeoutId = window.setTimeout(callback, delay);
+      });
+    }
   }
-
-  const heroSection = document.querySelector('.section_home-hero') as HTMLElement;
-  const maskedTrack = heroSection.querySelector('.home-hero_text-track.is-masked') as HTMLElement;
-  const bgTrack = heroSection.querySelector('.home-hero_text-track.is-bg') as HTMLElement;
-
-  const maskedChildren = [...maskedTrack.childNodes].map((item) => item as HTMLElement);
-  const bgChildren = [...bgTrack.childNodes];
-
-  // const midChildren = [];
-  // const outChildren = [];
-
-  // for (let i = 0; i < 3; i++) {
-  //   const maskedTemp = maskedChildren[i] as HTMLElement;
-  //   const bgTemp = bgChildren[i] as HTMLElement;
-
-  //   if (maskedTemp.classList.contains('is-mid') || bgTemp.classList.contains('is-mid')) {
-  //     midChildren.push(maskedTemp);
-  //     midChildren.push(bgTemp);
-  //   } else {
-  //     outChildren.push(maskedTemp);
-  //     outChildren.push(bgTemp);
-  //   }
-  // }
-
-  // const paddingGlobal = document.querySelector('.padding-global') as HTMLElement;
-  // const paddingObject = window
-  //   .getComputedStyle(paddingGlobal, null)
-  //   .getPropertyValue('padding-left');
-
-  // const winWidth = window.innerWidth;
-
-  // const paddingValue = parseInt(paddingObject);
-
-  // const textWidth = bgTrack.scrollWidth;
-  // const computedMovement = textWidth - textWidth / 3;
-
-  // const newComputed = textWidth - winWidth;
-
-  // const textSpeed = 10;
-
-  // console.log('HERE', winWidth, textWidth, newComputed, computedMovement);
-
-  // const outAnimation = gsap.timeline({
-  //   onComplete: () => {
-  //     outAnimation.restart();
-  //   },
-  // });
-  // outAnimation.to(outChildren, {
-  //   duration: textSpeed,
-  //   x: -computedMovement - paddingValue,
-  //   ease: 'linear',
-  // });
-
   new HeroTextMovement();
 };
 export default heroTextMovement;
