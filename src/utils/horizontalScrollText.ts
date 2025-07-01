@@ -39,7 +39,7 @@ export const horizontalScrollText = () => {
         trigger: tempSection,
         start: sp,
         end: ep,
-        markers: true,
+        // markers: true,
         scrub: true,
       },
     });
