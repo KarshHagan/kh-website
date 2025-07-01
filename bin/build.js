@@ -1,12 +1,14 @@
 /* eslint-disable no-console */
-import * as esbuild from 'esbuild';
+import * as esbuild from "esbuild";
+
+import process from "node:process";
 
 // Config output
-const BUILD_DIRECTORY = 'dist';
-const PRODUCTION = process.env.NODE_ENV === 'production';
+const BUILD_DIRECTORY = "dist";
+const PRODUCTION = process.env.NODE_ENV === "production";
 
 // Config entrypoint files
-const ENTRY_POINTS = ['src/index.ts', 'src/mxIndex.ts'];
+const ENTRY_POINTS = ["src/index.ts"];
 
 // Config dev serving
 const LIVE_RELOAD = !PRODUCTION;
@@ -19,8 +21,8 @@ const context = await esbuild.context({
   outdir: BUILD_DIRECTORY,
   minify: PRODUCTION,
   sourcemap: !PRODUCTION,
-  target: PRODUCTION ? 'es2019' : 'esnext',
-  inject: LIVE_RELOAD ? ['./bin/live-reload.js'] : undefined,
+  target: PRODUCTION ? "es2019" : "esnext",
+  inject: LIVE_RELOAD ? ["./bin/live-reload.js"] : undefined,
   define: {
     SERVE_PORT: `${SERVE_PORT}`,
   },
@@ -44,10 +46,10 @@ else {
       // Log all served files for easy reference
       const origin = `http://localhost:${port}`;
       const files = ENTRY_POINTS.map(
-        (path) => `${origin}/${path.replace('src/', '').replace('.ts', '.js')}`
+        (path) => `${origin}/${path.replace("src/", "").replace(".ts", ".js")}`
       );
 
-      console.log('Serving at:', origin);
-      console.log('Built files:', files);
+      console.log("Serving at:", origin);
+      console.log("Built files:", files);
     });
 }
