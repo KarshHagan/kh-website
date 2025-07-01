@@ -18,7 +18,7 @@ import { inertiaMovement } from "$utils/intertiaMovement";
 import { loadComponent } from "$utils/loadComponent";
 import { setDeepLinks } from "$utils/scrollToDeepLink";
 // import { smoothScroll } from '$utils/smoothScroll';
-import lenis from "$utils/smoothScroll";
+import { initSmoothScroll } from "$utils/smoothScroll";
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
@@ -27,10 +27,7 @@ window.Webflow.push(() => {
   // ---------------
   // Site Globals
   // ---------------
-  const isEditor = editorCheck();
-  if (!isEditor) {
-    lenis.start();
-  }
+  initSmoothScroll();
 
   // TESTING
   // spline();
