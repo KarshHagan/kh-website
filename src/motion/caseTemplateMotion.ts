@@ -24,10 +24,10 @@ if (device === "tablet" || device === "mobile") {
 // Page Reveal
 export const csPageReveal = () => {
   const fixedHeaderSection = document.querySelector(
-    ".section_sticky-header"
+    ".section_sticky-header",
   ) as HTMLElement;
   const featuredSection = document.querySelector(
-    ".section_case-hero"
+    ".section_case-hero",
   ) as HTMLElement;
 
   const headerTitle = fixedHeaderSection.querySelector("h1");
@@ -44,7 +44,7 @@ export const csPageReveal = () => {
 
   const overline = featuredSection.querySelector(".fixed-header_overline");
   const featuredContent = featuredSection.querySelector(
-    ".case-hero_featured-wrap"
+    ".case-hero_featured-wrap",
   );
 
   const animation = gsap.timeline({
@@ -64,17 +64,17 @@ export const csPageReveal = () => {
   animation.from(
     overline,
     { duration: 1, width: "0%", ease: "expo.inOut" },
-    "<"
+    "<",
   );
   animation.from(
     headerOverview,
     { duration: 1, opacity: 0, y: "1rem", ease: "power4.inOut" },
-    "<"
+    "<",
   );
   animation.from(
     featuredContent,
     { duration: 1, opacity: 0, y: "2rem", ease: "power4.out" },
-    "<0.6"
+    "<0.6",
   );
   animation.from(headerTexture, { opacity: 0, ease: "power4.out" });
 };
@@ -82,11 +82,11 @@ export const csPageReveal = () => {
 // Overview Reveal
 export const csOverviewReveal = () => {
   const overviewSection = document.querySelector(
-    ".section_case-overview"
+    ".section_case-overview",
   ) as HTMLElement;
   const overviewTitle = document.querySelector("h2");
   const overviewRichText = overviewSection.querySelector(
-    ".rich-text"
+    ".rich-text",
   ) as HTMLElement;
 
   const animation = gsap.timeline({
@@ -111,18 +111,18 @@ export const csOverviewReveal = () => {
   animation.from(
     overviewRichText,
     { duration: 1, y: "2rem", opacity: 0, ease: "power4.inOut" },
-    "<"
+    "<",
   );
 };
 
 // Image Slider Reveal
 export const csMediaSliderReveal = () => {
   const sliderSection = document.querySelector(
-    ".section_media-large-overlay"
+    ".section_media-large-overlay",
   ) as HTMLElement;
   if (sliderSection) {
     const revealContainer = sliderSection.querySelector(
-      ".media-slider_reveal-wrap"
+      ".media-slider_reveal-wrap",
     );
     const mediaControls = [
       ...sliderSection.querySelectorAll(".media-slider_button"),
@@ -146,7 +146,7 @@ export const csMediaSliderReveal = () => {
     animation.from(
       mediaControls,
       { duration: 1, y: "2rem", opacity: 0, ease: "power4.inOut" },
-      "<"
+      "<",
     );
   }
 };
@@ -154,7 +154,7 @@ export const csMediaSliderReveal = () => {
 // Stats Section Reveal
 export const csStatsReveal = () => {
   const statsSection = document.querySelector(
-    ".section_case-stats"
+    ".section_case-stats",
   ) as HTMLElement;
   const statsComponent = statsSection.querySelector(".case-overview_component");
 

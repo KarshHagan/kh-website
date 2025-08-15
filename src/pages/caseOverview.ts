@@ -1,8 +1,9 @@
-import { caseHover, csoPageReveal } from '$motion/caseOverviewMotion';
-import { cursorArrowYMovement } from '$motion/cursorMotion';
-import { caseScrollEffect } from '$utils/caseGridMovement';
-import { filterContent } from '$utils/filterContent';
-import { filterDeepLinks } from '$utils/scrollToDeepLink';
+import { caseHover, csoPageReveal } from "$motion/caseOverviewMotion";
+import { cursorArrowYMovement } from "$motion/cursorMotion";
+import { caseScrollEffect } from "$utils/caseGridMovement";
+import { filterContent } from "$utils/filterContent";
+import { filterContentUpdated } from "$utils/filterContentUpdated";
+import { filterDeepLinks } from "$utils/scrollToDeepLink";
 
 export const caseOverview = () => {
   // ---------------
@@ -15,7 +16,8 @@ export const caseOverview = () => {
   csoPageReveal();
 
   // Work Filtering
-  filterContent();
+  // filterContent();
+  filterContentUpdated();
 
   //  Item Hover
   caseHover();
@@ -24,10 +26,10 @@ export const caseOverview = () => {
   caseScrollEffect();
 
   // Cursor Y Scroll
-  const workGrid = document.querySelector('.work-grid_wrapper') as HTMLElement;
-  workGrid.addEventListener('mousemove', (e) => {
+  const workGrid = document.querySelector(".work-grid_wrapper") as HTMLElement;
+  workGrid.addEventListener("mousemove", (e) => {
     const mouseYMovement = e.movementY;
-    const setCursor = 'default';
+    const setCursor = "default";
     cursorArrowYMovement(setCursor, mouseYMovement);
   });
 };
