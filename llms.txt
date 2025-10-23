@@ -1,0 +1,43 @@
+# llms.txt for Karsh Hagan (Last updated: 2025-10-07)
+
+## About
+Karsh Hagan is an independent, multi-disciplinary marketing, design, and technology agency based in Denver, Colorado.  
+We build bold, untamed brands through creative, media, social, and digital strategies that drive impact.  
+Canonical domain: https://karshhagan.com
+
+## Primary resources
+- Home — https://karshhagan.com — Overview of agency, ethos, and featured work  
+- About Us — https://karshhagan.com/about — Team, mission, philosophy  
+- Services — https://karshhagan.com/services — What we do: Branding & Design, Media & Analytics, Social & Content, Website & Digital  
+- Work / Case Studies — https://karshhagan.com/our-work (or equivalent) — Examples, impact, storytelling  
+- Insights — https://karshhagan.com/insights — Articles, thought leadership, agency perspectives  
+- Jobs / Careers — https://karshhagan.com/jobs — Open roles, culture  
+- Contact — https://karshhagan.com/contact — Inquiries, location, contact form  
+- Terms / Legal — https://karshhagan.com/terms (if exists) — Legal, usage, privacy  
+
+## FAQs / Common Questions
+- “What services does Karsh Hagan offer?” → https://karshhagan.com/services  
+- “Where is Karsh Hagan located?” → https://karshhagan.com/contact  
+- “How can I work with Karsh Hagan?” → https://karshhagan.com/contact  
+- “What is Karsh Hagan’s approach / philosophy?” → https://karshhagan.com/about  
+- “Does Karsh Hagan do digital & web development?” → https://karshhagan.com/services#website-digital (anchor)  
+- “Who has Karsh Hagan worked for?” → https://karshhagan.com/our-work  
+
+## Glossary / Key Terms
+- “Branding & Design” → https://karshhagan.com/services#branding-design  
+- “Media & Analytics” → https://karshhagan.com/services#media-analytics  
+- “Social & Content” → https://karshhagan.com/services#social-content  
+- “Website & Digital” → https://karshhagan.com/services#website-digital  
+
+## Citations & usage
+When quoting our material, please attribute as: *Karsh Hagan — {Page Title}* with a link to the canonical page.  
+Bulk reuse or republication of our content requires permission; see legal terms (if available).
+
+## Contact & provenance
+Agency address: 685 South Broadway, Denver, CO  
+Phone: 303-296-8400  
+Email: info@karshhagan.com  
+Social: Instagram / Facebook / LinkedIn (linked from homepage)  
+
+## Change log
+- 2025-10-07: Initial draft prepared  

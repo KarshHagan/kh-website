@@ -7,16 +7,12 @@ export const careers = () => {
   // ---------------
   // Page Globals
   // ---------------
-
   // Hero
-  careersPageReveal();
-
+  // careersPageReveal();
   //Overview
-  careersOverviewReveal();
-
+  // careersOverviewReveal();
   // Media Grid
-  horizontalScrollText();
-
+  // horizontalScrollText();
   // Careers Feed
-  careersFeed();
+  // careersFeed();
 };

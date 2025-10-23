@@ -1,4 +1,5 @@
-/* eslint-disable simple-import-sort/imports */
+import { gsap } from 'gsap';
+
 import { cursorArrowYMovement } from '$motion/cursorMotion';
 import {
   menuInit,
@@ -8,7 +9,6 @@ import {
   menuMotionOpen,
 } from '$motion/navMotion';
 import { getDeviceType } from '$utils/getDevice';
-import { gsap } from 'gsap';
 
 export const menu = () => {
   const windowLocation = window.location.pathname as string;
@@ -16,42 +16,35 @@ export const menu = () => {
   const menuButton = document.querySelector('#navMenuButton') as HTMLElement;
   const menuCloseOffset = document.querySelector('.nav_x-offset') as HTMLElement;
 
-  let menuOpenAnimation: any;
-  let menuCloseAnimation: any;
-
-  navMenu &&
-    (() => {
-      menuOpenAnimation = menuMotionOpen();
-      menuCloseAnimation = menuMotionClose();
-
-      menuInit(windowLocation);
-    })();
-
-  // Menu Open/Close
-  // --------------
+  let menuOpenAnimation: gsap.core.Timeline;
+  let menuCloseAnimation: gsap.core.Timeline;
   let menuIsOpen = false;
-  menuButton &&
-    (() => {
-      menuButton.addEventListener('click', () => {
-        menuIsOpen = !menuIsOpen;
 
-        if (menuIsOpen === true) {
-          menuOpenAnimation.play(0);
-        } else {
-          menuCloseAnimation.play(0);
-          resetNav();
-        }
-      });
-    })();
+  if (navMenu) {
+    menuOpenAnimation = menuMotionOpen();
+    menuCloseAnimation = menuMotionClose();
 
-  menuCloseOffset &&
-    (() => {
-      menuCloseOffset.addEventListener('click', () => {
-        menuIsOpen = false;
+    menuInit(windowLocation);
+
+    menuButton.addEventListener('click', () => {
+      menuIsOpen = !menuIsOpen;
+
+      if (menuIsOpen === true) {
+        menuOpenAnimation.play(0);
+      } else {
         menuCloseAnimation.play(0);
         resetNav();
-      });
-    })();
+      }
+    });
+  }
+
+  if (menuCloseOffset) {
+    menuCloseOffset.addEventListener('click', () => {
+      menuIsOpen = false;
+      menuCloseAnimation.play(0);
+      resetNav();
+    });
+  }
 
   document.addEventListener('keydown', (e) => {
     const keyPressed = e.key;
@@ -102,12 +95,11 @@ export const menu = () => {
   }
 
   // Cursor Y Movement
-  navMenu &&
-    (() => {
-      navMenu.addEventListener('mousemove', (e) => {
-        const mouseY = e.movementY;
+  if (navMenu) {
+    navMenu.addEventListener('mousemove', (e) => {
+      const mouseY = e.movementY;
 
-        cursorArrowYMovement('default', mouseY);
-      });
-    })();
+      cursorArrowYMovement('default', mouseY);
+    });
+  }
 };
