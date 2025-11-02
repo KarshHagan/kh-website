@@ -1,18 +1,19 @@
-import { getWebflowEnv } from "./webflowEnv";
-import Lenis from "@studio-freight/lenis";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import Lenis from '@studio-freight/lenis';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+
+import { getWebflowEnv } from './webflowEnv';
 
 gsap.registerPlugin(ScrollTrigger);
 
 let lenis: Lenis | null = null;
 
 export function initSmoothScroll() {
-  window.addEventListener("load", () => {
+  window.addEventListener('load', () => {
     const env = getWebflowEnv();
 
-    if (env === "editor") {
-      console.log("[SmoothScroll] Editor detected — disabling Lenis.");
+    if (env === 'editor') {
+      console.log('[SmoothScroll] Editor detected — disabling Lenis.');
       disableScrollStyles();
       return;
     }
@@ -22,8 +23,8 @@ export function initSmoothScroll() {
       easing: (t) => Math.min(1, 1.001 - Math.pow(90, -2 * t)),
       wheelMultiplier: 0.8,
       touchMultiplier: 2,
-      orientation: "vertical",
-      gestureOrientation: "vertical",
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
       smoothWheel: true,
       infinite: false,
     });
@@ -57,8 +58,8 @@ export function destroySmoothScroll() {
 }
 
 function disableScrollStyles() {
-  document.documentElement.style.scrollBehavior = "auto";
-  document.body.style.overflow = "";
+  document.documentElement.style.scrollBehavior = 'auto';
+  document.body.style.overflow = '';
 }
 
 export function stopSmoothScroll() {

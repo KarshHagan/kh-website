@@ -11,7 +11,7 @@ gsap.registerPlugin(SplitText, InertiaPlugin);
 export const heroScroll = () => {
   // Set Production Scene
   const prodcutionScene = document.querySelector(
-    '.home-hero_3d-embed.is-production'
+    '.home-hero_3d-embed.is-production',
   ) as HTMLElement;
   const designerScene = document.querySelector('.home-hero_3d-embed.is-designer') as HTMLElement;
 
@@ -54,7 +54,7 @@ export const heroScroll = () => {
   const stMain = gsap.timeline({
     scrollTrigger: {
       trigger: scrollSections[0],
-      start: '10% top',
+      start: '15% top',
       end: 'bottom top',
       // markers: true,
       toggleActions: 'play none none reverse',
@@ -174,22 +174,22 @@ export const overviewReveal = () => {
       opacity: 0,
       ease: 'power4.out',
     },
-    '<'
+    '<',
   );
   animation.from(
     overviewStamp,
     { duration: 1, opacity: 0, rotateZ: '0deg', scale: 1.1, ease: 'expo.inOut' },
-    '<'
+    '<',
   );
   animation.from(
     overviewText,
     { duration: 2, y: setYOffset, opacity: 0, ease: 'power4.out' },
-    '<0.2'
+    '<0.2',
   );
   animation.from(
     overviewAwards,
     { duration: 1, opacity: 0, y: '2rem', stagger: 0.2, ease: 'power4.out' },
-    '<0.4'
+    '<0.4',
   );
   animation.from(
     overviewVideo,
@@ -199,7 +199,7 @@ export const overviewReveal = () => {
       opacity: 0,
       ease: 'power4.out',
     },
-    '<0.4'
+    '<0.4',
   );
 };
 
@@ -246,13 +246,13 @@ export const servicesReveal = () => {
   animation.from(
     servicesImageMask,
     { duration: 2, y: '4rem', opacity: 0, ease: 'power4.out' },
-    '<'
+    '<',
   );
   animation.from(servicesOverview, { duration: 2, y: '4rem', opacity: 0, ease: 'power4.out' }, '<');
   animation.from(
     serviceItems,
     { duration: 2, y: '4rem', opacity: 0, stagger: 0.2, ease: 'expo.out' },
-    '<'
+    '<',
   );
 };
 
@@ -292,12 +292,12 @@ export const focusReveal = () => {
       stagger: 0.1,
       ease: 'power4.out',
     },
-    '<'
+    '<',
   );
   animation.from(
     focusParagraph,
     { duration: 2, opacity: 0, y: '4rem', ease: 'power4.out' },
-    '<0.4'
+    '<0.4',
   );
   animation.from(focusStamp, { duration: 2, scale: 1.2, opacity: 0, ease: 'power4.out' }, '<');
 };

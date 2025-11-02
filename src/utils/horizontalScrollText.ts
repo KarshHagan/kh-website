@@ -21,14 +21,14 @@ export const horizontalScrollText = () => {
 
     let calcWidth = scroll - windowWidth;
 
-    console.group('!', scroll, windowWidth, scrollSections);
+    // console.group('!', scroll, windowWidth, scrollSections);
 
     if (scrollType === 'top') {
       sp = 'top bottom';
       ep = '10% top';
     }
 
-    console.log('!!', calcWidth);
+    // console.log('!!', calcWidth);
 
     if (calcWidth > 1000) calcWidth = 1000;
 
