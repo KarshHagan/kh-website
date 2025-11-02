@@ -1,125 +1,125 @@
-// /* eslint-disable simple-import-sort/imports */
-// import { getDeviceType } from '$utils/getDevice';
-// import { gsap } from 'gsap';
+import { gsap } from 'gsap';
 
-// const scrollSection = document.querySelector('.section_work') as HTMLElement;
-// let curAnimation = gsap.timeline({
-//   scrollTrigger: {
-//     trigger: scrollSection,
-//     start: 'top 40%',
-//     end: 'bottom bottom',
-//     scrub: true,
-//     toggleActions: 'play none none reverse',
-//     // markers: {
-//     //   startColor: 'yellow',
-//     //   endColor: 'orange',
-//     // },
-//   },
-// });
+import { getDeviceType } from '$utils/getDevice';
 
-// export const caseScrollEffect = () => {
-//   setScrollSpeed();
-//   createScrollerAnimation(curAnimation);
-// };
+const scrollSection = document.querySelector('.section_work') as HTMLElement;
+let curAnimation = gsap.timeline({
+  scrollTrigger: {
+    trigger: scrollSection,
+    start: 'top 40%',
+    end: 'bottom bottom',
+    scrub: true,
+    toggleActions: 'play none none reverse',
+    // markers: {
+    //   startColor: 'yellow',
+    //   endColor: 'orange',
+    // },
+  },
+});
 
-// export const createTimeline = () => {
-//   const scrollSection = document.querySelector('.section_work') as HTMLElement;
-//   const newAnimation = gsap.timeline({
-//     scrollTrigger: {
-//       trigger: scrollSection,
-//       start: 'top 40%',
-//       end: 'bottom bottom',
-//       scrub: true,
-//       toggleActions: 'play none none reverse',
-//       // markers: {
-//       //   startColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
-//       //   endColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
-//       // },
-//     },
-//   });
+export const caseScrollEffect = () => {
+  setScrollSpeed();
+  createScrollerAnimation(curAnimation);
+};
 
-//   return newAnimation;
-// };
+export const createTimeline = () => {
+  const scrollSection = document.querySelector('.section_work') as HTMLElement;
+  const newAnimation = gsap.timeline({
+    scrollTrigger: {
+      trigger: scrollSection,
+      start: 'top 40%',
+      end: 'bottom bottom',
+      scrub: true,
+      toggleActions: 'play none none reverse',
+      // markers: {
+      //   startColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
+      //   endColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
+      // },
+    },
+  });
 
-// export const createScrollerAnimation = (animation: gsap.core.Timeline) => {
-//   if (scrollSection) {
-//     const scrollElements = [...scrollSection.querySelectorAll('[data-scroll-speed]')];
+  return newAnimation;
+};
 
-//     for (const j in scrollElements) {
-//       const tempElement = scrollElements[j] as HTMLElement;
-//       const elementSpeed = Number(tempElement.dataset.scrollSpeed);
-//       const setSpeed = elementSpeed;
+export const createScrollerAnimation = (animation: gsap.core.Timeline) => {
+  if (scrollSection) {
+    const scrollElements = [...scrollSection.querySelectorAll('[data-scroll-speed]')];
 
-//       animation.to(tempElement, { yPercent: setSpeed * 5, ease: 'none' }, '<');
-//     }
-//   }
-// };
+    for (const j in scrollElements) {
+      const tempElement = scrollElements[j] as HTMLElement;
+      const elementSpeed = Number(tempElement.dataset.scrollSpeed);
+      const setSpeed = elementSpeed;
 
-// export const setScrollSpeed = () => {
-//   const workItems = [...document.querySelectorAll('.work-grid_item')];
-//   const renderQueue: HTMLElement[] = [];
-//   const hideQueue: HTMLElement[] = [];
+      animation.to(tempElement, { yPercent: setSpeed * 5, ease: 'none' }, '<');
+    }
+  }
+};
 
-//   const device = getDeviceType();
-//   const windowWidth = window.innerWidth;
+export const setScrollSpeed = () => {
+  const workItems = [...document.querySelectorAll('.work-grid_item')];
+  const renderQueue: HTMLElement[] = [];
+  const hideQueue: HTMLElement[] = [];
 
-//   for (const i in workItems) {
-//     const temp = workItems[i] as HTMLElement;
-//     const tempDisplay = getComputedStyle(temp).display;
+  const device = getDeviceType();
+  const windowWidth = window.innerWidth;
 
-//     if (tempDisplay !== 'none') {
-//       renderQueue.push(temp);
-//     } else {
-//       hideQueue.push(temp);
-//     }
-//   }
+  for (const i in workItems) {
+    const temp = workItems[i] as HTMLElement;
+    const tempDisplay = getComputedStyle(temp).display;
 
-//   if (device === 'desktop' && windowWidth > 767) {
-//     const sortedQueue = sortRenderQueue(renderQueue);
-//     const leftItems = sortedQueue[0];
-//     const rightItems = sortedQueue[1];
+    if (tempDisplay !== 'none') {
+      renderQueue.push(temp);
+    } else {
+      hideQueue.push(temp);
+    }
+  }
 
-//     for (const i in leftItems) {
-//       const temp = leftItems[i] as HTMLElement;
-//       temp.dataset.scrollSpeed = '3';
-//     }
+  if (device === 'desktop' && windowWidth > 767) {
+    const sortedQueue = sortRenderQueue(renderQueue);
+    const leftItems = sortedQueue[0];
+    const rightItems = sortedQueue[1];
 
-//     for (const i in rightItems) {
-//       const temp = rightItems[i] as HTMLElement;
-//       temp.dataset.scrollSpeed = '-3';
-//     }
-//     for (const i in hideQueue) {
-//       const temp = hideQueue[i] as HTMLElement;
-//       temp.dataset.scrollSpeed = '0';
-//     }
-//   } else {
-//     for (const i in renderQueue) {
-//       const temp = renderQueue[i] as HTMLElement;
-//       temp.dataset.scrollSpeed = '8';
-//     }
-//   }
-// };
+    for (const i in leftItems) {
+      const temp = leftItems[i] as HTMLElement;
+      temp.dataset.scrollSpeed = '3';
+    }
 
-// export const sortRenderQueue = (renderQueue: HTMLElement[]) => {
-//   const leftItems = [];
-//   const rightItems = [];
+    for (const i in rightItems) {
+      const temp = rightItems[i] as HTMLElement;
+      temp.dataset.scrollSpeed = '-3';
+    }
+    for (const i in hideQueue) {
+      const temp = hideQueue[i] as HTMLElement;
+      temp.dataset.scrollSpeed = '0';
+    }
+  } else {
+    for (const i in renderQueue) {
+      const temp = renderQueue[i] as HTMLElement;
+      temp.dataset.scrollSpeed = '8';
+    }
+  }
+};
 
-//   for (let i = 0; i < renderQueue.length; i += 2) {
-//     leftItems.push(renderQueue[i]);
-//   }
-//   for (let i = 1; i < renderQueue.length; i += 2) {
-//     rightItems.push(renderQueue[i]);
-//   }
+export const sortRenderQueue = (renderQueue: HTMLElement[]) => {
+  const leftItems = [];
+  const rightItems = [];
 
-//   return [leftItems, rightItems];
-// };
+  for (let i = 0; i < renderQueue.length; i += 2) {
+    leftItems.push(renderQueue[i]);
+  }
+  for (let i = 1; i < renderQueue.length; i += 2) {
+    rightItems.push(renderQueue[i]);
+  }
 
-// export const updateScrollEffect = () => {
-//   curAnimation.kill();
-//   setTimeout(() => {
-//     setScrollSpeed();
-//     const updatedAnimation = createTimeline();
-//     curAnimation = updatedAnimation;
-//     createScrollerAnimation(curAnimation);
-//   }, 500);
-// };
+  return [leftItems, rightItems];
+};
+
+export const updateScrollEffect = () => {
+  curAnimation.kill();
+  setTimeout(() => {
+    setScrollSpeed();
+    const updatedAnimation = createTimeline();
+    curAnimation = updatedAnimation;
+    createScrollerAnimation(curAnimation);
+  }, 500);
+};

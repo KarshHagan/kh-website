@@ -7038,92 +7038,6 @@
     }
   });
 
-  // src/utils/caseGridMovement.ts
-  var init_caseGridMovement = __esm({
-    "src/utils/caseGridMovement.ts"() {
-      "use strict";
-      init_live_reload();
-    }
-  });
-
-  // src/motion/filterReveal.ts
-  var filterReveal;
-  var init_filterReveal = __esm({
-    "src/motion/filterReveal.ts"() {
-      "use strict";
-      init_live_reload();
-      init_gsap();
-      filterReveal = (elements) => {
-        const windowWidth = window.innerWidth;
-        const animation = gsapWithCSS.timeline();
-        if (windowWidth > 767) {
-          animation.set(elements, { y: "16px", display: "block", opacity: 0 });
-          animation.to(elements, {
-            duration: 1,
-            y: "0px",
-            opacity: 1,
-            stagger: 0.1,
-            ease: "expo.inOut"
-          });
-        } else {
-          animation.set(elements, { y: "16px", display: "block", opacity: 0 });
-          animation.to(elements, {
-            duration: 1,
-            y: "0px",
-            opacity: 1,
-            ease: "expo.inOut"
-          });
-        }
-      };
-    }
-  });
-
-  // src/utils/filterContent.ts
-  var filterList, hideAll, updateInitialCheckbox;
-  var init_filterContent = __esm({
-    "src/utils/filterContent.ts"() {
-      "use strict";
-      init_live_reload();
-      init_filterReveal();
-      init_caseGridMovement();
-      filterList = (items, filters) => {
-        const filteredList = items.filter((item) => {
-          const itemTemp = item;
-          const itemTypes = [...itemTemp.querySelectorAll("[data-filter-item-type]")];
-          for (const i in itemTypes) {
-            const ele = itemTypes[i];
-            const serviceType = ele.innerHTML.split(" ")[0];
-            if (filters.includes(serviceType)) {
-              return serviceType;
-            }
-          }
-        });
-        return filteredList;
-      };
-      hideAll = () => {
-        const masterList = [...document.querySelectorAll("[data-filter-item]")];
-        for (const item of masterList) {
-          const temp = item;
-          temp.style.display = "none";
-        }
-      };
-      updateInitialCheckbox = (initialFilter, setState) => {
-        const checkboxContainer = initialFilter.children[0];
-        const checkboxInput = initialFilter.children[1];
-        const checkboxText = initialFilter.children[2];
-        if (setState === "hide") {
-          checkboxInput.checked = false;
-          checkboxContainer.classList.remove("w--redirected-checked");
-          checkboxText.style.color = "#EC2543";
-        } else if (setState === "show") {
-          checkboxInput.checked = true;
-          checkboxContainer.classList.add("w--redirected-checked");
-          checkboxText.style.color = "#EEEBE6";
-        }
-      };
-    }
-  });
-
   // src/motion/videoPlayerMotion.ts
   var togglePlayMotion, toggleMuteMotion;
   var init_videoPlayerMotion = __esm({
@@ -7411,7 +7325,6 @@
     "src/components/banner.ts"() {
       "use strict";
       init_live_reload();
-      init_filterContent();
       init_gsap();
       init_ScrollTrigger();
       init_SplitText();
@@ -7425,7 +7338,6 @@
         bannerButton;
         scrollSections;
         splitText;
-        //   private svgElement: SVGElement;
         constructor() {
           this.component = document.querySelector(".component_hero-banner");
           this.svgElement = this.component.querySelector(".hero-banner_svg");
@@ -7435,38 +7347,35 @@
           this.bannerButton = this.component.querySelector(".button");
           this.scrollSections = [...document.querySelectorAll(".home-hero_sizing-wrap")];
           this.splitText = new SplitText(this.bannerText, { type: "words", mask: "words" });
-          console.log("banner", this.component);
+          this.morphState.style.visibility = "hidden";
           setTimeout(() => {
             this.bannerController();
-          }, 2500);
+          }, 3e3);
         }
         bannerController() {
           this.showBanner();
-          const st = gsapWithCSS.timeline({
-            scrollTrigger: {
-              trigger: this.scrollSections[0],
-              start: "10% top",
-              end: "10% top",
-              markers: true,
-              toggleActions: "play none none reverse",
-              onEnter: () => {
-                console.log("enter");
-                this.hideBanner();
-              },
-              onEnterBack: () => {
-                console.log("enter back");
-                this.showBanner();
-              },
-              onLeaveBack: () => {
-              }
-              // scrub: 1,
+          new ScrollTrigger2({
+            trigger: this.scrollSections[0],
+            start: "10% top",
+            end: "10% top",
+            markers: true,
+            toggleActions: "play none none reverse",
+            onEnter: () => {
+              this.hideBanner();
+            },
+            onEnterBack: () => {
+              this.showBanner();
             }
           });
         }
         showBanner() {
           const tl = gsapWithCSS.timeline();
           tl.set(this.component, { display: "block" });
-          tl.to(this.baseState, { duration: 1, morphSVG: this.morphState, ease: "expo.out" });
+          tl.fromTo(
+            this.baseState,
+            { morphSVG: this.baseState },
+            { duration: 1, morphSVG: this.morphState, ease: "expo.out" }
+          );
           tl.fromTo(
             this.splitText.words,
             { y: "3rem", opacity: 0 },
@@ -7484,21 +7393,17 @@
           const tl = gsapWithCSS.timeline();
           tl.to(this.splitText.words, {
             duration: 0.5,
-            y: "-3rem",
+            // y: '-3rem',
             opacity: 0,
-            stagger: 0.05,
+            // stagger: 0.05,
             ease: "expo.out"
           });
           tl.to(
             this.bannerButton,
             { duration: 0.5, y: "-3rem", opacity: 0, stagger: 0.05, ease: "expo.out" },
-            "<0.5"
-          );
-          tl.to(
-            this.baseState,
-            { duration: 1, morphSVG: this.baseState, opacity: 0, ease: "expo.out" },
             "<"
           );
+          tl.to(this.baseState, { duration: 1, morphSVG: this.baseState, ease: "expo.out" }, "<0.1");
         }
       };
       banner = () => {
@@ -11331,17 +11236,17 @@
   init_ScrollTrigger();
   gsapWithCSS.registerPlugin(ScrollTrigger2);
   var stickyHeader = () => {
-    const scrollSection = document.querySelector(".section_sticky-header");
+    const scrollSection2 = document.querySelector(".section_sticky-header");
     const scrollTimeline = gsapWithCSS.timeline({
       scrollTrigger: {
-        trigger: scrollSection,
+        trigger: scrollSection2,
         start: "200% top",
         end: "200% top",
         toggleActions: "play none none reverse"
         // markers: true,
       }
     });
-    scrollTimeline.to(scrollSection, { duration: 0, opacity: 0 });
+    scrollTimeline.to(scrollSection2, { duration: 0, opacity: 0 });
   };
 
   // src/motion/careersMotion.ts
@@ -11452,13 +11357,184 @@
 
   // src/pages/caseOverview.ts
   init_cursorMotion();
-  init_caseGridMovement();
-  init_filterContent();
+
+  // src/utils/caseGridMovement.ts
+  init_live_reload();
+  init_gsap();
+  init_getDevice();
+  var scrollSection = document.querySelector(".section_work");
+  var curAnimation = gsapWithCSS.timeline({
+    scrollTrigger: {
+      trigger: scrollSection,
+      start: "top 40%",
+      end: "bottom bottom",
+      scrub: true,
+      toggleActions: "play none none reverse"
+      // markers: {
+      //   startColor: 'yellow',
+      //   endColor: 'orange',
+      // },
+    }
+  });
+  var caseScrollEffect = () => {
+    setScrollSpeed();
+    createScrollerAnimation(curAnimation);
+  };
+  var createTimeline = () => {
+    const scrollSection2 = document.querySelector(".section_work");
+    const newAnimation = gsapWithCSS.timeline({
+      scrollTrigger: {
+        trigger: scrollSection2,
+        start: "top 40%",
+        end: "bottom bottom",
+        scrub: true,
+        toggleActions: "play none none reverse"
+        // markers: {
+        //   startColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
+        //   endColor: '#' + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, '0'),
+        // },
+      }
+    });
+    return newAnimation;
+  };
+  var createScrollerAnimation = (animation) => {
+    if (scrollSection) {
+      const scrollElements = [...scrollSection.querySelectorAll("[data-scroll-speed]")];
+      for (const j in scrollElements) {
+        const tempElement = scrollElements[j];
+        const elementSpeed = Number(tempElement.dataset.scrollSpeed);
+        const setSpeed = elementSpeed;
+        animation.to(tempElement, { yPercent: setSpeed * 5, ease: "none" }, "<");
+      }
+    }
+  };
+  var setScrollSpeed = () => {
+    const workItems = [...document.querySelectorAll(".work-grid_item")];
+    const renderQueue = [];
+    const hideQueue = [];
+    const device12 = getDeviceType();
+    const windowWidth = window.innerWidth;
+    for (const i in workItems) {
+      const temp = workItems[i];
+      const tempDisplay = getComputedStyle(temp).display;
+      if (tempDisplay !== "none") {
+        renderQueue.push(temp);
+      } else {
+        hideQueue.push(temp);
+      }
+    }
+    if (device12 === "desktop" && windowWidth > 767) {
+      const sortedQueue = sortRenderQueue(renderQueue);
+      const leftItems = sortedQueue[0];
+      const rightItems = sortedQueue[1];
+      for (const i in leftItems) {
+        const temp = leftItems[i];
+        temp.dataset.scrollSpeed = "3";
+      }
+      for (const i in rightItems) {
+        const temp = rightItems[i];
+        temp.dataset.scrollSpeed = "-3";
+      }
+      for (const i in hideQueue) {
+        const temp = hideQueue[i];
+        temp.dataset.scrollSpeed = "0";
+      }
+    } else {
+      for (const i in renderQueue) {
+        const temp = renderQueue[i];
+        temp.dataset.scrollSpeed = "8";
+      }
+    }
+  };
+  var sortRenderQueue = (renderQueue) => {
+    const leftItems = [];
+    const rightItems = [];
+    for (let i = 0; i < renderQueue.length; i += 2) {
+      leftItems.push(renderQueue[i]);
+    }
+    for (let i = 1; i < renderQueue.length; i += 2) {
+      rightItems.push(renderQueue[i]);
+    }
+    return [leftItems, rightItems];
+  };
+  var updateScrollEffect = () => {
+    curAnimation.kill();
+    setTimeout(() => {
+      setScrollSpeed();
+      const updatedAnimation = createTimeline();
+      curAnimation = updatedAnimation;
+      createScrollerAnimation(curAnimation);
+    }, 500);
+  };
+
+  // src/utils/filterContent.ts
+  init_live_reload();
+
+  // src/motion/filterReveal.ts
+  init_live_reload();
+  init_gsap();
+  var filterReveal = (elements) => {
+    const windowWidth = window.innerWidth;
+    const animation = gsapWithCSS.timeline();
+    if (windowWidth > 767) {
+      animation.set(elements, { y: "16px", display: "block", opacity: 0 });
+      animation.to(elements, {
+        duration: 1,
+        y: "0px",
+        opacity: 1,
+        stagger: 0.1,
+        ease: "expo.inOut"
+      });
+    } else {
+      animation.set(elements, { y: "16px", display: "block", opacity: 0 });
+      animation.to(elements, {
+        duration: 1,
+        y: "0px",
+        opacity: 1,
+        ease: "expo.inOut"
+      });
+    }
+  };
+
+  // src/utils/filterContent.ts
+  var filterList = (items, filters) => {
+    const filteredList = items.filter((item) => {
+      const itemTemp = item;
+      const itemTypes = [...itemTemp.querySelectorAll("[data-filter-item-type]")];
+      for (const i in itemTypes) {
+        const ele = itemTypes[i];
+        const serviceType = ele.innerHTML.split(" ")[0];
+        if (filters.includes(serviceType)) {
+          return serviceType;
+        }
+      }
+    });
+    return filteredList;
+  };
+  var hideAll = () => {
+    const masterList = [...document.querySelectorAll("[data-filter-item]")];
+    for (const item of masterList) {
+      const temp = item;
+      temp.style.display = "none";
+    }
+  };
+  var updateInitialCheckbox = (initialFilter, setState) => {
+    const checkboxContainer = initialFilter.children[0];
+    const checkboxInput = initialFilter.children[1];
+    const checkboxText = initialFilter.children[2];
+    if (setState === "hide") {
+      checkboxInput.checked = false;
+      checkboxContainer.classList.remove("w--redirected-checked");
+      checkboxText.style.color = "#EC2543";
+    } else if (setState === "show") {
+      checkboxInput.checked = true;
+      checkboxContainer.classList.add("w--redirected-checked");
+      checkboxText.style.color = "#EEEBE6";
+    }
+  };
 
   // src/utils/filterContentUpdated.ts
   init_live_reload();
-  init_filterReveal();
-  init_caseGridMovement();
   var FilterContent = class {
     activeFilters = [];
     renderQueue = [];
@@ -11551,7 +11627,7 @@
           }
         }
       }
-      (void 0)();
+      updateScrollEffect();
     }
     handleSearchInput(e2) {
       const searchTerm = e2.target.value.toLowerCase();
@@ -11613,7 +11689,7 @@
       this.updateInitialCheckbox("show");
       this.hideAll();
       filterReveal(this.renderQueue);
-      (void 0)();
+      updateScrollEffect();
     }
     renderUpdate(items) {
       this.hideAll();
@@ -11652,8 +11728,6 @@
 
   // src/utils/scrollToDeepLink.ts
   init_live_reload();
-  init_filterReveal();
-  init_filterContent();
   init_gsap();
 
   // node_modules/gsap/ScrollToPlugin.js
@@ -11908,12 +11982,12 @@
   };
   var scrollToDeepLinks = () => {
     if (localStorage.length > 0) {
-      const scrollSection = localStorage.getItem("filterTag");
-      if (scrollSection !== "")
+      const scrollSection2 = localStorage.getItem("filterTag");
+      if (scrollSection2 !== "")
         setTimeout(() => {
           gsapWithCSS.to(window, {
             duration: 2,
-            scrollTo: { y: "#" + scrollSection, offsetY: 100 },
+            scrollTo: { y: "#" + scrollSection2, offsetY: 100 },
             ease: "power4.out",
             onComplete: () => {
               localStorage.clear();
@@ -11961,7 +12035,7 @@
     csoPageReveal();
     filterContentUpdated();
     caseHover();
-    (void 0)();
+    caseScrollEffect();
     const workGrid = document.querySelector(".work-grid_wrapper");
     workGrid.addEventListener("mousemove", (e2) => {
       const mouseYMovement = e2.movementY;
@@ -12402,7 +12476,6 @@
   };
 
   // src/components/accordianList.ts
-  init_filterContent();
   init_getDevice();
   init_gsap();
 
@@ -14148,7 +14221,6 @@
   };
 
   // src/pages/insightsOverview.ts
-  init_filterContent();
   var insights = () => {
     stickyHeader();
     isoRevealAnimation();
@@ -14674,7 +14746,7 @@
     const headerOverview = fixedHeaderSection.querySelector("p");
     const overline = heroSection.querySelector(".fixed-header_overline");
     const filterButtons = [...document.querySelectorAll(".services_link-item")];
-    const scrollSection = heroSection.querySelector(".services_sticky-section");
+    const scrollSection2 = heroSection.querySelector(".services_sticky-section");
     const sectionTexture = heroSection.querySelector(".services_scroll-texture");
     const animation = gsapWithCSS.timeline({
       onComplete: () => {
@@ -14703,7 +14775,7 @@
       },
       "<0.2"
     );
-    animation.from(scrollSection, { duration: 1, opacity: 0, y: "10%", ease: "Power4.out" }, "<");
+    animation.from(scrollSection2, { duration: 1, opacity: 0, y: "10%", ease: "Power4.out" }, "<");
     animation.from(sectionTexture, { duration: 1.5, opacity: 0, ease: "power4.out" }, "<0.5");
   };
   var servicesOverviewReveal = () => {
