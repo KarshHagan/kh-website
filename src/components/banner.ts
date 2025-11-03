@@ -87,9 +87,7 @@ class Banner {
     const tl = gsap.timeline();
     tl.to(this.splitText.words, {
       duration: 0.5,
-      // y: '-3rem',
       opacity: 0,
-      // stagger: 0.05,
       ease: "expo.out",
     });
     tl.to(
@@ -105,7 +103,7 @@ class Banner {
     );
     tl.to(
       this.baseState,
-      { duration: 1, morphSVG: this.baseState, ease: "expo.out" },
+      { duration: 1.5, morphSVG: this.baseState, ease: "expo.out" },
       "<0.1"
     );
   }
