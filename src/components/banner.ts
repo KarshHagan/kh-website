@@ -72,13 +72,13 @@ class Banner {
     tl.fromTo(
       this.splitText.words,
       { y: "3rem", opacity: 0 },
-      { duration: 0.5, opacity: 1, y: 0, stagger: 0.05, ease: "expo.out" },
+      { duration: 0.8, opacity: 1, y: 0, stagger: 0.05, ease: "power2.out" },
       "<0.2"
     );
     tl.fromTo(
       this.bannerButton,
       { y: "3rem", opacity: 0 },
-      { duration: 0.5, opacity: 1, y: 0, stagger: 0.05, ease: "expo.out" },
+      { duration: 0.8, opacity: 1, y: 0, stagger: 0.05, ease: "power2.out" },
       "<0.5"
     );
   }
