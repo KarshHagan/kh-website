@@ -103,7 +103,7 @@ class Banner {
     );
     tl.to(
       this.baseState,
-      { duration: 1.5, morphSVG: this.baseState, ease: "expo.out" },
+      { duration: 0.8, morphSVG: this.baseState, ease: "expo.out" },
       "<0.1"
     );
   }
