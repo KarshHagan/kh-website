@@ -1,6 +1,6 @@
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SplitText } from 'gsap/SplitText';
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
@@ -15,16 +15,27 @@ class Banner {
   private splitText: SplitText;
 
   constructor() {
-    this.component = document.querySelector('.component_hero-banner') as HTMLElement;
-    this.svgElement = this.component.querySelector('.hero-banner_svg') as SVGElement;
-    this.baseState = this.svgElement.querySelector('#base') as SVGPathElement;
-    this.morphState = this.svgElement.querySelector('#morph') as SVGPathElement;
-    this.bannerText = this.component.querySelector('.hero-banner_text') as HTMLElement;
-    this.bannerButton = this.component.querySelector('.button') as HTMLElement;
-    this.scrollSections = [...document.querySelectorAll('.home-hero_sizing-wrap')] as HTMLElement[];
-    this.splitText = new SplitText(this.bannerText, { type: 'words', mask: 'words' });
+    this.component = document.querySelector(
+      ".component_hero-banner"
+    ) as HTMLElement;
+    this.svgElement = this.component.querySelector(
+      ".hero-banner_svg"
+    ) as SVGElement;
+    this.baseState = this.svgElement.querySelector("#base") as SVGPathElement;
+    this.morphState = this.svgElement.querySelector("#morph") as SVGPathElement;
+    this.bannerText = this.component.querySelector(
+      ".hero-banner_text"
+    ) as HTMLElement;
+    this.bannerButton = this.component.querySelector(".button") as HTMLElement;
+    this.scrollSections = [
+      ...document.querySelectorAll(".home-hero_sizing-wrap"),
+    ] as HTMLElement[];
+    this.splitText = new SplitText(this.bannerText, {
+      type: "words",
+      mask: "words",
+    });
 
-    this.morphState.style.visibility = 'hidden';
+    this.morphState.style.visibility = "hidden";
 
     setTimeout(() => {
       this.bannerController();
@@ -36,10 +47,10 @@ class Banner {
 
     new ScrollTrigger({
       trigger: this.scrollSections[0],
-      start: '10% top',
-      end: '10% top',
-      markers: true,
-      toggleActions: 'play none none reverse',
+      start: "10% top",
+      end: "10% top",
+      // markers: true,
+      toggleActions: "play none none reverse",
       onEnter: () => {
         this.hideBanner();
       },
@@ -52,23 +63,23 @@ class Banner {
 
   private showBanner() {
     const tl = gsap.timeline();
-    tl.set(this.component, { display: 'block' });
+    tl.set(this.component, { display: "block" });
     tl.fromTo(
       this.baseState,
       { morphSVG: this.baseState },
-      { duration: 1, morphSVG: this.morphState, ease: 'expo.out' },
+      { duration: 1, morphSVG: this.morphState, ease: "expo.out" }
     );
     tl.fromTo(
       this.splitText.words,
-      { y: '3rem', opacity: 0 },
-      { duration: 0.5, opacity: 1, y: 0, stagger: 0.05, ease: 'expo.out' },
-      '<0.2',
+      { y: "3rem", opacity: 0 },
+      { duration: 0.5, opacity: 1, y: 0, stagger: 0.05, ease: "expo.out" },
+      "<0.2"
     );
     tl.fromTo(
       this.bannerButton,
-      { y: '3rem', opacity: 0 },
-      { duration: 0.5, opacity: 1, y: 0, stagger: 0.05, ease: 'expo.out' },
-      '<0.5',
+      { y: "3rem", opacity: 0 },
+      { duration: 0.5, opacity: 1, y: 0, stagger: 0.05, ease: "expo.out" },
+      "<0.5"
     );
   }
 
@@ -79,14 +90,24 @@ class Banner {
       // y: '-3rem',
       opacity: 0,
       // stagger: 0.05,
-      ease: 'expo.out',
+      ease: "expo.out",
     });
     tl.to(
       this.bannerButton,
-      { duration: 0.5, y: '-3rem', opacity: 0, stagger: 0.05, ease: 'expo.out' },
-      '<',
+      {
+        duration: 0.5,
+        y: "-3rem",
+        opacity: 0,
+        stagger: 0.05,
+        ease: "expo.out",
+      },
+      "<"
     );
-    tl.to(this.baseState, { duration: 1, morphSVG: this.baseState, ease: 'expo.out' }, '<0.1');
+    tl.to(
+      this.baseState,
+      { duration: 1, morphSVG: this.baseState, ease: "expo.out" },
+      "<0.1"
+    );
   }
 }
 
