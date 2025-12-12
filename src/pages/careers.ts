@@ -17,5 +17,5 @@ export const careers = () => {
   // Media Grid
   // horizontalScrollText();
   // Careers Feed
-  careersFeed();
+  // careersFeed();
 };
