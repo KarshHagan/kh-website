@@ -1,48 +1,110 @@
-/* eslint-disable simple-import-sort/imports */
 // import { cursorHover } from '$components/cursor';
-import { cloneNode } from "@finsweet/ts-utils";
+import { cloneNode } from '@finsweet/ts-utils';
 
 export const careersFeed = () => {
-  setTimeout(() => {
-    const bambooContainer = document.querySelector("#BambooHR") as HTMLElement;
+  const emptyMessage = document.querySelector('.careers_empty') as HTMLElement | null;
+  const jobList = document.querySelector('.careers-list_list') as HTMLElement | null;
+  const jobTemplate = document.querySelector('.careers-list_item') as HTMLElement | null;
 
-    bambooContainer &&
-      (() => {
-        const jobsList = [
-          ...document.querySelectorAll(".BambooHR-ATS-Jobs-Item"),
-        ];
+  if (!jobList || !jobTemplate) return;
 
-        jobsList.forEach((item) => {
-          createJob(item);
-        });
-      })();
-  }, 1500);
+  let hasRendered = false;
 
-  function createJob(data: Element) {
-    const jobList = document.querySelector(".careers-list_list") as HTMLElement;
-    const jobTemplate = document.querySelector(
-      ".careers-list_item"
-    ) as HTMLElement;
-    const newJob = cloneNode(jobTemplate) as HTMLElement;
+  const renderFromBamboo = (root: ParentNode) => {
+    if (hasRendered) return;
 
-    newJob.classList.remove("is-template", "hide");
+    const jobs = [...root.querySelectorAll('.BambooHR-ATS-Jobs-Item')];
 
-    const titleData = data.querySelector("a") as HTMLAnchorElement;
-    const locationData = data.querySelector("span") as HTMLElement;
+    if (jobs.length) {
+      hasRendered = true;
 
-    const setLink = newJob.querySelector("a") as HTMLAnchorElement;
-    const setTitle = newJob.querySelector("h3") as HTMLElement;
-    const setLocation = newJob.querySelector(
-      ".careers-list_location"
-    ) as HTMLElement;
-    const formatLocation = locationData.innerText.split("\n")[2];
+      jobs.forEach((item) => createJob(item, jobList, jobTemplate));
+
+      return true;
+    }
+
+    const noJobsEl =
+      root.querySelector('.BambooHR-ATS-Jobs-Empty') ||
+      root.querySelector('.BambooHR-ATS-Jobs-List:empty');
+
+    if (noJobsEl) {
+      hasRendered = true;
+      emptyMessage?.classList.remove('hide');
+      return true;
+    }
+
+    return false;
+  };
+
+  const waitForContainer = () => {
+    const container = document.querySelector('#BambooHR') as HTMLElement | null;
+    if (container) {
+      // console.log('[Careers] #BambooHR already exists');
+      return Promise.resolve(container);
+    }
+
+    // console.log('[Careers] Waiting for #BambooHR to mount');
+
+    return new Promise<HTMLElement>((resolve) => {
+      const obs = new MutationObserver(() => {
+        const el = document.querySelector('#BambooHR') as HTMLElement | null;
+        if (el) {
+          // console.log('[Careers] #BambooHR detected via MutationObserver');
+          obs.disconnect();
+          resolve(el);
+        }
+      });
+
+      obs.observe(document.documentElement, { childList: true, subtree: true });
+    });
+  };
+
+  waitForContainer().then((bambooContainer) => {
+    if (renderFromBamboo(bambooContainer)) {
+      // console.log('[Careers] Render completed on initial pass');
+      return;
+    }
+
+    const obs = new MutationObserver(() => {
+      // console.log('[Careers] Bamboo mutation detected');
+      if (renderFromBamboo(bambooContainer)) {
+        // console.log('[Careers] Render completed, disconnecting observer');
+        obs.disconnect();
+      }
+    });
+
+    obs.observe(bambooContainer, { childList: true, subtree: true });
+    window.setTimeout(() => {
+      if (!hasRendered) {
+        console.warn('[Careers] Timeout reached, showing empty state');
+        obs.disconnect();
+        emptyMessage?.classList.remove('hide');
+      }
+    }, 15000);
+  });
+
+  function createJob(data: Element, jobListEl: HTMLElement, jobTemplateEl: HTMLElement) {
+    const newJob = cloneNode(jobTemplateEl) as HTMLElement;
+    newJob.classList.remove('is-template', 'hide');
+
+    const titleData = data.querySelector('a') as HTMLAnchorElement | null;
+    const locationData = data.querySelector('span') as HTMLElement | null;
+
+    if (!titleData || !locationData) return;
+
+    const setLink = newJob.querySelector('a') as HTMLAnchorElement | null;
+    const setTitle = newJob.querySelector('h3') as HTMLElement | null;
+    const setLocation = newJob.querySelector('.careers-list_location') as HTMLElement | null;
+
+    if (!setLink || !setTitle || !setLocation) return;
+
+    const parts = locationData.innerText.split('\n');
+    const formatLocation = parts[2]?.trim() ?? locationData.innerText.trim();
 
     setLink.href = titleData.href;
     setTitle.innerText = titleData.innerText;
     setLocation.innerText = formatLocation;
 
-    jobList.appendChild(newJob);
-
-    // cursorHover();
+    jobListEl.appendChild(newJob);
   }
 };
